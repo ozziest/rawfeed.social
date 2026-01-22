@@ -1,0 +1,19 @@
+<article
+  class="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow"
+>
+  <time class="text-sm text-gray-500 mb-3 block">
+    <%= new Date(post.created_at).toLocaleDateString(undefined, { day:
+    'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute:
+    '2-digit' }) %>
+  </time>
+
+  <!-- prettier-ignore -->
+  <p
+    class="text-gray-900 leading-relaxed mb-4 whitespace-pre-line wrap-break-words overflow-wrap-anywhere line-clamp-12"
+    lang="<%= post.location %>"
+  ><%= sanitize(post.content) %></p>
+
+  <div class="flex gap-6 text-sm">
+    <%- include('postStats', { post: post }) %>
+  </div>
+</article>

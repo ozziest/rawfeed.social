@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+.overflow-wrap-anywhere {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}

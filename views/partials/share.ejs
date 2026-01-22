@@ -1,0 +1,66 @@
+<% if (user) { %>
+<div class="max-w-2xl mx-auto">
+  <form
+    id="post-form"
+    hx-post="/posts/create"
+    hx-swap="outerHTML"
+    class="bg-white rounded-lg shadow p-6 mb-6"
+  >
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <div class="mb-4">
+      <textarea
+        id="content"
+        name="content"
+        maxlength="400"
+        rows="3"
+        placeholder="What's on your mind?"
+        class="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+      ><%= formData?.content || '' %></textarea>
+            
+      <% if (validation?.content) { %>
+      <div class="text-red-600 text-sm mt-2">
+        <%= validation.content %>
+      </div>
+      <% } %>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <div class="flex items-center">
+        <select
+          id="location"
+          name="location"
+          class="text-sm text-gray-600 border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400"
+        >
+          <option value="tr" <%= (formData?.location === 'tr' || !formData?.location) ? 'selected' : '' %>>
+            Turkish
+          </option>
+          <option value="en" <%= formData?.location === 'en' ? 'selected' : '' %>>
+            English
+          </option>
+        </select>
+        
+        <% if (validation?.location) { %>
+        <span class="text-red-600 text-xs ml-2">
+          <%= validation.location %>
+        </span>
+        <% } %>
+      </div>
+
+      <button
+        type="submit"
+        class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+      >
+        Post
+      </button>
+    </div>
+
+    <% if (validation?.general) { %>
+    <div class="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+      <p class="text-red-700 text-sm">
+        <%= validation.general %>
+      </p>
+    </div>
+    <% } %>
+  </form>
+</div>
+<% } %>

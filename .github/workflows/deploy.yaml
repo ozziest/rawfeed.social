@@ -1,0 +1,58 @@
+name: Deployment
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  dockerize:
+    name: Dockerize
+    runs-on: ubuntu-latest
+    env:
+      DO_PASSWORD: ${{ secrets.DO_PASSWORD }}
+      SERVER_IP: ${{ secrets.SERVER_IP }}
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_ACCESS_TOKEN }}
+      RELEASE_VERSION: rawfeed@${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js 24.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 24.x
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1
+
+      - name: Login to AWS ECR
+        run: aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 459672519579.dkr.ecr.eu-central-1.amazonaws.com
+
+      - name: Install
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload source maps to Sentry
+        run: |
+          npx @sentry/cli sourcemaps upload \
+            --release=$RELEASE_VERSION \
+            ./dist
+
+      - name: Remove source maps from build
+        run: find ./dist -name "*.map" -type f -delete
+
+      - name: Build, tag and push images to AWS ECR
+        run: |
+          docker build \
+            --build-arg RELEASE_VERSION=$RELEASE_VERSION \
+            -t rawfeed-social .
+          docker tag rawfeed-social:latest 459672519579.dkr.ecr.eu-central-1.amazonaws.com/rawfeed-social:latest
+          docker push 459672519579.dkr.ecr.eu-central-1.amazonaws.com/rawfeed-social:latest
+
+      - name: Deployment to production
+        run: sshpass -p "$DO_PASSWORD" ssh -o StrictHostKeyChecking=no -o PreferredAuthentications=password root@$SERVER_IP 'cd /home/docker && sh restart.sh && docker system prune --force'
