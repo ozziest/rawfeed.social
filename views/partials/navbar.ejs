@@ -1,0 +1,50 @@
+<nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+  <div class="max-w-2xl mx-auto px-4 py-3">
+    <div class="flex items-center justify-between">
+      <!-- Logo/Brand -->
+      <a
+        href="/"
+        class="text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors"
+      >
+        rawfeed.social
+      </a>
+
+      <!-- Navigation Links -->
+      <div class="flex items-center gap-4">
+        <a href="/" class="text-gray-600 hover:text-gray-900 transition-colors">
+          Feed
+        </a>
+        <% if (!user) { %>
+        <a
+          href="/auth/login"
+          class="text-gray-600 hover:text-gray-900 transition-colors"
+        >
+          Login
+        </a>
+        <% } %>
+        <% if (user) { %>
+        <a
+          href="/u/iozguradem"
+          class="text-gray-600 hover:text-gray-900 transition-colors"
+        >
+          @iozguradem
+        </a>
+        <a
+          href="/user/settings"
+          class="text-gray-600 hover:text-gray-900 transition-colors"
+        >
+          Settings
+        </a>
+        <form method="GET" action="/auth/logout">
+          <button
+            type="submit"
+            class="text-gray-600 hover:text-red-600 transition-colors cursor-pointer"
+          >
+            Logout
+          </button>
+        </form>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</nav>
