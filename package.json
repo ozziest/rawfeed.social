@@ -18,7 +18,8 @@
     "db:reset": "npm run migrate:rollback && npm run migrate:latest && npm run seed:run",
     "types": "kysely-codegen --dialect mysql --out-file ./src/types/database.ts",
     "postinstall": "mkdir -p public/js && cp node_modules/htmx.org/dist/htmx.min.js public/js/",
-    "sentry:upload": "sentry-cli sourcemaps upload ./dist"
+    "sentry:upload": "sentry-cli sourcemaps upload ./dist",
+    "commit": "cz"
   },
   "dependencies": {
     "@fastify/compress": "^8.3.1",
@@ -52,6 +53,8 @@
     "@types/node": "^24.10.9",
     "@types/sanitize-html": "^2.16.0",
     "autoprefixer": "^10.4.23",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
     "kysely-codegen": "^0.19.0",
     "postcss": "^8.5.6",
     "prettier": "^3.8.1",
@@ -60,5 +63,10 @@
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.9.3"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   }
 }
