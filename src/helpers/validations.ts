@@ -35,15 +35,19 @@ export const validate = <T>(
   };
 };
 
+export const USERNAME_SCHEMA = z
+  .string()
+  .trim()
+  .toLowerCase()
+  .min(3)
+  .max(20)
+  .regex(/^[a-z][a-z0-9_-]*[a-z0-9]$/)
+  .regex(/^(?!.*[-_]{2})/)
+  .refine((username) => !RESERVED_USERNAMES.includes(username));
+
 export const REGISTER_SCHEMA = z
   .object({
-    username: z
-      .string()
-      .trim()
-      .min(3)
-      .max(20)
-      .regex(/^[a-zA-Z0-9_]+$/)
-      .toLowerCase(),
+    username: USERNAME_SCHEMA,
     email: z.email().toLowerCase(),
     password: z.string().min(8),
     confirmPassword: z.string(),
@@ -61,13 +65,3 @@ export const POST_SCHEMA = z.object({
   content: z.string().trim().min(1).max(400),
   location: z.enum(["tr", "en"]),
 });
-
-export const USERNAME_SCHEMA = z
-  .string()
-  .trim()
-  .toLowerCase()
-  .min(3)
-  .max(20)
-  .regex(/^[a-z][a-z0-9_-]*[a-z0-9]$/)
-  .regex(/^(?!.*[-_]{2})/)
-  .refine((username) => !RESERVED_USERNAMES.includes(username));
