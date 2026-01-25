@@ -29,7 +29,15 @@ const getByEmail = async (email: string) => {
     .first<Users | undefined>();
 };
 
+const getByUsername = async (username: string) => {
+  return await getKnex()
+    .table(TABLE_NAME)
+    .where("username", username)
+    .first<Users | undefined>();
+};
+
 export default {
   insert,
   getByEmail,
+  getByUsername,
 };

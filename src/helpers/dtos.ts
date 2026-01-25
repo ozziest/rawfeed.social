@@ -14,3 +14,7 @@ export type PostInput = {
   content: string;
   location: string;
 };
+
+export type UserProfileParams = {
+  username?: string;
+};

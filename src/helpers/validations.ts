@@ -1,4 +1,5 @@
 import * as z from "zod";
+import { RESERVED_USERNAMES } from "../consts";
 
 export const validate = <T>(
   schema: z.ZodSchema<T>,
@@ -60,3 +61,13 @@ export const POST_SCHEMA = z.object({
   content: z.string().trim().min(1).max(400),
   location: z.enum(["tr", "en"]),
 });
+
+export const USERNAME_SCHEMA = z
+  .string()
+  .trim()
+  .toLowerCase()
+  .min(3)
+  .max(20)
+  .regex(/^[a-z][a-z0-9_-]*[a-z0-9]$/)
+  .regex(/^(?!.*[-_]{2})/)
+  .refine((username) => !RESERVED_USERNAMES.includes(username));
