@@ -24,10 +24,10 @@
         <% } %>
         <% if (user) { %>
         <a
-          href="/u/iozguradem"
+          href="/u/<%= user.username %>"
           class="text-gray-600 hover:text-gray-900 transition-colors"
         >
-          @iozguradem
+          @<%= user.username %>
         </a>
         <a
           href="/user/settings"

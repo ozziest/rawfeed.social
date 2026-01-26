@@ -1,6 +1,7 @@
 // src/types/fastify.d.ts
 import "fastify";
 import "@fastify/jwt";
+import { TokenPayload } from "../helpers/tokens";
 
 declare module "fastify" {
   interface FastifyInstance {
@@ -12,8 +13,6 @@ declare module "fastify" {
   }
 
   interface FastifyRequest {
-    currentUser?: {
-      userId: string;
-    };
+    currentUser?: TokenPayload;
   }
 }

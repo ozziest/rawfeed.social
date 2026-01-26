@@ -1,5 +1,6 @@
 import type { FastifyRequest, FastifyReply } from "fastify";
-import { TokenPayload } from "../helpers/tokens";
+import { generateTokens, TokenPayload } from "../helpers/tokens";
+import userService from "../services/user.service";
 
 export async function verifyToken(
   request: FastifyRequest,
@@ -16,9 +17,7 @@ export async function verifyToken(
 
     const decoded = app.jwt.verify(accessToken) as TokenPayload;
 
-    request.currentUser = {
-      userId: decoded.userId,
-    };
+    request.currentUser = decoded as TokenPayload;
   } catch (error) {
     const refreshToken = request.cookies.refreshToken;
 
@@ -29,15 +28,17 @@ export async function verifyToken(
 
     try {
       const decoded = app.jwt.verify(refreshToken) as TokenPayload;
+      const user = await userService.getById(decoded.userId);
 
-      const newAccessToken = app.jwt.sign(
-        {
-          userId: decoded.userId,
-        },
-        {
-          expiresIn: "10m",
-        },
-      );
+      if (!user) {
+        throw new Error("The user not found");
+      }
+
+      const { accessToken: newAccessToken } = generateTokens(app, {
+        userId: decoded.userId,
+        username: user.username,
+        name: user.name,
+      });
 
       reply.setCookie("accessToken", newAccessToken, {
         httpOnly: true,
@@ -47,9 +48,7 @@ export async function verifyToken(
         maxAge: 10 * 60,
       });
 
-      request.currentUser = {
-        userId: decoded.userId,
-      };
+      request.currentUser = decoded as TokenPayload;
     } catch (refreshError) {
       request.currentUser = undefined;
 

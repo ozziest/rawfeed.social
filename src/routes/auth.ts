@@ -78,6 +78,8 @@ export default async function authRoutes(fastify: FastifyInstance) {
 
       const { accessToken, refreshToken } = generateTokens(fastify, {
         userId: user.id,
+        username: user.username,
+        name: user.name,
       });
 
       setAuthTokens(accessToken, refreshToken);
