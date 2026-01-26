@@ -45,7 +45,7 @@ export const RESERVED_USERNAMES = [
   "sales",
   "billing",
 
-  // App Routes & Features (RawFeed.social için)
+  // App Routes & Features
   "settings",
   "account",
   "profile",
@@ -147,11 +147,30 @@ export const RESERVED_USERNAMES = [
   "raw-feed",
   "raw_feed",
 
-  // Subdomains (eğer subdomain kullanımı varsa)
+  // Subdomains
   "blog",
   "docs",
   "status",
   "beta",
   "staging",
   "dev",
+
+  // possible subdomains
+  "app",
+  "cdn",
+  "mail",
+  "ftp",
+  "blog",
+  "shop",
+  "store",
+  "help",
+  "support",
+  "status",
+  "rawfeed",
+  "about",
+  "contact",
+  "privacy",
+  "terms",
+  "username",
+  "user",
 ];

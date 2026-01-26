@@ -36,8 +36,35 @@ const getByUsername = async (username: string) => {
     .first<Users | undefined>();
 };
 
+const getById = async (uuid: string) => {
+  return await getKnex()
+    .table(TABLE_NAME)
+    .where("id", uuid)
+    .first<Users | undefined>();
+};
+
+const isDomainExists = async (domain: string) => {
+  return await getKnex()
+    .table(TABLE_NAME)
+    .where("custom_domain", domain)
+    .first<Users | undefined>();
+};
+
+const update = async (uuid: string, data: Partial<Users>) => {
+  return await getKnex()
+    .table(TABLE_NAME)
+    .where("id", uuid)
+    .update({
+      ...data,
+      updated_at: new Date(),
+    });
+};
+
 export default {
   insert,
   getByEmail,
   getByUsername,
+  getById,
+  isDomainExists,
+  update,
 };

@@ -50,7 +50,7 @@ server.register(helmet, {
   crossOriginResourcePolicy: { policy: "same-origin" },
 });
 server.register(rateLimit, {
-  max: 200,
+  max: 300,
   timeWindow: "15 minutes",
 });
 server.register(fastifyFormbody);

@@ -40,7 +40,11 @@ export interface Posts {
 export interface Users {
   bio: string | null;
   created_at: Date | null;
+  custom_domain: string | null;
   deleted_at: Date | null;
+  domain_verification_status: "failed" | "pending" | "verified" | null;
+  domain_verification_token: string | null;
+  domain_verified_at: Date | null;
   email: string;
   id: string;
   name: string;

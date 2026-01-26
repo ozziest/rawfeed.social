@@ -1,0 +1,83 @@
+<div class="max-w-2xl mx-auto px-4 py-8">
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold text-gray-900 mb-2">Settings</h1>
+    <p class="text-gray-600">Manage your account preferences and settings</p>
+  </div>
+
+  <div class="space-y-3">
+    <a
+      href="/user/settings/domain"
+      class="block bg-white rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow border border-transparent"
+    >
+      <div class="flex items-center gap-4">
+        <div class="flex-1 min-w-0">
+          <h3 class="text-lg font-semibold text-gray-900 mb-1">
+            Custom domain
+          </h3>
+          <% if (user.custom_domain) { %>
+          <p class="text-sm font-medium text-blue-600 mb-1">
+            <%= user.custom_domain %>
+          </p>
+          <% if (user.domain_verification_status === 'verified') { %>
+          <span
+            class="inline-flex items-center gap-1 text-xs font-medium text-green-700"
+          >
+            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            Verified
+          </span>
+          <% } else if (user.domain_verification_status === 'pending') { %>
+          <span
+            class="inline-flex items-center gap-1 text-xs font-medium text-amber-700"
+          >
+            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            Pending verification
+          </span>
+          <% } else if (user.domain_verification_status === 'failed') { %>
+          <span
+            class="inline-flex items-center gap-1 text-xs font-medium text-red-700"
+          >
+            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            Verification failed
+          </span>
+          <% } %>
+          <% } else { %>
+          <p class="text-sm text-gray-600">
+            Use your own domain name for your profile and posts.
+          </p>
+          <% } %>
+        </div>
+        <svg
+          class="w-5 h-5 text-gray-400 shrink-0"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 5l7 7-7 7"
+          />
+        </svg>
+      </div>
+    </a>
+  </div>
+</div>

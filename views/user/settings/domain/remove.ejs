@@ -1,0 +1,129 @@
+<div class="max-w-2xl mx-auto px-4 py-8">
+  <!-- Header -->
+  <div class="mb-6">
+    <a
+      href="/user/settings/domain"
+      class="text-blue-600 hover:text-blue-700 text-sm font-medium mb-3 inline-block"
+    >
+      ← Back to Custom Domain
+    </a>
+    <h1 class="text-2xl font-bold text-gray-900 mb-2">Remove Custom Domain</h1>
+    <p class="text-gray-600">
+      This action cannot be undone. Please confirm you want to remove your
+      custom domain.
+    </p>
+  </div>
+
+  <!-- Warning Box -->
+  <div class="bg-red-50 border border-red-200 rounded-lg p-6 mb-6">
+    <div class="flex gap-3">
+      <svg
+        class="w-6 h-6 text-red-600 shrink-0 mt-0.5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+        />
+      </svg>
+      <div class="flex-1">
+        <h3 class="font-semibold text-red-900 mb-2">
+          Warning: This action is permanent
+        </h3>
+        <ul class="text-sm text-red-800 space-y-1 list-disc list-inside">
+          <li>
+            Your custom domain <strong><%= user.custom_domain %></strong> will
+            be removed
+          </li>
+          <li>
+            Your profile will only be accessible via rawfeed.social/u/<%= user.username %>
+          </li>
+          <li>
+            You'll need to complete the entire setup process again if you want
+            to reconnect this domain
+          </li>
+          <li>
+            DNS records can remain in place but won't work until you set up the
+            domain again
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Current Domain Info -->
+  <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+    <h3 class="font-semibold text-gray-900 mb-3">Current Configuration</h3>
+    <div class="space-y-2 text-sm">
+      <div class="flex justify-between">
+        <span class="text-gray-600">Domain:</span>
+        <span class="font-mono text-gray-900"><%= user.custom_domain %></span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-gray-600">Status:</span>
+        <% if (user.domain_verification_status === 'verified') { %>
+        <span class="text-green-700 font-medium">✓ Verified</span>
+        <% } else if (user.domain_verification_status === 'pending') { %>
+        <span class="text-amber-700 font-medium">Pending</span>
+        <% } else { %>
+        <span class="text-red-700 font-medium">Failed</span>
+        <% } %>
+      </div>
+      <% if (user.domain_verified_at) { %>
+      <div class="flex justify-between">
+        <span class="text-gray-600">Verified on:</span>
+        <span class="text-gray-900"
+          ><%= new Date(user.domain_verified_at).toLocaleDateString() %></span
+        >
+      </div>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- Confirmation Form -->
+  <div class="bg-white rounded-lg shadow-sm p-6">
+    <h3 class="font-semibold text-gray-900 mb-4">Confirm Removal</h3>
+    <p class="text-sm text-gray-600 mb-4">
+      Type
+      <strong class="font-mono text-gray-900"><%= user.custom_domain %></strong>
+      below to confirm:
+    </p>
+
+    <form method="POST" action="/user/settings/domain/remove" id="remove-form">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+
+      <input
+        type="text"
+        id="domain"
+        name="domain"
+        placeholder="<%= user.custom_domain %>"
+        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+        required
+      />
+
+      <% if (validation?.domain) { %>
+      <div class="text-red-700 text-sm my-1"><%= validation.domain %></div>
+      <% } %>
+
+      <div class="flex gap-3 mt-4">
+        <button
+          type="submit"
+          id="submit-btn"
+          class="flex-1 bg-red-600 hover:bg-red-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium px-6 py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+        >
+          Remove Domain
+        </button>
+        <a
+          href="/user/settings/domain"
+          class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-900 font-medium px-6 py-3 rounded-lg transition-colors text-center"
+        >
+          Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+</div>

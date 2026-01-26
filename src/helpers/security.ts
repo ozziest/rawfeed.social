@@ -1,4 +1,5 @@
 import sanitizeHtml from "sanitize-html";
+import crypto from "crypto";
 
 export const sanitize = (content: string) => {
   return sanitizeHtml(content, {
@@ -8,4 +9,8 @@ export const sanitize = (content: string) => {
   })
     .trim()
     .replace(/\n{3,}/g, "\n\n");
+};
+
+export const generateDomainVerificationToken = () => {
+  return `rawfeed-verify-${crypto.randomBytes(16).toString("hex")}`;
 };

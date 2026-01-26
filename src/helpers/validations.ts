@@ -41,8 +41,8 @@ export const USERNAME_SCHEMA = z
   .toLowerCase()
   .min(3)
   .max(20)
-  .regex(/^[a-z][a-z0-9_-]*[a-z0-9]$/)
-  .regex(/^(?!.*[-_]{2})/)
+  .regex(/^[a-z][a-z0-9-]*[a-z0-9]$/)
+  .regex(/^(?!.*--)/)
   .refine((username) => !RESERVED_USERNAMES.includes(username));
 
 export const REGISTER_SCHEMA = z
@@ -64,4 +64,34 @@ export const LOGIN_SCHEMA = z.object({
 export const POST_SCHEMA = z.object({
   content: z.string().trim().min(1).max(400),
   location: z.enum(["tr", "en"]),
+});
+
+export const CUSTOM_DOMAIN_SCHEMA = z.object({
+  domain: z
+    .string()
+    .trim()
+    .toLowerCase()
+    .min(3)
+    .max(255)
+    // Remove protocol if user accidentally includes it
+    .transform((val) => val.replace(/^https?:\/\//, ""))
+    // Remove trailing slash if exists
+    .transform((val) => val.replace(/\/$/, ""))
+    // Remove www. if exists (we'll handle it separately)
+    .transform((val) => val.replace(/^www\./, ""))
+    // Validate domain format (supports subdomains)
+    .refine((val) => {
+      // Basic domain regex: supports subdomains like blog.example.com
+      const domainRegex = /^([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}$/;
+      return domainRegex.test(val);
+    })
+    // Prevent using rawfeed.social itself
+    .refine((val) => !val.endsWith("rawfeed.social"))
+    // Prevent localhost and common test domains
+    .refine(
+      (val) =>
+        !["localhost", "test.local", "example.com", "example.org"].includes(
+          val,
+        ),
+    ),
 });

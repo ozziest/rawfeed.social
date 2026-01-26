@@ -18,3 +18,7 @@ export type PostInput = {
 export type UserProfileParams = {
   username?: string;
 };
+
+export type CustomDomainInput = {
+  domain: string;
+};
