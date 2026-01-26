@@ -15,9 +15,6 @@ const config = {
     directory: "./migrations",
     tableName: "knex_migrations",
   },
-  seeds: {
-    directory: "./seeds",
-  },
 };
 
 export default config;
