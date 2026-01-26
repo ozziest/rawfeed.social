@@ -22,6 +22,21 @@ const insert = async (userId: string, input: PostInput) => {
   return id;
 };
 
+const getItemsByUser = async (userId: string): Promise<Posts[]> => {
+  return await getKnex()
+    .table<Posts>(TABLE_NAME)
+    .where("user_id", userId)
+    .orderBy("created_at", "desc")
+    .limit(100);
+};
+
+const getItems = async (): Promise<Posts[]> => {
+  return await getKnex()
+    .table<Posts>(TABLE_NAME)
+    .orderBy("created_at", "desc")
+    .limit(100);
+};
+
 const getLast100 = async (): Promise<Posts[]> => {
   return await getKnex()
     .table<Posts>(TABLE_NAME)
@@ -51,6 +66,8 @@ const incViews = async (posts: Posts[]) => {
 
 export default {
   insert,
+  getItemsByUser,
+  getItems,
   getLast100,
   getLast100ByUser,
   getById,

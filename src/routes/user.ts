@@ -22,7 +22,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
     { preHandler: [verifyToken, requireAuth] },
     async (request, reply) => {
       const { view } = views(request, reply);
-      const user = await userService.getById(request.currentUser?.userId!);
+      const user = await userService.getById(request.loggedUser?.userId!);
 
       return view("settings/index", {
         user,
@@ -34,7 +34,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
     "/user/settings/domain",
     { preHandler: [verifyToken, requireAuth] },
     async (request, reply) => {
-      const user = await userService.getById(request.currentUser?.userId!);
+      const user = await userService.getById(request.loggedUser?.userId!);
 
       if (user?.custom_domain) {
         return reply.redirect("/user/settings/domain/verify");
@@ -43,7 +43,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
       const { view } = views(request, reply);
       return view("settings/domain/init", {
         csrfToken: reply.generateCsrf(),
-        user: request.currentUser,
+        user: request.loggedUser,
       });
     },
   );
@@ -62,7 +62,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
 
       const domain = (request.body as CustomDomainInput).domain;
 
-      const existingDomain = await userService.isDomainExists(domain);
+      const existingDomain = await userService.getByCustomDomain(domain);
       if (existingDomain) {
         setValidation({
           domain: "This domain is already in use by another account",
@@ -71,7 +71,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
       }
 
       const verificationToken = generateDomainVerificationToken();
-      await userService.update(request.currentUser?.userId!, {
+      await userService.update(request.loggedUser?.userId!, {
         custom_domain: domain,
         domain_verification_token: verificationToken,
         domain_verification_status: "pending",
@@ -86,7 +86,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
     "/user/settings/domain/verify",
     { preHandler: [verifyToken, requireAuth] },
     async (request, reply) => {
-      const user = await userService.getById(request.currentUser?.userId!);
+      const user = await userService.getById(request.loggedUser?.userId!);
 
       if (!user?.custom_domain) {
         return reply.redirect("/user/settings/domain");
@@ -104,7 +104,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
     "/user/settings/domain/remove",
     { preHandler: [verifyToken, requireAuth] },
     async (request, reply) => {
-      const user = await userService.getById(request.currentUser?.userId!);
+      const user = await userService.getById(request.loggedUser?.userId!);
 
       if (!user?.custom_domain) {
         return reply.redirect("/user/settings/domain");
@@ -122,7 +122,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
     "/user/settings/domain/remove",
     { preHandler: [verifyToken, requireAuth] },
     async (request, reply) => {
-      const user = await userService.getById(request.currentUser?.userId!);
+      const user = await userService.getById(request.loggedUser?.userId!);
       if (!user?.custom_domain) {
         return reply.redirect("/user/settings/domain");
       }
@@ -143,7 +143,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
         return reply.redirect("/user/settings/domain/remove");
       }
 
-      await userService.update(request.currentUser?.userId!, {
+      await userService.update(request.loggedUser?.userId!, {
         custom_domain: null,
         domain_verification_status: null,
         domain_verification_token: null,
@@ -158,7 +158,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
     "/user/settings/domain/verify",
     { preHandler: [verifyToken, requireAuth] },
     async (request, reply) => {
-      const user = await userService.getById(request.currentUser?.userId!);
+      const user = await userService.getById(request.loggedUser?.userId!);
 
       if (!user || !user.custom_domain || !user.domain_verification_token) {
         return reply.redirect("/user/settings/domain");
@@ -212,19 +212,16 @@ export default async function userRoutes(fastify: FastifyInstance) {
         return reply.status(404).view("404");
       }
 
-      const user = await userService.getByUsername(username as string);
-      if (!user) {
+      request.profileUser = await userService.getByUsername(username as string);
+      if (!request.profileUser) {
         return reply.status(404).view("404");
       }
 
-      const posts = await postService.getLast100ByUser(user?.id);
+      const posts = await postService.getLast100ByUser(request.profileUser?.id);
       const { view } = views(request, reply);
       return view("profile", {
         posts,
-        formData: {},
-        validation: {},
         csrfToken: reply.generateCsrf(),
-        user: request.currentUser,
       });
     },
   );

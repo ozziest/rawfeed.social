@@ -17,7 +17,12 @@ export const useViews = (options: UseViewsOptions) => {
         `${prefix}/${name}`,
         {
           title: "rawfeed.social",
-          validation,
+          validation: validation || {},
+          formData: {},
+          mode: request.mode,
+          domainUser: request.domainUser,
+          loggedUser: request.loggedUser,
+          profileUser: request.profileUser,
           sanitize,
           ...params,
         },
@@ -27,7 +32,7 @@ export const useViews = (options: UseViewsOptions) => {
       );
     };
 
-    const getFlash = (name: string) => {
+    const getFlash = (name: string): object | undefined => {
       const content = request.cookies[name];
       let data;
 

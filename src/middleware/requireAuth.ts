@@ -1,4 +1,3 @@
-// src/middleware/requireAuth.ts
 import type { FastifyRequest, FastifyReply } from "fastify";
 
 /**
@@ -11,7 +10,7 @@ export async function requireAuth(
   reply: FastifyReply,
 ) {
   // Check if user is authenticated
-  if (!request.currentUser) {
+  if (!request.loggedUser) {
     // Check if this is an API/HTMX request
     const isApiRequest =
       request.headers.accept?.includes("application/json") ||

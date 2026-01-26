@@ -17,12 +17,12 @@ export async function verifyToken(
 
     const decoded = app.jwt.verify(accessToken) as TokenPayload;
 
-    request.currentUser = decoded as TokenPayload;
+    request.loggedUser = decoded as TokenPayload;
   } catch (error) {
     const refreshToken = request.cookies.refreshToken;
 
     if (!refreshToken) {
-      request.currentUser = undefined;
+      request.loggedUser = undefined;
       return;
     }
 
@@ -50,9 +50,9 @@ export async function verifyToken(
         maxAge: 10 * 60,
       });
 
-      request.currentUser = payload;
+      request.loggedUser = payload;
     } catch (refreshError) {
-      request.currentUser = undefined;
+      request.loggedUser = undefined;
 
       reply.clearCookie("accessToken").clearCookie("refreshToken");
     }

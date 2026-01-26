@@ -7,10 +7,12 @@
     />
     <div class="flex-1 min-w-0">
       <div class="flex items-start justify-between gap-4 mb-2">
-        <h1 class="text-2xl font-bold text-gray-900">Özgür Adem Işıklı</h1>
+        <h1 class="text-2xl font-bold text-gray-900">
+          <%= profileUser?.name || domainUser?.name %>
+        </h1>
         <div class="flex gap-2">
           <a
-            href="/u/ozgur/rss"
+            href="/u/<%= profileUser?.username || domainUser?.username %>/rss"
             class="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-orange-600 bg-orange-50 hover:bg-orange-100 rounded-lg transition-colors"
             title="RSS Feed"
             target="_blank"
@@ -22,18 +24,6 @@
             </svg>
             <span>RSS</span>
           </a>
-
-          <% if (user) { %>
-          <form method="GET" action="/auth/logout">
-            <button
-              type="submit"
-              class="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors"
-              title="Logout"
-            >
-              Logout
-            </button>
-          </form>
-          <% } %>
         </div>
       </div>
       <p class="text-gray-600 leading-relaxed mb-3">

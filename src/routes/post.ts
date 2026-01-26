@@ -16,27 +16,18 @@ export default async function postRoutes(fastify: FastifyInstance) {
     "/posts/create",
     { preHandler: [verifyToken, requireAuth] },
     async (request, reply) => {
+      const { view } = usePostContext(request, reply);
       const csrfToken = reply.generateCsrf();
 
       const validation = validate(POST_SCHEMA, request.body);
       if (validation.isNotValid) {
-        return reply.view("/posts/create", {
-          user: request.currentUser,
-          formData: {},
-          validation: {},
-          csrfToken,
-        });
+        return view("create", { csrfToken });
       }
 
       const input = request.body as PostInput;
-      await postService.insert(request.currentUser?.userId!, input);
+      await postService.insert(request.loggedUser?.userId!, input);
 
-      return reply.view("/posts/create", {
-        user: request.currentUser,
-        formData: {},
-        validation: {},
-        csrfToken,
-      });
+      return view("create", { csrfToken });
     },
   );
 }

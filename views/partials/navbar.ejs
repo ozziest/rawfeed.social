@@ -1,3 +1,4 @@
+<% if (mode === 'root') { %>
 <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
   <div class="max-w-2xl mx-auto px-4 py-3">
     <div class="flex items-center justify-between">
@@ -14,7 +15,7 @@
         <a href="/" class="text-gray-600 hover:text-gray-900 transition-colors">
           Feed
         </a>
-        <% if (!user) { %>
+        <% if (!loggedUser) { %>
         <a
           href="/auth/login"
           class="text-gray-600 hover:text-gray-900 transition-colors"
@@ -22,12 +23,12 @@
           Login
         </a>
         <% } %>
-        <% if (user) { %>
+        <% if (loggedUser) { %>
         <a
-          href="/u/<%= user.username %>"
+          href="/u/<%= loggedUser.username %>"
           class="text-gray-600 hover:text-gray-900 transition-colors"
         >
-          @<%= user.username %>
+          @<%= loggedUser.username %>
         </a>
         <a
           href="/user/settings"
@@ -48,3 +49,4 @@
     </div>
   </div>
 </nav>
+<% } %>

@@ -2,6 +2,7 @@
 import "fastify";
 import "@fastify/jwt";
 import { TokenPayload } from "../helpers/tokens";
+import { Users } from "./database";
 
 declare module "fastify" {
   interface FastifyInstance {
@@ -13,6 +14,9 @@ declare module "fastify" {
   }
 
   interface FastifyRequest {
-    currentUser?: TokenPayload;
+    mode: "root" | "custom";
+    domainUser?: Users;
+    loggedUser?: TokenPayload;
+    profileUser?: Users;
   }
 }

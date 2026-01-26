@@ -43,7 +43,7 @@ const getById = async (uuid: string) => {
     .first<Users | undefined>();
 };
 
-const isDomainExists = async (domain: string) => {
+const getByCustomDomain = async (domain: string) => {
   return await getKnex()
     .table(TABLE_NAME)
     .where("custom_domain", domain)
@@ -65,6 +65,6 @@ export default {
   getByEmail,
   getByUsername,
   getById,
-  isDomainExists,
+  getByCustomDomain,
   update,
 };

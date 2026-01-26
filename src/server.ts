@@ -19,8 +19,11 @@ import helmet from "@fastify/helmet";
 import rateLimit from "@fastify/rate-limit";
 import csrf from "@fastify/csrf-protection";
 import Sentry from "@sentry/node";
+import { detectMode } from "./middleware/detectMode.ts";
 
-const server = Fastify({ logger: false });
+const isDevelopment = process.env.NODE_ENV !== "production";
+
+const server = Fastify({ logger: false, trustProxy: true });
 
 Sentry.setupFastifyErrorHandler(server);
 server.register(csrf, {
@@ -31,23 +34,27 @@ server.register(csrf, {
   },
 });
 server.register(helmet, {
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      scriptSrc: ["'self'"],
-      imgSrc: ["'self'", "data:", "https://api.dicebear.com"],
-      connectSrc: ["'self'"],
-      fontSrc: ["'self'"],
-      objectSrc: ["'none'"],
-      mediaSrc: ["'none'"],
-      frameSrc: ["'none'"],
-      baseUri: ["'self'"],
-      formAction: ["'self'"],
-    },
-  },
+  contentSecurityPolicy: isDevelopment
+    ? false
+    : {
+        directives: {
+          defaultSrc: ["'self'"],
+          styleSrc: ["'self'", "'unsafe-inline'"],
+          scriptSrc: ["'self'"],
+          imgSrc: ["'self'", "data:", "https://api.dicebear.com"],
+          connectSrc: ["'self'"],
+          fontSrc: ["'self'"],
+          objectSrc: ["'none'"],
+          mediaSrc: ["'none'"],
+          frameSrc: ["'none'"],
+          baseUri: ["'self'"],
+          formAction: ["'self'"],
+        },
+      },
   crossOriginEmbedderPolicy: false,
-  crossOriginResourcePolicy: { policy: "same-origin" },
+  crossOriginResourcePolicy: {
+    policy: isDevelopment ? "cross-origin" : "same-origin",
+  },
 });
 server.register(rateLimit, {
   max: 300,
@@ -61,7 +68,6 @@ server.register(pointOfView, {
 server.register(cookie, {
   secret: process.env.APP_SECRET!,
 });
-
 server.register(jwt, {
   secret: process.env.JWT_SECRET!,
 });
@@ -78,6 +84,7 @@ server.register(compress, {
   encodings: ["gzip", "deflate"],
 });
 
+server.addHook("onRequest", detectMode);
 server.register(routes);
 server.register(authRoutes);
 server.register(userRoutes);
