@@ -23,9 +23,9 @@
 ## Phase 3: MVP - General Use
 
 - [x] Header
-- [ ] Feed view
-- [ ] Profile view
-- [ ] Custom domain support
+- [x] Feed view
+- [x] Profile view
+- [x] Custom domain support
 - [ ] Infinite scroll
 
 ## Phase 4: More features
