@@ -34,11 +34,13 @@ export async function verifyToken(
         throw new Error("The user not found");
       }
 
-      const { accessToken: newAccessToken } = generateTokens(app, {
+      const payload = {
         userId: decoded.userId,
         username: user.username,
         name: user.name,
-      });
+      };
+
+      const { accessToken: newAccessToken } = generateTokens(app, payload);
 
       reply.setCookie("accessToken", newAccessToken, {
         httpOnly: true,
@@ -48,7 +50,7 @@ export async function verifyToken(
         maxAge: 10 * 60,
       });
 
-      request.currentUser = decoded as TokenPayload;
+      request.currentUser = payload;
     } catch (refreshError) {
       request.currentUser = undefined;
 
