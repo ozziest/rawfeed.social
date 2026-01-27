@@ -1,6 +1,7 @@
-import { Posts, Users } from "../types/database";
+import { Users } from "../types/database";
+import { PostWithUser } from "../types/relations";
 
-export function generateRSS(user: Users, posts: Posts[]): string {
+export function generateRSS(user: Users, posts: PostWithUser[]): string {
   const baseUrl = process.env.BASE_URL || "https://rawfeed.social";
   const now = new Date().toUTCString();
   const lastPost = posts[0]?.created_at
@@ -9,7 +10,6 @@ export function generateRSS(user: Users, posts: Posts[]): string {
 
   const items = posts
     .map((post) => {
-      // Newline ve whitespace'leri temizle
       const cleanContent = post.content.replace(/\s+/g, " ").trim();
       const title =
         cleanContent.length > 100
@@ -22,6 +22,7 @@ export function generateRSS(user: Users, posts: Posts[]): string {
       <link>${baseUrl}/u/${user.username}/post/${post.id}</link>
       <guid>${baseUrl}/u/${user.username}/post/${post.id}</guid>
       <pubDate>${new Date(post.created_at || new Date()).toUTCString()}</pubDate>
+      <author>${post.user.name}</author>
       <description>${cleanContent}</description>
       <category>${post.location}</category>
     </item>`;
