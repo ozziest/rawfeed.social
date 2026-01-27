@@ -1,8 +1,11 @@
 import { v4 as uuidv4 } from "uuid";
 import { getKnex } from "../db/connection";
 import bcrypt from "bcrypt";
+import crypto from "crypto";
 import { RegisterInput } from "../helpers/dtos";
 import { Users } from "../types/database";
+import { RSSSourceWithUser } from "../types/shared";
+import { Insertable } from "kysely";
 
 const TABLE_NAME = "users";
 
@@ -64,6 +67,32 @@ const update = async (uuid: string, data: Partial<Users>) => {
     });
 };
 
+const createRSSBot = async (resource: RSSSourceWithUser) => {
+  const user = await getByUsername(resource.username);
+  if (user) {
+    return user;
+  }
+
+  const id = uuidv4();
+  const email = `${resource.username}@rawfeed.social`;
+  const randomPassword = crypto.randomBytes(32).toString("hex");
+  const password = await bcrypt.hash(randomPassword, 10);
+
+  await getKnex().table<Insertable<Users>>(TABLE_NAME).insert({
+    id,
+    name: resource.name,
+    username: resource.username,
+    bio: resource.bio,
+    email,
+    password,
+    bot_type: "rss",
+    created_at: new Date(),
+    updated_at: new Date(),
+  });
+
+  return await getById(id);
+};
+
 export default {
   insert,
   getByEmail,
@@ -72,4 +101,5 @@ export default {
   getByIds,
   getByCustomDomain,
   update,
+  createRSSBot,
 };

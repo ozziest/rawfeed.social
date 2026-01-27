@@ -9,19 +9,27 @@ import { Selectable } from "kysely";
 
 const TABLE_NAME = "posts";
 
-const insert = async (userId: string, input: PostInput) => {
+const insert = async (
+  userId: string,
+  input: PostInput,
+  externalId?: string,
+  created_at?: Date,
+) => {
   const id = uuidv4();
-  const cleanInput = sanitize(input.content);
+  const cleanInput = sanitize(input.content || "");
 
-  await getKnex().table(TABLE_NAME).insert({
-    id,
-    user_id: userId,
-    content: cleanInput,
-    lexical: cleanInput,
-    location: input.location,
-    created_at: new Date(),
-    updated_at: new Date(),
-  });
+  await getKnex()
+    .table(TABLE_NAME)
+    .insert({
+      id,
+      user_id: userId,
+      content: cleanInput,
+      lexical: cleanInput,
+      location: input.location,
+      external_id: externalId,
+      created_at: created_at || new Date(),
+      updated_at: new Date(),
+    });
   return id;
 };
 
@@ -69,6 +77,13 @@ const getById = async (id: string): Promise<PostWithUser | undefined> => {
   return postWithUser;
 };
 
+const getItemByExternalId = async (externalId: string): Promise<Posts> => {
+  return await getKnex()
+    .table<Posts>(TABLE_NAME)
+    .where("external_id", externalId)
+    .first();
+};
+
 const incViews = async (posts: PostWithUser[]) => {
   const ids = posts.map((item) => item.id);
   return await getKnex()
@@ -107,4 +122,5 @@ export default {
   getById,
   incViews,
   mergeWithUsers,
+  getItemByExternalId,
 };

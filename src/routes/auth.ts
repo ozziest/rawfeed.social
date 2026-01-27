@@ -1,15 +1,11 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import userService from "../services/user.service";
-import {
-  LOGIN_SCHEMA,
-  REGISTER_SCHEMA,
-  validate,
-} from "../helpers/validations";
+import { LOGIN_SCHEMA, validate } from "../helpers/validations";
 import { useViews } from "../helpers/useViews";
 import { LoginInput, RegisterInput } from "../helpers/dtos";
 import bcrypt from "bcrypt";
 import { generateTokens } from "../helpers/tokens";
-import { getGravatarUrl } from "../helpers/common";
+import { getAvatar } from "../helpers/common";
 
 const useAuthContext = (request: FastifyRequest, reply: FastifyReply) => {
   const views = useViews({ prefix: "/auth", layout: "layouts/auth.ejs" });
@@ -31,7 +27,15 @@ export default async function authRoutes(fastify: FastifyInstance) {
   //     return reply.redirect("/auth/register");
   //   }
 
-  //   await userService.insert(request.body as RegisterInput);
+  //   const input = request.body as RegisterInput;
+  //   if (input.username.trim().toLowerCase().startsWith("rss_")) {
+  //     setValidation({
+  //       username: "This username prefix is reserved for automated accounts",
+  //     });
+  //     return reply.redirect("/auth/register");
+  //   }
+
+  //   await userService.insert(input);
 
   //   return reply.redirect("/");
   // });
@@ -86,7 +90,7 @@ export default async function authRoutes(fastify: FastifyInstance) {
         userId: user.id,
         username: user.username,
         name: user.name,
-        gravatar: getGravatarUrl(user.email),
+        gravatar: getAvatar(user),
       });
 
       setAuthTokens(accessToken, refreshToken);

@@ -24,6 +24,7 @@ export interface KnexMigrationsLock {
 export interface Posts {
   content: string;
   created_at: Date | null;
+  external_id: string | null;
   id: string;
   lexical: string;
   location: Generated<string>;
@@ -39,6 +40,7 @@ export interface Posts {
 
 export interface Users {
   bio: string | null;
+  bot_type: "rss" | "system" | null;
   created_at: Date | null;
   custom_domain: string | null;
   deleted_at: Date | null;

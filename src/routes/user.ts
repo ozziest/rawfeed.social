@@ -13,6 +13,7 @@ import { useViews } from "../helpers/useViews";
 import { requireAuth } from "../middleware/requireAuth";
 import { generateDomainVerificationToken } from "../helpers/security";
 import dns from "dns/promises";
+import { RSS_BOT_USERNAMES } from "../rssResources";
 
 const views = useViews({ prefix: "user", layout: "layouts/default.ejs" });
 
@@ -208,7 +209,10 @@ export default async function userRoutes(fastify: FastifyInstance) {
       const { username } = request.params as UserProfileParams;
 
       const validation = validate(USERNAME_SCHEMA, username);
-      if (validation.isNotValid) {
+      if (
+        validation.isNotValid &&
+        !RSS_BOT_USERNAMES.includes(username || "")
+      ) {
         return reply.status(404).view("404");
       }
 
@@ -230,9 +234,23 @@ export default async function userRoutes(fastify: FastifyInstance) {
     "/u/:username/rss",
     { preHandler: [verifyToken] },
     async (request, reply) => {
-      const user = await userService.getByEmail("i.ozguradem@gmail.com");
+      const { username } = request.params as UserProfileParams;
+
+      if (!username) {
+        return reply.status(404).view("404");
+      }
+
+      const validation = validate(USERNAME_SCHEMA, username);
+      if (
+        validation.isNotValid &&
+        !RSS_BOT_USERNAMES.includes(username || "")
+      ) {
+        return reply.status(404).view("404");
+      }
+
+      const user = await userService.getByUsername(username);
       if (!user) {
-        throw new Error("User not found");
+        return reply.status(404).view("404");
       }
 
       const posts = await postService.getLast100ByUser(user?.id);

@@ -21,6 +21,7 @@ import csrf from "@fastify/csrf-protection";
 import Sentry from "@sentry/node";
 import { detectMode } from "./middleware/detectMode.ts";
 import fs from "fs/promises";
+import { initializeRSSScheduler } from "./scheduler/rss-scheduler";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
@@ -147,6 +148,9 @@ const start = async () => {
   try {
     const port = Number(process.env.APP_PORT) || 3000;
     await server.listen({ port, host: "0.0.0.0" });
+
+    initializeRSSScheduler(isDevelopment);
+
     server.log.info(`Server listening on port ${port}`);
   } catch (err) {
     server.log.error(err);

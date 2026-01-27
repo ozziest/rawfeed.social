@@ -1,7 +1,7 @@
 import type { FastifyRequest, FastifyReply } from "fastify";
 import { generateTokens, TokenPayload } from "../helpers/tokens";
 import userService from "../services/user.service";
-import { getGravatarUrl } from "../helpers/common";
+import { getAvatar } from "../helpers/common";
 
 export async function verifyToken(
   request: FastifyRequest,
@@ -39,7 +39,7 @@ export async function verifyToken(
         userId: decoded.userId,
         username: user.username,
         name: user.name,
-        gravatar: getGravatarUrl(user.email),
+        gravatar: getAvatar(user),
       };
 
       const { accessToken: newAccessToken } = generateTokens(app, payload);

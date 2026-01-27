@@ -1,7 +1,7 @@
 <div class="bg-white rounded-lg p-6 mb-6 shadow-sm">
   <div class="flex items-start gap-4">
     <img
-      src="<%= getGravatarUrl(profileUser?.email || domainUser?.email) %>"
+      src="<%= getAvatar(profileUser || domainUser) %>"
       class="w-20 h-20 rounded-full border-2 border-blue-100"
     />
     <div class="flex-1 min-w-0">
@@ -26,8 +26,7 @@
         </div>
       </div>
       <p class="text-gray-600 leading-relaxed mb-3">
-        Senior software developer. Building tools for developers and exploring
-        social impact projects.
+        <%= profileUser?.bio || domainUser?.bio %>
       </p>
       <!-- <div class="flex gap-4 text-sm text-gray-500">
         <span><strong class="text-gray-900">247</strong> gönderi</span>
@@ -38,4 +37,6 @@
   </div>
 </div>
 
+<% if (loggedUser?.userId === profileUser?.id) { %>
 <%- include('share') %>
+<% } %>
