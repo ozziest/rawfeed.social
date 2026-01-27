@@ -22,6 +22,7 @@ import Sentry from "@sentry/node";
 import { detectMode } from "./middleware/detectMode.ts";
 import fs from "fs/promises";
 import { initializeRSSScheduler } from "./scheduler/rss-scheduler";
+import redirectRoutes from "./routes/redirect";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
@@ -96,6 +97,7 @@ server.register(compress, {
 
 server.addHook("onRequest", detectMode);
 server.register(routes);
+server.register(redirectRoutes);
 server.register(authRoutes);
 server.register(userRoutes);
 server.register(postRoutes);

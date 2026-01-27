@@ -1,6 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { sanitize } from "./security";
 import { getAvatar } from "./common";
+import { formatPostContent } from "./postHelpers";
 
 type UseViewsOptions = {
   prefix: string;
@@ -28,6 +29,7 @@ export const useViews = (options: UseViewsOptions) => {
           profileUser: request.profileUser,
           sanitize,
           getAvatar,
+          formatPostContent,
           ...params,
         },
         {

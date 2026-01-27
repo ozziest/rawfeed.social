@@ -9,6 +9,13 @@ export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
   ? ColumnType<S, I | undefined, U>
   : ColumnType<T, T | undefined, T>;
 
+export interface Hashtags {
+  created_at: Date | null;
+  hashtag: string;
+  id: string;
+  updated_at: Date | null;
+}
+
 export interface KnexMigrations {
   batch: number | null;
   id: Generated<number>;
@@ -19,6 +26,41 @@ export interface KnexMigrations {
 export interface KnexMigrationsLock {
   index: Generated<number>;
   is_locked: number | null;
+}
+
+export interface Links {
+  code: string;
+  count: Generated<number>;
+  created_at: Date | null;
+  id: string;
+  link: string;
+  updated_at: Date | null;
+}
+
+export interface PostHashtags {
+  created_at: Date | null;
+  hashtag: string;
+  hashtag_id: string;
+  id: string;
+  post_id: string;
+  updated_at: Date | null;
+}
+
+export interface PostLinks {
+  created_at: Date | null;
+  id: string;
+  link_id: string;
+  post_id: string;
+  updated_at: Date | null;
+}
+
+export interface PostMentions {
+  created_at: Date | null;
+  id: string;
+  post_id: string;
+  updated_at: Date | null;
+  user_id: string | null;
+  username: string;
 }
 
 export interface Posts {
@@ -56,8 +98,13 @@ export interface Users {
 }
 
 export interface DB {
+  hashtags: Hashtags;
   knex_migrations: KnexMigrations;
   knex_migrations_lock: KnexMigrationsLock;
+  links: Links;
+  post_hashtags: PostHashtags;
+  post_links: PostLinks;
+  post_mentions: PostMentions;
   posts: Posts;
   users: Users;
 }

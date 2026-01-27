@@ -9,12 +9,21 @@
       class="w-10 h-10 rounded-full"
     />
     <div>
-      <a
-        href="/u/<%= post.user.username %>"
-        class="font-semibold text-gray-900 hover:underline"
-      >
-        <%= post.user.name %>
-      </a>
+      <div class="flex items-center gap-2">
+        <a
+          href="/u/<%= post.user.username %>"
+          class="font-semibold text-gray-900 hover:underline"
+        >
+          <%= post.user.name %>
+        </a>
+        <% if (post.user.bot_type) { %>
+        <span
+          class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800"
+        >
+          🤖 Bot
+        </span>
+        <% } %>
+      </div>
       <p class="text-sm text-gray-500">@<%= post.user.username %></p>
     </div>
   </div>
@@ -23,7 +32,7 @@
   <p
     class="text-gray-900 leading-relaxed mb-4 whitespace-pre-line wrap-break-words overflow-wrap-anywhere line-clamp-12"
     lang="<%= post.location %>"
-  ><%= sanitize(post.content) %></p>
+  ><%- formatPostContent(post) %></p>
 
   <div class="flex items-center justify-between text-sm">
     <div class="flex gap-6"><%- include('postStats', { post: post }) %></div>

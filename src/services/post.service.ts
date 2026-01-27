@@ -2,10 +2,12 @@ import { v4 as uuidv4 } from "uuid";
 import { getKnex } from "../db/connection";
 import { PostInput } from "../helpers/dtos";
 import { Posts } from "../types/database";
-import { sanitize } from "../helpers/security";
-import { PostWithUser } from "../types/relations";
+import { PostWithContent } from "../types/relations";
 import userService from "./user.service";
 import { Selectable } from "kysely";
+import contentService from "./content.service";
+import postDetailService from "./postDetailService";
+import linkService from "./link.service";
 
 const TABLE_NAME = "posts";
 
@@ -15,66 +17,69 @@ const insert = async (
   externalId?: string,
   created_at?: Date,
 ) => {
-  const id = uuidv4();
-  const cleanInput = sanitize(input.content || "");
+  const postId = uuidv4();
+  const postContent = await contentService.toPostContent(input.content);
 
   await getKnex()
     .table(TABLE_NAME)
     .insert({
-      id,
+      id: postId,
       user_id: userId,
-      content: cleanInput,
-      lexical: cleanInput,
+      content: postContent.content,
+      lexical: postContent.content,
       location: input.location,
       external_id: externalId,
       created_at: created_at || new Date(),
       updated_at: new Date(),
     });
-  return id;
+
+  await postDetailService.insert(postId, postContent);
+
+  return postId;
 };
 
-const getItemsByUser = async (userId: string): Promise<PostWithUser[]> => {
+const getItemsByUser = async (userId: string): Promise<PostWithContent[]> => {
   const posts = await getKnex()
     .table<Selectable<Posts>>(TABLE_NAME)
     .where("user_id", userId)
     .orderBy("created_at", "desc")
     .limit(100);
-  return await mergeWithUsers(posts);
+  return await mergeWithContent(posts);
 };
 
-const getItems = async (): Promise<PostWithUser[]> => {
+const getItems = async (): Promise<PostWithContent[]> => {
   const posts = await getKnex()
     .table<Selectable<Posts>>(TABLE_NAME)
     .orderBy("created_at", "desc")
     .limit(100);
-  return await mergeWithUsers(posts);
+  return await mergeWithContent(posts);
 };
 
-const getLast100 = async (): Promise<PostWithUser[]> => {
+const getLast100 = async (): Promise<PostWithContent[]> => {
   const posts = await getKnex()
     .table<Selectable<Posts>>(TABLE_NAME)
     .orderBy("created_at", "desc")
     .limit(100);
-  return await mergeWithUsers(posts);
+  return await mergeWithContent(posts);
 };
 
-const getLast100ByUser = async (userId: string): Promise<PostWithUser[]> => {
+const getLast100ByUser = async (userId: string): Promise<PostWithContent[]> => {
   const posts = await getKnex()
     .table<Selectable<Posts>>(TABLE_NAME)
     .where("user_id", userId)
     .orderBy("created_at", "desc")
     .limit(100);
-  return await mergeWithUsers(posts);
+  return await mergeWithContent(posts);
 };
 
-const getById = async (id: string): Promise<PostWithUser | undefined> => {
+const getById = async (id: string): Promise<PostWithContent | undefined> => {
   const post = await getKnex()
     .table<Selectable<Posts>>(TABLE_NAME)
     .where("id", id)
     .first();
 
-  const [postWithUser] = await mergeWithUsers([post]);
-  return postWithUser;
+  const [PostWithContent] = await mergeWithContent([post]);
+  return PostWithContent;
 };
 
 const getItemByExternalId = async (externalId: string): Promise<Posts> => {
@@ -84,7 +89,7 @@ const getItemByExternalId = async (externalId: string): Promise<Posts> => {
     .first();
 };
 
-const incViews = async (posts: PostWithUser[]) => {
+const incViews = async (posts: PostWithContent[]) => {
   const ids = posts.map((item) => item.id);
   return await getKnex()
     .table(TABLE_NAME)
@@ -92,24 +97,37 @@ const incViews = async (posts: PostWithUser[]) => {
     .increment("stats_views", 1);
 };
 
-const mergeWithUsers = async (
+const mergeWithContent = async (
   posts: Selectable<Posts>[],
-): Promise<PostWithUser[]> => {
+): Promise<PostWithContent[]> => {
   const userIds = posts.map((item) => item.user_id);
-  if (userIds.length === 0) {
-    return posts as PostWithUser[];
-  }
+  const postIds = posts.map((item) => item.id);
 
-  const users = await userService.getByIds(userIds);
+  const [users, details] = await Promise.all([
+    userService.getByIds(userIds),
+    postDetailService.getDetailsByPost(postIds),
+  ]);
 
+  // Setting user map
   const userMap = new Map(users.map((user) => [user.id, user]));
 
+  // Setting link map
+  const linkIds = details.links.map((link) => link.link_id);
+  const links = await linkService.getAllByIds(linkIds);
+  const linkMap = new Map(links.map((link) => [link.id, link]));
+  details.links.forEach((postLink) => {
+    postLink.linkDetail = linkMap.get(postLink.link_id);
+  });
+
   return posts.map((post) => {
-    const postWithUser: PostWithUser = {
+    const postWithContent: PostWithContent = {
       ...post,
       user: userMap.get(post.user_id)!,
+      links: details.links.filter((link) => link.post_id === post.id),
+      mentions: details.mentions.filter((link) => link.post_id === post.id),
+      hashtags: details.hashtags.filter((link) => link.post_id === post.id),
     };
-    return postWithUser;
+    return postWithContent;
   });
 };
 
@@ -121,6 +139,5 @@ export default {
   getLast100ByUser,
   getById,
   incViews,
-  mergeWithUsers,
   getItemByExternalId,
 };

@@ -30,3 +30,26 @@ export type DefaultRSSFeedItem = {
   pubDate?: string;
   isoDate?: string;
 };
+
+export type LinkMap = {
+  link: string;
+  uniqueId: string;
+  linkId?: string;
+};
+
+export type MentionMap = {
+  username: string;
+  id?: string;
+};
+
+export type HashtagMap = {
+  cleaned: string;
+  id?: string;
+};
+
+export type ContentMap = {
+  content: string;
+  links: LinkMap[];
+  mentions: MentionMap[];
+  hashtags: HashtagMap[];
+};

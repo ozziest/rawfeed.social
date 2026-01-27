@@ -39,6 +39,12 @@ const getByUsername = async (username: string) => {
     .first<Users | undefined>();
 };
 
+const getAllByUsernames = async (usernames: string[]): Promise<Users[]> => {
+  return await getKnex()
+    .table<Users>(TABLE_NAME)
+    .whereIn("username", usernames);
+};
+
 const getById = async (uuid: string) => {
   return await getKnex()
     .table(TABLE_NAME)
@@ -46,7 +52,11 @@ const getById = async (uuid: string) => {
     .first<Users | undefined>();
 };
 
-const getByIds = async (uuids: string[]) => {
+const getByIds = async (uuids: string[]): Promise<Users[]> => {
+  if (uuids.length === 0) {
+    return [];
+  }
+
   return await getKnex().table<Users>(TABLE_NAME).whereIn("id", uuids);
 };
 
@@ -97,6 +107,7 @@ export default {
   insert,
   getByEmail,
   getByUsername,
+  getAllByUsernames,
   getById,
   getByIds,
   getByCustomDomain,
