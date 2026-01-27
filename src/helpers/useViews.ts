@@ -13,12 +13,14 @@ export const useViews = (options: UseViewsOptions) => {
   return (request: FastifyRequest, reply: FastifyReply) => {
     const view = (name: string, params: object = {}) => {
       const validation = getFlash("validation");
+      const state = getFlash("state");
 
       return reply.view(
         `${prefix}/${name}`,
         {
           title: "rawfeed.social",
           validation: validation || {},
+          state: state || {},
           formData: {},
           mode: request.mode,
           domainUser: request.domainUser,
@@ -54,8 +56,12 @@ export const useViews = (options: UseViewsOptions) => {
       });
     };
 
-    const setValidation = (data: object) => {
-      setFlash("validation", data);
+    const setValidation = (errors: object) => {
+      setFlash("validation", errors);
+    };
+
+    const setState = (state: object) => {
+      setFlash("state", state);
     };
 
     const setAuthTokens = (accessToken: string, refreshToken: string) => {
@@ -81,6 +87,7 @@ export const useViews = (options: UseViewsOptions) => {
       getFlash,
       setFlash,
       setValidation,
+      setState,
       setAuthTokens,
     };
   };

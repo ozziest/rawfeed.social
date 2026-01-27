@@ -53,14 +53,19 @@ export default async function authRoutes(fastify: FastifyInstance) {
       config: {
         rateLimit: {
           max: 5,
-          timeWindow: "15 minutes",
+          timeWindow: "30 minutes",
         },
       },
     },
     async (request, reply) => {
-      const { setValidation, setAuthTokens } = useAuthContext(request, reply);
+      const { setValidation, setState, setAuthTokens } = useAuthContext(
+        request,
+        reply,
+      );
 
       const input = request.body as LoginInput;
+      setState(input);
+
       const validation = validate(LOGIN_SCHEMA, input);
       if (validation.isNotValid) {
         setValidation(validation.errors);
