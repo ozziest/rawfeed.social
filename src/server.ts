@@ -20,6 +20,7 @@ import rateLimit from "@fastify/rate-limit";
 import csrf from "@fastify/csrf-protection";
 import Sentry from "@sentry/node";
 import { detectMode } from "./middleware/detectMode.ts";
+import fs from "fs/promises";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
@@ -76,6 +77,14 @@ server.register(fastifyStatic, {
   root: path.join(process.cwd(), "public"),
   prefix: "/public/",
   decorateReply: false,
+});
+
+server.get("/robots.txt", async (request, reply) => {
+  const robotsPath = path.join(__dirname, "../public/robots.txt");
+  const content = await fs.readFile(robotsPath, "utf-8");
+
+  reply.type("text/plain");
+  return content;
 });
 
 server.register(compress, {
