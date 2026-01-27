@@ -21,8 +21,10 @@
             id="email"
             name="email"
             type="email"
+            autocomplete="email"
             class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
             placeholder="you@example.com"
+            required
             value="<%= state?.email %>"
           />
         </div>
@@ -41,6 +43,8 @@
             id="password"
             name="password"
             type="password"
+            autocomplete="current-password"
+            required
             class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
             placeholder="••••••••"
           />
