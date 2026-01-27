@@ -4,6 +4,7 @@ export interface TokenPayload {
   userId: string;
   username: string;
   name: string;
+  gravatar: string;
 }
 
 export function generateTokens(app: FastifyInstance, payload: TokenPayload) {

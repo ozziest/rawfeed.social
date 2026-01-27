@@ -1,8 +1,7 @@
 <div class="bg-white rounded-lg p-6 mb-6 shadow-sm">
   <div class="flex items-start gap-4">
     <img
-      src="https://api.dicebear.com/7.x/avataaars/svg?seed=ozzy"
-      alt="Profil"
+      src="<%= getGravatarUrl(profileUser?.email || domainUser?.email) %>"
       class="w-20 h-20 rounded-full border-2 border-blue-100"
     />
     <div class="flex-1 min-w-0">

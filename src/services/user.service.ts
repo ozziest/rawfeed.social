@@ -43,6 +43,10 @@ const getById = async (uuid: string) => {
     .first<Users | undefined>();
 };
 
+const getByIds = async (uuids: string[]) => {
+  return await getKnex().table<Users>(TABLE_NAME).whereIn("id", uuids);
+};
+
 const getByCustomDomain = async (domain: string) => {
   return await getKnex()
     .table(TABLE_NAME)
@@ -65,6 +69,7 @@ export default {
   getByEmail,
   getByUsername,
   getById,
+  getByIds,
   getByCustomDomain,
   update,
 };

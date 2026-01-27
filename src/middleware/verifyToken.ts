@@ -1,6 +1,7 @@
 import type { FastifyRequest, FastifyReply } from "fastify";
 import { generateTokens, TokenPayload } from "../helpers/tokens";
 import userService from "../services/user.service";
+import { getGravatarUrl } from "../helpers/common";
 
 export async function verifyToken(
   request: FastifyRequest,
@@ -34,10 +35,11 @@ export async function verifyToken(
         throw new Error("The user not found");
       }
 
-      const payload = {
+      const payload: TokenPayload = {
         userId: decoded.userId,
         username: user.username,
         name: user.name,
+        gravatar: getGravatarUrl(user.email),
       };
 
       const { accessToken: newAccessToken } = generateTokens(app, payload);

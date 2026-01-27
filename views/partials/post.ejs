@@ -1,11 +1,23 @@
 <article
   class="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow"
 >
-  <time class="text-sm text-gray-500 mb-3 block">
-    <%= new Date(post.created_at).toLocaleDateString(undefined, { day:
-    'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute:
-    '2-digit' }) %>
-  </time>
+  <!-- User Info -->
+  <div class="flex items-center gap-3 mb-4">
+    <img
+      src="<%= getGravatarUrl(post.user.email) %>"
+      alt="<%= post.user.name %>"
+      class="w-10 h-10 rounded-full"
+    />
+    <div>
+      <a
+        href="/u/<%= post.user.username %>"
+        class="font-semibold text-gray-900 hover:underline"
+      >
+        <%= post.user.name %>
+      </a>
+      <p class="text-sm text-gray-500">@<%= post.user.username %></p>
+    </div>
+  </div>
 
   <!-- prettier-ignore -->
   <p
@@ -13,7 +25,11 @@
     lang="<%= post.location %>"
   ><%= sanitize(post.content) %></p>
 
-  <div class="flex gap-6 text-sm">
-    <%- include('postStats', { post: post }) %>
+  <div class="flex items-center justify-between text-sm">
+    <div class="flex gap-6"><%- include('postStats', { post: post }) %></div>
+    <time class="text-gray-400 text-xs">
+      <%= new Date(post.created_at).toLocaleDateString(undefined, { month:
+      'short', day: 'numeric' }) %>
+    </time>
   </div>
 </article>

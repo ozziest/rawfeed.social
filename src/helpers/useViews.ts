@@ -1,5 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { sanitize } from "./security";
+import { getGravatarUrl } from "./common";
 
 type UseViewsOptions = {
   prefix: string;
@@ -24,6 +25,7 @@ export const useViews = (options: UseViewsOptions) => {
           loggedUser: request.loggedUser,
           profileUser: request.profileUser,
           sanitize,
+          getGravatarUrl,
           ...params,
         },
         {

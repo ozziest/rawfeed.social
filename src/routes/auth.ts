@@ -9,6 +9,7 @@ import { useViews } from "../helpers/useViews";
 import { LoginInput, RegisterInput } from "../helpers/dtos";
 import bcrypt from "bcrypt";
 import { generateTokens } from "../helpers/tokens";
+import { getGravatarUrl } from "../helpers/common";
 
 const useAuthContext = (request: FastifyRequest, reply: FastifyReply) => {
   const views = useViews({ prefix: "/auth", layout: "layouts/auth.ejs" });
@@ -80,6 +81,7 @@ export default async function authRoutes(fastify: FastifyInstance) {
         userId: user.id,
         username: user.username,
         name: user.name,
+        gravatar: getGravatarUrl(user.email),
       });
 
       setAuthTokens(accessToken, refreshToken);
