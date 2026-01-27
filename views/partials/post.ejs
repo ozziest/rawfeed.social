@@ -36,9 +36,11 @@
 
   <div class="flex items-center justify-between text-sm">
     <div class="flex gap-6"><%- include('postStats', { post: post }) %></div>
-    <time class="text-gray-400 text-xs">
-      <%= new Date(post.created_at).toLocaleDateString(undefined, { month:
-      'short', day: 'numeric' }) %>
+    <time
+      class="text-gray-400 text-xs"
+      datetime="<%= toISO(post.created_at) %>"
+    >
+      <%= toISO(post.created_at) %>
     </time>
   </div>
 </article>

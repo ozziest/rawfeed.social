@@ -52,3 +52,7 @@ export const logError = (
     }
   });
 };
+
+export const toISO = (date: string) => {
+  return new Date(date).toISOString();
+};
