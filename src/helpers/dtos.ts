@@ -26,3 +26,8 @@ export type CustomDomainInput = {
 export type HashtagViewParams = {
   hashtag?: string;
 };
+
+export type PostQueryParams = {
+  cursor?: string;
+  userId?: string;
+};

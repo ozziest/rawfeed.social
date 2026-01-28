@@ -1,5 +1,15 @@
 <div class="max-w-2xl mx-auto px-4 py-8">
   <%- include('partials/profile') %>
 
-  <div class="space-y-4"><%- include('partials/posts') %></div>
+  <div class="space-y-4">
+    <%- include('partials/posts') %>
+    <div
+      hx-get="/posts/next/<%= nextCursor %>/<%= nextCursorUserId %>"
+      hx-trigger="intersect once"
+      hx-swap="outerHTML"
+      class="h-20 flex items-center justify-center"
+    >
+      <div class="animate-pulse text-gray-500">Loading more...</div>
+    </div>
+  </div>
 </div>

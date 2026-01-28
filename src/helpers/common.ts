@@ -2,6 +2,8 @@ import crypto from "crypto";
 import Sentry from "@sentry/node";
 import { Users } from "../types/database";
 import { RSS_RESOURCES } from "../rssResources";
+import { POST_SIZE } from "../consts";
+import { PostWithContent } from "../types/relations";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
@@ -116,3 +118,20 @@ export function loggerAll<T extends Record<string, any>>(
     return acc;
   }, {} as T);
 }
+
+export const nextCursor = (posts: PostWithContent[]) => {
+  const hasMore = posts.length === POST_SIZE;
+
+  if (!hasMore || posts.length === 0) {
+    return null;
+  }
+
+  const lastPost = posts[posts.length - 1];
+
+  const timestamp =
+    lastPost.created_at instanceof Date
+      ? lastPost.created_at.toISOString()
+      : new Date(lastPost.created_at!).toISOString();
+
+  return `${timestamp}_${lastPost.id}`;
+};

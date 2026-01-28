@@ -14,6 +14,7 @@ import { requireAuth } from "../middleware/requireAuth";
 import { generateDomainVerificationToken } from "../helpers/security";
 import dns from "dns/promises";
 import { RSS_BOT_USERNAMES } from "../rssResources";
+import { nextCursor } from "../helpers/common";
 
 const views = useViews({ prefix: "user", layout: "layouts/default.ejs" });
 
@@ -221,11 +222,17 @@ export default async function userRoutes(fastify: FastifyInstance) {
         return reply.status(404).view("404");
       }
 
-      const posts = await postService.getLast100ByUser(request.profileUser?.id);
+      const posts = await postService.getItems({
+        userId: request.profileUser?.id,
+      });
+      postService.incViews(posts);
+
       const { view } = views(request, reply);
       return view("profile", {
         posts,
         csrfToken: reply.generateCsrf(),
+        nextCursorUserId: request.profileUser?.id,
+        nextCursor: nextCursor(posts),
       });
     },
   );

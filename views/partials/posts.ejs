@@ -1,8 +1,4 @@
 <% if (posts && posts.length > 0) { %> <% posts.forEach(post => { %>
 <%- include('post', { post: post }) %>
 <% }) %>
-<% } else { %>
-<div class="bg-white rounded-lg p-12 shadow-sm text-center">
-  <p class="text-gray-500">No posts yet</p>
-</div>
 <% } %>

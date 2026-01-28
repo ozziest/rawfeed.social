@@ -19,9 +19,14 @@ const insert = async (code: string, link: string) => {
 };
 
 const getAllByIds = async (ids: string[]): Promise<Links[]> => {
-  return cache("link.service.getAllByIds", 60 * 10, async () => {
-    return await getKnex().table<Links>(TABLE_NAME).whereIn("id", ids);
-  });
+  return cache(
+    "link.service.getAllByIds",
+    60 * 10,
+    async () => {
+      return await getKnex().table<Links>(TABLE_NAME).whereIn("id", ids);
+    },
+    { ids },
+  );
 };
 
 const getByCode = async (code: string): Promise<Links> => {

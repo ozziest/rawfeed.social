@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { getKnex } from "../db/connection";
-import { PostInput } from "../helpers/dtos";
+import { PostInput, PostQueryParams } from "../helpers/dtos";
 import { Posts } from "../types/database";
 import { PostWithContent } from "../types/relations";
 import userService from "./user.service";
@@ -8,7 +8,8 @@ import { Selectable } from "kysely";
 import contentService from "./content.service";
 import postDetailService from "./postDetailService";
 import linkService from "./link.service";
-import { logger, loggerAll } from "../helpers/common";
+import { loggerAll } from "../helpers/common";
+import { POST_SIZE } from "../consts";
 
 const TABLE_NAME = "posts";
 
@@ -48,11 +49,29 @@ const getItemsByUser = async (userId: string): Promise<PostWithContent[]> => {
   return await mergeWithContent(posts);
 };
 
-const getItems = async (): Promise<PostWithContent[]> => {
-  const posts = await getKnex()
+const getItems = async (
+  params?: PostQueryParams,
+): Promise<PostWithContent[]> => {
+  let query = getKnex()
     .table<Selectable<Posts>>(TABLE_NAME)
     .orderBy("created_at", "desc")
-    .limit(100);
+    .orderBy("id", "desc")
+    .limit(POST_SIZE);
+
+  if (params?.userId) {
+    query.where("user_id", params.userId);
+  }
+
+  if (params?.cursor) {
+    const [timestamp, lastId] = params.cursor.split("_");
+    query = query.where(function () {
+      this.where("created_at", "<", timestamp).orWhere(function () {
+        this.where("created_at", "=", timestamp).andWhere("id", "<", lastId);
+      });
+    });
+  }
+
+  const posts = await query;
   return await mergeWithContent(posts);
 };
 
@@ -67,13 +86,6 @@ const getItemsByHashtag = async (
     .limit(100)
     .select("posts.*");
 
-  return await mergeWithContent(posts);
-};
-const getLast100 = async (): Promise<PostWithContent[]> => {
-  const posts = await getKnex()
-    .table<Selectable<Posts>>(TABLE_NAME)
-    .orderBy("created_at", "desc")
-    .limit(100);
   return await mergeWithContent(posts);
 };
 
@@ -154,7 +166,6 @@ export default loggerAll(
     insert,
     getItemsByUser,
     getItems,
-    getLast100,
     getLast100ByUser,
     getById,
     incViews,

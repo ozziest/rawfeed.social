@@ -1,0 +1,15 @@
+<%- include('../partials/posts') %>
+<% if (nextCursor) { %>
+<div
+  hx-get="/posts/next/<%= nextCursor %>/<%= userId %>"
+  hx-trigger="intersect once"
+  hx-swap="outerHTML"
+  class="h-20 flex items-center justify-center"
+>
+  <div class="animate-pulse text-gray-500">Loading more...</div>
+</div>
+<% } %>
+
+<script>
+  updateTimestamps();
+</script>

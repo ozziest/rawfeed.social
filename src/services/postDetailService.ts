@@ -89,18 +89,30 @@ const getDetailsByPost = async (postIds: string[]) => {
   }
 
   const promises = [
-    cache("postDetail.services.links", 60 * 15, async () =>
-      getKnex().table<PostLinks>("post_links").whereIn("post_id", postIds),
+    cache(
+      "postDetail.services.links",
+      60 * 15,
+      async () =>
+        getKnex().table<PostLinks>("post_links").whereIn("post_id", postIds),
+      { postIds },
     ),
-    cache("postDetail.services.mentions", 60 * 15, async () =>
-      getKnex()
-        .table<PostMentions>("post_mentions")
-        .whereIn("post_id", postIds),
+    cache(
+      "postDetail.services.mentions",
+      60 * 15,
+      async () =>
+        getKnex()
+          .table<PostMentions>("post_mentions")
+          .whereIn("post_id", postIds),
+      { postIds },
     ),
-    cache("postDetail.services.hashtags", 60 * 15, async () =>
-      getKnex()
-        .table<PostHashtags>("post_hashtags")
-        .whereIn("post_id", postIds),
+    cache(
+      "postDetail.services.hashtags",
+      60 * 15,
+      async () =>
+        getKnex()
+          .table<PostHashtags>("post_hashtags")
+          .whereIn("post_id", postIds),
+      { postIds },
     ),
   ];
   const [links, mentions, hashtags] = await Promise.all(promises);

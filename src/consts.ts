@@ -1,3 +1,5 @@
+export const POST_SIZE = 10;
+
 export const RESERVED_USERNAMES = [
   // Admin & Moderation
   "admin",
