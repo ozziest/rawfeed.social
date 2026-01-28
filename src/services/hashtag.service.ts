@@ -3,6 +3,7 @@ import { getKnex } from "../db/connection";
 import { Hashtags } from "../types/database";
 import { format, subHours } from "date-fns";
 import { DailyReportItem } from "../types/shared";
+import { Selectable } from "kysely";
 
 const TABLE_NAME = "hashtags";
 
@@ -15,6 +16,13 @@ const insert = async (hashtag: string) => {
     updated_at: new Date(),
   });
   return id;
+};
+
+const getByTag = async (hashtag: string): Promise<Hashtags> => {
+  return await getKnex()
+    .table<Selectable<Hashtags>>(TABLE_NAME)
+    .where("hashtag", hashtag)
+    .first();
 };
 
 const getUsedHashtags = async (tags: string[]) => {
@@ -41,4 +49,5 @@ export default {
   insert,
   getUsedHashtags,
   getDailyReport,
+  getByTag,
 };

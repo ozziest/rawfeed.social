@@ -22,3 +22,7 @@ export type UserProfileParams = {
 export type CustomDomainInput = {
   domain: string;
 };
+
+export type HashtagViewParams = {
+  hashtag?: string;
+};

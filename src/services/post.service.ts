@@ -55,6 +55,19 @@ const getItems = async (): Promise<PostWithContent[]> => {
   return await mergeWithContent(posts);
 };
 
+const getItemsByHashtag = async (
+  hashtagId: string,
+): Promise<PostWithContent[]> => {
+  const posts = await getKnex()
+    .table<Selectable<Posts>>(TABLE_NAME)
+    .innerJoin("post_hashtags", "posts.id", "post_hashtags.post_id")
+    .where("post_hashtags.hashtag_id", hashtagId)
+    .orderBy("posts.created_at", "desc")
+    .limit(100)
+    .select("posts.*");
+
+  return await mergeWithContent(posts);
+};
 const getLast100 = async (): Promise<PostWithContent[]> => {
   const posts = await getKnex()
     .table<Selectable<Posts>>(TABLE_NAME)
@@ -90,6 +103,10 @@ const getItemByExternalId = async (externalId: string): Promise<Posts> => {
 };
 
 const incViews = async (posts: PostWithContent[]) => {
+  if (posts.length === 0) {
+    return;
+  }
+
   const ids = posts.map((item) => item.id);
   return await getKnex()
     .table(TABLE_NAME)
@@ -140,4 +157,5 @@ export default {
   getById,
   incViews,
   getItemByExternalId,
+  getItemsByHashtag,
 };

@@ -15,7 +15,7 @@
         rows="3"
         placeholder="What's on your mind?"
         class="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-      ><%= formData?.content || '' %></textarea>
+      ><%= formData?.content || activeHashtag || '' %></textarea>
             
       <% if (validation?.content) { %>
       <div class="text-red-600 text-sm mt-2">

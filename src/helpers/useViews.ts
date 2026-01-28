@@ -27,6 +27,7 @@ export const useViews = (options: UseViewsOptions) => {
           domainUser: request.domainUser,
           loggedUser: request.loggedUser,
           profileUser: request.profileUser,
+          activeHashtag: "",
           sanitize,
           getAvatar,
           formatPostContent,

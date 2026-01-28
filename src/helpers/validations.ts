@@ -45,6 +45,14 @@ export const USERNAME_SCHEMA = z
   .regex(/^(?!.*--)/)
   .refine((username) => !RESERVED_USERNAMES.includes(username));
 
+export const HASHTAG_VALIDATION = z
+  .string()
+  .trim()
+  .min(1)
+  .max(20)
+  .regex(/^[a-zA-Z0-9_]+$/)
+  .refine((val) => !/^\d+$/.test(val));
+
 export const REGISTER_SCHEMA = z
   .object({
     username: USERNAME_SCHEMA,

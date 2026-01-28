@@ -24,6 +24,7 @@ import fs from "fs/promises";
 import { initializeRSSScheduler } from "./scheduler/rss-scheduler";
 import redirectRoutes from "./routes/redirect";
 import exploreRoutes from "./routes/explore";
+import tagsRoutes from "./routes/tags";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
@@ -103,6 +104,7 @@ server.register(authRoutes);
 server.register(userRoutes);
 server.register(postRoutes);
 server.register(exploreRoutes);
+server.register(tagsRoutes);
 
 server.setErrorHandler((error: any, request, reply) => {
   request.log.error(error);

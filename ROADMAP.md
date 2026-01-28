@@ -27,7 +27,7 @@
 - [x] Profile view
 - [x] Custom domain support
 - [x] Explore members/bots
-- [ ] Hashtag view
+- [x] Hashtag view
 - [ ] Infinite scroll
 
 ## Phase 4: More features
