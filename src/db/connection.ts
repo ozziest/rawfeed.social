@@ -16,6 +16,10 @@ export function getKnex(): Knex {
     instance = knex({
       client: "mysql2",
       connection,
+      pool: {
+        min: 5,
+        max: 20,
+      },
     });
   }
   return instance;

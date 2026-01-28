@@ -8,6 +8,7 @@ import { Selectable } from "kysely";
 import contentService from "./content.service";
 import postDetailService from "./postDetailService";
 import linkService from "./link.service";
+import { logger, loggerAll } from "../helpers/common";
 
 const TABLE_NAME = "posts";
 
@@ -148,14 +149,17 @@ const mergeWithContent = async (
   });
 };
 
-export default {
-  insert,
-  getItemsByUser,
-  getItems,
-  getLast100,
-  getLast100ByUser,
-  getById,
-  incViews,
-  getItemByExternalId,
-  getItemsByHashtag,
-};
+export default loggerAll(
+  {
+    insert,
+    getItemsByUser,
+    getItems,
+    getLast100,
+    getLast100ByUser,
+    getById,
+    incViews,
+    getItemByExternalId,
+    getItemsByHashtag,
+  },
+  "post.service",
+);

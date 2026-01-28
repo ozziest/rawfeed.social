@@ -4,6 +4,7 @@ import { nanoid } from "nanoid";
 import userService from "./user.service";
 import linkService from "./link.service";
 import hashtagService from "./hashtag.service";
+import { loggerAll } from "../helpers/common";
 
 const toPostContent = async (content: string): Promise<ContentMap> => {
   content = sanitize(content);
@@ -126,6 +127,9 @@ const normalizeString = (str: string) => {
     .toLowerCase();
 };
 
-export default {
-  toPostContent,
-};
+export default loggerAll(
+  {
+    toPostContent,
+  },
+  "content.service",
+);

@@ -6,6 +6,8 @@ import { RegisterInput } from "../helpers/dtos";
 import { Users } from "../types/database";
 import { RSSSourceWithUser } from "../types/shared";
 import { Insertable, Selectable } from "kysely";
+import { loggerAll } from "../helpers/common";
+import { cache } from "../helpers/cache";
 
 const TABLE_NAME = "users";
 
@@ -57,7 +59,9 @@ const getByIds = async (uuids: string[]): Promise<Users[]> => {
     return [];
   }
 
-  return await getKnex().table<Users>(TABLE_NAME).whereIn("id", uuids);
+  return cache("user.service.getByIds", 60, async () => {
+    return await getKnex().table<Users>(TABLE_NAME).whereIn("id", uuids);
+  });
 };
 
 const getByCustomDomain = async (domain: string) => {
@@ -104,19 +108,23 @@ const createRSSBot = async (resource: RSSSourceWithUser) => {
 };
 
 const getLastMembers = async () => {
-  return await getKnex()
-    .table<Selectable<Users>>(TABLE_NAME)
-    .whereNull("bot_type")
-    .orderBy("created_at", "desc")
-    .limit(3);
+  return cache("user.service.getLastMembers", 60 * 15, async () => {
+    return await getKnex()
+      .table<Selectable<Users>>(TABLE_NAME)
+      .whereNull("bot_type")
+      .orderBy("created_at", "desc")
+      .limit(3);
+  });
 };
 
 const getLastBots = async () => {
-  return await getKnex()
-    .table<Selectable<Users>>(TABLE_NAME)
-    .whereNotNull("bot_type")
-    .orderBy("created_at", "desc")
-    .limit(3);
+  return cache("user.service.getLastBots", 60 * 15, async () => {
+    return await getKnex()
+      .table<Selectable<Users>>(TABLE_NAME)
+      .whereNotNull("bot_type")
+      .orderBy("created_at", "desc")
+      .limit(3);
+  });
 };
 
 const paginateMembers = async () => {
@@ -135,18 +143,21 @@ const paginateBots = async () => {
     .limit(100);
 };
 
-export default {
-  insert,
-  getByEmail,
-  getByUsername,
-  getAllByUsernames,
-  getById,
-  getByIds,
-  getByCustomDomain,
-  getLastMembers,
-  getLastBots,
-  update,
-  createRSSBot,
-  paginateMembers,
-  paginateBots,
-};
+export default loggerAll(
+  {
+    insert,
+    getByEmail,
+    getByUsername,
+    getAllByUsernames,
+    getById,
+    getByIds,
+    getByCustomDomain,
+    getLastMembers,
+    getLastBots,
+    update,
+    createRSSBot,
+    paginateMembers,
+    paginateBots,
+  },
+  "user.service",
+);

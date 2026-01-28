@@ -1,6 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
 import { getKnex } from "../db/connection";
 import { Links } from "../types/database";
+import { loggerAll } from "../helpers/common";
+import { cache } from "../helpers/cache";
 
 const TABLE_NAME = "links";
 
@@ -17,7 +19,9 @@ const insert = async (code: string, link: string) => {
 };
 
 const getAllByIds = async (ids: string[]): Promise<Links[]> => {
-  return await getKnex().table<Links>(TABLE_NAME).whereIn("id", ids);
+  return cache("link.service.getAllByIds", 60 * 10, async () => {
+    return await getKnex().table<Links>(TABLE_NAME).whereIn("id", ids);
+  });
 };
 
 const getByCode = async (code: string): Promise<Links> => {
@@ -31,9 +35,12 @@ const incCount = async (id: string) => {
     .increment("count", 1);
 };
 
-export default {
-  insert,
-  getAllByIds,
-  getByCode,
-  incCount,
-};
+export default loggerAll(
+  {
+    insert,
+    getAllByIds,
+    getByCode,
+    incCount,
+  },
+  "link.service",
+);

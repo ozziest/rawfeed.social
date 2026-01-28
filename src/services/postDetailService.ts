@@ -4,6 +4,8 @@ import { PostHashtags, PostLinks, PostMentions } from "../types/database";
 import { ContentMap } from "../types/shared";
 import { Insertable } from "kysely";
 import { PostLinkWithLink } from "../types/relations";
+import { loggerAll } from "../helpers/common";
+import { cache } from "../helpers/cache";
 
 const insert = async (postId: string, content: ContentMap) => {
   const promises = [
@@ -87,9 +89,19 @@ const getDetailsByPost = async (postIds: string[]) => {
   }
 
   const promises = [
-    getKnex().table<PostLinks>("post_links").whereIn("post_id", postIds),
-    getKnex().table<PostMentions>("post_mentions").whereIn("post_id", postIds),
-    getKnex().table<PostHashtags>("post_hashtags").whereIn("post_id", postIds),
+    cache("postDetail.services.links", 60 * 15, async () =>
+      getKnex().table<PostLinks>("post_links").whereIn("post_id", postIds),
+    ),
+    cache("postDetail.services.mentions", 60 * 15, async () =>
+      getKnex()
+        .table<PostMentions>("post_mentions")
+        .whereIn("post_id", postIds),
+    ),
+    cache("postDetail.services.hashtags", 60 * 15, async () =>
+      getKnex()
+        .table<PostHashtags>("post_hashtags")
+        .whereIn("post_id", postIds),
+    ),
   ];
   const [links, mentions, hashtags] = await Promise.all(promises);
 
@@ -100,7 +112,10 @@ const getDetailsByPost = async (postIds: string[]) => {
   };
 };
 
-export default {
-  insert,
-  getDetailsByPost,
-};
+export default loggerAll(
+  {
+    insert,
+    getDetailsByPost,
+  },
+  "postDetail.service",
+);
