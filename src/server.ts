@@ -45,9 +45,9 @@ server.register(helmet, {
         directives: {
           defaultSrc: ["'self'"],
           styleSrc: ["'self'", "'unsafe-inline'"],
-          scriptSrc: ["'self'"],
+          scriptSrc: ["'self'", "https://cloud.umami.is"],
           imgSrc: ["'self'", "data:", "https://www.gravatar.com"],
-          connectSrc: ["'self'"],
+          connectSrc: ["'self'", "https://cloud.umami.is"],
           fontSrc: ["'self'"],
           objectSrc: ["'none'"],
           mediaSrc: ["'none'"],
