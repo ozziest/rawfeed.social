@@ -1,0 +1,19 @@
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title><%= title || 'rawfeed.social' %></title>
+  <link rel="stylesheet" href="/public/css/tailwind.css" />
+  <script src="/public/js/htmx.min.js"></script>
+  <script src="/public/js/app.js"></script>
+  <meta name="robots" content="index, follow" />
+  <meta name="googlebot" content="index, follow, noarchive" />
+  <meta name="googlebot-news" content="nosnippet" />
+  <!-- views/layout.ejs -->
+  <% if (isProd) { %>
+  <script
+    defer
+    src="https://cloud.umami.is/script.js"
+    data-website-id="b0b55b3f-3a08-4ddd-b775-348ea72445d6"
+  ></script>
+  <% } %>
+</head>
