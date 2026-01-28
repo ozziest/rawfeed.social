@@ -19,6 +19,7 @@
           <% } %>
         </div>
         <div class="flex gap-2">
+          <% if (!(profileUser || domainUser)?.bot_type) { %>
           <a
             href="/u/<%= profileUser?.username || domainUser?.username %>/rss"
             class="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-orange-600 bg-orange-50 hover:bg-orange-100 rounded-lg transition-colors"
@@ -32,6 +33,7 @@
             </svg>
             <span>RSS</span>
           </a>
+          <% } %>
         </div>
       </div>
       <p class="text-gray-600 leading-relaxed mb-3">
