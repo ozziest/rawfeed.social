@@ -28,6 +28,7 @@ export const useViews = (options: UseViewsOptions) => {
           loggedUser: request.loggedUser,
           profileUser: request.profileUser,
           activeHashtag: "",
+          isProd: process.env.NODE_ENV === "production",
           sanitize,
           getAvatar,
           formatPostContent,
