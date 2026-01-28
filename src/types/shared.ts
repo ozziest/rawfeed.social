@@ -53,3 +53,8 @@ export type ContentMap = {
   mentions: MentionMap[];
   hashtags: HashtagMap[];
 };
+
+export type DailyReportItem = {
+  hashtag: string;
+  total: number;
+};

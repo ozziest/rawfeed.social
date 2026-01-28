@@ -59,7 +59,27 @@ export const formatPostContent = (data: PostWithContent): string => {
         }
 
         const safeCode = encodeURIComponent(linkMatch.linkDetail.code);
-        const displayText = escapeHtml(linkMatch.linkDetail.link);
+        let displayText = linkMatch.linkDetail.link;
+        try {
+          const url = new URL(linkMatch.linkDetail.link);
+          const domain = url.hostname.replace("www.", "");
+          const path = url.pathname + url.search;
+
+          if (linkMatch.linkDetail.link.length > 50) {
+            if (path.length > 25) {
+              displayText = `${domain}${path.substring(0, 22)}...`;
+            } else {
+              displayText = `${domain}${path}`;
+            }
+          }
+        } catch (e) {
+          displayText =
+            linkMatch.linkDetail.link.length > 50
+              ? linkMatch.linkDetail.link.substring(0, 47) + "..."
+              : linkMatch.linkDetail.link;
+        }
+
+        displayText = escapeHtml(displayText);
         return `<a href="/redirect/${safeCode}" target="_blank" rel="noopener noreferrer" class="transition-colors font-medium text-indigo-800 hover:underline hover:text-indigo-950">${displayText}</a>`;
       }
 

@@ -5,7 +5,7 @@ import crypto from "crypto";
 import { RegisterInput } from "../helpers/dtos";
 import { Users } from "../types/database";
 import { RSSSourceWithUser } from "../types/shared";
-import { Insertable } from "kysely";
+import { Insertable, Selectable } from "kysely";
 
 const TABLE_NAME = "users";
 
@@ -103,6 +103,22 @@ const createRSSBot = async (resource: RSSSourceWithUser) => {
   return await getById(id);
 };
 
+const getLastMembers = async () => {
+  return await getKnex()
+    .table<Selectable<Users>>(TABLE_NAME)
+    .whereNull("bot_type")
+    .orderBy("created_at", "desc")
+    .limit(3);
+};
+
+const getLastBots = async () => {
+  return await getKnex()
+    .table<Selectable<Users>>(TABLE_NAME)
+    .whereNotNull("bot_type")
+    .orderBy("created_at", "desc")
+    .limit(3);
+};
+
 export default {
   insert,
   getByEmail,
@@ -111,6 +127,8 @@ export default {
   getById,
   getByIds,
   getByCustomDomain,
+  getLastMembers,
+  getLastBots,
   update,
   createRSSBot,
 };

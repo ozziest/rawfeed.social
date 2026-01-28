@@ -60,7 +60,7 @@ server.register(helmet, {
   },
 });
 server.register(rateLimit, {
-  max: 300,
+  max: 400,
   timeWindow: "15 minutes",
 });
 server.register(fastifyFormbody);

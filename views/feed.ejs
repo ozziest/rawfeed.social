@@ -1,5 +1,12 @@
-<div class="max-w-2xl mx-auto px-4 py-8">
-  <%- include('partials/share') %>
+<div class="max-w-4xl mx-auto px-4 py-8">
+  <div class="flex justify-between gap-4">
+    <div class="grow">
+      <%- include('partials/share') %>
 
-  <div class="space-y-4"><%- include('partials/posts') %></div>
+      <div class="space-y-4"><%- include('partials/posts') %></div>
+    </div>
+    <div class="min-w-64 hidden lg:block">
+      <%- include('partials/sidebar') %>
+    </div>
+  </div>
 </div>
