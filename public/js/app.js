@@ -46,7 +46,13 @@ function updateTimestamps() {
 }
 
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", updateTimestamps);
+  document.addEventListener("DOMContentLoaded", () => {
+    updateTimestamps();
+
+    document.body.addEventListener("htmx:afterSwap", function (event) {
+      updateTimestamps();
+    });
+  });
 } else {
   updateTimestamps();
 }
