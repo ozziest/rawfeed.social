@@ -60,7 +60,6 @@ export const RSS_RESOURCES: RSSSource[] = [
     language: "en",
     updateFrequency: "0 * * * *",
     svg: "/public/images/rss/gamespot.svg",
-    useInDevelopment: true,
   },
 ];
 
