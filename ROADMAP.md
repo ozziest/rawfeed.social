@@ -26,6 +26,9 @@
 - [x] Feed view
 - [x] Profile view
 - [x] Custom domain support
+- [x] Explore members/bots
+- [ ] Explore trending
+- [ ] Hashtag view
 - [ ] Infinite scroll
 
 ## Phase 4: More features

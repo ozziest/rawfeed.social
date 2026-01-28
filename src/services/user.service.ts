@@ -119,6 +119,22 @@ const getLastBots = async () => {
     .limit(3);
 };
 
+const paginateMembers = async () => {
+  return await getKnex()
+    .table<Selectable<Users>>(TABLE_NAME)
+    .orderBy("username")
+    .whereNull("bot_type")
+    .limit(100);
+};
+
+const paginateBots = async () => {
+  return await getKnex()
+    .table<Selectable<Users>>(TABLE_NAME)
+    .orderBy("username")
+    .whereNotNull("bot_type")
+    .limit(100);
+};
+
 export default {
   insert,
   getByEmail,
@@ -131,4 +147,6 @@ export default {
   getLastBots,
   update,
   createRSSBot,
+  paginateMembers,
+  paginateBots,
 };

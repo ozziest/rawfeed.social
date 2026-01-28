@@ -23,6 +23,7 @@ import { detectMode } from "./middleware/detectMode.ts";
 import fs from "fs/promises";
 import { initializeRSSScheduler } from "./scheduler/rss-scheduler";
 import redirectRoutes from "./routes/redirect";
+import exploreRoutes from "./routes/explore";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
@@ -101,6 +102,7 @@ server.register(redirectRoutes);
 server.register(authRoutes);
 server.register(userRoutes);
 server.register(postRoutes);
+server.register(exploreRoutes);
 
 server.setErrorHandler((error: any, request, reply) => {
   request.log.error(error);
