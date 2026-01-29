@@ -30,4 +30,5 @@ export type HashtagViewParams = {
 export type PostQueryParams = {
   cursor?: string;
   userId?: string;
+  id?: string;
 };

@@ -44,9 +44,11 @@ export default async function postRoutes(fastify: FastifyInstance) {
       }
 
       const input = request.body as PostInput;
-      await postService.insert(request.loggedUser?.userId!, input);
+      const id = await postService.insert(request.loggedUser?.userId!, input);
 
-      return view("create", { csrfToken });
+      const posts = await postService.getItems({ id });
+
+      return view("create", { csrfToken, posts });
     },
   );
 }

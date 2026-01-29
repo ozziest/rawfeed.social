@@ -31,11 +31,11 @@
           name="location"
           class="text-sm text-gray-600 border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400"
         >
-          <option value="tr" <%= (formData?.location === 'tr' || !formData?.location) ? 'selected' : '' %>>
-            Turkish
-          </option>
-          <option value="en" <%= formData?.location === 'en' ? 'selected' : '' %>>
+          <option value="en" <%= (formData?.location === 'en' || !formData?.location) ? 'selected' : '' %>>
             English
+          </option>
+          <option value="tr" <%= formData?.location === 'tr' ? 'selected' : '' %>>
+            Turkish
           </option>
         </select>
         

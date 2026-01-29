@@ -58,6 +58,10 @@ const getItems = async (
     .orderBy("id", "desc")
     .limit(POST_SIZE);
 
+  if (params?.id) {
+    query.where("id", params.id);
+  }
+
   if (params?.userId) {
     query.where("user_id", params.userId);
   }
