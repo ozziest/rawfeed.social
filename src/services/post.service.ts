@@ -120,15 +120,14 @@ const getItemByExternalId = async (externalId: string): Promise<Posts> => {
 };
 
 const incViews = async (posts: PostWithContent[]) => {
-  if (posts.length === 0) {
-    return;
-  }
-
-  const ids = posts.map((item) => item.id);
-  return await getKnex()
-    .table(TABLE_NAME)
-    .whereIn("id", ids)
-    .increment("stats_views", 1);
+  // if (posts.length === 0) {
+  //   return;
+  // }
+  // const ids = posts.map((item) => item.id);
+  // return await getKnex()
+  //   .table(TABLE_NAME)
+  //   .whereIn("id", ids)
+  //   .increment("stats_views", 1);
 };
 
 const mergeWithContent = async (

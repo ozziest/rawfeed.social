@@ -25,6 +25,7 @@ import { initializeRSSScheduler } from "./scheduler/rss-scheduler";
 import redirectRoutes from "./routes/redirect";
 import exploreRoutes from "./routes/explore";
 import tagsRoutes from "./routes/tags";
+import { timer } from "./helpers/timer";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
@@ -65,10 +66,10 @@ server.register(helmet, {
     policy: isDevelopment ? "cross-origin" : "same-origin",
   },
 });
-server.register(rateLimit, {
-  max: 400,
-  timeWindow: "15 minutes",
-});
+// server.register(rateLimit, {
+//   max: 400,
+//   timeWindow: "15 minutes",
+// });
 server.register(fastifyFormbody);
 server.register(pointOfView, {
   engine: { ejs },
@@ -79,6 +80,18 @@ server.register(cookie, {
 });
 server.register(jwt, {
   secret: process.env.JWT_SECRET!,
+});
+// server.get("/metrics", async (request, reply) => {
+//   reply.type("text/html");
+//   return timer.getHtml();
+// });
+server.addHook("onRequest", async (request, reply) => {
+  const routeName = `${request.method} ${request.url}`;
+  timer.start(routeName);
+
+  reply.raw.on("finish", () => {
+    timer.end(routeName);
+  });
 });
 
 server.register(fastifyStatic, {
