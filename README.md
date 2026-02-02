@@ -4,6 +4,8 @@
 
 Rawfeed is a chronological, algorithm-free microblogging platform built on the principle that users—not corporations—should control what they see and share.
 
+![RawFeed Screenshot](./screenshot.png)
+
 ## The Problem
 
 Social media promised to connect us, but it has become a tool for manipulation and control. The platforms we use daily have fundamentally broken the social contract they built their empires on.
