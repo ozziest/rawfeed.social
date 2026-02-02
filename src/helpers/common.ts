@@ -7,7 +7,7 @@ import { PostWithContent } from "../types/relations";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
-const getGravatarUrl = (email: string, size: number = 80): string => {
+const getGravatarUrl = (email: string, size: number = 400): string => {
   const hash = crypto
     .createHash("md5")
     .update(email.trim().toLowerCase())
