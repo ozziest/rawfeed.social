@@ -16,6 +16,9 @@ export default async function exploreRoutes(fastify: FastifyInstance) {
 
       return view("bots", {
         users,
+        pageTitle: "RSS Bots",
+        pageDescription:
+          "Automated accounts that share content from various RSS feeds.",
       });
     },
   );
@@ -29,6 +32,8 @@ export default async function exploreRoutes(fastify: FastifyInstance) {
 
       return view("bots", {
         users,
+        pageTitle: "New Members",
+        pageDescription: "New membets that you can follow.",
       });
     },
   );
