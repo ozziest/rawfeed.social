@@ -394,6 +394,9 @@
   .h-20 {
     height: calc(var(--spacing) * 20);
   }
+  .h-123 {
+    height: calc(var(--spacing) * 123);
+  }
   .min-h-screen {
     min-height: 100vh;
   }
@@ -905,6 +908,9 @@
   }
   .text-white {
     color: var(--color-white);
+  }
+  .lowercase {
+    text-transform: lowercase;
   }
   .uppercase {
     text-transform: uppercase;

@@ -5,6 +5,7 @@ import userService from "./user.service";
 import linkService from "./link.service";
 import hashtagService from "./hashtag.service";
 import { loggerAll } from "../helpers/common";
+import toHashtagMap from "../converters/content/toHashtagMap";
 
 const toPostContent = async (content: string): Promise<ContentMap> => {
   content = sanitize(content);
@@ -17,28 +18,8 @@ const toPostContent = async (content: string): Promise<ContentMap> => {
 };
 
 const resolveHashtags = async (content: string): Promise<HashtagMap[]> => {
-  // Regular expression to find words starting with '#' and stop at the first non-alphanumeric character
-  const regex = /(?:^|\s)#([\p{L}\p{N}_]+)(?=\s|$)/gu;
-
-  // Create a Set to store unique hashtags
-  const hashtags = new Set();
-
-  let match;
-
-  // Iterate through all matches
-  while ((match = regex.exec(content)) !== null) {
-    // Add the hashtag (without the #) to the Set
-    hashtags.add(match[1]);
-  }
-
   // Convert the Set to an array and return
-  const map = Array.from(hashtags)
-    .map((hashtag) => hashtag as string)
-    .map((original) => {
-      return {
-        cleaned: original.trim().toLowerCase(),
-      } as HashtagMap;
-    });
+  const map = toHashtagMap(content);
 
   // We don't need to query tags ids if we have empty query
   if (map.length === 0) {

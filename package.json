@@ -19,6 +19,8 @@
     "types": "kysely-codegen --dialect mysql --out-file ./src/types/database.ts",
     "postinstall": "mkdir -p public/js && cp node_modules/htmx.org/dist/htmx.min.js public/js/",
     "sentry:upload": "sentry-cli sourcemaps upload ./dist",
+    "test": "vitest --watch",
+    "test:ci": "vitest --run",
     "commit": "cz"
   },
   "dependencies": {
@@ -67,7 +69,8 @@
     "tailwindcss": "^4.1.18",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^1.0.0"
   },
   "config": {
     "commitizen": {
