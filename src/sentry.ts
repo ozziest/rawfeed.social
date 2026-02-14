@@ -6,7 +6,7 @@ if (process.env.NODE_ENV === "production") {
     release: process.env.RELEASE_VERSION,
     sendDefaultPii: false,
     tracesSampleRate: 0.05,
-    sampleRate: 0.1,
+    sampleRate: 0.01,
     profilesSampleRate: 0,
     environment: process.env.NODE_ENV || "production",
     ignoreErrors: ["NotFoundError", "ValidationError"],
