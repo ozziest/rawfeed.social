@@ -81,10 +81,10 @@ server.register(cookie, {
 server.register(jwt, {
   secret: process.env.JWT_SECRET!,
 });
-// server.get("/metrics", async (request, reply) => {
-//   reply.type("text/html");
-//   return timer.getHtml();
-// });
+server.get("/metrics", async (request, reply) => {
+  reply.type("text/html");
+  return timer.getHtml();
+});
 server.addHook("onRequest", async (request, reply) => {
   const routeName = `${request.method} ${request.url}`;
   timer.start(routeName);

@@ -8,7 +8,7 @@ interface TimerEntry {
 class SimpleTimer {
   private entries: TimerEntry[] = [];
   private activeTimers: Map<string, number> = new Map();
-  private maxEntries = 10000;
+  private maxEntries = 1000;
 
   start(name: string) {
     this.activeTimers.set(name, Date.now());
