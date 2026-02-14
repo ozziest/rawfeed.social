@@ -66,10 +66,10 @@ server.register(helmet, {
     policy: isDevelopment ? "cross-origin" : "same-origin",
   },
 });
-// server.register(rateLimit, {
-//   max: 400,
-//   timeWindow: "15 minutes",
-// });
+server.register(rateLimit, {
+  max: 400,
+  timeWindow: "15 minutes",
+});
 server.register(fastifyFormbody);
 server.register(pointOfView, {
   engine: { ejs },
