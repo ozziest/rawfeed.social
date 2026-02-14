@@ -10,8 +10,7 @@
     "forceConsistentCasingInFileNames": true,
     "sourceMap": true,
     "inlineSources": true,
-    "typeRoots": ["./node_modules/@types", "./src/types"],
-    "types": ["vitest/globals"]
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   },
   "include": ["src/**/*.ts"]
 }
