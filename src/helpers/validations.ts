@@ -71,7 +71,7 @@ export const LOGIN_SCHEMA = z.object({
 
 export const POST_SCHEMA = z.object({
   content: z.string().trim().min(1).max(400),
-  location: z.enum(["tr", "en"]),
+  location: z.enum(["tr", "en", "da"]),
 });
 
 export const CUSTOM_DOMAIN_SCHEMA = z.object({

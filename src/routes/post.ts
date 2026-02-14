@@ -40,11 +40,12 @@ export default async function postRoutes(fastify: FastifyInstance) {
 
       const validation = validate(POST_SCHEMA, request.body);
       if (validation.isNotValid) {
-        return view("create", { csrfToken });
+        return view("create", { csrfToken, posts: [] });
       }
 
       const input = request.body as PostInput;
       const id = await postService.insert(request.loggedUser?.userId!, input);
+      console.log("id", id);
 
       const posts = await postService.getItems({ id });
 
