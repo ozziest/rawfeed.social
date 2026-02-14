@@ -71,6 +71,16 @@ export const RSS_RESOURCES: RSSSource[] = [
     updateFrequency: "0 * * * *",
     svg: "/public/images/rss/dr.svg",
   },
+  {
+    username: "rss_ooh_directory",
+    name: "ooh.directory",
+    bio: "ooh.directory is a place to find good blogs that interest you.",
+    url: "https://ooh.directory/feeds/recently-added.xml",
+    category: "blog",
+    language: "en",
+    updateFrequency: "0 */4 * * *",
+    svg: "/public/images/rss/ooh_directory.svg",
+  },
 ];
 
 export const RSS_BOT_USERNAMES: string[] = RSS_RESOURCES.map(

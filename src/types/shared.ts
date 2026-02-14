@@ -1,6 +1,6 @@
 export type SupportedLanguages = "en" | "tr" | "da";
 
-export type RSSCategories = "tech" | "science" | "gaming" | "news";
+export type RSSCategories = "tech" | "science" | "gaming" | "news" | "blog";
 
 export type RSSSource = {
   username: string;
