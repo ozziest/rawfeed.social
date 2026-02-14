@@ -15,7 +15,6 @@
     "migrate:rollback": "node -r ts-node/register ./node_modules/knex/bin/cli.js migrate:rollback --knexfile knexfile.ts",
     "seed:make": "node -r ts-node/register ./node_modules/knex/bin/cli.js seed:make",
     "seed:run": "node -r ts-node/register ./node_modules/knex/bin/cli.js seed:run --knexfile knexfile.ts",
-    "db:reset": "npm run migrate:rollback && npm run migrate:latest && npm run seed:run",
     "types": "kysely-codegen --dialect mysql --out-file ./src/types/database.ts",
     "postinstall": "mkdir -p public/js && cp node_modules/htmx.org/dist/htmx.min.js public/js/",
     "sentry:upload": "sentry-cli sourcemaps upload ./dist",
