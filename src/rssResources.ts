@@ -61,6 +61,16 @@ export const RSS_RESOURCES: RSSSource[] = [
     updateFrequency: "0 * * * *",
     svg: "/public/images/rss/gamespot.svg",
   },
+  {
+    username: "rss_dr_seneste_nyt",
+    name: "DR Seneste Nyt",
+    bio: "Nyheder fra sektionen Kort nyt.",
+    url: "https://www.dr.dk/nyheder/service/feeds/senestenyt",
+    category: "news",
+    language: "da",
+    updateFrequency: "0 * * * *",
+    svg: "/public/images/rss/dr.svg",
+  },
 ];
 
 export const RSS_BOT_USERNAMES: string[] = RSS_RESOURCES.map(
