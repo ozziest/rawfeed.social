@@ -49,3 +49,10 @@
 - [ ] Build moderation dashboard
 - [ ] Create user management interface
 - [ ] Implement content flagging system
+
+## Phase 6: Privacy & Legal Commitments
+
+- [ ] Data Export Tool - One-click download of account data as JSON
+- [ ] Self-service Account Deletion - Delete account with 30-day recovery window
+- [ ] Privacy Settings Dashboard - Manage email preferences, error tracking opt-out, etc.
+- [ ] Data Access Portal - View data we hold about you in your account

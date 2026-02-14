@@ -25,6 +25,7 @@ import { initializeRSSScheduler } from "./scheduler/rss-scheduler";
 import redirectRoutes from "./routes/redirect";
 import exploreRoutes from "./routes/explore";
 import tagsRoutes from "./routes/tags";
+import legalRoutes from "./routes/legal";
 import { timer } from "./helpers/timer";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
@@ -67,7 +68,7 @@ server.register(helmet, {
   },
 });
 server.register(rateLimit, {
-  max: 400,
+  max: 500,
   timeWindow: "15 minutes",
 });
 server.register(fastifyFormbody);
@@ -122,6 +123,7 @@ server.register(userRoutes);
 server.register(postRoutes);
 server.register(exploreRoutes);
 server.register(tagsRoutes);
+server.register(legalRoutes);
 
 server.setErrorHandler((error: any, request, reply) => {
   request.log.error(error);
