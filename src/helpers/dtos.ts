@@ -23,6 +23,11 @@ export type CustomDomainInput = {
   domain: string;
 };
 
+export type ProfileUpdateInput = {
+  name: string;
+  bio: string;
+};
+
 export type HashtagViewParams = {
   hashtag?: string;
 };

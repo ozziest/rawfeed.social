@@ -3,9 +3,14 @@ import { verifyToken } from "../middleware/verifyToken";
 import postService from "../services/post.service";
 import userService from "../services/user.service";
 import { generateRSS } from "../helpers/rssGenerator";
-import { CustomDomainInput, UserProfileParams } from "../helpers/dtos";
+import {
+  CustomDomainInput,
+  ProfileUpdateInput,
+  UserProfileParams,
+} from "../helpers/dtos";
 import {
   CUSTOM_DOMAIN_SCHEMA,
+  PROFILE_UPDATE_SCHEMA,
   USERNAME_SCHEMA,
   validate,
 } from "../helpers/validations";
@@ -29,6 +34,42 @@ export default async function userRoutes(fastify: FastifyInstance) {
       return view("settings/index", {
         user,
       });
+    },
+  );
+
+  fastify.get(
+    "/user/settings/profile",
+    { preHandler: [verifyToken, requireAuth] },
+    async (request, reply) => {
+      const { view } = views(request, reply);
+      const user = await userService.getById(request.loggedUser?.userId!);
+
+      return view("settings/profile/index", {
+        csrfToken: reply.generateCsrf(),
+        user,
+      });
+    },
+  );
+
+  fastify.post(
+    "/user/settings/profile",
+    { preHandler: [verifyToken, requireAuth] },
+    async (request, reply) => {
+      const { view, setValidation } = views(request, reply);
+
+      const validation = validate(PROFILE_UPDATE_SCHEMA, request.body);
+      if (validation.isNotValid) {
+        setValidation(validation.errors);
+        return reply.redirect("/user/settings/profile");
+      }
+
+      const input = request.body as ProfileUpdateInput;
+      await userService.update(request.loggedUser?.userId!, {
+        name: input.name,
+        bio: input.bio,
+      });
+
+      return reply.redirect("/user/settings");
     },
   );
 

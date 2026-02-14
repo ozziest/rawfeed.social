@@ -103,3 +103,8 @@ export const CUSTOM_DOMAIN_SCHEMA = z.object({
         ),
     ),
 });
+
+export const PROFILE_UPDATE_SCHEMA = z.object({
+  name: z.string().trim().min(1).max(100),
+  bio: z.string().trim().max(400),
+});
