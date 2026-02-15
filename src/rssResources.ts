@@ -71,6 +71,16 @@ export const RSS_RESOURCES: RSSSource[] = [
     updateFrequency: "0 */4 * * *",
     svg: "/public/images/rss/ooh_directory.svg",
   },
+  {
+    username: "rss_mserdark_blog",
+    name: "M. Serdar Kuzuloğlu Blog",
+    bio: "M. Serdar Kuzuloğlu'nun blog akışı.",
+    url: "https://www.mserdark.com/feed",
+    category: "blog",
+    language: "tr",
+    updateFrequency: "0 0 * * *",
+    svg: "/public/images/rss/rss.svg",
+  },
 ];
 
 export const RSS_BOT_USERNAMES: string[] = RSS_RESOURCES.map(
