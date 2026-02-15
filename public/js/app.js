@@ -45,9 +45,45 @@ function updateTimestamps() {
   });
 }
 
+function initMobileMenu() {
+  const menuButton = document.getElementById("mobile-menu-button");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  if (menuButton && mobileMenu) {
+    menuButton.addEventListener("click", function () {
+      mobileMenu.classList.toggle("hidden");
+    });
+  }
+}
+
+function initScrollAnimations() {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add(
+            entry.target.dataset.animation || "animate-fade-in-up",
+          );
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px",
+    },
+  );
+
+  document.querySelectorAll(".animate-on-scroll").forEach((el) => {
+    observer.observe(el);
+  });
+}
+
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", () => {
     updateTimestamps();
+    initMobileMenu();
+    initScrollAnimations();
 
     document.body.addEventListener("htmx:afterSwap", function (event) {
       updateTimestamps();
@@ -55,4 +91,6 @@ if (document.readyState === "loading") {
   });
 } else {
   updateTimestamps();
+  initMobileMenu();
+  initScrollAnimations();
 }

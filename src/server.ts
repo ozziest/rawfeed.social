@@ -27,6 +27,7 @@ import redirectRoutes from "./routes/redirect";
 import exploreRoutes from "./routes/explore";
 import tagsRoutes from "./routes/tags";
 import legalRoutes from "./routes/legal";
+import aboutRoutes from "./routes/about";
 import { timer } from "./helpers/timer";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
@@ -125,6 +126,7 @@ server.register(postRoutes);
 server.register(exploreRoutes);
 server.register(tagsRoutes);
 server.register(legalRoutes);
+server.register(aboutRoutes);
 
 server.setErrorHandler((error: any, request, reply) => {
   request.log.error(error);
