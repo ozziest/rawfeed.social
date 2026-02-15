@@ -105,7 +105,6 @@ export interface Users {
   email_verification_token: string | null;
   email_verification_token_expires_at: Date | null;
   id: string;
-  is_email_verified: Generated<number>;
   name: string;
   password: string;
   updated_at: Date | null;
