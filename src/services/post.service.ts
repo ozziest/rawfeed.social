@@ -102,6 +102,14 @@ const getLast100ByUser = async (userId: string): Promise<PostWithContent[]> => {
   return await mergeWithContent(posts);
 };
 
+const getAllByUser = async (userId: string): Promise<PostWithContent[]> => {
+  const posts = await getKnex()
+    .table<Selectable<Posts>>(TABLE_NAME)
+    .where("user_id", userId)
+    .orderBy("created_at", "desc");
+  return await mergeWithContent(posts);
+};
+
 const getById = async (id: string): Promise<PostWithContent | undefined> => {
   const post = await getKnex()
     .table<Selectable<Posts>>(TABLE_NAME)
@@ -170,6 +178,7 @@ export default loggerAll(
     getItemsByUser,
     getItems,
     getLast100ByUser,
+    getAllByUser,
     getById,
     incViews,
     getItemByExternalId,

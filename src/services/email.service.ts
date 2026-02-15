@@ -1,0 +1,80 @@
+import { CreateEmailOptions, Resend } from "resend";
+import { logError } from "../helpers/common";
+
+const resend = new Resend(process.env.RESEND_KEY!);
+
+const FROM_EMAIL = "noreply@rawfeed.social";
+
+export const sendDataExportReadyEmail = async (
+  to: string,
+  username: string,
+  downloadUrl: string,
+): Promise<void> => {
+  try {
+    const options: CreateEmailOptions = {
+      from: FROM_EMAIL,
+      to,
+      subject: "Your Data Export is Ready",
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2>Your Data Export is Ready</h2>
+          <p>Hi ${username},</p>
+          <p>Your complete data archive has been generated and is ready for download.</p>
+          <p style="margin: 30px 0;">
+            <a href="${downloadUrl}" 
+               style="background-color: #2563eb; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">
+              Download Your Archive
+            </a>
+          </p>
+          <p style="color: #666; font-size: 14px;">
+            <strong>File format:</strong> ZIP archive containing your data in JSON format.
+          </p>
+          <p style="color: #666; font-size: 14px;">
+            <strong>Important:</strong> This download link will expire in 24 hours for security reasons.
+          </p>
+          <p style="color: #666; font-size: 14px;">
+            If you didn't request this export, please ignore this email.
+          </p>
+        </div>
+      `,
+    };
+
+    if (process.env.NODE_ENV === "production") {
+      await resend.emails.send(options);
+    } else {
+      console.log(options.html);
+    }
+  } catch (error) {
+    logError(error);
+    throw error;
+  }
+};
+
+export const sendDataExportFailedEmail = async (
+  to: string,
+  username: string,
+): Promise<void> => {
+  try {
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to,
+      subject: "Data Export Failed",
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2>Data Export Failed</h2>
+          <p>Hi ${username},</p>
+          <p>Unfortunately, we encountered an error while generating your data export.</p>
+          <p>Please try again later or contact support if the problem persists.</p>
+        </div>
+      `,
+    });
+  } catch (error) {
+    logError(error);
+    throw error;
+  }
+};
+
+export default {
+  sendDataExportReadyEmail,
+  sendDataExportFailedEmail,
+};

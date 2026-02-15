@@ -2,6 +2,8 @@ import { FastifyInstance } from "fastify";
 import { verifyToken } from "../middleware/verifyToken";
 import postService from "../services/post.service";
 import userService from "../services/user.service";
+import dataExportService from "../services/dataExport.service";
+import s3Service from "../services/s3.service";
 import { generateRSS } from "../helpers/rssGenerator";
 import {
   CustomDomainInput,
@@ -20,9 +22,9 @@ import { generateDomainVerificationToken } from "../helpers/security";
 import dns from "dns/promises";
 import { RSS_BOT_USERNAMES } from "../rssResources";
 import { nextCursor } from "../helpers/common";
+import { sanitizePostsWithUser } from "../helpers/dataHelpers";
 
 const views = useViews({ prefix: "user", layout: "layouts/default.ejs" });
-
 export default async function userRoutes(fastify: FastifyInstance) {
   fastify.get(
     "/user/settings",
@@ -241,6 +243,93 @@ export default async function userRoutes(fastify: FastifyInstance) {
 
         return reply.redirect("/user/settings/domain/verify");
       }
+    },
+  );
+
+  fastify.get(
+    "/user/settings/data-extraction",
+    { preHandler: [verifyToken, requireAuth] },
+    async (request, reply) => {
+      const userId = request.loggedUser?.userId!;
+      const { view } = views(request, reply);
+
+      // Get export history (last 10)
+      const exports = await dataExportService.getByUserId(userId, 10);
+
+      // Check if user can request a new export
+      const canRequest = await dataExportService.canUserRequestExport(userId);
+
+      return view("settings/data-extraction/index", {
+        csrfToken: reply.generateCsrf(),
+        exports,
+        canRequest,
+      });
+    },
+  );
+
+  fastify.post(
+    "/user/settings/data-extraction/request",
+    { preHandler: [verifyToken, requireAuth] },
+    async (request, reply) => {
+      const userId = request.loggedUser?.userId!;
+      const { setState } = views(request, reply);
+
+      // Check if user can request an export
+      const canRequest = await dataExportService.canUserRequestExport(userId);
+      if (!canRequest) {
+        setState({
+          error:
+            "You can only request one export per week. Please try again later.",
+        });
+        return reply.redirect("/user/settings/data-extraction");
+      }
+
+      // Create export request
+      await dataExportService.create({ userId });
+
+      setState({
+        success:
+          "Export request submitted successfully. You'll receive an email when it's ready.",
+      });
+      return reply.redirect("/user/settings/data-extraction");
+    },
+  );
+
+  fastify.get(
+    "/user/settings/data-extraction/:id/download",
+    { preHandler: [verifyToken, requireAuth] },
+    async (request, reply) => {
+      const userId = request.loggedUser?.userId!;
+      const { id } = request.params as { id: string };
+      const { setState } = views(request, reply);
+
+      const exportRecord = await dataExportService.getById(id);
+
+      // Verify export exists and belongs to user
+      if (!exportRecord || exportRecord.user_id !== userId) {
+        setState({ error: "Export not found" });
+        return reply.redirect("/user/settings/data-extraction");
+      }
+
+      // Verify export is completed and valid
+      if (!dataExportService.isExportValid(exportRecord)) {
+        setState({ error: "Export has expired or is not yet ready" });
+        return reply.redirect("/user/settings/data-extraction");
+      }
+
+      const user = await userService.getById(userId);
+      const filename = `rawfeed-export-${user?.username}-${new Date().toISOString().split("T")[0]}.zip`;
+
+      // Generate presigned URL with download headers
+      const downloadUrl = await s3Service.generatePresignedUrl(
+        exportRecord.s3_key!,
+        900, // 15 minutes
+        filename,
+        "application/zip",
+      );
+
+      // Redirect to presigned S3 URL for direct download
+      return reply.redirect(downloadUrl);
     },
   );
 

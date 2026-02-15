@@ -22,6 +22,7 @@ import Sentry from "@sentry/node";
 import { detectMode } from "./middleware/detectMode.ts";
 import fs from "fs/promises";
 import { initializeRSSScheduler } from "./scheduler/rss-scheduler";
+import { initializeExportWorker } from "./scheduler/export-worker";
 import redirectRoutes from "./routes/redirect";
 import exploreRoutes from "./routes/explore";
 import tagsRoutes from "./routes/tags";
@@ -175,6 +176,7 @@ const start = async () => {
     await server.listen({ port, host: "0.0.0.0" });
 
     initializeRSSScheduler(isDevelopment);
+    initializeExportWorker();
 
     server.log.info(`Server listening on port ${port}`);
   } catch (err) {

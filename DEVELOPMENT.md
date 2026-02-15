@@ -17,7 +17,7 @@ npm install
 cp .env.example .env
 
 # Edit .env with your configuration
-# Required: DATABASE_URL, COOKIE_SECRET, SESSION_SECRET
+# Required: COOKIE_SECRET, SESSION_SECRET
 
 # Run migrations
 npx knex migrate:latest

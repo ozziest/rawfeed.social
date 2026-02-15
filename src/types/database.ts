@@ -9,6 +9,18 @@ export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
   ? ColumnType<S, I | undefined, U>
   : ColumnType<T, T | undefined, T>;
 
+export interface DataExports {
+  completed_at: Date | null;
+  error_message: string | null;
+  expires_at: Date | null;
+  file_size: number | null;
+  id: string;
+  requested_at: Generated<Date | null>;
+  s3_key: string | null;
+  status: Generated<"completed" | "failed" | "pending" | "processing">;
+  user_id: string;
+}
+
 export interface Hashtags {
   created_at: Date | null;
   hashtag: string;
@@ -90,7 +102,10 @@ export interface Users {
   domain_verification_token: string | null;
   domain_verified_at: Date | null;
   email: string;
+  email_verification_token: string | null;
+  email_verification_token_expires_at: Date | null;
   id: string;
+  is_email_verified: Generated<number>;
   name: string;
   password: string;
   updated_at: Date | null;
@@ -98,6 +113,7 @@ export interface Users {
 }
 
 export interface DB {
+  data_exports: DataExports;
   hashtags: Hashtags;
   knex_migrations: KnexMigrations;
   knex_migrations_lock: KnexMigrationsLock;
