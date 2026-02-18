@@ -55,7 +55,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
 
   fastify.post(
     "/user/settings/profile",
-    { preHandler: [verifyToken, requireAuth] },
+    { preHandler: [fastify.csrfProtection, verifyToken, requireAuth] },
     async (request, reply) => {
       const { view, setValidation } = views(request, reply);
 
@@ -95,7 +95,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
 
   fastify.post(
     "/user/settings/domain",
-    { preHandler: [verifyToken, requireAuth] },
+    { preHandler: [fastify.csrfProtection, verifyToken, requireAuth] },
     async (request, reply) => {
       const { view, setValidation } = views(request, reply);
 
@@ -165,7 +165,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
 
   fastify.post(
     "/user/settings/domain/remove",
-    { preHandler: [verifyToken, requireAuth] },
+    { preHandler: [fastify.csrfProtection, verifyToken, requireAuth] },
     async (request, reply) => {
       const user = await userService.getById(request.loggedUser?.userId!);
       if (!user?.custom_domain) {
@@ -201,7 +201,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
 
   fastify.post(
     "/user/settings/domain/verify",
-    { preHandler: [verifyToken, requireAuth] },
+    { preHandler: [fastify.csrfProtection, verifyToken, requireAuth] },
     async (request, reply) => {
       const user = await userService.getById(request.loggedUser?.userId!);
 
@@ -269,7 +269,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
 
   fastify.post(
     "/user/settings/data-extraction/request",
-    { preHandler: [verifyToken, requireAuth] },
+    { preHandler: [fastify.csrfProtection, verifyToken, requireAuth] },
     async (request, reply) => {
       const userId = request.loggedUser?.userId!;
       const { setState } = views(request, reply);

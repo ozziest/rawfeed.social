@@ -13,6 +13,10 @@ const TABLE_NAME = "users";
 
 const insert = async (input: RegisterInput) => {
   const id = uuidv4();
+  const verificationToken = crypto.randomBytes(32).toString("hex");
+  const tokenExpiresAt = new Date();
+  tokenExpiresAt.setHours(tokenExpiresAt.getHours() + 24); // 24 hours from now
+
   await getKnex()
     .table(TABLE_NAME)
     .insert({
@@ -21,10 +25,12 @@ const insert = async (input: RegisterInput) => {
       username: input.username,
       email: input.email,
       password: await bcrypt.hash(input.password, 10),
+      email_verification_token: verificationToken,
+      email_verification_token_expires_at: tokenExpiresAt,
       created_at: new Date(),
       updated_at: new Date(),
     });
-  return id;
+  return { id, verificationToken };
 };
 
 const getByEmail = async (email: string) => {
@@ -158,6 +164,20 @@ const paginateBots = async () => {
     .limit(100);
 };
 
+const getByVerificationToken = async (token: string) => {
+  return await getKnex()
+    .table(TABLE_NAME)
+    .where("email_verification_token", token)
+    .first<Users | undefined>();
+};
+
+const verifyEmail = async (userId: string) => {
+  await update(userId, {
+    email_verification_token: null,
+    email_verification_token_expires_at: null,
+  });
+};
+
 export default loggerAll(
   {
     insert,
@@ -173,6 +193,8 @@ export default loggerAll(
     createRSSBot,
     paginateMembers,
     paginateBots,
+    getByVerificationToken,
+    verifyEmail,
   },
   "user.service",
 );

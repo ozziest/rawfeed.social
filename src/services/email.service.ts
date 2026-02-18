@@ -74,7 +74,54 @@ export const sendDataExportFailedEmail = async (
   }
 };
 
+export const sendVerificationEmail = async (
+  to: string,
+  username: string,
+  verificationUrl: string,
+): Promise<void> => {
+  try {
+    const options: CreateEmailOptions = {
+      from: FROM_EMAIL,
+      to,
+      subject: "Verify Your Email Address",
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2>Welcome to rawfeed.social!</h2>
+          <p>Hi ${username},</p>
+          <p>Thank you for creating an account. Please verify your email address to get started.</p>
+          <p style="margin: 30px 0;">
+            <a href="${verificationUrl}" 
+               style="background-color: #000000; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">
+              Verify Email Address
+            </a>
+          </p>
+          <p style="color: #666; font-size: 14px;">
+            Or copy and paste this link into your browser:<br>
+            <a href="${verificationUrl}" style="color: #2563eb;">${verificationUrl}</a>
+          </p>
+          <p style="color: #666; font-size: 14px;">
+            <strong>Important:</strong> This verification link will expire in 24 hours.
+          </p>
+          <p style="color: #666; font-size: 14px;">
+            If you didn't create an account on rawfeed.social, please ignore this email.
+          </p>
+        </div>
+      `,
+    };
+
+    if (process.env.NODE_ENV === "production") {
+      await resend.emails.send(options);
+    } else {
+      console.log(options.html);
+    }
+  } catch (error) {
+    logError(error);
+    throw error;
+  }
+};
+
 export default {
   sendDataExportReadyEmail,
   sendDataExportFailedEmail,
+  sendVerificationEmail,
 };

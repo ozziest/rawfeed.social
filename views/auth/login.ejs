@@ -11,6 +11,8 @@
 
     <!-- Form -->
     <form class="mt-8 space-y-6" action="/auth/login" method="post">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+
       <!-- Email -->
       <div>
         <label for="email" class="block text-sm font-medium text-gray-700">

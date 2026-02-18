@@ -43,7 +43,12 @@ export const USERNAME_SCHEMA = z
   .max(20)
   .regex(/^[a-z][a-z0-9-]*[a-z0-9]$/)
   .regex(/^(?!.*--)/)
-  .refine((username) => !RESERVED_USERNAMES.includes(username));
+  .refine((username) => !username.startsWith("rss_"), {
+    message: "This username prefix is reserved for automated accounts",
+  })
+  .refine((username) => !RESERVED_USERNAMES.includes(username), {
+    message: "This username is reserved and cannot be used",
+  });
 
 export const HASHTAG_VALIDATION = z
   .string()

@@ -11,6 +11,8 @@
 
     <!-- Form -->
     <form class="mt-8 space-y-6" action="/auth/register" method="post">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+
       <!-- Username -->
       <div>
         <label for="username" class="block text-sm font-medium text-gray-700">
@@ -23,6 +25,7 @@
             type="text"
             class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
             placeholder="johndoe"
+            value="<%= state?.username %>"
           />
         </div>
         <% if (validation?.username) { %>
@@ -42,6 +45,7 @@
             type="email"
             class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
             placeholder="you@example.com"
+            value="<%= state?.email %>"
           />
         </div>
         <% if (validation?.email) { %>

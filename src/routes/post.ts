@@ -33,7 +33,9 @@ export default async function postRoutes(fastify: FastifyInstance) {
 
   fastify.post(
     "/posts/create",
-    { preHandler: [verifyToken, requireAuth] },
+    {
+      preHandler: [fastify.csrfProtection, verifyToken, requireAuth],
+    },
     async (request, reply) => {
       const { view } = usePostContext(request, reply);
       const csrfToken = reply.generateCsrf();

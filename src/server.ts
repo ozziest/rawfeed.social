@@ -35,11 +35,19 @@ const isDevelopment = process.env.NODE_ENV !== "production";
 const server = Fastify({ logger: false, trustProxy: true });
 
 Sentry.setupFastifyErrorHandler(server);
+
+// Register cookie and formbody BEFORE csrf
+server.register(cookie, {
+  secret: process.env.APP_SECRET!,
+});
+server.register(fastifyFormbody);
+
+// Now register CSRF protection
 server.register(csrf, {
   cookieOpts: {
     signed: true,
     httpOnly: true,
-    sameSite: "strict",
+    sameSite: "lax",
   },
 });
 server.register(helmet, {
@@ -73,13 +81,9 @@ server.register(rateLimit, {
   max: 500,
   timeWindow: "15 minutes",
 });
-server.register(fastifyFormbody);
 server.register(pointOfView, {
   engine: { ejs },
   root: path.join(process.cwd(), "views"),
-});
-server.register(cookie, {
-  secret: process.env.APP_SECRET!,
 });
 server.register(jwt, {
   secret: process.env.JWT_SECRET!,
