@@ -14,7 +14,7 @@
         maxlength="400"
         rows="3"
         placeholder="What's on your mind?"
-        class="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+        class="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent resize-none"
       ><%= formData?.content || activeHashtag || '' %></textarea>
             
       <% if (validation?.content) { %>
@@ -29,7 +29,7 @@
         <select
           id="location"
           name="location"
-          class="text-sm text-gray-600 border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400"
+          class="text-sm text-gray-600 border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-black"
         >
           <option value="en" <%= (formData?.location === 'en' || !formData?.location) ? 'selected' : '' %>>
             English
@@ -51,7 +51,7 @@
 
       <button
         type="submit"
-        class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        class="bg-black hover:bg-gray-800 text-white font-medium px-4 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
       >
         Share
       </button>

@@ -24,66 +24,118 @@
         your consent under GDPR.
       </p>
 
-      <table class="w-full mt-4 border-collapse border border-gray-300">
-        <thead class="bg-gray-100">
-          <tr>
-            <th class="border border-gray-300 px-4 py-2 text-left">
-              Cookie Name
-            </th>
-            <th class="border border-gray-300 px-4 py-2 text-left">Purpose</th>
-            <th class="border border-gray-300 px-4 py-2 text-left">
-              Expiration
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="border border-gray-300 px-4 py-2">
-              <code>accessToken</code>
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              Maintains your login session and authenticates your requests
-            </td>
-            <td class="border border-gray-300 px-4 py-2">10 minutes</td>
-          </tr>
-          <tr class="bg-gray-50">
-            <td class="border border-gray-300 px-4 py-2">
-              <code>refreshToken</code>
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              Allows you to stay logged in without re-entering credentials
-            </td>
-            <td class="border border-gray-300 px-4 py-2">30 days</td>
-          </tr>
-          <tr>
-            <td class="border border-gray-300 px-4 py-2">
-              <code>_csrf</code>
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              Prevents cross-site request forgery attacks on forms you submit
-            </td>
-            <td class="border border-gray-300 px-4 py-2">Session</td>
-          </tr>
-          <tr class="bg-gray-50">
-            <td class="border border-gray-300 px-4 py-2">
-              <code>validation</code>
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              Displays form validation errors
-            </td>
-            <td class="border border-gray-300 px-4 py-2">1 hour</td>
-          </tr>
-          <tr>
-            <td class="border border-gray-300 px-4 py-2">
-              <code>state</code>
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              Stores application state messages
-            </td>
-            <td class="border border-gray-300 px-4 py-2">1 hour</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="overflow-x-auto -mx-2 sm:mx-0">
+        <table
+          class="w-full mt-4 border-collapse border border-gray-300 min-w-[640px]"
+        >
+          <thead class="bg-gray-100">
+            <tr>
+              <th
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-left text-xs sm:text-sm"
+              >
+                Cookie Name
+              </th>
+              <th
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-left text-xs sm:text-sm"
+              >
+                Purpose
+              </th>
+              <th
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-left text-xs sm:text-sm"
+              >
+                Expiration
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                <code>accessToken</code>
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                Maintains your login session and authenticates your requests
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                10 minutes
+              </td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                <code>refreshToken</code>
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                Allows you to stay logged in without re-entering credentials
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                30 days
+              </td>
+            </tr>
+            <tr>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                <code>_csrf</code>
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                Prevents cross-site request forgery attacks on forms you submit
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                Session
+              </td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                <code>validation</code>
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                Displays form validation errors
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                1 hour
+              </td>
+            </tr>
+            <tr>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                <code>state</code>
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                Stores application state messages
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                1 hour
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <p class="mt-4 text-sm">
         All Rawfeed cookies are set with the <code>httpOnly</code> and
@@ -108,7 +160,7 @@
         recognize you across websites.
         <a
           href="https://automattic.com/privacy/"
-          class="text-blue-600 hover:underline"
+          class="text-black hover:underline font-medium"
           >Learn about Gravatar's privacy</a
         >.
       </p>
@@ -122,7 +174,7 @@
         identifiers.
         <a
           href="https://www.cloudflare.com/privacypolicy/"
-          class="text-blue-600 hover:underline"
+          class="text-black hover:underline font-medium"
           >Learn about Cloudflare's cookies</a
         >.
       </p>
@@ -165,28 +217,28 @@
         <li>
           <a
             href="https://support.google.com/accounts/answer/61416"
-            class="text-blue-600 hover:underline"
+            class="text-black hover:underline font-medium"
             >Google Chrome</a
           >
         </li>
         <li>
           <a
             href="https://support.mozilla.org/en-US/kb/enhanced-tracking-protection-firefox-desktop"
-            class="text-blue-600 hover:underline"
+            class="text-black hover:underline font-medium"
             >Firefox</a
           >
         </li>
         <li>
           <a
             href="https://support.apple.com/en-us/HT201265"
-            class="text-blue-600 hover:underline"
+            class="text-black hover:underline font-medium"
             >Safari</a
           >
         </li>
         <li>
           <a
             href="https://support.microsoft.com/en-us/microsoft-edge/manage-cookies-in-microsoft-edge"
-            class="text-blue-600 hover:underline"
+            class="text-black hover:underline font-medium"
             >Microsoft Edge</a
           >
         </li>
@@ -245,7 +297,7 @@
       <p>
         For more information about how we use data collected through cookies and
         other methods, see our
-        <a href="/legal/privacy" class="text-blue-600 hover:underline"
+        <a href="/legal/privacy" class="text-black hover:underline font-medium"
           >Privacy Policy</a
         >.
       </p>
@@ -270,7 +322,7 @@
           Email:
           <a
             href="mailto:i.ozguradem@gmail.com"
-            class="text-blue-600 hover:underline"
+            class="text-black hover:underline font-medium"
             >i.ozguradem@gmail.com</a
           >
         </p>

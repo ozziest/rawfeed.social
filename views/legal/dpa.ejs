@@ -34,144 +34,230 @@
       <h3 class="text-lg font-semibold mb-3 mt-4">
         2.1 Infrastructure & Hosting
       </h3>
-      <table class="w-full mt-3 border-collapse border border-gray-300">
-        <thead class="bg-gray-100">
-          <tr>
-            <th class="border border-gray-300 px-4 py-2 text-left">Provider</th>
-            <th class="border border-gray-300 px-4 py-2 text-left">Purpose</th>
-            <th class="border border-gray-300 px-4 py-2 text-left">Location</th>
-            <th class="border border-gray-300 px-4 py-2 text-left">DPA</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="border border-gray-300 px-4 py-2">
-              <strong>DigitalOcean</strong>
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              Database (MySQL), Cache (Redis), Server hosting
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              Frankfurt, Germany (FRA1)
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              <a
-                href="https://www.digitalocean.com/legal/data-processing-agreement"
-                class="text-blue-600 hover:underline"
-                >DigitalOcean DPA</a
+      <div class="overflow-x-auto -mx-2 sm:mx-0">
+        <table
+          class="w-full mt-3 border-collapse border border-gray-300 min-w-[640px]"
+        >
+          <thead class="bg-gray-100">
+            <tr>
+              <th
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-left text-xs sm:text-sm"
               >
-            </td>
-          </tr>
-          <tr class="bg-gray-50">
-            <td class="border border-gray-300 px-4 py-2">
-              <strong>AWS</strong>
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              Database backups & disaster recovery
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              Frankfurt, Germany (EU-Central-1)
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              <a
-                href="https://aws.amazon.com/legal/aws-dpa/"
-                class="text-blue-600 hover:underline"
-                >AWS DPA</a
+                Provider
+              </th>
+              <th
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-left text-xs sm:text-sm"
               >
-            </td>
-          </tr>
-          <tr>
-            <td class="border border-gray-300 px-4 py-2">
-              <strong>Cloudflare</strong>
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              CDN, DDoS protection, DNS
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              Global (EU data centers)
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              <a
-                href="https://www.cloudflare.com/trust-hub/dpa/"
-                class="text-blue-600 hover:underline"
-                >Cloudflare DPA</a
+                Purpose
+              </th>
+              <th
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-left text-xs sm:text-sm"
               >
-            </td>
-          </tr>
-        </tbody>
-      </table>
+                Location
+              </th>
+              <th
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-left text-xs sm:text-sm"
+              >
+                DPA
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                <strong>DigitalOcean</strong>
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                Database (MySQL), Cache (Redis), Server hosting
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                Frankfurt, Germany (FRA1)
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                <a
+                  href="https://www.digitalocean.com/legal/data-processing-agreement"
+                  class="text-black hover:underline font-medium"
+                  >DigitalOcean DPA</a
+                >
+              </td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                <strong>AWS</strong>
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                Database backups & disaster recovery
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                Frankfurt, Germany (EU-Central-1)
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                <a
+                  href="https://aws.amazon.com/legal/aws-dpa/"
+                  class="text-black hover:underline font-medium"
+                  >AWS DPA</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                <strong>Cloudflare</strong>
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                CDN, DDoS protection, DNS
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                Global (EU data centers)
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                <a
+                  href="https://www.cloudflare.com/trust-hub/dpa/"
+                  class="text-black hover:underline font-medium"
+                  >Cloudflare DPA</a
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <h3 class="text-lg font-semibold mb-3 mt-4">
         2.2 Support & Monitoring Services
       </h3>
-      <table class="w-full mt-3 border-collapse border border-gray-300">
-        <thead class="bg-gray-100">
-          <tr>
-            <th class="border border-gray-300 px-4 py-2 text-left">Provider</th>
-            <th class="border border-gray-300 px-4 py-2 text-left">Purpose</th>
-            <th class="border border-gray-300 px-4 py-2 text-left">
-              Data Type
-            </th>
-            <th class="border border-gray-300 px-4 py-2 text-left">DPA</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="border border-gray-300 px-4 py-2">
-              <strong>Sentry</strong>
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              Error tracking & monitoring (optional)
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              Anonymized error logs, stack traces (NO PII)
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              <a
-                href="https://sentry.io/legal/dpa/"
-                class="text-blue-600 hover:underline"
-                >Sentry DPA</a
+      <div class="overflow-x-auto -mx-2 sm:mx-0">
+        <table
+          class="w-full mt-3 border-collapse border border-gray-300 min-w-[640px]"
+        >
+          <thead class="bg-gray-100">
+            <tr>
+              <th
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-left text-xs sm:text-sm"
               >
-            </td>
-          </tr>
-          <tr class="bg-gray-50">
-            <td class="border border-gray-300 px-4 py-2">
-              <strong>Resend</strong>
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              Email service for account notifications
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              Email address, notification content
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              <a
-                href="https://resend.com/terms"
-                class="text-blue-600 hover:underline"
-                >Resend Terms</a
+                Provider
+              </th>
+              <th
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-left text-xs sm:text-sm"
               >
-            </td>
-          </tr>
-          <tr>
-            <td class="border border-gray-300 px-4 py-2">
-              <strong>Gravatar</strong>
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              Avatar/profile picture service (if used)
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              Email hash (for gravatar lookup)
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              <a
-                href="https://automattic.com/privacy/"
-                class="text-blue-600 hover:underline"
-                >Automattic Privacy</a
+                Purpose
+              </th>
+              <th
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-left text-xs sm:text-sm"
               >
-            </td>
-          </tr>
-        </tbody>
-      </table>
+                Data Type
+              </th>
+              <th
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-left text-xs sm:text-sm"
+              >
+                DPA
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                <strong>Sentry</strong>
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                Error tracking & monitoring (optional)
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                Anonymized error logs, stack traces (NO PII)
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                <a
+                  href="https://sentry.io/legal/dpa/"
+                  class="text-black hover:underline font-medium"
+                  >Sentry DPA</a
+                >
+              </td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                <strong>Resend</strong>
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                Email service for account notifications
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                Email address, notification content
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                <a
+                  href="https://resend.com/terms"
+                  class="text-black hover:underline font-medium"
+                  >Resend Terms</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                <strong>Gravatar</strong>
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                Avatar/profile picture service (if used)
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                Email hash (for gravatar lookup)
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                <a
+                  href="https://automattic.com/privacy/"
+                  class="text-black hover:underline font-medium"
+                  >Automattic Privacy</a
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <section>
@@ -265,7 +351,9 @@
       </ul>
       <p class="mt-4">
         For requests related to these rights, see our
-        <a href="/legal/data-rights" class="text-blue-600 hover:underline"
+        <a
+          href="/legal/data-rights"
+          class="text-black hover:underline font-medium"
           >Data Subject Rights Instructions</a
         >.
       </p>
@@ -332,72 +420,118 @@
     <section>
       <h2 class="text-2xl font-bold mb-4">7. Data Retention Schedule</h2>
 
-      <table class="w-full mt-4 border-collapse border border-gray-300">
-        <thead class="bg-gray-100">
-          <tr>
-            <th class="border border-gray-300 px-4 py-2 text-left">
-              Data Type
-            </th>
-            <th class="border border-gray-300 px-4 py-2 text-left">
-              Retention Period
-            </th>
-            <th class="border border-gray-300 px-4 py-2 text-left">Purpose</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="border border-gray-300 px-4 py-2">
-              <strong>User Account Data</strong>
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              30 days after deletion (backup)
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              Permanent deletion window + recovery
-            </td>
-          </tr>
-          <tr class="bg-gray-50">
-            <td class="border border-gray-300 px-4 py-2">
-              <strong>Posts & Content</strong>
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              30 days after deletion (backup)
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              Permanent deletion window + recovery
-            </td>
-          </tr>
-          <tr>
-            <td class="border border-gray-300 px-4 py-2">
-              <strong>Access Logs</strong>
-            </td>
-            <td class="border border-gray-300 px-4 py-2">Up to 90 days</td>
-            <td class="border border-gray-300 px-4 py-2">
-              Security, debugging, legal compliance
-            </td>
-          </tr>
-          <tr class="bg-gray-50">
-            <td class="border border-gray-300 px-4 py-2">
-              <strong>Error Logs</strong>
-            </td>
-            <td class="border border-gray-300 px-4 py-2">Up to 90 days</td>
-            <td class="border border-gray-300 px-4 py-2">
-              Platform monitoring (anonymized)
-            </td>
-          </tr>
-          <tr>
-            <td class="border border-gray-300 px-4 py-2">
-              <strong>Session Tokens</strong>
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              10 minutes (access token), 30 days (refresh token)
-            </td>
-            <td class="border border-gray-300 px-4 py-2">
-              Active session management
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="overflow-x-auto -mx-2 sm:mx-0">
+        <table
+          class="w-full mt-4 border-collapse border border-gray-300 min-w-[640px]"
+        >
+          <thead class="bg-gray-100">
+            <tr>
+              <th
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-left text-xs sm:text-sm"
+              >
+                Data Type
+              </th>
+              <th
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-left text-xs sm:text-sm"
+              >
+                Retention Period
+              </th>
+              <th
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-left text-xs sm:text-sm"
+              >
+                Purpose
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                <strong>User Account Data</strong>
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                30 days after deletion (backup)
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                Permanent deletion window + recovery
+              </td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                <strong>Posts & Content</strong>
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                30 days after deletion (backup)
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                Permanent deletion window + recovery
+              </td>
+            </tr>
+            <tr>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                <strong>Access Logs</strong>
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                Up to 90 days
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                Security, debugging, legal compliance
+              </td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                <strong>Error Logs</strong>
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                Up to 90 days
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                Platform monitoring (anonymized)
+              </td>
+            </tr>
+            <tr>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                <strong>Session Tokens</strong>
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                10 minutes (access token), 30 days (refresh token)
+              </td>
+              <td
+                class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm"
+              >
+                Active session management
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <section>
@@ -415,7 +549,7 @@
         Users can lodge objections to new sub-processors by contacting
         <a
           href="mailto:i.ozguradem@gmail.com"
-          class="text-blue-600 hover:underline"
+          class="text-black hover:underline font-medium"
           >i.ozguradem@gmail.com</a
         >.
       </p>
@@ -491,7 +625,7 @@
           Email:
           <a
             href="mailto:i.ozguradem@gmail.com"
-            class="text-blue-600 hover:underline"
+            class="text-black hover:underline font-medium"
             >i.ozguradem@gmail.com</a
           >
         </p>
@@ -505,22 +639,28 @@
       <h2 class="text-2xl font-bold mb-4">13. Related Documents</h2>
       <ul class="list-disc pl-6 space-y-2">
         <li>
-          <a href="/legal/privacy" class="text-blue-600 hover:underline"
+          <a
+            href="/legal/privacy"
+            class="text-black hover:underline font-medium"
             >Privacy Policy</a
           >
         </li>
         <li>
-          <a href="/legal/terms" class="text-blue-600 hover:underline"
+          <a href="/legal/terms" class="text-black hover:underline font-medium"
             >Terms of Service</a
           >
         </li>
         <li>
-          <a href="/legal/data-rights" class="text-blue-600 hover:underline"
+          <a
+            href="/legal/data-rights"
+            class="text-black hover:underline font-medium"
             >Data Subject Rights Instructions</a
           >
         </li>
         <li>
-          <a href="/legal/cookies" class="text-blue-600 hover:underline"
+          <a
+            href="/legal/cookies"
+            class="text-black hover:underline font-medium"
             >Cookie Policy</a
           >
         </li>

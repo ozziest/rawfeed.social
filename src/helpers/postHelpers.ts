@@ -80,7 +80,7 @@ export const formatPostContent = (data: PostWithContent): string => {
         }
 
         displayText = escapeHtml(displayText);
-        return `<a href="/redirect/${safeCode}" target="_blank" rel="noopener noreferrer" class="transition-colors font-medium text-indigo-800 hover:underline hover:text-indigo-950">${displayText}</a>`;
+        return `<a href="/redirect/${safeCode}" target="_blank" rel="noopener noreferrer" class="transition-colors font-medium text-black hover:underline hover:text-gray-700">${displayText}</a>`;
       }
 
       return escapeHtml(part);
