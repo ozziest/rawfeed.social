@@ -12,8 +12,8 @@ import {
 } from "../helpers/dtos";
 import {
   CUSTOM_DOMAIN_SCHEMA,
+  DEFAULT_USERNAME_SCHEMA,
   PROFILE_UPDATE_SCHEMA,
-  USERNAME_SCHEMA,
   validate,
 } from "../helpers/validations";
 import { useViews } from "../helpers/useViews";
@@ -339,7 +339,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
     async (request, reply) => {
       const { username } = request.params as UserProfileParams;
 
-      const validation = validate(USERNAME_SCHEMA, username);
+      const validation = validate(DEFAULT_USERNAME_SCHEMA, username);
       if (
         validation.isNotValid &&
         !RSS_BOT_USERNAMES.includes(username || "")
@@ -377,7 +377,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
         return reply.status(404).view("404");
       }
 
-      const validation = validate(USERNAME_SCHEMA, username);
+      const validation = validate(DEFAULT_USERNAME_SCHEMA, username);
       if (
         validation.isNotValid &&
         !RSS_BOT_USERNAMES.includes(username || "")
