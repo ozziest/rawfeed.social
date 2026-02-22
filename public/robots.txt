@@ -80,3 +80,5 @@ Disallow: /
 User-agent: wget
 Disallow: /
 
+# Sitemap
+Sitemap: https://rawfeed.social/sitemap.xml

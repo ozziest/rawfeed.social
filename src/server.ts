@@ -23,11 +23,13 @@ import { detectMode } from "./middleware/detectMode.ts";
 import fs from "fs/promises";
 import { initializeRSSScheduler } from "./scheduler/rss-scheduler";
 import { initializeExportWorker } from "./scheduler/export-worker";
+import { initializeSitemapScheduler } from "./scheduler/sitemap-scheduler";
 import redirectRoutes from "./routes/redirect";
 import exploreRoutes from "./routes/explore";
 import tagsRoutes from "./routes/tags";
 import legalRoutes from "./routes/legal";
 import aboutRoutes from "./routes/about";
+import sitemapRoutes from "./routes/sitemap";
 import { timer } from "./helpers/timer";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
@@ -122,6 +124,7 @@ server.register(compress, {
 });
 
 server.addHook("onRequest", detectMode);
+server.register(sitemapRoutes);
 server.register(routes);
 server.register(redirectRoutes);
 server.register(authRoutes);
@@ -183,6 +186,7 @@ const start = async () => {
 
     initializeRSSScheduler(isDevelopment);
     initializeExportWorker();
+    initializeSitemapScheduler();
 
     server.log.info(`Server listening on port ${port}`);
   } catch (err) {
