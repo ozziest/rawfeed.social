@@ -2,6 +2,30 @@ import { FastifyInstance } from "fastify";
 import linkService from "../services/link.service";
 import { logError } from "../helpers/common";
 
+function addUtmParameters(url: string): string {
+  try {
+    const urlObj = new URL(url);
+
+    // If the link already has UTM parameters, respect them and don't modify
+    if (
+      urlObj.searchParams.has("utm_source") ||
+      urlObj.searchParams.has("utm_medium") ||
+      urlObj.searchParams.has("utm_campaign")
+    ) {
+      return url;
+    }
+
+    // Add minimal UTM parameters
+    urlObj.searchParams.append("utm_source", "rawfeed.social");
+    urlObj.searchParams.append("utm_medium", "redirect");
+
+    return urlObj.toString();
+  } catch (error) {
+    // If URL parsing fails, return original URL
+    return url;
+  }
+}
+
 export default async function redirectRoutes(fastify: FastifyInstance) {
   fastify.get("/redirect/:code", { preHandler: [] }, async (request, reply) => {
     const { code } = request.params as { code: string };
@@ -24,7 +48,8 @@ export default async function redirectRoutes(fastify: FastifyInstance) {
 
       await linkService.incCount(link.id);
 
-      return reply.redirect(link.link);
+      const urlWithUtm = addUtmParameters(link.link);
+      return reply.redirect(urlWithUtm);
     } catch (error) {
       logError(error as Error, {
         code,
