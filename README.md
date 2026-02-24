@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://rawfeed.social/public/favicon.svg" alt="Rawfeed Logo" width="96" height="96" />
+  <img src="./public/favicon.svg" alt="Rawfeed Logo" width="96" height="96" />
 
   <h1>Rawfeed</h1>
 
