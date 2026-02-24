@@ -1,10 +1,17 @@
-# Rawfeed
+<div align="center">
+  <img src="https://rawfeed.social/public/favicon.svg" alt="Rawfeed Logo" width="96" height="96" />
 
-**Reclaiming Freedom in Social Media**
+  <h1>Rawfeed</h1>
 
-Rawfeed is a chronological, algorithm-free microblogging platform built on the principle that users—not corporations—should control what they see and share.
+  <p><strong>Reclaiming Freedom in Social Media</strong></p>
+
+  <p>A chronological, algorithm-free microblogging platform built on the principle that<br/>users — not corporations — should control what they see and share.</p>
+
+  <br/>
 
 ![RawFeed Screenshot](./screenshot.png)
+
+</div>
 
 ## The Problem
 
