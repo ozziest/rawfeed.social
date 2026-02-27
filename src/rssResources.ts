@@ -9,7 +9,7 @@ export const RSS_RESOURCES: RSSSource[] = [
     category: "tech",
     language: "en",
     updateFrequency: "0 * * * *",
-    svg: "/public/images/rss/rss_hacker_news.svg",
+    svg: "/public/images/rss/rss.svg",
   },
   {
     username: "rss_github_blog",
@@ -19,7 +19,7 @@ export const RSS_RESOURCES: RSSSource[] = [
     category: "tech",
     language: "en",
     updateFrequency: "0 * * * *",
-    svg: "/public/images/rss/github.svg",
+    svg: "/public/images/rss/rss.svg",
   },
   {
     username: "rss_nasa_new_releases",
@@ -29,7 +29,7 @@ export const RSS_RESOURCES: RSSSource[] = [
     category: "science",
     language: "en",
     updateFrequency: "0 * * * *",
-    svg: "/public/images/rss/nasa.svg",
+    svg: "/public/images/rss/rss.svg",
   },
   {
     username: "rss_nasa_ss",
@@ -39,7 +39,7 @@ export const RSS_RESOURCES: RSSSource[] = [
     category: "science",
     language: "en",
     updateFrequency: "0 * * * *",
-    svg: "/public/images/rss/nasa.svg",
+    svg: "/public/images/rss/rss.svg",
   },
   {
     username: "rss_nature",
@@ -49,7 +49,7 @@ export const RSS_RESOURCES: RSSSource[] = [
     category: "science",
     language: "en",
     updateFrequency: "0 * * * *",
-    svg: "/public/images/rss/nature.svg",
+    svg: "/public/images/rss/rss.svg",
   },
   {
     username: "rss_gamespot",
@@ -59,7 +59,7 @@ export const RSS_RESOURCES: RSSSource[] = [
     category: "gaming",
     language: "en",
     updateFrequency: "0 * * * *",
-    svg: "/public/images/rss/gamespot.svg",
+    svg: "/public/images/rss/rss.svg",
   },
   {
     username: "rss_ooh_directory",
@@ -69,7 +69,7 @@ export const RSS_RESOURCES: RSSSource[] = [
     category: "blog",
     language: "en",
     updateFrequency: "0 */4 * * *",
-    svg: "/public/images/rss/ooh_directory.svg",
+    svg: "/public/images/rss/rss.svg",
   },
   {
     username: "rss_mserdark_blog",
