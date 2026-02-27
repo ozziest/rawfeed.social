@@ -1,0 +1,34 @@
+name: CDN
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  sync:
+    name: Sync static assets to R2
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js 24.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 24.x
+
+      - name: Install
+        run: npm install
+
+      - name: Build Tailwind CSS
+        run: npm run tailwind:build
+
+      - name: Sync static assets to Cloudflare R2
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: |
+          aws s3 sync ./public s3://${{ secrets.R2_BUCKET_NAME }}/public \
+            --endpoint-url https://${{ secrets.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com \
+            --region auto \
+            --cache-control "public, max-age=3600" \
+            --delete

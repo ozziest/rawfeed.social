@@ -1,4 +1,5 @@
 import { RSSSource } from "./types/shared";
+import { asset } from "./helpers/asset";
 
 export const RSS_RESOURCES: RSSSource[] = [
   {
@@ -9,7 +10,7 @@ export const RSS_RESOURCES: RSSSource[] = [
     category: "tech",
     language: "en",
     updateFrequency: "0 * * * *",
-    svg: "/public/images/rss/rss.svg",
+    svg: asset("/public/images/rss/rss.svg"),
   },
   {
     username: "rss_github_blog",
@@ -19,7 +20,7 @@ export const RSS_RESOURCES: RSSSource[] = [
     category: "tech",
     language: "en",
     updateFrequency: "0 * * * *",
-    svg: "/public/images/rss/rss.svg",
+    svg: asset("/public/images/rss/rss.svg"),
   },
   {
     username: "rss_nasa_new_releases",
@@ -29,7 +30,7 @@ export const RSS_RESOURCES: RSSSource[] = [
     category: "science",
     language: "en",
     updateFrequency: "0 * * * *",
-    svg: "/public/images/rss/rss.svg",
+    svg: asset("/public/images/rss/rss.svg"),
   },
   {
     username: "rss_nasa_ss",
@@ -39,7 +40,7 @@ export const RSS_RESOURCES: RSSSource[] = [
     category: "science",
     language: "en",
     updateFrequency: "0 * * * *",
-    svg: "/public/images/rss/rss.svg",
+    svg: asset("/public/images/rss/rss.svg"),
   },
   {
     username: "rss_nature",
@@ -49,7 +50,7 @@ export const RSS_RESOURCES: RSSSource[] = [
     category: "science",
     language: "en",
     updateFrequency: "0 * * * *",
-    svg: "/public/images/rss/rss.svg",
+    svg: asset("/public/images/rss/rss.svg"),
   },
   {
     username: "rss_gamespot",
@@ -59,7 +60,7 @@ export const RSS_RESOURCES: RSSSource[] = [
     category: "gaming",
     language: "en",
     updateFrequency: "0 * * * *",
-    svg: "/public/images/rss/rss.svg",
+    svg: asset("/public/images/rss/rss.svg"),
   },
   {
     username: "rss_ooh_directory",
@@ -69,7 +70,7 @@ export const RSS_RESOURCES: RSSSource[] = [
     category: "blog",
     language: "en",
     updateFrequency: "0 */4 * * *",
-    svg: "/public/images/rss/rss.svg",
+    svg: asset("/public/images/rss/rss.svg"),
   },
   {
     username: "rss_mserdark_blog",
@@ -79,7 +80,7 @@ export const RSS_RESOURCES: RSSSource[] = [
     category: "blog",
     language: "tr",
     updateFrequency: "0 0 * * *",
-    svg: "/public/images/rss/rss.svg",
+    svg: asset("/public/images/rss/rss.svg"),
   },
 ];
 

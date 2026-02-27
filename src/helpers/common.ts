@@ -4,6 +4,7 @@ import { Users } from "../types/database";
 import { RSS_RESOURCES } from "../rssResources";
 import { POST_SIZE } from "../consts";
 import { PostWithContent } from "../types/relations";
+import { asset } from "./asset";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
@@ -27,7 +28,7 @@ export const getAvatar = (user: Users) => {
   if (resource) {
     return resource.svg;
   }
-  return "/public/images/default_avatar.svg";
+  return asset("/public/images/default_avatar.svg");
 };
 
 export const logError = (

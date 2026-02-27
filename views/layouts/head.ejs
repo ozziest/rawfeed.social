@@ -2,11 +2,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title><%= title || 'rawfeed.social' %></title>
-  <link rel="icon" type="image/svg+xml" href="/public/favicon.svg" />
-  <link rel="stylesheet" href="/public/css/tailwind.css" />
-  <script src="/public/js/htmx.min.js"></script>
-  <script src="/public/js/simple-cookie-banner.js"></script>
-  <script src="/public/js/app.js"></script>
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="<%= asset('/public/favicon.svg') %>"
+  />
+  <link rel="stylesheet" href="<%= asset('/public/css/tailwind.css') %>" />
+  <script src="<%= asset('/public/js/htmx.min.js') %>"></script>
+  <script src="<%= asset('/public/js/simple-cookie-banner.js') %>"></script>
+  <script src="<%= asset('/public/js/app.js') %>"></script>
   <meta name="robots" content="index, follow" />
   <meta name="googlebot" content="index, follow, noarchive" />
   <meta name="googlebot-news" content="nosnippet" />
@@ -18,19 +22,13 @@
     property="og:description"
     content="Chronological feeds without algorithmic manipulation"
   />
-  <meta
-    property="og:image"
-    content="https://rawfeed.social/public/images/og.png"
-  />
+  <meta property="og:image" content="<%= asset('/public/images/og.png') %>" />
   <meta property="og:url" content="https://rawfeed.social" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="rawfeed.social - Ethical Microblogging" />
   <meta name="twitter:description" content="Ethical microblogging platform" />
-  <meta
-    name="twitter:image"
-    content="https://rawfeed.social/public/images/og.png"
-  />
+  <meta name="twitter:image" content="<%= asset('/public/images/og.png') %>" />
 
   <!-- views/layout.ejs -->
   <% if (isProd) { %>
