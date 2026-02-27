@@ -31,8 +31,10 @@ import legalRoutes from "./routes/legal";
 import aboutRoutes from "./routes/about";
 import sitemapRoutes from "./routes/sitemap";
 import { timer } from "./helpers/timer";
+import { asset } from "./helpers/useViews";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
+const assetBaseUrl = (process.env.ASSET_BASE_URL || "").replace(/\/$/, "");
 
 const server = Fastify({ logger: false, trustProxy: true });
 
@@ -58,15 +60,28 @@ server.register(helmet, {
     : {
         directives: {
           defaultSrc: ["'self'"],
-          styleSrc: ["'self'", "'unsafe-inline'"],
-          scriptSrc: ["'self'", "https://cloud.umami.is"],
-          imgSrc: ["'self'", "data:", "https://www.gravatar.com"],
+          styleSrc: [
+            "'self'",
+            "'unsafe-inline'",
+            ...(assetBaseUrl ? [assetBaseUrl] : []),
+          ],
+          scriptSrc: [
+            "'self'",
+            "https://cloud.umami.is",
+            ...(assetBaseUrl ? [assetBaseUrl] : []),
+          ],
+          imgSrc: [
+            "'self'",
+            "data:",
+            "https://www.gravatar.com",
+            ...(assetBaseUrl ? [assetBaseUrl] : []),
+          ],
           connectSrc: [
             "'self'",
             "https://cloud.umami.is",
             "https://api-gateway.umami.dev",
           ],
-          fontSrc: ["'self'"],
+          fontSrc: ["'self'", ...(assetBaseUrl ? [assetBaseUrl] : [])],
           objectSrc: ["'none'"],
           mediaSrc: ["'none'"],
           frameSrc: ["'none'"],
@@ -155,6 +170,7 @@ server.setErrorHandler((error: any, request, reply) => {
         stack: error.stack,
         statusCode,
       },
+      asset,
     });
   }
 
@@ -164,6 +180,7 @@ server.setErrorHandler((error: any, request, reply) => {
       statusCode === 500
         ? "Something went wrong on our end. Please try again later."
         : error.message,
+    asset,
   });
 });
 
@@ -176,7 +193,7 @@ server.setNotFoundHandler((request, reply) => {
     });
   }
 
-  return reply.code(404).view("404");
+  return reply.code(404).view("404", { asset });
 });
 
 const start = async () => {
