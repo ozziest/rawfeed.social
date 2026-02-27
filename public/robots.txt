@@ -3,6 +3,7 @@
 
 User-agent: *
 Allow: /
+Disallow: /redirect/
 
 # Block AI Training Bots
 User-agent: GPTBot
