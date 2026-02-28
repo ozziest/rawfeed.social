@@ -39,6 +39,17 @@
       <p class="text-gray-600 leading-relaxed mb-3">
         <%= profileUser?.bio || domainUser?.bio %>
       </p>
+      <% const _profileLink = (profileUser || domainUser)?.link; %>
+      <% if (_profileLink) { %>
+      <a
+        href="<%= _profileLink %>"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-1 text-sm text-blue-600 hover:underline break-all"
+      >
+        <%= _profileLink.replace(/^https?:\/\//, '') %>
+      </a>
+      <% } %>
       <!-- <div class="flex gap-4 text-sm text-gray-500">
         <span><strong class="text-gray-900">247</strong> gönderi</span>
         <span><strong class="text-gray-900">1.2K</strong> takipçi</span>
