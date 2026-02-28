@@ -5,6 +5,7 @@ import {
   generateStaticSitemap,
   generateUsersSitemap,
   generateHashtagsSitemap,
+  generateCustomDomainSitemap,
 } from "../helpers/sitemapGenerator";
 
 /**
@@ -43,30 +44,49 @@ export default async function sitemapRoutes(fastify: FastifyInstance) {
   fastify.get(
     "/sitemap.xml",
     async (request: FastifyRequest, reply: FastifyReply) => {
+      if (request.mode === "custom") {
+        const protocol = request.protocol;
+        const hostname = request.hostname;
+        const domainUrl = `${protocol}://${hostname}`;
+        const cacheKey = `sitemap:custom:${hostname}`;
+        await serveSitemap(reply, cacheKey, async () =>
+          generateCustomDomainSitemap(domainUrl),
+        );
+        return;
+      }
       await serveSitemap(reply, "sitemap:index", generateSitemapIndex);
     },
   );
 
-  // Static pages sitemap
+  // Static pages sitemap — not available on custom domains
   fastify.get(
     "/sitemap-static.xml",
     async (request: FastifyRequest, reply: FastifyReply) => {
+      if (request.mode === "custom") {
+        return reply.status(404).send({ error: "Not found" });
+      }
       await serveSitemap(reply, "sitemap:static", generateStaticSitemap);
     },
   );
 
-  // Users sitemap
+  // Users sitemap — not available on custom domains
   fastify.get(
     "/sitemap-users.xml",
     async (request: FastifyRequest, reply: FastifyReply) => {
+      if (request.mode === "custom") {
+        return reply.status(404).send({ error: "Not found" });
+      }
       await serveSitemap(reply, "sitemap:users", generateUsersSitemap);
     },
   );
 
-  // Hashtags sitemap
+  // Hashtags sitemap — not available on custom domains
   fastify.get(
     "/sitemap-hashtags.xml",
     async (request: FastifyRequest, reply: FastifyReply) => {
+      if (request.mode === "custom") {
+        return reply.status(404).send({ error: "Not found" });
+      }
       await serveSitemap(reply, "sitemap:hashtags", generateHashtagsSitemap);
     },
   );
