@@ -9,7 +9,7 @@ jobs:
     name: Sync static assets to R2
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
 
       - name: Use Node.js 24.x
         uses: actions/setup-node@v3
