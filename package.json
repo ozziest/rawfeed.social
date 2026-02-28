@@ -50,7 +50,7 @@
     "knex": "^3.1.0",
     "mysql2": "^3.16.1",
     "nanoid": "^3.3.7",
-    "resend": "^6.9.2",
+    "resend": "^6.9.3",
     "rss-parser": "^3.13.0",
     "sanitize-html": "^2.17.0",
     "uuid": "^13.0.0",
