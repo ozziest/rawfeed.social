@@ -64,7 +64,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.10.9",
     "@types/sanitize-html": "^2.16.0",
-    "autoprefixer": "^10.4.23",
+    "autoprefixer": "^10.4.27",
     "commitizen": "^4.3.1",
     "concurrently": "^9.2.1",
     "cz-conventional-changelog": "^3.3.0",
