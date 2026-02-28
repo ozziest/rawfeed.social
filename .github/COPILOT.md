@@ -111,12 +111,12 @@ Files to update when making changes
 - API/logic → `src/services/*`, `src/routes/*`.
 - Views → `views/` (and `views/partials/` for fragments).
 - DB schema → `migrations/` + run `npm run types`.
-- Documentation → `README.md` and `DEVELOPMENT.md` if workflow or CLI changes.
+- Documentation → `README.md` and `CONTRIBUTING.md` if workflow or CLI changes.
 
 If unsure, prefer the existing patterns in `src/` over suggesting a new architecture.
 
 Contact / extra context
 
-- Look at `DEVELOPMENT.md` and existing code in `src/` for implementation examples.
+- Look at `CONTRIBUTING.md` and existing code in `src/` for implementation examples.
 
 Thank you — follow these rules when generating or editing code for Rawfeed. Keep changes small, tested, and consistent with the project's server-rendered, HTMX-first approach.

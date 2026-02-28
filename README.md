@@ -166,7 +166,7 @@ This is idealistic. This is difficult. Many have tried and failed. But the alter
 
 ### How You Can Help
 
-- **Developers**: See [DEVELOPMENT.md](./DEVELOPMENT.md) for technical details
+- **Developers**: See [CONTRIBUTING.md](./CONTRIBUTING.md) for technical details
 - **Designers**: Help make the platform beautiful and accessible
 - **Writers**: Improve documentation and communication
 - **Testers**: Use the platform, report bugs, suggest improvements

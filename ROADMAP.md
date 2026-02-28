@@ -15,7 +15,7 @@
 ## Phase 2: Building Community
 
 - [x] Write comprehensive README (vision, principles, tech stack)
-- [x] Create DEVELOPMENT.md
+- [x] Create CONTRIBUTING.md
 - [x] Add Code of Conduct
 - [x] Create issue templates
 - [x] Create PR templates
