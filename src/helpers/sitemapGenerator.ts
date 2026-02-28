@@ -185,6 +185,22 @@ export async function generateHashtagsSitemap(): Promise<string> {
 }
 
 /**
+ * Generates a minimal sitemap for a custom domain profile
+ */
+export function generateCustomDomainSitemap(domainUrl: string): string {
+  const now = new Date().toISOString();
+  const urls: SitemapUrl[] = [
+    {
+      loc: domainUrl,
+      changefreq: "daily",
+      priority: 1.0,
+      lastmod: now,
+    },
+  ];
+  return generateSitemapXml(urls);
+}
+
+/**
  * Generates sitemap index pointing to all sub-sitemaps
  */
 export async function generateSitemapIndex(): Promise<string> {
