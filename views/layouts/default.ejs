@@ -2,7 +2,8 @@
 <html lang="en">
   <%- include('head') %>
   <body class="bg-gray-100 text-gray-900">
-    <%- include('../partials/navbar') %> <%- body %> <%-
-    include('../partials/footer') %>
+    <%- include('../partials/navbar') %> <%- body %> <% if (mode === 'custom') {
+    %> <%- include('../partials/footer-custom') %> <% } else { %> <%-
+    include('../partials/footer') %> <% } %>
   </body>
 </html>
