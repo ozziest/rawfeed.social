@@ -358,11 +358,17 @@ export default async function userRoutes(fastify: FastifyInstance) {
       postService.incViews(posts);
 
       const { view } = views(request, reply);
+      const profileUser = request.profileUser!;
       return view("profile", {
         posts,
         csrfToken: reply.generateCsrf(),
-        nextCursorUserId: request.profileUser?.id,
+        nextCursorUserId: profileUser.id,
         nextCursor: nextCursor(posts),
+        title: `${profileUser.name} (@${profileUser.username}) - RawFeed`,
+        description:
+          profileUser.bio ||
+          `View ${profileUser.name}'s posts on RawFeed - a chronological microblogging platform.`,
+        canonical: `https://rawfeed.social/u/${profileUser.username}`,
       });
     },
   );

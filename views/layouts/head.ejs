@@ -1,7 +1,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title><%= title || 'rawfeed.social' %></title>
+  <title><%= title %></title>
+  <meta name="description" content="<%= description %>" />
+  <meta name="keywords" content="<%= keywords  %>" />
+  <% if (typeof canonical !== 'undefined' && canonical) { %>
+  <link rel="canonical" href="<%= canonical %>" />
+  <% } %>
   <link
     rel="icon"
     type="image/svg+xml"
@@ -17,17 +22,29 @@
 
   <meta property="og:site_name" content="rawfeed.social" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="rawfeed.social - Ethical Microblogging" />
+  <meta
+    property="og:title"
+    content="<%= title || 'RawFeed - Chronological Microblogging Without Algorithmic Manipulation' %>"
+  />
   <meta
     property="og:description"
-    content="Chronological feeds without algorithmic manipulation"
+    content="<%= description || 'Open-source microblogging with chronological RSS feeds and no algorithmic manipulation.' %>"
   />
   <meta property="og:image" content="<%= asset('/public/images/og.png') %>" />
-  <meta property="og:url" content="https://rawfeed.social" />
+  <meta
+    property="og:url"
+    content="<%= typeof canonical !== 'undefined' && canonical ? canonical : 'https://rawfeed.social' %>"
+  />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="rawfeed.social - Ethical Microblogging" />
-  <meta name="twitter:description" content="Ethical microblogging platform" />
+  <meta
+    name="twitter:title"
+    content="<%= title || 'RawFeed - Chronological Microblogging Without Algorithmic Manipulation' %>"
+  />
+  <meta
+    name="twitter:description"
+    content="<%= description || 'Open-source microblogging with chronological RSS feeds and no algorithmic manipulation.' %>"
+  />
   <meta name="twitter:image" content="<%= asset('/public/images/og.png') %>" />
 
   <!-- views/layout.ejs -->
