@@ -120,7 +120,24 @@ export const PROFILE_UPDATE_SCHEMA = z.object({
     .trim()
     .max(2048)
     .optional()
-    .refine((val) => !val || /^https?:\/\/.+/.test(val), {
+    .refine((val) => {
+      if (!val) {
+        // Allow undefined or empty string
+        return true;
+      }
+
+      const parsed = z.string().url().safeParse(val);
+      if (!parsed.success) {
+        return false;
+      }
+
+      try {
+        const url = new URL(val);
+        return url.protocol === "http:" || url.protocol === "https:";
+      } catch {
+        return false;
+      }
+    }, {
       message: "Link must be a valid URL starting with http:// or https://",
     }),
 });
