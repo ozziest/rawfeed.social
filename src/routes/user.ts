@@ -69,6 +69,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
       await userService.update(request.loggedUser?.userId!, {
         name: input.name,
         bio: input.bio,
+        link: input.link || null,
       });
 
       return reply.redirect("/user/settings");

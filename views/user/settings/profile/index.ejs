@@ -53,6 +53,26 @@
         <% } %>
       </div>
 
+      <div>
+        <label for="link" class="block text-sm font-medium text-gray-900 mb-2">
+          Website / Link
+        </label>
+        <input
+          type="url"
+          id="link"
+          name="link"
+          value="<%= user?.link || '' %>"
+          placeholder="https://yourwebsite.com"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition"
+        />
+        <p class="text-xs text-gray-500 mt-1">
+          Must start with http:// or https://
+        </p>
+        <% if (validation?.link) { %>
+        <div class="text-red-700 text-sm my-1"><%= validation.link %></div>
+        <% } %>
+      </div>
+
       <div class="flex gap-3">
         <button
           type="submit"

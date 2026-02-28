@@ -26,6 +26,7 @@ export type CustomDomainInput = {
 export type ProfileUpdateInput = {
   name: string;
   bio: string;
+  link?: string;
 };
 
 export type HashtagViewParams = {
