@@ -30,20 +30,29 @@ export default async function routes(fastify: FastifyInstance) {
         bots,
         nextCursor: nextCursor(posts),
         csrfToken: reply.generateCsrf(),
+        canonical: "https://rawfeed.social/",
       });
     }
 
     const { view } = userViews(request, reply);
+    const domainUser = request.domainUser!;
     const posts = await postService.getItems({
-      userId: request.domainUser?.id!,
+      userId: domainUser.id,
     });
     postService.incViews(posts);
 
     return view("index.ejs", {
       posts,
-      nextCursorUserId: request.domainUser?.id!,
+      nextCursorUserId: domainUser.id,
       nextCursor: nextCursor(posts),
       csrfToken: reply.generateCsrf(),
+      title: `${domainUser.name} - ${domainUser.custom_domain}`,
+      description:
+        domainUser.bio ||
+        `View ${domainUser.name}'s posts on RawFeed - a chronological microblogging platform.`,
+      canonical: domainUser.custom_domain
+        ? `https://${domainUser.custom_domain}`
+        : `https://rawfeed.social/u/${domainUser.username}`,
     });
   });
 }

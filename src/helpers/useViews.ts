@@ -21,7 +21,12 @@ export const useViews = (options: UseViewsOptions) => {
       return reply.view(
         `${prefix}/${name}`,
         {
-          title: "rawfeed.social",
+          title:
+            "RawFeed - Chronological Microblogging Without Algorithmic Manipulation",
+          description:
+            "RawFeed is an open-source microblogging platform with chronological feeds, no algorithmic manipulation, and full RSS integration.",
+          keywords:
+            "microblogging, chronological feed, RSS, open-source, social network, no algorithm, rawfeed",
           validation: validation || {},
           state: state || {},
           formData: {},
