@@ -39,7 +39,3 @@ export type PostQueryParams = {
   id?: string;
   followingUserIds?: string[];
 };
-
-export type FollowQueryParams = {
-  cursor?: string;
-};
