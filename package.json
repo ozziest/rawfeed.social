@@ -1,7 +1,20 @@
 {
   "name": "rawfeed.social",
   "version": "0.1.0",
+  "description": "A chronological, algorithm-free social RSS feed aggregator and microblogging platform.",
   "private": true,
+  "license": "AGPL-3.0",
+  "author": "rawfeed.social",
+  "keywords": [
+    "microblogging",
+    "rss",
+    "social",
+    "fastify",
+    "htmx"
+  ],
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "scripts": {
     "dev": "concurrently \"npm run dev:server\" \"npm run tailwind:watch\"",
     "dev:server": "ts-node-dev --respawn --transpile-only src/server.ts",
