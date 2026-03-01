@@ -206,7 +206,7 @@ const start = async () => {
     const port = Number(process.env.APP_PORT) || 3000;
     await server.listen({ port, host: "0.0.0.0" });
 
-    await blogService.clearCache();
+    blogService.clearCache();
 
     initializeRSSScheduler(isDevelopment);
     initializeExportWorker();

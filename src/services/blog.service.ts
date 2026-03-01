@@ -127,10 +127,20 @@ async function getPost(slug: string): Promise<Post | null> {
  * cached HTML is never served after a deployment.
  */
 async function clearCache(): Promise<void> {
-  const keys = await redis.keys("blog*");
-  if (keys.length > 0) {
-    await redis.del(...keys);
-  }
+  let cursor = "0";
+  do {
+    const [nextCursor, keys] = await redis.scan(
+      cursor,
+      "MATCH",
+      "blog:*",
+      "COUNT",
+      100,
+    );
+    cursor = nextCursor;
+    if (keys.length > 0) {
+      await redis.del(...keys);
+    }
+  } while (cursor !== "0");
 }
 
 export default { getAllPosts, getPost, clearCache };
