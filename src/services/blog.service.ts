@@ -4,9 +4,7 @@ import matter from "gray-matter";
 import { marked } from "marked";
 import { cache, redis } from "../helpers/cache";
 import { sanitizeBlogHtml } from "../helpers/security";
-
-const BLOG_DIR = path.join(process.cwd(), "blog", "posts");
-const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+import { BLOG_DIR, BLOG_SLUG_PATTERN } from "../consts";
 const TTL_SECONDS =
   process.env.NODE_ENV === "production" ? 60 * 60 * 24 * 7 : 1;
 
@@ -40,7 +38,7 @@ async function getAllPosts(): Promise<PostMeta[]> {
     for (const file of files) {
       if (!file.endsWith(".md")) continue;
       const slug = file.replace(/\.md$/, "");
-      if (!SLUG_RE.test(slug)) continue;
+      if (!BLOG_SLUG_PATTERN.test(slug)) continue;
 
       const raw = await fs.readFile(path.join(BLOG_DIR, file), "utf-8");
       const { data } = matter(raw);
@@ -67,7 +65,7 @@ async function getAllPosts(): Promise<PostMeta[]> {
  */
 async function getPost(slug: string): Promise<Post | null> {
   // Reject slugs that could be used for directory traversal or are invalid
-  if (!SLUG_RE.test(slug)) return null;
+  if (!BLOG_SLUG_PATTERN.test(slug)) return null;
 
   const htmlKey = `blog:${slug}:html`;
   const metaKey = `blog:${slug}:meta`;

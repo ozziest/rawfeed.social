@@ -3,9 +3,7 @@ import path from "path";
 import matter from "gray-matter";
 import { getKnex } from "../db/connection";
 import { Users, Hashtags } from "../types/database";
-
-const BLOG_DIR = path.join(process.cwd(), "blog", "posts");
-const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+import { BLOG_DIR, BLOG_SLUG_PATTERN } from "../consts";
 
 const APP_URL = process.env.APP_URL || "https://rawfeed.social";
 
@@ -214,7 +212,7 @@ export async function generateBlogSitemap(): Promise<string> {
   for (const file of files) {
     if (!file.endsWith(".md")) continue;
     const slug = file.replace(/\.md$/, "");
-    if (!SLUG_RE.test(slug)) continue;
+    if (!BLOG_SLUG_PATTERN.test(slug)) continue;
 
     try {
       const raw = await fs.readFile(path.join(BLOG_DIR, file), "utf-8");
