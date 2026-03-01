@@ -9,7 +9,7 @@
 
   <br/>
 
-![RawFeed Screenshot](./screenshot.png)
+![Rawfeed Screenshot](./screenshot.png)
 
 </div>
 

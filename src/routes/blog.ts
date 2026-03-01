@@ -18,9 +18,9 @@ export default async function blogRoutes(fastify: FastifyInstance) {
       const posts = await blogService.getAllPosts();
       return view("blog/index.ejs", {
         posts,
-        title: "Blog — RawFeed",
+        title: "Blog — Rawfeed",
         description:
-          "Thoughts, guides, and updates from the RawFeed team on open feeds, decentralisation, and the future of social.",
+          "Thoughts, guides, and updates from the Rawfeed team on open feeds, decentralisation, and the future of social.",
       });
     },
   );
@@ -40,7 +40,7 @@ export default async function blogRoutes(fastify: FastifyInstance) {
 
       return view("blog/post.ejs", {
         post,
-        title: `${post.title} — RawFeed Blog`,
+        title: `${post.title} — Rawfeed Blog`,
         description: post.excerpt ?? "",
       });
     },
