@@ -87,8 +87,10 @@ async function getPost(slug: string): Promise<Post | null> {
     return { ...meta, html: cachedHtml };
   }
 
-  // Read from disk
-  const filePath = path.join(BLOG_DIR, `${slug}.md`);
+  // Read from disk — resolve and assert the path stays within BLOG_DIR
+  const filePath = path.resolve(BLOG_DIR, `${slug}.md`);
+  if (!filePath.startsWith(path.resolve(BLOG_DIR) + path.sep)) return null;
+
   let raw: string;
   try {
     raw = await fs.readFile(filePath, "utf-8");
