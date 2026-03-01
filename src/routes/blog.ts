@@ -35,8 +35,7 @@ export default async function blogRoutes(fastify: FastifyInstance) {
       const post = await blogService.getPost(slug);
 
       if (!post) {
-        reply.status(404);
-        return view("404.ejs", {});
+        return reply.status(404).view("404.ejs");
       }
 
       return view("blog/post.ejs", {

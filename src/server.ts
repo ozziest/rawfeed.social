@@ -104,6 +104,7 @@ server.register(rateLimit, {
 server.register(pointOfView, {
   engine: { ejs },
   root: path.join(process.cwd(), "views"),
+  defaultContext: { asset },
 });
 server.register(jwt, {
   secret: process.env.JWT_SECRET!,
