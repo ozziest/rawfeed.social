@@ -25,9 +25,6 @@ COPY blog ./blog
 # Build TypeScript
 RUN npm run build
 
-# Build CSS
-RUN npm run tailwind:build
-
 
 # Production stage
 FROM node:24-alpine AS runner
