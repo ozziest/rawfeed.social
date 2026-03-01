@@ -1,0 +1,42 @@
+<div class="bg-white min-h-screen">
+  <!-- Back link -->
+  <div class="border-b border-gray-200">
+    <div class="max-w-3xl mx-auto px-4 py-4">
+      <a
+        href="/blog"
+        class="inline-flex items-center gap-1 text-sm font-semibold text-black hover:text-gray-600 transition-colors"
+      >
+        &larr; Back to Blog
+      </a>
+    </div>
+  </div>
+
+  <!-- Article -->
+  <article class="max-w-3xl mx-auto px-4 py-12">
+    <!-- Meta -->
+    <header class="mb-10 border-b-2 border-black pb-8">
+      <div class="flex items-center gap-3 text-sm text-gray-500 mb-4">
+        <time datetime="<%= post.date %>"><%= post.date %></time>
+      </div>
+      <h1 class="text-4xl sm:text-5xl font-bold text-black leading-tight mb-4">
+        <%= post.title %>
+      </h1>
+      <% if (post.excerpt) { %>
+      <p class="text-xl text-gray-600 leading-relaxed"><%= post.excerpt %></p>
+      <% } %>
+    </header>
+
+    <!-- Content (sanitized HTML from Markdown) -->
+    <div id="blog-content"><%- post.html %></div>
+
+    <!-- Footer -->
+    <footer class="mt-16 pt-8 border-t-2 border-black">
+      <a
+        href="/blog"
+        class="inline-flex items-center gap-1 font-semibold text-black border-b-2 border-black hover:text-gray-600 hover:border-gray-600 transition-colors text-sm"
+      >
+        &larr; Back to Blog
+      </a>
+    </footer>
+  </article>
+</div>

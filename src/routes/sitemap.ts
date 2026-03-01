@@ -6,6 +6,7 @@ import {
   generateUsersSitemap,
   generateHashtagsSitemap,
   generateCustomDomainSitemap,
+  generateBlogSitemap,
 } from "../helpers/sitemapGenerator";
 
 /**
@@ -88,6 +89,17 @@ export default async function sitemapRoutes(fastify: FastifyInstance) {
         return reply.status(404).send({ error: "Not found" });
       }
       await serveSitemap(reply, "sitemap:hashtags", generateHashtagsSitemap);
+    },
+  );
+
+  // Blog sitemap — not available on custom domains
+  fastify.get(
+    "/sitemap-blog.xml",
+    async (request: FastifyRequest, reply: FastifyReply) => {
+      if (request.mode === "custom") {
+        return reply.status(404).send({ error: "Not found" });
+      }
+      await serveSitemap(reply, "sitemap:blog", generateBlogSitemap);
     },
   );
 }

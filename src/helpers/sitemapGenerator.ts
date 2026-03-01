@@ -1,5 +1,11 @@
+import fs from "fs/promises";
+import path from "path";
+import matter from "gray-matter";
 import { getKnex } from "../db/connection";
 import { Users, Hashtags } from "../types/database";
+
+const BLOG_DIR = path.join(process.cwd(), "blog", "posts");
+const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 const APP_URL = process.env.APP_URL || "https://rawfeed.social";
 
@@ -185,6 +191,53 @@ export async function generateHashtagsSitemap(): Promise<string> {
 }
 
 /**
+ * Generates sitemap for blog posts
+ */
+export async function generateBlogSitemap(): Promise<string> {
+  let files: string[];
+  try {
+    files = await fs.readdir(BLOG_DIR);
+  } catch {
+    files = [];
+  }
+
+  const urls: SitemapUrl[] = [];
+
+  // Blog index page
+  urls.push({
+    loc: `${APP_URL}/blog`,
+    changefreq: "weekly",
+    priority: 0.7,
+    lastmod: new Date().toISOString().slice(0, 10),
+  });
+
+  for (const file of files) {
+    if (!file.endsWith(".md")) continue;
+    const slug = file.replace(/\.md$/, "");
+    if (!SLUG_RE.test(slug)) continue;
+
+    try {
+      const raw = await fs.readFile(path.join(BLOG_DIR, file), "utf-8");
+      const { data } = matter(raw);
+      const lastmod = data.date
+        ? new Date(data.date).toISOString().slice(0, 10)
+        : undefined;
+
+      urls.push({
+        loc: `${APP_URL}/blog/${slug}`,
+        lastmod,
+        changefreq: "monthly",
+        priority: 0.6,
+      });
+    } catch {
+      // Skip unreadable files
+    }
+  }
+
+  return generateSitemapXml(urls);
+}
+
+/**
  * Generates a minimal sitemap for a custom domain profile
  */
 export function generateCustomDomainSitemap(domainUrl: string): string {
@@ -217,6 +270,10 @@ export async function generateSitemapIndex(): Promise<string> {
     },
     {
       loc: `${APP_URL}/sitemap-hashtags.xml`,
+      lastmod: now,
+    },
+    {
+      loc: `${APP_URL}/sitemap-blog.xml`,
       lastmod: now,
     },
   ];
