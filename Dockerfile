@@ -20,6 +20,7 @@ COPY src ./src
 COPY migrations ./migrations
 COPY views ./views
 COPY public ./public
+COPY blog ./blog
 
 # Build TypeScript
 RUN npm run build
@@ -47,6 +48,7 @@ COPY --from=builder /app/knexfile.js ./
 COPY --from=builder /app/migrations ./migrations
 COPY --from=builder /app/views ./views
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/blog ./blog
 
 # Expose port
 EXPOSE 3000
