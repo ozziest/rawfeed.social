@@ -29,6 +29,8 @@ import exploreRoutes from "./routes/explore";
 import tagsRoutes from "./routes/tags";
 import legalRoutes from "./routes/legal";
 import aboutRoutes from "./routes/about";
+import blogRoutes from "./routes/blog";
+import blogService from "./services/blog.service";
 import sitemapRoutes from "./routes/sitemap";
 import followRoutes from "./routes/follow";
 import { timer } from "./helpers/timer";
@@ -102,6 +104,7 @@ server.register(rateLimit, {
 server.register(pointOfView, {
   engine: { ejs },
   root: path.join(process.cwd(), "views"),
+  defaultContext: { asset },
 });
 server.register(jwt, {
   secret: process.env.JWT_SECRET!,
@@ -151,6 +154,7 @@ server.register(exploreRoutes);
 server.register(tagsRoutes);
 server.register(legalRoutes);
 server.register(aboutRoutes);
+server.register(blogRoutes);
 
 server.setErrorHandler((error: any, request, reply) => {
   request.log.error(error);
@@ -202,6 +206,8 @@ const start = async () => {
   try {
     const port = Number(process.env.APP_PORT) || 3000;
     await server.listen({ port, host: "0.0.0.0" });
+
+    blogService.clearCache();
 
     initializeRSSScheduler(isDevelopment);
     initializeExportWorker();

@@ -22,9 +22,9 @@ export const useViews = (options: UseViewsOptions) => {
         `${prefix}/${name}`,
         {
           title:
-            "RawFeed - Chronological Microblogging Without Algorithmic Manipulation",
+            "Rawfeed - Chronological Microblogging Without Algorithmic Manipulation",
           description:
-            "RawFeed is an open-source microblogging platform with chronological feeds, no algorithmic manipulation, and full RSS integration.",
+            "Rawfeed is an open-source microblogging platform with chronological feeds, no algorithmic manipulation, and full RSS integration.",
           keywords:
             "microblogging, chronological feed, RSS, open-source, social network, no algorithm, rawfeed",
           validation: validation || {},

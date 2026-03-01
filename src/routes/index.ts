@@ -64,7 +64,7 @@ export default async function routes(fastify: FastifyInstance) {
       title: `${domainUser.name} - ${domainUser.custom_domain}`,
       description:
         domainUser.bio ||
-        `View ${domainUser.name}'s posts on RawFeed - a chronological microblogging platform.`,
+        `View ${domainUser.name}'s posts on Rawfeed - a chronological microblogging platform.`,
       canonical: domainUser.custom_domain
         ? `https://${domainUser.custom_domain}`
         : `https://rawfeed.social/u/${domainUser.username}`,

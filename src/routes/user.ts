@@ -381,10 +381,10 @@ export default async function userRoutes(fastify: FastifyInstance) {
         followerCount,
         followingCount,
         isFollowing: isFollowingProfile,
-        title: `${profileUser.name} (@${profileUser.username}) - RawFeed`,
+        title: `${profileUser.name} (@${profileUser.username}) - Rawfeed`,
         description:
           profileUser.bio ||
-          `View ${profileUser.name}'s posts on RawFeed - a chronological microblogging platform.`,
+          `View ${profileUser.name}'s posts on Rawfeed - a chronological microblogging platform.`,
         canonical: `https://rawfeed.social/u/${profileUser.username}`,
       });
     },

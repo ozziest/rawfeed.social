@@ -1,5 +1,165 @@
 @import "tailwindcss";
 
+/* ---------------------------------------------------------------------------
+   Blog post content — scoped styles for Markdown-rendered HTML
+   --------------------------------------------------------------------------- */
+#blog-content {
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  color: #374151;
+}
+
+#blog-content h1,
+#blog-content h2,
+#blog-content h3,
+#blog-content h4,
+#blog-content h5,
+#blog-content h6 {
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.25;
+  margin-top: 2em;
+  margin-bottom: 0.6em;
+}
+
+#blog-content h1 {
+  font-size: 2rem;
+}
+#blog-content h2 {
+  font-size: 1.5rem;
+}
+#blog-content h3 {
+  font-size: 1.25rem;
+}
+#blog-content h4 {
+  font-size: 1.1rem;
+}
+
+#blog-content p {
+  margin-top: 0;
+  margin-bottom: 1.25em;
+}
+
+#blog-content a {
+  color: #111827;
+  text-decoration: underline;
+}
+
+#blog-content a:hover {
+  color: #4b5563;
+}
+
+#blog-content strong {
+  font-weight: 700;
+  color: #111827;
+}
+
+#blog-content em {
+  font-style: italic;
+}
+
+#blog-content ul,
+#blog-content ol {
+  margin-top: 0;
+  margin-bottom: 1.25em;
+  padding-left: 1.75em;
+}
+
+#blog-content ul {
+  list-style-type: disc;
+}
+#blog-content ol {
+  list-style-type: decimal;
+}
+
+#blog-content li {
+  margin-bottom: 0.375em;
+}
+
+#blog-content li > ul,
+#blog-content li > ol {
+  margin-top: 0.375em;
+  margin-bottom: 0;
+}
+
+#blog-content blockquote {
+  border-left: 4px solid #111827;
+  margin: 1.5em 0;
+  padding: 0.5em 0 0.5em 1.25em;
+  color: #6b7280;
+  font-style: italic;
+}
+
+#blog-content blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+#blog-content pre {
+  background: #111827;
+  color: #f3f4f6;
+  padding: 1.25em 1.5em;
+  overflow-x: auto;
+  margin: 1.5em 0;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+#blog-content code {
+  background: #f3f4f6;
+  color: #1f2937;
+  font-size: 0.875em;
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+#blog-content pre code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  border-radius: 0;
+  font-size: inherit;
+}
+
+#blog-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+  font-size: 0.9375rem;
+}
+
+#blog-content th,
+#blog-content td {
+  border: 1px solid #d1d5db;
+  padding: 0.6em 0.875em;
+  text-align: left;
+}
+
+#blog-content th {
+  background: #f9fafb;
+  font-weight: 600;
+  color: #111827;
+}
+
+#blog-content tr:nth-child(even) td {
+  background: #f9fafb;
+}
+
+#blog-content img {
+  max-width: 100%;
+  height: auto;
+  margin: 1.5em 0;
+}
+
+#blog-content hr {
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  margin: 2.5em 0;
+}
+
+/* ---------------------------------------------------------------------------
+   General utilities
+   --------------------------------------------------------------------------- */
 .overflow-wrap-anywhere {
   overflow-wrap: anywhere;
   word-break: break-word;

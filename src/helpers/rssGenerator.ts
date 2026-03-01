@@ -35,7 +35,7 @@ export function generateRSS(user: Users, posts: PostWithContent[]): string {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>${displayName} - RawFeed</title>
+    <title>${displayName} - Rawfeed</title>
     <link>${baseUrl}/u/${user.username}</link>
     <description>${description}</description>
     <language>en</language>
