@@ -1,7 +1,7 @@
 <%- include('../partials/posts') %>
 <% if (nextCursor) { %>
 <div
-  hx-get="/posts/next/<%= nextCursor %>/<%= userId %>"
+  hx-get="<%= locals.feedNextRoute ? feedNextRoute + nextCursor : '/posts/next/' + nextCursor + '/' + (userId || '') %>"
   hx-trigger="intersect once"
   hx-swap="outerHTML"
   class="h-20 flex items-center justify-center"

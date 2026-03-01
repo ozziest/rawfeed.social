@@ -21,6 +21,14 @@ export interface DataExports {
   user_id: string;
 }
 
+export interface Follows {
+  created_at: Date;
+  follower_id: string;
+  following_id: string;
+  id: string;
+  updated_at: Date;
+}
+
 export interface Hashtags {
   created_at: Date | null;
   hashtag: string;
@@ -114,6 +122,7 @@ export interface Users {
 
 export interface DB {
   data_exports: DataExports;
+  follows: Follows;
   hashtags: Hashtags;
   knex_migrations: KnexMigrations;
   knex_migrations_lock: KnexMigrationsLock;

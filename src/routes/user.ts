@@ -2,6 +2,7 @@ import { FastifyInstance } from "fastify";
 import { verifyToken } from "../middleware/verifyToken";
 import postService from "../services/post.service";
 import userService from "../services/user.service";
+import followService from "../services/follow.service";
 import dataExportService from "../services/dataExport.service";
 import s3Service from "../services/s3.service";
 import { generateRSS } from "../helpers/rssGenerator";
@@ -358,6 +359,18 @@ export default async function userRoutes(fastify: FastifyInstance) {
       });
       postService.incViews(posts);
 
+      const loggedUserId = request.loggedUser?.userId;
+      const profileUserId = request.profileUser!.id;
+
+      const [followerCount, followingCount, isFollowingProfile] =
+        await Promise.all([
+          followService.getFollowerCount(profileUserId),
+          followService.getFollowingCount(profileUserId),
+          loggedUserId && loggedUserId !== profileUserId
+            ? followService.isFollowing(loggedUserId, profileUserId)
+            : Promise.resolve(false),
+        ]);
+
       const { view } = views(request, reply);
       const profileUser = request.profileUser!;
       return view("profile", {
@@ -365,6 +378,9 @@ export default async function userRoutes(fastify: FastifyInstance) {
         csrfToken: reply.generateCsrf(),
         nextCursorUserId: profileUser.id,
         nextCursor: nextCursor(posts),
+        followerCount,
+        followingCount,
+        isFollowing: isFollowingProfile,
         title: `${profileUser.name} (@${profileUser.username}) - RawFeed`,
         description:
           profileUser.bio ||

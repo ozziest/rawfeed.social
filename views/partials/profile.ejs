@@ -50,12 +50,36 @@
         <%= _profileLink.replace(/^https?:\/\//, '') %>
       </a>
       <% } %>
-      <!-- <div class="flex gap-4 text-sm text-gray-500">
-        <span><strong class="text-gray-900">247</strong> gönderi</span>
-        <span><strong class="text-gray-900">1.2K</strong> takipçi</span>
-        <span><strong class="text-gray-900">342</strong> takip</span>
-      </div> -->
+      <% if (typeof followerCount !== 'undefined') { %>
+      <div
+        id="follow-count-<%= (profileUser || domainUser).id %>"
+        class="flex gap-4 text-sm text-gray-500 mt-3"
+      >
+        <a
+          href="/u/<%= (profileUser || domainUser).username %>/followers"
+          class="hover:underline"
+        >
+          <strong class="text-gray-900"><%= followerCount ?? 0 %></strong>
+          followers
+        </a>
+        <a
+          href="/u/<%= (profileUser || domainUser).username %>/following"
+          class="hover:underline"
+        >
+          <strong class="text-gray-900"><%= followingCount ?? 0 %></strong>
+          following
+        </a>
+      </div>
+      <% } %>
     </div>
+    <% if (loggedUser && loggedUser.userId !== (profileUser || domainUser)?.id) { %>
+    <% const _followTarget = profileUser || domainUser; %>
+    <div class="shrink-0">
+      <%- include('follow-button', { targetUsername: _followTarget.username,
+      targetUserId: _followTarget.id, isFollowing: locals.isFollowing ?? false,
+      csrfToken }) %>
+    </div>
+    <% } %>
   </div>
 </div>
 

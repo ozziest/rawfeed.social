@@ -37,4 +37,5 @@ export type PostQueryParams = {
   cursor?: string;
   userId?: string;
   id?: string;
+  followingUserIds?: string[];
 };

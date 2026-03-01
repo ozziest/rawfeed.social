@@ -30,6 +30,7 @@ import tagsRoutes from "./routes/tags";
 import legalRoutes from "./routes/legal";
 import aboutRoutes from "./routes/about";
 import sitemapRoutes from "./routes/sitemap";
+import followRoutes from "./routes/follow";
 import { timer } from "./helpers/timer";
 import { asset } from "./helpers/useViews";
 
@@ -95,7 +96,7 @@ server.register(helmet, {
   },
 });
 server.register(rateLimit, {
-  max: 500,
+  max: 1000,
   timeWindow: "15 minutes",
 });
 server.register(pointOfView, {
@@ -145,6 +146,7 @@ server.register(redirectRoutes);
 server.register(authRoutes);
 server.register(userRoutes);
 server.register(postRoutes);
+server.register(followRoutes);
 server.register(exploreRoutes);
 server.register(tagsRoutes);
 server.register(legalRoutes);
