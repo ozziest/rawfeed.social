@@ -61,6 +61,20 @@ const isFollowing = async (
   );
 };
 
+const isFollowingBatch = async (
+  followerId: string,
+  targetUserIds: string[],
+): Promise<Record<string, boolean>> => {
+  if (targetUserIds.length === 0) return {};
+  const rows = await getKnex()
+    .table<Selectable<Follows>>(TABLE_NAME)
+    .where("follower_id", followerId)
+    .whereIn("following_id", targetUserIds)
+    .select("following_id");
+  const followed = new Set(rows.map((r) => r.following_id));
+  return Object.fromEntries(targetUserIds.map((id) => [id, followed.has(id)]));
+};
+
 const getFollowers = async (
   userId: string,
   cursor?: string,
@@ -242,6 +256,7 @@ export default loggerAll(
     followUser,
     unfollowUser,
     isFollowing,
+    isFollowingBatch,
     getFollowers,
     getFollowing,
     getFollowerCount,

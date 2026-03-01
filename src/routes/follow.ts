@@ -121,18 +121,13 @@ export default async function followRoutes(fastify: FastifyInstance) {
       );
 
       const loggedUserId = request.loggedUser?.userId;
-      const isFollowingMap: Record<string, boolean> = {};
-
-      if (loggedUserId && items.length > 0) {
-        await Promise.all(
-          items.map(async (f) => {
-            isFollowingMap[f.user.id] =
-              f.user.id !== loggedUserId
-                ? await followService.isFollowing(loggedUserId, f.user.id)
-                : false;
-          }),
-        );
-      }
+      const isFollowingMap: Record<string, boolean> =
+        loggedUserId && items.length > 0
+          ? await followService.isFollowingBatch(
+              loggedUserId,
+              items.map((f) => f.user.id),
+            )
+          : {};
 
       const { view } = listViews(request, reply);
       return view("followers", {
@@ -165,18 +160,13 @@ export default async function followRoutes(fastify: FastifyInstance) {
       );
 
       const loggedUserId = request.loggedUser?.userId;
-      const isFollowingMap: Record<string, boolean> = {};
-
-      if (loggedUserId && items.length > 0) {
-        await Promise.all(
-          items.map(async (f) => {
-            isFollowingMap[f.user.id] =
-              f.user.id !== loggedUserId
-                ? await followService.isFollowing(loggedUserId, f.user.id)
-                : false;
-          }),
-        );
-      }
+      const isFollowingMap: Record<string, boolean> =
+        loggedUserId && items.length > 0
+          ? await followService.isFollowingBatch(
+              loggedUserId,
+              items.map((f) => f.user.id),
+            )
+          : {};
 
       const { view } = fragmentViews(request, reply);
       return view("user-list-items", {
@@ -208,18 +198,13 @@ export default async function followRoutes(fastify: FastifyInstance) {
       );
 
       const loggedUserId = request.loggedUser?.userId;
-      const isFollowingMap: Record<string, boolean> = {};
-
-      if (loggedUserId && items.length > 0) {
-        await Promise.all(
-          items.map(async (f) => {
-            isFollowingMap[f.user.id] =
-              f.user.id !== loggedUserId
-                ? await followService.isFollowing(loggedUserId, f.user.id)
-                : false;
-          }),
-        );
-      }
+      const isFollowingMap: Record<string, boolean> =
+        loggedUserId && items.length > 0
+          ? await followService.isFollowingBatch(
+              loggedUserId,
+              items.map((f) => f.user.id),
+            )
+          : {};
 
       const { view } = listViews(request, reply);
       return view("following", {
@@ -252,18 +237,13 @@ export default async function followRoutes(fastify: FastifyInstance) {
       );
 
       const loggedUserId = request.loggedUser?.userId;
-      const isFollowingMap: Record<string, boolean> = {};
-
-      if (loggedUserId && items.length > 0) {
-        await Promise.all(
-          items.map(async (f) => {
-            isFollowingMap[f.user.id] =
-              f.user.id !== loggedUserId
-                ? await followService.isFollowing(loggedUserId, f.user.id)
-                : false;
-          }),
-        );
-      }
+      const isFollowingMap: Record<string, boolean> =
+        loggedUserId && items.length > 0
+          ? await followService.isFollowingBatch(
+              loggedUserId,
+              items.map((f) => f.user.id),
+            )
+          : {};
 
       const { view } = fragmentViews(request, reply);
       return view("user-list-items", {
