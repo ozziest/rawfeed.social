@@ -1,0 +1,16 @@
+<form
+  id="follow-btn-<%= targetUserId %>"
+  method="POST"
+  action="/<%= isFollowing ? 'unfollow' : 'follow' %>/<%= targetUsername %>"
+  hx-post="/<%= isFollowing ? 'unfollow' : 'follow' %>/<%= targetUsername %>"
+  hx-target="#follow-btn-<%= targetUserId %>"
+  hx-swap="outerHTML"
+>
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+  <button
+    type="submit"
+    class="px-4 py-1.5 text-sm font-medium rounded-full transition-colors <%= isFollowing ? 'text-gray-700 bg-white border border-gray-300 hover:bg-red-50 hover:text-red-600 hover:border-red-300' : 'text-white bg-black hover:bg-gray-800' %>"
+  >
+    <%= isFollowing ? 'Unfollow' : 'Follow' %>
+  </button>
+</form>

@@ -1,5 +1,6 @@
 import { Selectable } from "kysely";
 import {
+  Follows,
   Links,
   PostHashtags,
   PostLinks,
@@ -17,4 +18,8 @@ export type PostWithContent = Selectable<Posts> & {
   links: PostLinkWithLink[];
   mentions: PostMentions[];
   hashtags: PostHashtags[];
+};
+
+export type FollowWithUser = Selectable<Follows> & {
+  user: Selectable<Users>;
 };

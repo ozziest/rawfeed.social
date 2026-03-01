@@ -66,6 +66,10 @@ const getItems = async (
     query.where("user_id", params.userId);
   }
 
+  if (params?.followingUserIds && params.followingUserIds.length > 0) {
+    query = query.whereIn("user_id", params.followingUserIds);
+  }
+
   if (params?.cursor) {
     const [timestamp, lastId] = params.cursor.split("_");
     query = query.where(function () {
