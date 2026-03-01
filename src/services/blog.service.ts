@@ -27,41 +27,37 @@ export interface Post extends PostMeta {
  * Result is cached for 7 days.
  */
 async function getAllPosts(): Promise<PostMeta[]> {
-  return cache<PostMeta[]>(
-    "blog.service.getAllPosts",
-    TTL_SECONDS,
-    async () => {
-      let files: string[];
-      try {
-        files = await fs.readdir(BLOG_DIR);
-      } catch {
-        return [];
-      }
+  return cache<PostMeta[]>("blog:getAllPosts", TTL_SECONDS, async () => {
+    let files: string[];
+    try {
+      files = await fs.readdir(BLOG_DIR);
+    } catch {
+      return [];
+    }
 
-      const posts: PostMeta[] = [];
+    const posts: PostMeta[] = [];
 
-      for (const file of files) {
-        if (!file.endsWith(".md")) continue;
-        const slug = file.replace(/\.md$/, "");
-        if (!SLUG_RE.test(slug)) continue;
+    for (const file of files) {
+      if (!file.endsWith(".md")) continue;
+      const slug = file.replace(/\.md$/, "");
+      if (!SLUG_RE.test(slug)) continue;
 
-        const raw = await fs.readFile(path.join(BLOG_DIR, file), "utf-8");
-        const { data } = matter(raw);
+      const raw = await fs.readFile(path.join(BLOG_DIR, file), "utf-8");
+      const { data } = matter(raw);
 
-        posts.push({
-          slug,
-          title: String(data.title ?? slug),
-          date: data.date
-            ? new Date(data.date).toISOString().slice(0, 10)
-            : "1970-01-01",
-          author: data.author ? String(data.author) : undefined,
-          excerpt: data.excerpt ? String(data.excerpt) : undefined,
-        });
-      }
+      posts.push({
+        slug,
+        title: String(data.title ?? slug),
+        date: data.date
+          ? new Date(data.date).toISOString().slice(0, 10)
+          : "1970-01-01",
+        author: data.author ? String(data.author) : undefined,
+        excerpt: data.excerpt ? String(data.excerpt) : undefined,
+      });
+    }
 
-      return posts.sort((a, b) => (a.date < b.date ? 1 : -1));
-    },
-  );
+    return posts.sort((a, b) => (a.date < b.date ? 1 : -1));
+  });
 }
 
 /**
