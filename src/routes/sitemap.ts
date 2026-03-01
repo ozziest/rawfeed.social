@@ -99,7 +99,7 @@ export default async function sitemapRoutes(fastify: FastifyInstance) {
       if (request.mode === "custom") {
         return reply.status(404).send({ error: "Not found" });
       }
-      await serveSitemap(reply, "sitemap:blog", generateBlogSitemap);
+      await serveSitemap(reply, "blog:sitemap", generateBlogSitemap);
     },
   );
 }
