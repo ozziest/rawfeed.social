@@ -51,7 +51,10 @@
       </a>
       <% } %>
       <% if (typeof followerCount !== 'undefined') { %>
-      <div class="flex gap-4 text-sm text-gray-500 mt-3">
+      <div
+        id="follow-count-<%= (profileUser || domainUser).id %>"
+        class="flex gap-4 text-sm text-gray-500 mt-3"
+      >
         <a
           href="/u/<%= (profileUser || domainUser).username %>/followers"
           class="hover:underline"

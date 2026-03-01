@@ -3,7 +3,7 @@
   method="POST"
   action="/<%= isFollowing ? 'unfollow' : 'follow' %>/<%= targetUsername %>"
   hx-post="/<%= isFollowing ? 'unfollow' : 'follow' %>/<%= targetUsername %>"
-  hx-target="#follow-btn-<%= targetUserId %>"
+  hx-target="#<%= locals.hxTarget || ('follow-btn-' + targetUserId) %>"
   hx-swap="outerHTML"
 >
   <input type="hidden" name="_csrf" value="<%= csrfToken %>" />

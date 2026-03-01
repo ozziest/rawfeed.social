@@ -47,10 +47,15 @@ export default async function followRoutes(fastify: FastifyInstance) {
 
       if (request.headers["hx-request"]) {
         const { view } = fragmentViews(request, reply);
-        return view("follow-button", {
-          targetUsername: targetUser.username,
-          targetUserId: targetUser.id,
+        const [followerCount, followingCount] = await Promise.all([
+          followService.getFollowerCount(targetUser.id),
+          followService.getFollowingCount(targetUser.id),
+        ]);
+        return view("follow-actions", {
+          targetUser,
           isFollowing: true,
+          followerCount,
+          followingCount,
           csrfToken: reply.generateCsrf(),
         });
       }
@@ -79,10 +84,15 @@ export default async function followRoutes(fastify: FastifyInstance) {
 
       if (request.headers["hx-request"]) {
         const { view } = fragmentViews(request, reply);
-        return view("follow-button", {
-          targetUsername: targetUser.username,
-          targetUserId: targetUser.id,
+        const [followerCount, followingCount] = await Promise.all([
+          followService.getFollowerCount(targetUser.id),
+          followService.getFollowingCount(targetUser.id),
+        ]);
+        return view("follow-actions", {
+          targetUser,
           isFollowing: false,
+          followerCount,
+          followingCount,
           csrfToken: reply.generateCsrf(),
         });
       }
