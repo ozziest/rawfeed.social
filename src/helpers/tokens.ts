@@ -5,6 +5,7 @@ export interface TokenPayload {
   username: string;
   name: string;
   gravatar: string;
+  isAdmin: boolean;
 }
 
 export function generateTokens(app: FastifyInstance, payload: TokenPayload) {
@@ -13,6 +14,7 @@ export function generateTokens(app: FastifyInstance, payload: TokenPayload) {
       userId: payload.userId,
       username: payload.username,
       name: payload.name,
+      isAdmin: payload.isAdmin,
     },
     {
       expiresIn: "10m",

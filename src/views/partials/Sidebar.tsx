@@ -1,0 +1,184 @@
+/** @jsxImportSource @kitajs/html */
+import type { Users } from "../../types/database";
+import type { DailyReportItem } from "../../types/shared";
+import { getAvatar } from "../../helpers/common";
+
+type SidebarProps = {
+  report?: DailyReportItem[];
+  lastMembers?: Users[];
+  bots?: Users[];
+};
+
+export function Sidebar({ report, lastMembers, bots }: SidebarProps) {
+  return (
+    <div class="sticky top-16 space-y-4">
+      {report && report.length > 0 ? (
+        <div class="bg-white border border-gray-200 rounded-lg p-4">
+          <h3 class="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+            <svg
+              class="w-5 h-5 text-orange-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+              ></path>
+            </svg>
+            Trending
+          </h3>
+          <div class="space-y-2">
+            {report.map((item) => (
+              <a
+                href={`/tags/${item.hashtag}`}
+                class="block hover:bg-gray-50 -mx-2 px-2 py-1 rounded"
+              >
+                <p class="text-sm font-medium text-gray-900">
+                  #<span safe>{item.hashtag}</span>
+                </p>
+                <p class="text-xs text-gray-500">{item.total} posts</p>
+              </a>
+            ))}
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+
+      {lastMembers && lastMembers.length > 0 ? (
+        <div class="bg-white border border-gray-200 rounded-lg p-4">
+          <h3 class="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+            <svg
+              class="w-5 h-5 text-black"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+              ></path>
+            </svg>
+            New Members
+          </h3>
+          <div class="space-y-2">
+            {lastMembers.map((member) => (
+              <a
+                href={`/u/${member.username}`}
+                class="flex items-center gap-2 hover:bg-gray-50 -mx-2 px-2 py-1 rounded"
+              >
+                <img
+                  src={getAvatar(member)}
+                  alt={member.name}
+                  class="w-8 h-8 rounded-full object-cover"
+                />
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium text-gray-900 truncate" safe>
+                    {member.name}
+                  </p>
+                  <p class="text-xs text-gray-500">
+                    @<span safe>{member.username}</span>
+                  </p>
+                </div>
+              </a>
+            ))}
+          </div>
+          <a
+            href="/explore/members"
+            class="mt-2 block text-center text-sm text-black hover:text-gray-700 font-medium"
+          >
+            View all
+          </a>
+        </div>
+      ) : (
+        ""
+      )}
+
+      {bots && bots.length > 0 ? (
+        <div class="bg-white border border-gray-200 rounded-lg p-4">
+          <h3 class="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+            <svg
+              class="w-5 h-5 text-green-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z"
+              ></path>
+            </svg>
+            RSS Bots
+          </h3>
+          <div class="space-y-2">
+            {bots.map((bot) => (
+              <a
+                href={`/u/${bot.username}`}
+                class="flex items-center gap-2 hover:bg-gray-50 -mx-2 px-2 py-1 rounded"
+              >
+                <img
+                  src={getAvatar(bot)}
+                  alt={bot.name}
+                  class="w-8 h-8 rounded-full object-cover"
+                />
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium text-gray-900 truncate" safe>
+                    {bot.name}
+                  </p>
+                  <p class="text-xs text-gray-500">
+                    @<span safe>{bot.username}</span>
+                  </p>
+                </div>
+              </a>
+            ))}
+          </div>
+          <a
+            href="/explore/bots"
+            class="mt-2 block text-center text-sm text-black hover:text-gray-700 font-medium"
+          >
+            View all
+          </a>
+        </div>
+      ) : (
+        ""
+      )}
+
+      <div class="bg-white border border-gray-200 rounded-lg p-3">
+        <div class="flex flex-wrap gap-x-3 gap-y-1 text-xs text-gray-600">
+          <a href="/about" class="hover:underline">
+            About
+          </a>
+          <a href="/blog" class="hover:underline">
+            Blog
+          </a>
+          <a href="/legal/privacy" class="hover:underline">
+            Privacy
+          </a>
+          <a href="/legal/terms" class="hover:underline">
+            Terms
+          </a>
+          <a href="/legal/cookies" class="hover:underline">
+            Cookies
+          </a>
+          <a href="/legal/data-rights" class="hover:underline">
+            Data Rights
+          </a>
+          <a href="/legal/dpa" class="hover:underline">
+            DPA
+          </a>
+          <a href="/legal/bots" class="hover:underline">
+            Bots
+          </a>
+        </div>
+        <p class="text-xs text-gray-500 mt-2">&copy; 2026 rawfeed.social</p>
+      </div>
+    </div>
+  );
+}

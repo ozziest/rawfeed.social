@@ -10,7 +10,7 @@
 | -------------- | ----------------------------------------------------------------- |
 | Runtime        | Node.js + TypeScript                                              |
 | HTTP Framework | Fastify v5                                                        |
-| Frontend       | HTMX v2 + EJS templates + Tailwind CSS v4                         |
+| Frontend       | HTMX v2 + `@kitajs/html` JSX templates + Tailwind CSS v4          |
 | Database       | MySQL via Knex.js                                                 |
 | DB Types       | Kysely (codegen only — not used for query building)               |
 | Cache          | Redis (ioredis)                                                   |
@@ -21,27 +21,31 @@
 | Scheduling     | Croner                                                            |
 | Validation     | Zod                                                               |
 | Testing        | Vitest                                                            |
-| Formatting     | Prettier + `prettier-plugin-ejs`                                  |
+| Formatting     | Prettier                                                          |
 | Commits        | Commitizen (conventional changelog)                               |
 
 ## Project Structure
 
 ```
 src/
-  server.ts           # Fastify app bootstrap, plugin registration, error handlers
+  server.tsx          # Fastify app bootstrap, plugin registration, error handlers
   consts.ts           # App-wide constants
-  routes/             # Fastify route handlers (thin — delegate to services)
+  routes/             # Fastify route handlers (.tsx — thin, delegate to services)
+  views/              # JSX view components (.tsx)
+    layouts/          # Layout wrappers (Base, Auth, etc.)
+    partials/         # Reusable JSX fragments
+    auth/, posts/, user/, tags/, explore/  # Feature-specific views
   services/           # Business logic layer (pure functions, no classes)
   helpers/            # Shared utilities (validation, tokens, cache, DTOs, etc.)
   middleware/         # Fastify hooks (auth guard, mode detection, token verification)
   scheduler/          # Background workers (RSS sync, data exports, sitemap)
   db/                 # Knex connection setup
-  types/              # TypeScript types (database.ts auto-generated, relations.ts, shared.ts)
+  types/
+    database.ts       # Auto-generated Kysely types — do not edit
+    relations.ts      # Join/relation types
+    shared.ts         # Shared DTOs and interfaces
+    custom/           # Fastify module augmentation (generateCsrf, csrfProtection, etc.)
   converters/         # Data transformation utilities
-views/
-  layouts/            # EJS layout files
-  partials/           # Reusable EJS fragments
-  auth/, posts/, user/, tags/, explore/  # Feature-specific views
 migrations/           # Knex migration files (JS)
 seeds/                # Knex seed files
 public/               # Static assets (CSS, JS, images)
@@ -51,9 +55,12 @@ public/               # Static assets (CSS, JS, images)
 
 ### Routes
 
-- Route files live in `src/routes/` and export a default `async function (fastify: FastifyInstance)`.
+- Route files live in `src/routes/` as `.tsx` files and export a default `async function (fastify: FastifyInstance)`.
+- All `.tsx` files must include `/** @jsxImportSource @kitajs/html */` as the very first line.
 - Keep routes thin — validate input, call a service, render a view or redirect.
-- Use `useViews` / `useAuthContext` helpers to get `view`, `setState`, and `setValidation` helpers.
+- Use `useJsxViews()` from `src/helpers/useViews.ts` to get `html`, `base`, `setFlash`, `setState`, and `setValidation` helpers.
+- Render views with `reply.html(<MyView {...base()} />)` — `base()` injects all shared props.
+- Return 404s as `reply.status(404).html(<NotFound asset={asset} />)`.
 - Apply `preHandler: fastify.csrfProtection` on all mutating POST routes.
 - Apply per-route rate limits via `config.rateLimit` when exposing sensitive endpoints.
 
@@ -79,9 +86,11 @@ public/               # Static assets (CSS, JS, images)
 
 ### Views
 
-- EJS templates live in `views/`.
-- Layouts are in `views/layouts/`; partials in `views/partials/`.
-- Use the `asset` helper (from `src/helpers/useViews.ts`) in views for cache-busted static asset URLs.
+- JSX view components live in `src/views/` as `.tsx` files.
+- Layouts are in `src/views/layouts/`; partials in `src/views/partials/`.
+- Every `.tsx` file must start with `/** @jsxImportSource @kitajs/html */`.
+- All views receive a `BaseProps` object (from `getBaseProps()`) which includes `asset`, `loggedUser`, `mode`, helpers like `sanitize`/`getAvatar`/`formatPostContent`, and flash data (`validation`, `state`).
+- Use the `asset` helper (from `src/helpers/asset.ts`) for cache-busted static asset URLs.
 - HTMX targets return HTML fragments, not full pages — use `hx-boost`, `hx-swap`, `hx-target` patterns.
 
 ### Middleware
@@ -95,6 +104,7 @@ public/               # Static assets (CSS, JS, images)
 - `src/types/database.ts` — **auto-generated**, do not edit manually. Regenerate with `npm run types`.
 - `src/types/relations.ts` — join/relation types built on top of database types.
 - `src/types/shared.ts` — shared DTOs and interfaces.
+- `src/types/custom/index.d.ts` — Fastify module augmentation. Declares custom properties on `FastifyInstance` (`csrfProtection`), `FastifyReply` (`generateCsrf`), and `FastifyRequest` (`mode`, `loggedUser`, `domainUser`, `profileUser`). Only edit when adding new custom Fastify properties.
 
 ### Schedulers
 

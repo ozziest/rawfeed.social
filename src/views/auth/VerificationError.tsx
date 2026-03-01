@@ -1,0 +1,95 @@
+/** @jsxImportSource @kitajs/html */
+import type { BaseProps } from "../../types/views";
+import { AuthLayout } from "../layouts/AuthLayout";
+
+type VerificationErrorProps = BaseProps & { errorMessage: string };
+
+export function VerificationError(props: VerificationErrorProps) {
+  const { errorMessage } = props;
+
+  const isExpired = errorMessage.includes("expired");
+
+  return (
+    <AuthLayout {...props}>
+      <div class="flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
+        <div class="w-full max-w-md space-y-8">
+          <div class="text-center">
+            <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-red-100 mb-6">
+              <svg
+                class="h-8 w-8 text-red-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </div>
+            <h2 class="text-3xl font-bold tracking-tight text-gray-900">
+              Verification Failed
+            </h2>
+            <p class="mt-4 text-base text-gray-600">
+              We couldn't verify your email address
+            </p>
+          </div>
+
+          <div class="bg-red-50 border border-red-200 rounded-lg p-6 space-y-4">
+            <div class="flex items-start">
+              <svg
+                class="h-6 w-6 text-red-600 mt-0.5 mr-3 flex-shrink-0"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                />
+              </svg>
+              <div>
+                <h3 class="text-base font-semibold text-gray-900" safe>
+                  {errorMessage}
+                </h3>
+                <p class="mt-2 text-sm text-gray-600">
+                  {isExpired
+                    ? "The verification link has expired. Please register again or contact support for assistance."
+                    : "The verification link may be invalid or has already been used. If you already verified your account, you can sign in directly."}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <a
+              href="/auth/login"
+              class="group relative flex w-full justify-center rounded-md border border-transparent bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
+            >
+              Go to login
+            </a>
+            <a
+              href="/auth/register"
+              class="group relative flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
+            >
+              Register a new account
+            </a>
+          </div>
+
+          <div class="text-center text-sm">
+            <a
+              href="/"
+              class="font-medium text-black hover:text-gray-700 underline"
+            >
+              Go to homepage
+            </a>
+          </div>
+        </div>
+      </div>
+    </AuthLayout>
+  );
+}
