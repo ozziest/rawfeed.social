@@ -5,6 +5,7 @@ import userService from "../services/user.service";
 import followService from "../services/follow.service";
 import { useViews } from "../helpers/useViews";
 import { UserProfileParams } from "../helpers/dtos";
+import { safeReferer } from "../helpers/security";
 
 const listViews = useViews({ prefix: "user", layout: "layouts/default.ejs" });
 const fragmentViews = useViews({
@@ -39,8 +40,8 @@ export default async function followRoutes(fastify: FastifyInstance) {
             csrfToken: reply.generateCsrf(),
           });
         }
-        const referer = request.headers.referer || `/u/${username}`;
-        return reply.redirect(referer as string);
+        const referer = safeReferer(request.headers.referer, `/u/${username}`);
+        return reply.redirect(referer);
       }
 
       await followService.followUser(followerId, targetUser.id);
@@ -60,8 +61,8 @@ export default async function followRoutes(fastify: FastifyInstance) {
         });
       }
 
-      const referer = request.headers.referer || `/u/${username}`;
-      return reply.redirect(referer as string);
+      const referer = safeReferer(request.headers.referer, `/u/${username}`);
+      return reply.redirect(referer);
     },
   );
 
@@ -97,8 +98,8 @@ export default async function followRoutes(fastify: FastifyInstance) {
         });
       }
 
-      const referer = request.headers.referer || `/u/${username}`;
-      return reply.redirect(referer as string);
+      const referer = safeReferer(request.headers.referer, `/u/${username}`);
+      return reply.redirect(referer);
     },
   );
 
