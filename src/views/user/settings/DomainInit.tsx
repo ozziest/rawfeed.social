@@ -55,12 +55,12 @@ export function DomainInit(props: DomainInitProps) {
               <p class="mt-2 text-sm text-gray-500">
                 Enter your domain without http:// or www (e.g., example.com)
               </p>
-              <div safe>
-                {validation?.domain && (
+              <div>
+                {validation?.domain ? (
                   <p class="text-red-700 text-sm my-1" safe>
                     {validation.domain}
                   </p>
-                )}
+                ) : undefined}
               </div>
             </div>
 

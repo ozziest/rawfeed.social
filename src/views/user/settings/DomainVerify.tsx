@@ -183,7 +183,7 @@ export function DomainVerify(props: DomainVerifyProps) {
                       Verify Domain
                     </button>
                   </form>
-                  {user.domain_verification_status === "failed" && (
+                  {user.domain_verification_status === "failed" ? (
                     <div class="mt-4 bg-red-50 border border-red-200 rounded-lg p-3">
                       <p class="text-sm text-red-800">
                         <strong>Verification failed.</strong> Please make sure
@@ -191,7 +191,7 @@ export function DomainVerify(props: DomainVerifyProps) {
                         minutes for DNS propagation.
                       </p>
                     </div>
-                  )}
+                  ) : undefined}
                 </div>
               </div>
             </div>

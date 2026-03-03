@@ -44,12 +44,12 @@ export function Login(props: LoginProps) {
                   value={state?.email as string | undefined}
                 />
               </div>
-              <div safe>
-                {validation?.email && (
+              <div>
+                {validation?.email ? (
                   <div class="text-red-700 text-sm my-1" safe>
                     {validation.email}
                   </div>
-                )}
+                ) : undefined}
               </div>
             </div>
 
@@ -71,12 +71,12 @@ export function Login(props: LoginProps) {
                   placeholder="••••••••"
                 />
               </div>
-              <div safe>
-                {validation?.password && (
+              <div>
+                {validation?.password ? (
                   <div class="text-red-700 text-sm my-1" safe>
                     {validation.password}
                   </div>
-                )}
+                ) : undefined}
               </div>
             </div>
 

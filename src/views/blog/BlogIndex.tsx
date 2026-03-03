@@ -38,13 +38,13 @@ export function BlogIndex(props: BlogIndexProps) {
                       <time datetime={post.date} safe>
                         {post.date}
                       </time>
-                      <span safe>
-                        {post.author && (
+                      <span>
+                        {post.author ? (
                           <>
                             <span>&middot;</span>
                             <span safe>{post.author}</span>
                           </>
-                        )}
+                        ) : undefined}
                       </span>
                     </div>
                     <h2 class="text-2xl font-bold text-black mb-2">
@@ -56,12 +56,12 @@ export function BlogIndex(props: BlogIndexProps) {
                         {post.title}
                       </a>
                     </h2>
-                    <div safe>
-                      {post.excerpt && (
+                    <div>
+                      {post.excerpt ? (
                         <p class="text-gray-600 leading-relaxed mb-4" safe>
                           {post.excerpt}
                         </p>
-                      )}
+                      ) : undefined}
                     </div>
                     <a
                       href={`/blog/${post.slug}`}

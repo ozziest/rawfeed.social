@@ -163,8 +163,8 @@ export function DataExtraction(props: DataExtractionProps) {
             </form>
           </div>
 
-          <div safe>
-            {exportList && exportList.length > 0 && (
+          <div>
+            {exportList && exportList.length > 0 ? (
               <div class="bg-white rounded-lg p-5 shadow-sm border border-gray-200">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4">
                   Export History
@@ -197,27 +197,25 @@ export function DataExtraction(props: DataExtractionProps) {
                             </span>
                           </p>
                           {exp.status === "completed" &&
-                            exp.expires_at != null && (
-                              <p class="text-xs text-gray-600">
-                                {!isExpired ? (
-                                  <>
-                                    Expires:{" "}
-                                    <span safe>
-                                      {new Date(
-                                        exp.expires_at,
-                                      ).toLocaleString()}
-                                    </span>
-                                  </>
-                                ) : (
-                                  <span class="text-red-600">Expired</span>
-                                )}
-                              </p>
-                            )}
-                          {exp.file_size != null && (
+                          exp.expires_at != null ? (
+                            <p class="text-xs text-gray-600">
+                              {!isExpired ? (
+                                <>
+                                  Expires:{" "}
+                                  <span safe>
+                                    {new Date(exp.expires_at).toLocaleString()}
+                                  </span>
+                                </>
+                              ) : (
+                                <span class="text-red-600">Expired</span>
+                              )}
+                            </p>
+                          ) : undefined}
+                          {exp.file_size != null ? (
                             <p class="text-xs text-gray-600" safe>
                               {size}
                             </p>
-                          )}
+                          ) : undefined}
                         </div>
                         <div>
                           {canDownload ? (
@@ -255,7 +253,7 @@ export function DataExtraction(props: DataExtractionProps) {
                   })}
                 </div>
               </div>
-            )}
+            ) : undefined}
           </div>
 
           {/* Info Notice */}

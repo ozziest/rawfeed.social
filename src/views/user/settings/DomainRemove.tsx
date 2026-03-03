@@ -120,12 +120,12 @@ export function DomainRemove(props: DomainRemoveProps) {
                 placeholder={user.custom_domain || ""}
                 autocomplete="off"
               />
-              <div safe>
-                {validation?.domain && (
+              <div>
+                {validation?.domain ? (
                   <p class="mt-1 text-sm text-red-600" safe>
                     {validation.domain}
                   </p>
-                )}
+                ) : undefined}
               </div>
             </div>
             <button

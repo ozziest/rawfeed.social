@@ -46,18 +46,16 @@ export function UserProfile(props: UserProfileProps) {
 
         <div class="space-y-4">
           <Posts posts={posts} />
-          <div safe>
-            {nextCursor && (
-              <div
-                hx-get={`/posts/next/${nextCursor}/${nextCursorUserId}`}
-                hx-trigger="intersect once"
-                hx-swap="outerHTML"
-                class="h-20 flex items-center justify-center"
-              >
-                <div class="animate-pulse text-gray-500">Loading more...</div>
-              </div>
-            )}
-          </div>
+          {nextCursor ? (
+            <div
+              hx-get={`/posts/next/${nextCursor}/${nextCursorUserId}`}
+              hx-trigger="intersect once"
+              hx-swap="outerHTML"
+              class="h-20 flex items-center justify-center"
+            >
+              <div class="animate-pulse text-gray-500">Loading more...</div>
+            </div>
+          ) : undefined}
         </div>
       </div>
     </DefaultLayout>

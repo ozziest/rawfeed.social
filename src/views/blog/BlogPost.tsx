@@ -38,16 +38,15 @@ export function BlogPost(props: BlogPostProps) {
             >
               {post.title}
             </h1>
-            <div safe>
-              {post.excerpt && (
+            <div>
+              {post.excerpt ? (
                 <p class="text-xl text-gray-600 leading-relaxed" safe>
                   {post.excerpt}
                 </p>
-              )}
+              ) : undefined}
             </div>
           </header>
 
-          {/* post.html is pre-sanitized markdown output — raw expression, no escaping */}
           <div id="blog-content" safe>
             {post.html}
           </div>

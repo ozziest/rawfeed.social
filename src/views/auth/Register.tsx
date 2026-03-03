@@ -40,12 +40,12 @@ export function Register(props: RegisterProps) {
                   value={state?.username as string | undefined}
                 />
               </div>
-              <div safe>
-                {validation?.username && (
+              <div>
+                {validation?.username ? (
                   <div class="text-red-700 text-sm my-1" safe>
                     {validation.username}
                   </div>
-                )}
+                ) : null}
               </div>
             </div>
 
@@ -66,12 +66,12 @@ export function Register(props: RegisterProps) {
                   value={state?.email as string | undefined}
                 />
               </div>
-              <div safe>
-                {validation?.email && (
+              <div>
+                {validation?.email ? (
                   <div class="text-red-700 text-sm my-1" safe>
                     {validation.email}
                   </div>
-                )}
+                ) : undefined}
               </div>
             </div>
 
@@ -91,12 +91,12 @@ export function Register(props: RegisterProps) {
                   placeholder="••••••••"
                 />
               </div>
-              <div safe>
-                {validation?.password && (
+              <div>
+                {validation?.password ? (
                   <div class="text-red-700 text-sm my-1" safe>
                     {validation.password}
                   </div>
-                )}
+                ) : undefined}
               </div>
             </div>
 
@@ -116,12 +116,12 @@ export function Register(props: RegisterProps) {
                   placeholder="••••••••"
                 />
               </div>
-              <div safe>
-                {validation?.confirmPassword && (
+              <div>
+                {validation?.confirmPassword ? (
                   <div class="text-red-700 text-sm my-1" safe>
                     {validation.confirmPassword}
                   </div>
-                )}
+                ) : undefined}
               </div>
             </div>
 

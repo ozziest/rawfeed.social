@@ -47,12 +47,12 @@ export function SettingsProfile(props: SettingsProfileProps) {
                 placeholder="Your name"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition"
               />
-              <div safe>
-                {validation?.name && (
+              <div>
+                {validation?.name ? (
                   <div class="text-red-700 text-sm my-1" safe>
                     {validation.name}
                   </div>
-                )}
+                ) : undefined}
               </div>
             </div>
 
@@ -75,12 +75,12 @@ export function SettingsProfile(props: SettingsProfileProps) {
                 {user?.bio || ""}
               </textarea>
               <p class="text-xs text-gray-500 mt-1">Maximum 400 characters</p>
-              <div safe>
-                {validation?.bio && (
+              <div>
+                {validation?.bio ? (
                   <div class="text-red-700 text-sm my-1" safe>
                     {validation.bio}
                   </div>
-                )}
+                ) : undefined}
               </div>
             </div>
 
@@ -102,12 +102,12 @@ export function SettingsProfile(props: SettingsProfileProps) {
               <p class="text-xs text-gray-500 mt-1">
                 Must start with http:// or https://
               </p>
-              <div safe>
-                {validation?.link && (
+              <div>
+                {validation?.link ? (
                   <div class="text-red-700 text-sm my-1" safe>
                     {validation.link}
                   </div>
-                )}
+                ) : undefined}
               </div>
             </div>
 

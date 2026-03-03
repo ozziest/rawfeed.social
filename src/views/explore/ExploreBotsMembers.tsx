@@ -53,18 +53,18 @@ export function ExploreBotsMembers(props: ExploreBotsMembersProps) {
                     @{user.username}
                   </p>
 
-                  <div safe>
-                    {user.bio && (
+                  <div>
+                    {user.bio ? (
                       <p class="text-sm text-gray-700 mb-3 line-clamp-2" safe>
                         {user.bio}
                       </p>
-                    )}
+                    ) : undefined}
                   </div>
                 </div>
               </div>
 
-              <div safe>
-                {(user as any).rss_source && (
+              <div>
+                {(user as any).rss_source ? (
                   <div class="mt-3 pt-3 border-t border-gray-100">
                     <div class="flex items-center gap-2 text-xs text-gray-500">
                       <svg
@@ -85,7 +85,7 @@ export function ExploreBotsMembers(props: ExploreBotsMembersProps) {
                       </span>
                     </div>
                   </div>
-                )}
+                ) : undefined}
               </div>
             </div>
           ))}
