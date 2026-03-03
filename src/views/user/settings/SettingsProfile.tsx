@@ -1,0 +1,133 @@
+/** @jsxImportSource @kitajs/html */
+import type { BaseProps } from "../../../types/views";
+import type { Selectable } from "kysely";
+import type { Users } from "../../../types/database";
+import { DefaultLayout } from "../../layouts/DefaultLayout";
+
+type SettingsProfileProps = BaseProps & {
+  user: Selectable<Users> | undefined;
+  csrfToken: string;
+};
+
+export function SettingsProfile(props: SettingsProfileProps) {
+  const { user, csrfToken, validation } = props;
+
+  return (
+    <DefaultLayout {...props}>
+      <div class="max-w-2xl mx-auto px-4 py-8">
+        <div class="mb-6">
+          <a
+            href="/user/settings"
+            class="text-black hover:text-gray-700 text-sm font-medium underline mb-4 inline-block"
+          >
+            ← Back to settings
+          </a>
+          <h1 class="text-2xl font-bold text-gray-900 mb-2">Update profile</h1>
+          <p class="text-gray-600">
+            Edit your name, bio, and other profile information
+          </p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <form method="POST" action="/user/settings/profile" class="space-y-6">
+            <input type="hidden" name="_csrf" value={csrfToken} />
+
+            <div>
+              <label
+                for="name"
+                class="block text-sm font-medium text-gray-900 mb-2"
+              >
+                Display name
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={user?.name || ""}
+                placeholder="Your name"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition"
+              />
+              <div>
+                {validation?.name ? (
+                  <div class="text-red-700 text-sm my-1" safe>
+                    {validation.name}
+                  </div>
+                ) : undefined}
+              </div>
+            </div>
+
+            <div>
+              <label
+                for="bio"
+                class="block text-sm font-medium text-gray-900 mb-2"
+              >
+                Bio
+              </label>
+              <textarea
+                id="bio"
+                name="bio"
+                placeholder="Write something about yourself"
+                rows="7"
+                maxlength="400"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition resize-none"
+                safe
+              >
+                {user?.bio || ""}
+              </textarea>
+              <p class="text-xs text-gray-500 mt-1">Maximum 400 characters</p>
+              <div>
+                {validation?.bio ? (
+                  <div class="text-red-700 text-sm my-1" safe>
+                    {validation.bio}
+                  </div>
+                ) : undefined}
+              </div>
+            </div>
+
+            <div>
+              <label
+                for="link"
+                class="block text-sm font-medium text-gray-900 mb-2"
+              >
+                Website / Link
+              </label>
+              <input
+                type="url"
+                id="link"
+                name="link"
+                value={user?.link || ""}
+                placeholder="https://yourwebsite.com"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition"
+              />
+              <p class="text-xs text-gray-500 mt-1">
+                Must start with http:// or https://
+              </p>
+              <div>
+                {validation?.link ? (
+                  <div class="text-red-700 text-sm my-1" safe>
+                    {validation.link}
+                  </div>
+                ) : undefined}
+              </div>
+            </div>
+
+            <div class="flex gap-3">
+              <button
+                type="submit"
+                class="px-6 py-2 bg-black text-white font-medium rounded-lg hover:bg-gray-800 transition-colors"
+              >
+                Save changes
+              </button>
+              <a
+                href="/user/settings"
+                class="px-6 py-2 bg-gray-200 text-gray-900 font-medium rounded-lg hover:bg-gray-300 transition-colors"
+              >
+                Cancel
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </DefaultLayout>
+  );
+}

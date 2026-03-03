@@ -37,19 +37,21 @@ const getByEmail = async (email: string) => {
   return await getKnex()
     .table(TABLE_NAME)
     .where("email", email)
-    .first<Users | undefined>();
+    .first<Selectable<Users> | undefined>();
 };
 
 const getByUsername = async (username: string) => {
   return await getKnex()
     .table(TABLE_NAME)
     .where("username", username)
-    .first<Users | undefined>();
+    .first<Selectable<Users> | undefined>();
 };
 
-const getAllByUsernames = async (usernames: string[]): Promise<Users[]> => {
+const getAllByUsernames = async (
+  usernames: string[],
+): Promise<Selectable<Users>[]> => {
   return await getKnex()
-    .table<Users>(TABLE_NAME)
+    .table<Selectable<Users>>(TABLE_NAME)
     .whereIn("username", usernames);
 };
 
@@ -57,10 +59,10 @@ const getById = async (uuid: string) => {
   return await getKnex()
     .table(TABLE_NAME)
     .where("id", uuid)
-    .first<Users | undefined>();
+    .first<Selectable<Users> | undefined>();
 };
 
-const getByIds = async (uuids: string[]): Promise<Users[]> => {
+const getByIds = async (uuids: string[]): Promise<Selectable<Users>[]> => {
   if (uuids.length === 0) {
     return [];
   }
@@ -69,7 +71,9 @@ const getByIds = async (uuids: string[]): Promise<Users[]> => {
     "user.service.getByIds",
     60,
     async () => {
-      return await getKnex().table<Users>(TABLE_NAME).whereIn("id", uuids);
+      return await getKnex()
+        .table<Selectable<Users>>(TABLE_NAME)
+        .whereIn("id", uuids);
     },
     { uuids },
   );
@@ -79,7 +83,7 @@ const getByCustomDomain = async (domain: string) => {
   return await getKnex()
     .table(TABLE_NAME)
     .where("custom_domain", domain)
-    .first<Users | undefined>();
+    .first<Selectable<Users> | undefined>();
 };
 
 const update = async (uuid: string, data: Partial<Users>) => {
@@ -168,7 +172,7 @@ const getByVerificationToken = async (token: string) => {
   return await getKnex()
     .table(TABLE_NAME)
     .where("email_verification_token", token)
-    .first<Users | undefined>();
+    .first<Selectable<Users> | undefined>();
 };
 
 const verifyEmail = async (userId: string) => {

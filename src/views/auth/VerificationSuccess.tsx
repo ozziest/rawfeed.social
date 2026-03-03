@@ -1,0 +1,82 @@
+/** @jsxImportSource @kitajs/html */
+import type { BaseProps } from "../../types/views";
+import { AuthLayout } from "../layouts/AuthLayout";
+
+export function VerificationSuccess(props: BaseProps) {
+  return (
+    <AuthLayout {...props}>
+      <div class="flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
+        <div class="w-full max-w-md space-y-8">
+          <div class="text-center">
+            <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-100 mb-6">
+              <svg
+                class="h-8 w-8 text-green-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </div>
+            <h2 class="text-3xl font-bold tracking-tight text-gray-900">
+              Email Verified!
+            </h2>
+            <p class="mt-4 text-base text-gray-600">
+              Your email address has been successfully verified
+            </p>
+          </div>
+
+          <div class="bg-green-50 border border-green-200 rounded-lg p-6 space-y-4">
+            <div class="flex items-start">
+              <svg
+                class="h-6 w-6 text-green-600 mt-0.5 mr-3 shrink-0"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <div>
+                <h3 class="text-base font-semibold text-gray-900">
+                  You're all set!
+                </h3>
+                <p class="mt-2 text-sm text-gray-600">
+                  Your account is now active and you can sign in to start using
+                  rawfeed.social.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <a
+              href="/auth/login"
+              class="group relative flex w-full justify-center rounded-md border border-transparent bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
+            >
+              Sign in to your account
+            </a>
+          </div>
+
+          <div class="text-center text-sm">
+            <a
+              href="/"
+              class="font-medium text-black hover:text-gray-700 underline"
+            >
+              Go to homepage
+            </a>
+          </div>
+        </div>
+      </div>
+    </AuthLayout>
+  );
+}

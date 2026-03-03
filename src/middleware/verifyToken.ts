@@ -40,6 +40,7 @@ export async function verifyToken(
         username: user.username,
         name: user.name,
         gravatar: getAvatar(user),
+        isAdmin: !!user.is_admin,
       };
 
       const { accessToken: newAccessToken } = generateTokens(app, payload);

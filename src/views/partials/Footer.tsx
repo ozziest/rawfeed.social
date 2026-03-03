@@ -1,0 +1,172 @@
+/** @jsxImportSource @kitajs/html */
+export function Footer() {
+  return (
+    <footer class="bg-black text-gray-300 border-t-2 border-white">
+      <div class="max-w-4xl mx-auto px-4 py-16">
+        <div class="grid md:grid-cols-4 gap-10 mb-12">
+          {/* Column 1 — Project */}
+          <div>
+            <h4 class="text-white font-bold mb-6 text-lg border-b border-gray-700 pb-2">
+              Project
+            </h4>
+            <ul class="space-y-3">
+              <li>
+                <a
+                  href="https://github.com/ozziest/rawfeed.social"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-gray-300"
+                >
+                  GitHub
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/ozziest/rawfeed.social/blob/main/ROADMAP.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-gray-300"
+                >
+                  Roadmap
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/ozziest/rawfeed.social/discussions"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-gray-300"
+                >
+                  Discussions
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 2 — Contribute */}
+          <div>
+            <h4 class="text-white font-bold mb-6 text-lg border-b border-gray-700 pb-2">
+              Contribute
+            </h4>
+            <ul class="space-y-3">
+              <li>
+                <a
+                  href="https://github.com/ozziest/rawfeed.social/blob/main/CONTRIBUTING.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-gray-300"
+                >
+                  Development Guide
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/ozziest/rawfeed.social/blob/main/CODE_OF_CONDUCT.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-gray-300"
+                >
+                  Code of Conduct
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/ozziest/rawfeed.social/issues"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-gray-300"
+                >
+                  Report Issues
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 3 — Legal */}
+          <div>
+            <h4 class="text-white font-bold mb-6 text-lg border-b border-gray-700 pb-2">
+              Legal
+            </h4>
+            <ul class="space-y-3">
+              <li>
+                <a href="/legal/privacy" class="text-gray-300">
+                  Privacy Policy
+                </a>
+              </li>
+              <li>
+                <a href="/legal/terms" class="text-gray-300">
+                  Terms of Service
+                </a>
+              </li>
+              <li>
+                <a href="/legal/cookies" class="text-gray-300">
+                  Cookie Policy
+                </a>
+              </li>
+              <li>
+                <a href="/legal/dpa" class="text-gray-300">
+                  Data Processing Agreement
+                </a>
+              </li>
+              <li>
+                <a href="/legal/bots" class="text-gray-300">
+                  Bots &amp; Automation
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/ozziest/rawfeed.social/blob/main/LICENSE"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-gray-300"
+                >
+                  License (AGPL-3.0)
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 4 — Platform */}
+          <div>
+            <h4 class="text-white font-bold mb-6 text-lg border-b border-gray-700 pb-2">
+              Platform
+            </h4>
+            <ul class="space-y-3">
+              <li>
+                <a href="/blog" class="text-gray-300">
+                  Blog
+                </a>
+              </li>
+              <li>
+                <a href="/auth/login" class="text-gray-300">
+                  Login
+                </a>
+              </li>
+              <li>
+                <a href="/auth/register" class="text-gray-300">
+                  Register
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="border-t border-gray-700 pt-10 text-center">
+          <div class="mb-4">
+            <span class="text-2xl font-extrabold text-white">Rawfeed</span>
+          </div>
+          <p class="text-base mb-3 text-gray-400">
+            Reclaiming Freedom in Social Media
+          </p>
+          <div class="flex justify-center gap-3 text-sm text-gray-400">
+            <span class="px-3 py-1 border border-gray-700">Non-profit</span>
+            <span class="px-3 py-1 border border-gray-700">Open Source</span>
+            <span class="px-3 py-1 border border-gray-700">
+              Community-owned
+            </span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}

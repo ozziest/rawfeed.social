@@ -1,6 +1,12 @@
 node_modules/
 dist/
-public/css/tailwind.css
+
 .vscode/
 .env
 coverage/
+
+public/css/tailwind.css
+public/css/cookieconsent.css
+public/js/cookieconsent.umd.js
+public/js/htmx.min.js
+

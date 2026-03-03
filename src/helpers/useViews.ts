@@ -1,64 +1,54 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { sanitize } from "./security";
 import { getAvatar, toISO } from "./common";
-import { formatPostContent } from "./postHelpers";
 import { asset } from "./asset";
-export { asset } from "./asset";
 
-type UseViewsOptions = {
-  prefix: string;
-  layout: string;
+// ---------------------------------------------------------------------------
+// Shared base props injected into every JSX view
+// ---------------------------------------------------------------------------
+export const getBaseProps = (request: FastifyRequest, reply: FastifyReply) => {
+  const getFlashRaw = (name: string): object | undefined => {
+    const content = request.cookies[name];
+    if (content) {
+      const data = JSON.parse(content);
+      reply.clearCookie(name, { path: "/" });
+      return data;
+    }
+  };
+
+  return {
+    title:
+      "Rawfeed - Chronological Microblogging Without Algorithmic Manipulation",
+    description:
+      "Rawfeed is an open-source microblogging platform with chronological feeds, no algorithmic manipulation, and full RSS integration.",
+    keywords:
+      "microblogging, chronological feed, RSS, open-source, social network, no algorithm, rawfeed",
+    validation: (getFlashRaw("validation") as Record<string, string>) ?? {},
+    state: (getFlashRaw("state") as Record<string, unknown>) ?? {},
+    formData: {} as Record<string, unknown>,
+    mode: request.mode,
+    domainUser: request.domainUser,
+    loggedUser: request.loggedUser,
+    profileUser: request.profileUser,
+    activeHashtag: "",
+    isProd: process.env.NODE_ENV === "production",
+    sanitize,
+    getAvatar,
+    toISO,
+    asset,
+  };
 };
 
-export const useViews = (options: UseViewsOptions) => {
-  const { prefix, layout } = options;
-
+// ---------------------------------------------------------------------------
+// JSX view helper — call reply.html() with a JSX component.
+// Flash cookies (validation, state) are consumed through getBaseProps.
+// ---------------------------------------------------------------------------
+export const useJsxViews = () => {
   return (request: FastifyRequest, reply: FastifyReply) => {
-    const view = (name: string, params: object = {}) => {
-      const validation = getFlash("validation");
-      const state = getFlash("state");
+    const base = () => getBaseProps(request, reply);
 
-      return reply.view(
-        `${prefix}/${name}`,
-        {
-          title:
-            "Rawfeed - Chronological Microblogging Without Algorithmic Manipulation",
-          description:
-            "Rawfeed is an open-source microblogging platform with chronological feeds, no algorithmic manipulation, and full RSS integration.",
-          keywords:
-            "microblogging, chronological feed, RSS, open-source, social network, no algorithm, rawfeed",
-          validation: validation || {},
-          state: state || {},
-          formData: {},
-          mode: request.mode,
-          domainUser: request.domainUser,
-          loggedUser: request.loggedUser,
-          profileUser: request.profileUser,
-          activeHashtag: "",
-          isProd: process.env.NODE_ENV === "production",
-          sanitize,
-          getAvatar,
-          formatPostContent,
-          toISO,
-          asset,
-          ...params,
-        },
-        {
-          layout,
-        },
-      );
-    };
-
-    const getFlash = (name: string): object | undefined => {
-      const content = request.cookies[name];
-      let data;
-
-      if (content) {
-        data = JSON.parse(content);
-        reply.clearCookie(name, { path: "/" });
-      }
-
-      return data;
+    const html = (component: JSX.Element) => {
+      return reply.html(component);
     };
 
     const setFlash = (name: string, data: object) => {
@@ -69,13 +59,8 @@ export const useViews = (options: UseViewsOptions) => {
       });
     };
 
-    const setValidation = (errors: object) => {
-      setFlash("validation", errors);
-    };
-
-    const setState = (state: object) => {
-      setFlash("state", state);
-    };
+    const setValidation = (errors: object) => setFlash("validation", errors);
+    const setState = (state: object) => setFlash("state", state);
 
     const setAuthTokens = (accessToken: string, refreshToken: string) => {
       reply.setCookie("accessToken", accessToken, {
@@ -83,25 +68,17 @@ export const useViews = (options: UseViewsOptions) => {
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
         path: "/",
-        maxAge: 10 * 60, // 10 minutes
+        maxAge: 10 * 60,
       });
-
       reply.setCookie("refreshToken", refreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
         path: "/",
-        maxAge: 30 * 24 * 60 * 60, // 30 days
+        maxAge: 30 * 24 * 60 * 60,
       });
     };
 
-    return {
-      view,
-      getFlash,
-      setFlash,
-      setValidation,
-      setState,
-      setAuthTokens,
-    };
+    return { html, base, setFlash, setValidation, setState, setAuthTokens };
   };
 };

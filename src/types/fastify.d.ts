@@ -1,8 +1,11 @@
 // src/types/fastify.d.ts
 import "fastify";
 import "@fastify/jwt";
+import "@fastify/csrf-protection";
+import { Selectable } from "kysely";
 import { TokenPayload } from "../helpers/tokens";
 import { Users } from "./database";
+import { CookieSerializeOptions } from "@fastify/cookie";
 
 declare module "fastify" {
   interface FastifyInstance {
@@ -11,12 +14,23 @@ declare module "fastify" {
       verify: (token: string) => any;
       decode: (token: string) => any;
     };
+    csrfProtection(
+      req: FastifyRequest,
+      reply: FastifyReply,
+      done: () => void,
+    ): void;
   }
 
   interface FastifyRequest {
     mode: "root" | "custom";
-    domainUser?: Users;
+    domainUser?: Selectable<Users>;
     loggedUser?: TokenPayload;
-    profileUser?: Users;
+    profileUser?: Selectable<Users>;
+  }
+
+  interface FastifyReply {
+    generateCsrf(
+      options?: CookieSerializeOptions & { userInfo?: string },
+    ): string;
   }
 }

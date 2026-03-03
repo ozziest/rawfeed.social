@@ -1,0 +1,502 @@
+/** @jsxImportSource @kitajs/html */
+import type { BaseProps } from "../../types/views";
+import { DefaultLayout } from "../layouts/DefaultLayout";
+
+type Props = BaseProps;
+
+export function DataRightsPage(props: Props) {
+  return (
+    <DefaultLayout {...props} title="Data Subject Rights - Rawfeed">
+      <>
+        <div class="max-w-4xl mx-auto px-6 py-12">
+          <h1 class="text-4xl font-bold mb-2">
+            Data Subject Rights & How to Exercise Them
+          </h1>
+          <p class="text-gray-600 mb-8">Last Updated: February 2026</p>
+
+          <div class="prose prose-sm max-w-none space-y-6">
+            <section>
+              <h2 class="text-2xl font-bold mb-4">Overview</h2>
+              <p>
+                Under the EU's General Data Protection Regulation (GDPR) and
+                similar data protection laws, you have specific rights regarding
+                your personal data held by Rawfeed. This page explains each
+                right and how to exercise it.
+              </p>
+            </section>
+
+            <section>
+              <h2 class="text-2xl font-bold mb-4">
+                1. Right to Access (GDPR Article 15)
+              </h2>
+              <p>
+                You have the right to request a copy of all personal data we
+                hold about you.
+              </p>
+
+              <h3 class="text-lg font-semibold mb-3 mt-4">
+                How to Exercise This Right:
+              </h3>
+              <ol class="list-decimal pl-6 space-y-2">
+                <li>
+                  <strong>Via Your Account (Coming Soon):</strong> A data export
+                  tool will be available in your account settings that allows
+                  you to download your data as JSON.
+                </li>
+                <li>
+                  <strong>Via RSS Feed (Available Now):</strong> Your personal
+                  RSS feed contains all your posts and is publicly accessible
+                  (e.g.,
+                  <code>https://rawfeed.social/u/[username]/rss</code>.
+                </li>
+                <li>
+                  <strong>Manual Request:</strong> Email
+                  <a
+                    href="mailto:privacy@rawfeed.dev"
+                    class="text-black hover:underline font-medium"
+                  >
+                    privacy@rawfeed.dev
+                  </a>
+                  with the subject "Data Access Request" and include your
+                  username. We will respond within 30 days with a complete copy
+                  of your data.
+                </li>
+              </ol>
+
+              <div class="bg-gray-100 border-l-4 border-black p-4 mt-4">
+                <p class="text-sm">
+                  <strong>Timeline:</strong> We will provide data within 30 days
+                  of your request. In complex cases, we may extend by 2
+                  additional months.
+                </p>
+              </div>
+            </section>
+
+            <section>
+              <h2 class="text-2xl font-bold mb-4">
+                2. Right to Rectification (GDPR Article 16)
+              </h2>
+              <p>
+                You have the right to correct inaccurate or incomplete data we
+                hold about you.
+              </p>
+
+              <h3 class="text-lg font-semibold mb-3 mt-4">
+                How to Exercise This Right:
+              </h3>
+              <ol class="list-decimal pl-6 space-y-2">
+                <li>
+                  <strong>Self-Service (Available Now):</strong> You can edit
+                  your profile information directly in your account settings
+                  (name, bio, etc.).
+                </li>
+                <li>
+                  <strong>Deletion & Replacement:</strong> You can delete posts
+                  and create new ones to correct information.
+                </li>
+                <li>
+                  <strong>Manual Request:</strong> For data that cannot be
+                  edited through the interface, email
+                  <a
+                    href="mailto:privacy@rawfeed.dev"
+                    class="text-black hover:underline font-medium"
+                  >
+                    privacy@rawfeed.dev
+                  </a>
+                  with:
+                  <ul class="list-disc pl-6 mt-2">
+                    <li>Subject: "Data Rectification Request"</li>
+                    <li>The inaccurate data and the correction needed</li>
+                    <li>Your username</li>
+                  </ul>
+                </li>
+              </ol>
+
+              <div class="bg-gray-100 border-l-4 border-black p-4 mt-4">
+                <p class="text-sm">
+                  <strong>Note:</strong> We cannot edit your posts after
+                  creation for integrity reasons. You can delete and re-post
+                  corrected content.
+                </p>
+              </div>
+            </section>
+
+            <section>
+              <h2 class="text-2xl font-bold mb-4">
+                3. Right to Erasure / Right to Be Forgotten (GDPR Article 17)
+              </h2>
+              <p>
+                You have the right to request deletion of your account and all
+                associated data.
+              </p>
+
+              <h3 class="text-lg font-semibold mb-3 mt-4">
+                How to Exercise This Right:
+              </h3>
+              <ol class="list-decimal pl-6 space-y-2">
+                <li>
+                  <strong>Self-Service (Coming Soon):</strong> A "Delete
+                  Account" button will be available in account settings that
+                  immediately removes your profile and posts from public view.
+                </li>
+                <li>
+                  <strong>Manual Request:</strong> Email
+                  <a
+                    href="mailto:privacy@rawfeed.dev"
+                    class="text-black hover:underline font-medium"
+                  >
+                    privacy@rawfeed.dev
+                  </a>
+                  with:
+                  <ul class="list-disc pl-6 mt-2">
+                    <li>Subject: "Account Deletion Request"</li>
+                    <li>Your username and email</li>
+                    <li>Confirmation that you want permanent deletion</li>
+                  </ul>
+                </li>
+              </ol>
+
+              <h3 class="text-lg font-semibold mb-3 mt-4">
+                What Happens When You Delete Your Account:
+              </h3>
+              <ul class="list-disc pl-6 space-y-2">
+                <li>Your profile is immediately removed from public view</li>
+                <li>Your posts are deleted from the feed</li>
+                <li>
+                  Data is retained in backups for 30 days to allow recovery in
+                  case of accidental deletion
+                </li>
+                <li>
+                  After 30 days, all backups containing your data are
+                  permanently deleted
+                </li>
+              </ul>
+
+              <h3 class="text-lg font-semibold mb-3 mt-4">Limitations:</h3>
+              <ul class="list-disc pl-6 space-y-2">
+                <li>
+                  Other users' replies to your deleted posts may still exist (we
+                  cannot delete their content)
+                </li>
+                <li>
+                  Some legal data may be retained for compliance (e.g., if abuse
+                  was reported)
+                </li>
+                <li>
+                  Once deleted, data cannot be recovered after the 30-day backup
+                  period
+                </li>
+                <li>
+                  Cached copies may persist for minutes to hours after deletion
+                  while automatic cache expiration takes place
+                </li>
+              </ul>
+
+              <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mt-4">
+                <p class="text-sm">
+                  <strong>Warning:</strong> Account deletion is permanent.
+                  Please ensure you have exported or backed up any data you wish
+                  to keep before requesting deletion.
+                </p>
+              </div>
+            </section>
+
+            <section>
+              <h2 class="text-2xl font-bold mb-4">
+                4. Right to Restrict Processing (GDPR Article 18)
+              </h2>
+              <p>
+                You have the right to ask us to limit how we use your data in
+                certain circumstances (e.g., while you contest its accuracy).
+              </p>
+
+              <h3 class="text-lg font-semibold mb-3 mt-4">
+                How to Exercise This Right:
+              </h3>
+              <p>
+                Email
+                <a
+                  href="mailto:privacy@rawfeed.dev"
+                  class="text-black hover:underline font-medium"
+                >
+                  privacy@rawfeed.dev
+                </a>
+                with:
+              </p>
+              <ul class="list-disc pl-6 space-y-2">
+                <li>Subject: "Data Processing Restriction Request"</li>
+                <li>The specific type of processing you want restricted</li>
+                <li>
+                  Your username and reason (e.g., contesting accuracy, unlawful
+                  processing)
+                </li>
+              </ul>
+
+              <p class="mt-4">
+                While processing is restricted, we will only store your data and
+                not actively use it (except for legal compliance or with your
+                consent).
+              </p>
+            </section>
+
+            <section>
+              <h2 class="text-2xl font-bold mb-4">
+                5. Right to Data Portability (GDPR Article 20)
+              </h2>
+              <p>
+                You have the right to receive your data in a portable format and
+                transfer it to another service.
+              </p>
+
+              <h3 class="text-lg font-semibold mb-3 mt-4">
+                How to Exercise This Right:
+              </h3>
+              <ol class="list-decimal pl-6 space-y-2">
+                <li>
+                  <strong>Via RSS Feed (Available Now):</strong> Your RSS feed
+                  is already machine-readable and portable. You can subscribe to
+                  it in any RSS reader or export it.
+                </li>
+                <li>
+                  <strong>Via Data Export:</strong> Download your account data
+                  as JSON from account settings, including posts, profile,
+                  followers/following, etc.
+                </li>
+                <li>
+                  <strong>Manual Request:</strong> Email
+                  <a
+                    href="mailto:privacy@rawfeed.dev"
+                    class="text-black hover:underline font-medium"
+                  >
+                    privacy@rawfeed.dev
+                  </a>
+                  requesting your data in a portable format (e.g., CSV, JSON).
+                </li>
+              </ol>
+
+              <p class="mt-4">
+                We will provide your data in a structured, commonly-used format
+                to allow easy transfer to other platforms.
+              </p>
+            </section>
+
+            <section>
+              <h2 class="text-2xl font-bold mb-4">
+                6. Right to Object (GDPR Article 21)
+              </h2>
+              <p>
+                You have the right to object to certain types of processing of
+                your data.
+              </p>
+
+              <h3 class="text-lg font-semibold mb-3 mt-4">
+                How to Exercise This Right:
+              </h3>
+              <p>
+                Email
+                <a
+                  href="mailto:privacy@rawfeed.dev"
+                  class="text-black hover:underline font-medium"
+                >
+                  privacy@rawfeed.dev
+                </a>
+                with:
+              </p>
+              <ul class="list-disc pl-6 space-y-2">
+                <li>Subject: "Data Processing Objection"</li>
+                <li>
+                  The type of processing you object to (e.g., error tracking,
+                  link analytics)
+                </li>
+                <li>Your reasons</li>
+              </ul>
+
+              <h3 class="text-lg font-semibold mb-3 mt-4">Examples:</h3>
+              <ul class="list-disc pl-6 space-y-2">
+                <li>
+                  <strong>Opt-Out of Error Tracking:</strong> You can request
+                  not to have your errors sent to Sentry. We will comply while
+                  maintaining platform stability.
+                </li>
+                <li>
+                  <strong>Opt-Out of Email Notifications:</strong> You can opt
+                  out of account notifications and system emails at any time.
+                </li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 class="text-2xl font-bold mb-4">
+                7. Right to Not Be Subject to Automated Decision-Making (GDPR
+                Article 22)
+              </h2>
+              <p>
+                You have the right not to be subject to decisions made solely by
+                automated processing that significantly affects you.
+              </p>
+
+              <h3 class="text-lg font-semibold mb-3 mt-4">
+                Rawfeed's Compliance:
+              </h3>
+              <ul class="list-disc pl-6 space-y-2">
+                <li>
+                  <strong>No Algorithmic Feed:</strong> Your feed is strictly
+                  chronological. We do not use machine learning to rank or
+                  filter posts for you.
+                </li>
+                <li>
+                  <strong>No Automated Account Decisions:</strong> Human review
+                  is required before any account suspension or termination
+                  (except for automated anti-spam in extreme cases).
+                </li>
+                <li>
+                  <strong>Transparent Moderation:</strong> If your content is
+                  removed, we will explain why.
+                </li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 class="text-2xl font-bold mb-4">
+                8. Right to Lodge a Complaint (GDPR Article 77)
+              </h2>
+              <p>
+                If you believe we have violated your rights or the GDPR, you
+                have the right to lodge a complaint with your national Data
+                Protection Authority.
+              </p>
+
+              <h3 class="text-lg font-semibold mb-3 mt-4">Contact Your DPA:</h3>
+              <ul class="list-disc pl-6 space-y-2">
+                <li>
+                  <strong>EU/EEA:</strong>
+                  <a
+                    href="https://edpb.ec.europa.eu/about-edpb/board/members_en"
+                    class="text-black hover:underline font-medium"
+                  >
+                    Find your national DPA
+                  </a>
+                </li>
+                <li>
+                  <strong>UK:</strong>
+                  <a
+                    href="https://ico.org.uk/"
+                    class="text-black hover:underline font-medium"
+                  >
+                    UK Information Commissioner's Office (ICO)
+                  </a>
+                </li>
+              </ul>
+
+              <p class="mt-4">
+                We encourage you to contact us first to resolve any concerns
+                before filing a complaint with your DPA.
+              </p>
+            </section>
+
+            <section>
+              <h2 class="text-2xl font-bold mb-4">
+                9. How to Submit Your Rights Request
+              </h2>
+              <p>To exercise any of these rights, contact us at:</p>
+
+              <div class="bg-gray-100 p-4 rounded mt-4">
+                <p>
+                  <strong>Email:</strong>
+                  <a
+                    href="mailto:i.ozguradem@gmail.com"
+                    class="text-black hover:underline font-medium"
+                  >
+                    i.ozguradem@gmail.com
+                  </a>
+                </p>
+                <p class="mt-2 text-sm">
+                  <strong>Required Information:</strong> Include your username,
+                  email address, and a clear description of your request.
+                </p>
+                <p class="text-sm mt-2">
+                  <strong>Timeline:</strong> We will respond within 30 days (or
+                  up to 90 days for complex requests).
+                </p>
+                <p class="text-sm mt-2">
+                  <strong>No Fee:</strong> There is no charge for exercising
+                  these rights, unless your request is manifestly unfounded or
+                  excessive.
+                </p>
+              </div>
+            </section>
+
+            <section>
+              <h2 class="text-2xl font-bold mb-4">
+                10. Roadmap: Upcoming Features
+              </h2>
+              <p>
+                These features are coming soon to make exercising your rights
+                easier:
+              </p>
+
+              <ul class="list-disc pl-6 space-y-2">
+                <li>
+                  <strong>Account Deletion Tool:</strong> Self-service account
+                  deletion with 30-day recovery window
+                </li>
+                <li>
+                  <strong>Privacy Settings Dashboard:</strong> Manage email
+                  preferences, error tracking opt-out, etc.
+                </li>
+                <li>
+                  <strong>Data Access Portal:</strong> View what data we hold
+                  about you in your account
+                </li>
+              </ul>
+
+              <p class="mt-4">
+                Check back periodically for updates on these features.
+              </p>
+            </section>
+
+            <section>
+              <h2 class="text-2xl font-bold mb-4">11. Our Commitment</h2>
+              <p>
+                We take your data rights seriously. Rawfeed was built from the
+                ground up with privacy and user control as core values. We are
+                committed to:
+              </p>
+              <ul class="list-disc pl-6 space-y-2">
+                <li>
+                  Responding to all rights requests promptly and transparently
+                </li>
+                <li>Not charging fees for reasonable requests</li>
+                <li>Providing data in accessible formats</li>
+                <li>Respecting your choices without retaliation</li>
+                <li>Continuously improving our privacy practices</li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 class="text-2xl font-bold mb-4">12. Questions?</h2>
+              <p>
+                For questions about your rights or to exercise them, please
+                reach out:
+              </p>
+              <div class="bg-gray-100 p-4 rounded mt-4">
+                <p>
+                  <strong>Rawfeed Privacy Team:</strong>
+                </p>
+                <p>
+                  Email:
+                  <a
+                    href="mailto:i.ozguradem@gmail.com"
+                    class="text-black hover:underline font-medium"
+                  >
+                    i.ozguradem@gmail.com
+                  </a>
+                </p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </>
+    </DefaultLayout>
+  );
+}
