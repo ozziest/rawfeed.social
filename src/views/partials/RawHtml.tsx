@@ -12,9 +12,12 @@ type RawHtmlProps = {
  * Never pass user-generated content here unless it has been sanitized first.
  */
 export function RawHtml({ html, id, class: className }: RawHtmlProps) {
-  return (
-    <div id={id} class={className}>
-      {html as JSX.Element}
-    </div>
-  );
+  const attrs = [
+    id ? `id="${id}"` : "",
+    className ? `class="${className}"` : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  return `<div ${attrs}>${html}</div>` as "safe";
 }

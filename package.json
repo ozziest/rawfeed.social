@@ -18,6 +18,7 @@
   "scripts": {
     "dev": "concurrently \"npm run dev:server\" \"npm run tailwind:watch\"",
     "dev:server": "ts-node-dev --respawn --transpile-only src/server.tsx",
+    "check": "npm run type-check && npm run build && npm run test:ci",
     "build": "tsc",
     "type-check": "tsc --noEmit",
     "scan": "xss-scan",

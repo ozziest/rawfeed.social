@@ -89,7 +89,7 @@ public/               # Static assets (CSS, JS, images)
 - JSX view components live in `src/views/` as `.tsx` files.
 - Layouts are in `src/views/layouts/`; partials in `src/views/partials/`.
 - Every `.tsx` file must start with `/** @jsxImportSource @kitajs/html */`.
-- All views receive a `BaseProps` object (from `getBaseProps()`) which includes `asset`, `loggedUser`, `mode`, helpers like `sanitize`/`getAvatar`/`formatPostContent`, and flash data (`validation`, `state`).
+- All views receive a `BaseProps` object (from `getBaseProps()`) which includes `asset`, `loggedUser`, `mode`, helpers like `sanitize`/`getAvatar`, and flash data (`validation`, `state`).
 - Use the `asset` helper (from `src/helpers/asset.ts`) for cache-busted static asset URLs.
 - HTMX targets return HTML fragments, not full pages — use `hx-boost`, `hx-swap`, `hx-target` patterns.
 
