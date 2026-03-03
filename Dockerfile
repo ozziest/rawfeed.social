@@ -18,7 +18,6 @@ COPY tsconfig.json ./
 COPY knexfile.js ./
 COPY src ./src
 COPY migrations ./migrations
-COPY views ./views
 COPY public ./public
 COPY blog ./blog
 
@@ -46,7 +45,6 @@ RUN npm ci --only=production
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/knexfile.js ./
 COPY --from=builder /app/migrations ./migrations
-COPY --from=builder /app/views ./views
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/blog ./blog
 
