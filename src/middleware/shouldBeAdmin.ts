@@ -5,6 +5,6 @@ export async function shouldBeAdmin(
   reply: FastifyReply,
 ) {
   if (!request.loggedUser || !request.loggedUser?.isAdmin) {
-    reply.status(401).send("Unauthorized");
+    return reply.status(403).send("Forbidden");
   }
 }
