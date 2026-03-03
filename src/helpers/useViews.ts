@@ -1,7 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { sanitize } from "./security";
 import { getAvatar, toISO } from "./common";
-import { formatPostContent } from "./postHelpers";
 import { asset } from "./asset";
 
 // ---------------------------------------------------------------------------
@@ -35,7 +34,6 @@ export const getBaseProps = (request: FastifyRequest, reply: FastifyReply) => {
     isProd: process.env.NODE_ENV === "production",
     sanitize,
     getAvatar,
-    formatPostContent,
     toISO,
     asset,
   };

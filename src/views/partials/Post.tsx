@@ -1,8 +1,8 @@
 /** @jsxImportSource @kitajs/html */
 import type { PostWithContent } from "../../types/relations";
 import { getAvatar } from "../../helpers/common";
-import { formatPostContent } from "../../helpers/postHelpers";
 import { toISO } from "../../helpers/common";
+import { PostContent } from "./PostContent";
 import { PostStats } from "./PostStats";
 
 type PostProps = {
@@ -43,13 +43,12 @@ export function Post({ post }: PostProps) {
         </div>
       </div>
 
-      {/* Content — formatPostContent returns pre-sanitized HTML */}
+      {/* Content — PostContent renders pre-sanitized HTML with mentions/hashtags/links */}
       <p
         class="text-gray-900 leading-relaxed mb-4 whitespace-pre-line wrap-break-words overflow-wrap-anywhere line-clamp-12"
         lang={post.location ?? "en"}
-        safe
       >
-        {formatPostContent(post)}
+        <PostContent post={post} />
       </p>
 
       <div class="flex items-center justify-between text-sm">
