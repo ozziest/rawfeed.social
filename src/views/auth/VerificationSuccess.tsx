@@ -34,7 +34,7 @@ export function VerificationSuccess(props: BaseProps) {
           <div class="bg-green-50 border border-green-200 rounded-lg p-6 space-y-4">
             <div class="flex items-start">
               <svg
-                class="h-6 w-6 text-green-600 mt-0.5 mr-3 flex-shrink-0"
+                class="h-6 w-6 text-green-600 mt-0.5 mr-3 shrink-0"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
