@@ -1,4 +1,5 @@
 /** @jsxImportSource @kitajs/html */
+import type { Selectable } from "kysely";
 import type { Users } from "../../types/database";
 import type { TokenPayload } from "../../helpers/tokens";
 import { getAvatar } from "../../helpers/common";
@@ -6,8 +7,8 @@ import { FollowButton } from "./FollowButton";
 import { Share } from "./Share";
 
 type ProfileProps = {
-  profileUser?: Users;
-  domainUser?: Users;
+  profileUser?: Selectable<Users>;
+  domainUser?: Selectable<Users>;
   loggedUser?: TokenPayload;
   followerCount?: number;
   followingCount?: number;

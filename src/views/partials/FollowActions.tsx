@@ -1,9 +1,10 @@
 /** @jsxImportSource @kitajs/html */
+import type { Selectable } from "kysely";
 import type { Users } from "../../types/database";
 import { FollowButton } from "./FollowButton";
 
 type FollowActionsProps = {
-  targetUser: Users;
+  targetUser: Selectable<Users>;
   isFollowing: boolean;
   followerCount: number;
   followingCount: number;

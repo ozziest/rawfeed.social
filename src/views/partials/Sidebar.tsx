@@ -1,12 +1,13 @@
 /** @jsxImportSource @kitajs/html */
+import type { Selectable } from "kysely";
 import type { Users } from "../../types/database";
 import type { DailyReportItem } from "../../types/shared";
 import { getAvatar } from "../../helpers/common";
 
 type SidebarProps = {
   report?: DailyReportItem[];
-  lastMembers?: Users[];
-  bots?: Users[];
+  lastMembers?: Selectable<Users>[];
+  bots?: Selectable<Users>[];
 };
 
 export function Sidebar({ report, lastMembers, bots }: SidebarProps) {

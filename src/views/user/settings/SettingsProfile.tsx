@@ -1,10 +1,11 @@
 /** @jsxImportSource @kitajs/html */
 import type { BaseProps } from "../../../types/views";
+import type { Selectable } from "kysely";
 import type { Users } from "../../../types/database";
 import { DefaultLayout } from "../../layouts/DefaultLayout";
 
 type SettingsProfileProps = BaseProps & {
-  user: Users | undefined;
+  user: Selectable<Users> | undefined;
   csrfToken: string;
 };
 

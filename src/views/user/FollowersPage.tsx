@@ -1,13 +1,14 @@
 /** @jsxImportSource @kitajs/html */
 import type { BaseProps } from "../../types/views";
 import type { FollowWithUser } from "../../types/relations";
+import type { Selectable } from "kysely";
 import type { Users } from "../../types/database";
 import type { TokenPayload } from "../../helpers/tokens";
 import { DefaultLayout } from "../layouts/DefaultLayout";
 import { UserListItems } from "../partials/UserListItems";
 
 type FollowersPageProps = BaseProps & {
-  profileUser: Users;
+  profileUser: Selectable<Users>;
   items: FollowWithUser[];
   nextCursor?: string | null;
   isFollowingMap: Record<string, boolean>;

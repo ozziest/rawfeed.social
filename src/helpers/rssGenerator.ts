@@ -1,7 +1,11 @@
+import { Selectable } from "kysely";
 import { Users } from "../types/database";
 import { PostWithContent } from "../types/relations";
 
-export function generateRSS(user: Users, posts: PostWithContent[]): string {
+export function generateRSS(
+  user: Selectable<Users>,
+  posts: PostWithContent[],
+): string {
   const baseUrl = process.env.APP_URL || "https://rawfeed.social";
   const now = new Date().toUTCString();
   const lastPost = posts[0]?.created_at

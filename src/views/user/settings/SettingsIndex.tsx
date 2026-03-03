@@ -1,11 +1,12 @@
 /** @jsxImportSource @kitajs/html */
 import type { BaseProps } from "../../../types/views";
+import type { Selectable } from "kysely";
 import type { Users } from "../../../types/database";
 import { DefaultLayout } from "../../layouts/DefaultLayout";
 import { FlashMessages } from "../../partials/FlashMessages";
 
 type SettingsIndexProps = BaseProps & {
-  user: Users | undefined;
+  user: Selectable<Users> | undefined;
 };
 
 export function SettingsIndex(props: SettingsIndexProps) {

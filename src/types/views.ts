@@ -1,4 +1,5 @@
 import type { Children } from "@kitajs/html";
+import type { Selectable } from "kysely";
 import type { TokenPayload } from "../helpers/tokens";
 import type { Users } from "./database";
 
@@ -14,8 +15,8 @@ export type BaseProps = {
   state: Record<string, unknown>;
   mode: "root" | "custom";
   loggedUser?: TokenPayload;
-  domainUser?: Users;
-  profileUser?: Users;
+  domainUser?: Selectable<Users>;
+  profileUser?: Selectable<Users>;
   isProd: boolean;
 };
 

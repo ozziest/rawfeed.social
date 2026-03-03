@@ -1,11 +1,12 @@
 /** @jsxImportSource @kitajs/html */
 import type { BaseProps } from "../../types/views";
+import type { Selectable } from "kysely";
 import type { Users } from "../../types/database";
 import { DefaultLayout } from "../layouts/DefaultLayout";
 import { getAvatar } from "../../helpers/common";
 
 type ExploreBotsMembersProps = BaseProps & {
-  users: Users[];
+  users: Selectable<Users>[];
   pageTitle: string;
   pageDescription: string;
 };

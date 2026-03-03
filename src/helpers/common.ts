@@ -1,5 +1,6 @@
 import crypto from "crypto";
 import Sentry from "@sentry/node";
+import { Selectable } from "kysely";
 import { Users } from "../types/database";
 import { RSS_RESOURCES } from "../rssResources";
 import { POST_SIZE } from "../consts";
@@ -17,7 +18,7 @@ const getGravatarUrl = (email: string, size: number = 400): string => {
   return `https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon`;
 };
 
-export const getAvatar = (user: Users) => {
+export const getAvatar = (user: Selectable<Users>) => {
   if (user.bot_type === null) {
     return getGravatarUrl(user.email);
   }

@@ -2,6 +2,7 @@
 import "fastify";
 import "@fastify/jwt";
 import "@fastify/csrf-protection";
+import { Selectable } from "kysely";
 import { TokenPayload } from "../helpers/tokens";
 import { Users } from "./database";
 import { CookieSerializeOptions } from "@fastify/cookie";
@@ -22,9 +23,9 @@ declare module "fastify" {
 
   interface FastifyRequest {
     mode: "root" | "custom";
-    domainUser?: Users;
+    domainUser?: Selectable<Users>;
     loggedUser?: TokenPayload;
-    profileUser?: Users;
+    profileUser?: Selectable<Users>;
   }
 
   interface FastifyReply {

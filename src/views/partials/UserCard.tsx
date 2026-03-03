@@ -1,11 +1,12 @@
 /** @jsxImportSource @kitajs/html */
+import type { Selectable } from "kysely";
 import type { Users } from "../../types/database";
 import type { TokenPayload } from "../../helpers/tokens";
 import { getAvatar } from "../../helpers/common";
 import { FollowButton } from "./FollowButton";
 
 type UserCardProps = {
-  cardUser: Users;
+  cardUser: Selectable<Users>;
   loggedUser?: TokenPayload;
   isFollowing: boolean;
   csrfToken: string;

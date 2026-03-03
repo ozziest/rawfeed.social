@@ -1,6 +1,7 @@
 /** @jsxImportSource @kitajs/html */
 import type { BaseProps } from "../../types/views";
 import type { PostWithContent } from "../../types/relations";
+import type { Selectable } from "kysely";
 import type { Users } from "../../types/database";
 import type { DailyReportItem } from "../../types/shared";
 import { DefaultLayout } from "../layouts/DefaultLayout";
@@ -11,8 +12,8 @@ import { Sidebar } from "../partials/Sidebar";
 type TagsIndexProps = BaseProps & {
   posts: PostWithContent[];
   report?: DailyReportItem[];
-  lastMembers?: Users[];
-  bots?: Users[];
+  lastMembers?: Selectable<Users>[];
+  bots?: Selectable<Users>[];
   activeHashtag?: string;
   csrfToken: string;
 };

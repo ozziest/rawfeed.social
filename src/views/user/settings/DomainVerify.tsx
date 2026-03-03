@@ -1,12 +1,13 @@
 /** @jsxImportSource @kitajs/html */
 import type { BaseProps } from "../../../types/views";
+import type { Selectable } from "kysely";
 import type { Users } from "../../../types/database";
 import { DefaultLayout } from "../../layouts/DefaultLayout";
 import { asset } from "../../../helpers/asset";
 
 type DomainVerifyProps = BaseProps & {
   csrfToken: string;
-  user: Users;
+  user: Selectable<Users>;
 };
 
 function CopyButton({ value }: { value: string }) {
