@@ -3,6 +3,7 @@ import type { BaseProps } from "../../types/views";
 import type { Post } from "../../services/blog.service";
 import { LandingLayout } from "../layouts/LandingLayout";
 import { Footer } from "../partials/Footer";
+import { RawHtml } from "../partials/RawHtml";
 
 type BlogPostProps = BaseProps & {
   post: Post;
@@ -47,9 +48,7 @@ export function BlogPost(props: BlogPostProps) {
             </div>
           </header>
 
-          <div id="blog-content" safe>
-            {post.html}
-          </div>
+          <RawHtml id="blog-content" html={post.html} />
 
           <footer class="mt-16 pt-8 border-t-2 border-black">
             <a
