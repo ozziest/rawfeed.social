@@ -82,6 +82,16 @@ export const RSS_RESOURCES: RSSSource[] = [
     updateFrequency: "0 0 * * *",
     svg: asset("/public/images/rss/rss.svg"),
   },
+  {
+    username: "rss_terriblesoftware",
+    name: "Terrible Software",
+    bio: "RSS feed of the Terrible Software blog",
+    url: "https://terriblesoftware.org/feed/",
+    category: "blog",
+    language: "en",
+    updateFrequency: "0 0 * * *",
+    svg: asset("/public/images/rss/rss.svg"),
+  },
 ];
 
 export const RSS_BOT_USERNAMES: string[] = RSS_RESOURCES.map(
