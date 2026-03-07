@@ -84,7 +84,7 @@ export default async function postRoutes(fastify: FastifyInstance) {
       const post = await postService.getById(postId, userId);
       if (!post) {
         notify("Post not found");
-        return reply.status(200).send();
+        return reply.status(404).send();
       }
 
       return html(
