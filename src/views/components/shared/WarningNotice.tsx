@@ -21,7 +21,9 @@ export function WarningNotice({
       <div class="flex items-start gap-3">
         <WarningTriangleSmallIcon class="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
         <div>
-          <h3 class="font-semibold text-red-800 mb-1">{title}</h3>
+          <h3 class="font-semibold text-red-800 mb-1" safe>
+            {title}
+          </h3>
           {children}
         </div>
       </div>

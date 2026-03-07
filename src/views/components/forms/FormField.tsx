@@ -32,7 +32,7 @@ export function FormField({
 }: FormFieldProps) {
   return (
     <div class={className}>
-      <label for={id} class="block text-sm font-medium text-gray-700">
+      <label for={id} class="block text-sm font-medium text-gray-700" safe>
         {label}
       </label>
       <div class="mt-1">

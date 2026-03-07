@@ -16,8 +16,8 @@ export function SidebarSection({
   return (
     <div class={"bg-white border border-gray-200 rounded-lg p-4 " + className}>
       <h3 class="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-        {icon}
-        {title}
+        <span>{icon}</span>
+        <span safe>{title}</span>
       </h3>
       {children}
     </div>

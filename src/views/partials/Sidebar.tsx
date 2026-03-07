@@ -18,32 +18,32 @@ type SidebarProps = {
 export function Sidebar({ report, lastMembers, bots }: SidebarProps) {
   return (
     <div class="sticky top-16 space-y-4">
-      {report && report.length > 0 && (
+      {report && report.length > 0 ? (
         <SidebarSection
           title="Trending"
           icon={<TrendingUpIcon class="w-5 h-5 text-orange-500" />}
         >
           <SidebarTrending report={report} />
         </SidebarSection>
-      )}
+      ) : undefined}
 
-      {lastMembers && lastMembers.length > 0 && (
+      {lastMembers && lastMembers.length > 0 ? (
         <SidebarSection
           title="New Members"
           icon={<UserPlusIcon class="w-5 h-5 text-black" />}
         >
           <SidebarUserList users={lastMembers} viewAllHref="/explore/members" />
         </SidebarSection>
-      )}
+      ) : undefined}
 
-      {bots && bots.length > 0 && (
+      {bots && bots.length > 0 ? (
         <SidebarSection
           title="RSS Bots"
           icon={<RssWaveIcon class="w-5 h-5 text-green-500" />}
         >
           <SidebarUserList users={bots} viewAllHref="/explore/bots" />
         </SidebarSection>
-      )}
+      ) : undefined}
 
       <SidebarLinks />
     </div>

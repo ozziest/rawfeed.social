@@ -17,7 +17,9 @@ export function InfoNotice({
       <div class="flex gap-3">
         <InfoCircleSmallIcon class="w-5 h-5 text-black shrink-0 mt-0.5" />
         <div class="text-sm text-gray-700">
-          <p class="font-medium mb-1">{title}</p>
+          <p class="font-medium mb-1" safe>
+            {title}
+          </p>
           {children}
         </div>
       </div>
