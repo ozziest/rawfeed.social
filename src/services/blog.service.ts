@@ -5,6 +5,7 @@ import { marked } from "marked";
 import { cache, redis } from "../helpers/cache";
 import { sanitizeBlogHtml } from "../helpers/security";
 import { BLOG_DIR, BLOG_SLUG_PATTERN } from "../consts";
+import { asset } from "../helpers/asset";
 const TTL_SECONDS =
   process.env.NODE_ENV === "production" ? 60 * 60 * 24 * 7 : 1;
 
@@ -95,7 +96,11 @@ async function getPost(slug: string): Promise<Post | null> {
   const { data, content } = matter(raw);
 
   const rawHtml = await marked(content, { async: true });
-  const html = sanitizeBlogHtml(rawHtml);
+  const withCdnImages = rawHtml.replace(
+    /(\/public\/images\/[^"'\s>]+)/g,
+    (match) => asset(match),
+  );
+  const html = sanitizeBlogHtml(withCdnImages);
 
   const meta: PostMeta = {
     slug,
