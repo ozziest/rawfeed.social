@@ -1,4 +1,5 @@
 import type { PostWithContent } from "../../types/relations";
+import type { TokenPayload } from "../../helpers/tokens";
 import { Posts } from "../partials/Posts";
 
 type PostsNextProps = {
@@ -6,6 +7,8 @@ type PostsNextProps = {
   nextCursor: string | null;
   userId?: string;
   feedNextRoute?: string;
+  loggedUser?: TokenPayload;
+  csrfToken?: string;
 };
 
 export function PostsNext({
@@ -13,6 +16,8 @@ export function PostsNext({
   nextCursor,
   userId = "",
   feedNextRoute,
+  loggedUser,
+  csrfToken,
 }: PostsNextProps) {
   const nextHref = feedNextRoute
     ? `${feedNextRoute}${nextCursor}`
@@ -20,7 +25,7 @@ export function PostsNext({
 
   return (
     <>
-      <Posts posts={posts} />
+      <Posts posts={posts} loggedUser={loggedUser} csrfToken={csrfToken} />
       {nextCursor ? (
         <div
           hx-get={nextHref}

@@ -80,7 +80,7 @@ const getItems = async (
   }
 
   const posts = await query;
-  return await mergeWithContent(posts);
+  return await mergeWithContent(posts, params?.loggedUserId);
 };
 
 const getItemsByHashtag = async (
@@ -114,14 +114,21 @@ const getAllByUser = async (userId: string): Promise<PostWithContent[]> => {
   return await mergeWithContent(posts);
 };
 
-const getById = async (id: string): Promise<PostWithContent | undefined> => {
+const getById = async (
+  id: string,
+  loggedUserId?: string,
+): Promise<PostWithContent | undefined> => {
   const post = await getKnex()
     .table<Selectable<Posts>>(TABLE_NAME)
     .where("id", id)
     .first();
 
-  const [PostWithContent] = await mergeWithContent([post]);
-  return PostWithContent;
+  if (!post) {
+    return undefined;
+  }
+
+  const [result] = await mergeWithContent([post], loggedUserId);
+  return result;
 };
 
 const getItemByExternalId = async (externalId: string): Promise<Posts> => {
@@ -142,11 +149,80 @@ const incViews = async (posts: PostWithContent[]) => {
   //   .increment("stats_views", 1);
 };
 
+const reshare = async (userId: string, postId: string): Promise<string> => {
+  const original = await getKnex()
+    .table<Selectable<Posts>>(TABLE_NAME)
+    .where("id", postId)
+    .first();
+
+  if (!original) {
+    throw new Error("Post not found");
+  }
+  if (original.user_id === userId) {
+    throw new Error("Cannot reshare your own post");
+  }
+  if (original.reshare_id !== null) {
+    throw new Error("Cannot reshare a reshare");
+  }
+
+  const reshareId = uuidv4();
+  await getKnex()
+    .table(TABLE_NAME)
+    .insert({
+      id: reshareId,
+      user_id: userId,
+      reshare_id: postId,
+      content: "",
+      lexical: "",
+      location: original.location ?? "en",
+      created_at: new Date(),
+      updated_at: new Date(),
+    });
+
+  await getKnex()
+    .table(TABLE_NAME)
+    .where("id", postId)
+    .increment("stats_shares", 1);
+
+  return reshareId;
+};
+
+const unreshare = async (userId: string, postId: string): Promise<void> => {
+  await getKnex()
+    .table(TABLE_NAME)
+    .where("user_id", userId)
+    .where("reshare_id", postId)
+    .delete();
+
+  await getKnex()
+    .table(TABLE_NAME)
+    .where("id", postId)
+    .where("stats_shares", ">", 0)
+    .decrement("stats_shares", 1);
+};
+
+const getReshareByUser = async (
+  userId: string,
+  postId: string,
+): Promise<Selectable<Posts> | undefined> => {
+  return getKnex()
+    .table<Selectable<Posts>>(TABLE_NAME)
+    .where("user_id", userId)
+    .where("reshare_id", postId)
+    .first();
+};
+
 const mergeWithContent = async (
   posts: Selectable<Posts>[],
+  loggedUserId?: string,
 ): Promise<PostWithContent[]> => {
   const userIds = posts.map((item) => item.user_id);
   const postIds = posts.map((item) => item.id);
+
+  // Collect reshare_id values to fetch original posts
+  const reshareIds = posts
+    .map((p) => p.reshare_id)
+    .filter((id): id is string => id !== null && id !== undefined);
 
   const [users, details] = await Promise.all([
     userService.getByIds(userIds),
@@ -164,6 +240,32 @@ const mergeWithContent = async (
     postLink.linkDetail = linkMap.get(postLink.link_id);
   });
 
+  // Fetch original posts for reshares
+  let resharedPostMap = new Map<string, PostWithContent>();
+  if (reshareIds.length > 0) {
+    const originalPosts = await getKnex()
+      .table<Selectable<Posts>>(TABLE_NAME)
+      .whereIn("id", reshareIds);
+    // Recursively resolve originals (one level deep, no loggedUserId to avoid infinite nesting)
+    const resolved = await mergeWithContent(originalPosts);
+    resharedPostMap = new Map(resolved.map((p) => [p.id, p]));
+  }
+
+  // Fetch which posts the logged-in user has reshared
+  let userResharedSet = new Set<string>();
+  if (loggedUserId && postIds.length > 0) {
+    const userReshares = await getKnex()
+      .table<Selectable<Posts>>(TABLE_NAME)
+      .whereIn("reshare_id", postIds)
+      .where("user_id", loggedUserId)
+      .select("reshare_id");
+    userResharedSet = new Set(
+      userReshares
+        .map((r) => r.reshare_id)
+        .filter((id): id is string => id !== null),
+    );
+  }
+
   return posts.map((post) => {
     const postWithContent: PostWithContent = {
       ...post,
@@ -171,6 +273,10 @@ const mergeWithContent = async (
       links: details.links.filter((link) => link.post_id === post.id),
       mentions: details.mentions.filter((link) => link.post_id === post.id),
       hashtags: details.hashtags.filter((link) => link.post_id === post.id),
+      resharedPost: post.reshare_id
+        ? resharedPostMap.get(post.reshare_id)
+        : undefined,
+      userReshared: loggedUserId ? userResharedSet.has(post.id) : undefined,
     };
     return postWithContent;
   });
@@ -187,6 +293,9 @@ export default loggerAll(
     incViews,
     getItemByExternalId,
     getItemsByHashtag,
+    reshare,
+    unreshare,
+    getReshareByUser,
   },
   "post.service",
 );

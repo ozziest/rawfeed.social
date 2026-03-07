@@ -27,7 +27,7 @@ export function PostCreate({
         formData={formData}
       />
       <div class="mb-4">
-        <Posts posts={posts} />
+        <Posts posts={posts} loggedUser={loggedUser} csrfToken={csrfToken} />
       </div>
     </>
   );

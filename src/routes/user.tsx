@@ -367,12 +367,12 @@ export default async function userRoutes(fastify: FastifyInstance) {
         return reply.status(404).html(<NotFound {...base()} />);
       }
 
+      const loggedUserId = request.loggedUser?.userId;
       const posts = await postService.getItems({
         userId: request.profileUser?.id,
+        loggedUserId,
       });
       postService.incViews(posts);
-
-      const loggedUserId = request.loggedUser?.userId;
       const profileUserId = request.profileUser!.id;
 
       const [followerCount, followingCount, isFollowingProfile] =

@@ -192,6 +192,7 @@ npm run commit               # Commitizen interactive commit
 ## Code Style
 
 - **TypeScript strict mode** — avoid `any` unless absolutely necessary.
+- **Always use braces** for `if`, `else`, `for`, and `while` blocks — never omit `{` and `}` for single-line bodies.
 - **No classes for services** — use plain exported functions.
 - **Async/await** throughout — no callbacks or raw Promises.
 - **Named exports** for helpers and services; **default exports** for route registrations and the Fastify server.

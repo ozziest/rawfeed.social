@@ -8,6 +8,7 @@ import postService from "../services/post.service";
 import { nextCursor } from "../helpers/common";
 import { PostCreate } from "../views/posts/PostCreate";
 import { PostsNext } from "../views/posts/PostsNext";
+import { ReshareButton } from "../views/components/posts/ReshareButton";
 
 const useCtx = useJsxViews();
 
@@ -22,8 +23,14 @@ export default async function postRoutes(fastify: FastifyInstance) {
       };
 
       const { html } = useCtx(request, reply);
+      const csrfToken = reply.generateCsrf();
+      const loggedUserId = request.loggedUser?.userId;
 
-      const posts = await postService.getItems({ cursor, userId });
+      const posts = await postService.getItems({
+        cursor,
+        userId,
+        loggedUserId,
+      });
       postService.incViews(posts);
 
       return html(
@@ -31,6 +38,55 @@ export default async function postRoutes(fastify: FastifyInstance) {
           posts={posts}
           nextCursor={nextCursor(posts)}
           userId={userId}
+          csrfToken={csrfToken}
+          loggedUser={request.loggedUser}
+        />,
+      );
+    },
+  );
+
+  fastify.post(
+    "/posts/reshare/:postId",
+    { preHandler: [fastify.csrfProtection, verifyToken, requireAuth] },
+    async (request, reply) => {
+      const { postId } = request.params as { postId: string };
+      const { html, notify } = useCtx(request, reply);
+      const csrfToken = reply.generateCsrf();
+      const userId = request.loggedUser!.userId;
+
+      const existing = await postService.getReshareByUser(userId, postId);
+      if (existing) {
+        await postService.unreshare(userId, postId);
+      } else {
+        try {
+          await postService.reshare(userId, postId);
+        } catch (err) {
+          const message =
+            err instanceof Error ? err.message : "Cannot reshare this post";
+          notify(message);
+          const current = await postService.getById(postId, userId);
+          if (!current) return reply.status(404).send();
+          return html(
+            <ReshareButton
+              post={current}
+              loggedUser={request.loggedUser}
+              csrfToken={csrfToken}
+            />,
+          );
+        }
+      }
+
+      const post = await postService.getById(postId, userId);
+      if (!post) {
+        notify("Post not found");
+        return reply.status(200).send();
+      }
+
+      return html(
+        <ReshareButton
+          post={post}
+          loggedUser={request.loggedUser}
+          csrfToken={csrfToken}
         />,
       );
     },
@@ -63,7 +119,8 @@ export default async function postRoutes(fastify: FastifyInstance) {
       const id = await postService.insert(request.loggedUser?.userId!, input);
       console.log("id", id);
 
-      const posts = await postService.getItems({ id });
+      const loggedUserId = request.loggedUser?.userId;
+      const posts = await postService.getItems({ id, loggedUserId });
       const b = base();
 
       return html(
