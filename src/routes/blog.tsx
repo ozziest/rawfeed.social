@@ -38,7 +38,7 @@ export default async function blogRoutes(fastify: FastifyInstance) {
       const post = await blogService.getPost(slug);
 
       if (!post) {
-        return reply.status(404).send(<NotFound asset={asset} />);
+        return reply.status(404).html(<NotFound asset={asset} />);
       }
 
       return html(

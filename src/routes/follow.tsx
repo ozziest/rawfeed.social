@@ -121,7 +121,7 @@ export default async function followRoutes(fastify: FastifyInstance) {
 
       const profileUser = await userService.getByUsername(username!);
       if (!profileUser) {
-        return reply.status(404).send(<NotFound asset={asset} />);
+        return reply.status(404).html(<NotFound asset={asset} />);
       }
 
       request.profileUser = profileUser;
@@ -203,7 +203,7 @@ export default async function followRoutes(fastify: FastifyInstance) {
 
       const profileUser = await userService.getByUsername(username!);
       if (!profileUser) {
-        return reply.status(404).send(<NotFound asset={asset} />);
+        return reply.status(404).html(<NotFound asset={asset} />);
       }
 
       request.profileUser = profileUser;

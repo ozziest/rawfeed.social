@@ -359,12 +359,12 @@ export default async function userRoutes(fastify: FastifyInstance) {
         validation.isNotValid &&
         !RSS_BOT_USERNAMES.includes(username || "")
       ) {
-        return reply.status(404).send(<NotFound {...base()} />);
+        return reply.status(404).html(<NotFound {...base()} />);
       }
 
       request.profileUser = await userService.getByUsername(username as string);
       if (!request.profileUser) {
-        return reply.status(404).send(<NotFound {...base()} />);
+        return reply.status(404).html(<NotFound {...base()} />);
       }
 
       const posts = await postService.getItems({
@@ -415,7 +415,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
       const { username } = request.params as UserProfileParams;
 
       if (!username) {
-        return reply.status(404).send(<NotFound {...base()} />);
+        return reply.status(404).html(<NotFound {...base()} />);
       }
 
       const validation = validate(DEFAULT_USERNAME_SCHEMA, username);
@@ -423,12 +423,12 @@ export default async function userRoutes(fastify: FastifyInstance) {
         validation.isNotValid &&
         !RSS_BOT_USERNAMES.includes(username || "")
       ) {
-        return reply.status(404).send(<NotFound {...base()} />);
+        return reply.status(404).html(<NotFound {...base()} />);
       }
 
       const user = await userService.getByUsername(username);
       if (!user) {
-        return reply.status(404).send(<NotFound {...base()} />);
+        return reply.status(404).html(<NotFound {...base()} />);
       }
 
       const posts = await postService.getLast100ByUser(user?.id);

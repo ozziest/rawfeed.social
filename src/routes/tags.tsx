@@ -22,12 +22,12 @@ export default async function tagsRoutes(fastify: FastifyInstance) {
 
       const validation = validate(HASHTAG_VALIDATION, hashtag);
       if (validation.isNotValid) {
-        return reply.status(404).send(<NotFound asset={asset} />);
+        return reply.status(404).html(<NotFound asset={asset} />);
       }
 
       const item = await hashtagService.getByTag(hashtag!);
       if (!item) {
-        return reply.status(404).send(<NotFound asset={asset} />);
+        return reply.status(404).html(<NotFound asset={asset} />);
       }
 
       const [posts, report, lastMembers, bots] = await Promise.all([
