@@ -42,6 +42,7 @@ import { requireAuth } from "./middleware/requireAuth";
 import { shouldBeAdmin } from "./middleware/shouldBeAdmin";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
+const isTest = process.env.NODE_ENV === "test";
 const assetBaseUrl = (process.env.ASSET_BASE_URL || "").replace(/\/$/, "");
 
 const server = Fastify({ logger: false, trustProxy: true });
@@ -217,11 +218,13 @@ const start = async () => {
     const port = Number(process.env.APP_PORT) || 3000;
     await server.listen({ port, host: "0.0.0.0" });
 
-    blogService.clearCache();
+    if (!isTest) {
+      blogService.clearCache();
 
-    initializeRSSScheduler(isDevelopment);
-    initializeExportWorker();
-    initializeSitemapScheduler();
+      initializeRSSScheduler(isDevelopment);
+      initializeExportWorker();
+      initializeSitemapScheduler();
+    }
 
     server.log.info(`Server listening on port ${port}`);
   } catch (err) {

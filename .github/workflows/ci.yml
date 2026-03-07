@@ -19,8 +19,11 @@ jobs:
       - name: Install
         run: npm ci
 
-      - name: Test
+      - name: Unit tests
         run: npm run test:ci
+
+      - name: Integration tests
+        run: npm run test:sqlite
 
       - name: Type check
         run: npm run type-check
