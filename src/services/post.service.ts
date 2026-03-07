@@ -149,6 +149,19 @@ const incViews = async (posts: PostWithContent[]) => {
   //   .increment("stats_views", 1);
 };
 
+const isDuplicateKeyError = (err: unknown): boolean => {
+  if (err && typeof err === "object" && "code" in err) {
+    const code = (err as { code: string }).code;
+    // MySQL: ER_DUP_ENTRY, SQLite: SQLITE_CONSTRAINT_UNIQUE / SQLITE_CONSTRAINT
+    return (
+      code === "ER_DUP_ENTRY" ||
+      code === "SQLITE_CONSTRAINT_UNIQUE" ||
+      code === "SQLITE_CONSTRAINT"
+    );
+  }
+  return false;
+};
+
 const reshare = async (userId: string, postId: string): Promise<string> => {
   const original = await getKnex()
     .table<Selectable<Posts>>(TABLE_NAME)
@@ -166,18 +179,26 @@ const reshare = async (userId: string, postId: string): Promise<string> => {
   }
 
   const reshareId = uuidv4();
-  await getKnex()
-    .table(TABLE_NAME)
-    .insert({
-      id: reshareId,
-      user_id: userId,
-      reshare_id: postId,
-      content: "",
-      lexical: "",
-      location: original.location ?? "en",
-      created_at: new Date(),
-      updated_at: new Date(),
-    });
+  try {
+    await getKnex()
+      .table(TABLE_NAME)
+      .insert({
+        id: reshareId,
+        user_id: userId,
+        reshare_id: postId,
+        content: "",
+        lexical: "",
+        location: original.location ?? "en",
+        created_at: new Date(),
+        updated_at: new Date(),
+      });
+  } catch (err) {
+    if (isDuplicateKeyError(err)) {
+      const existing = await getReshareByUser(userId, postId);
+      return existing!.id;
+    }
+    throw err;
+  }
 
   await getKnex()
     .table(TABLE_NAME)
@@ -246,8 +267,8 @@ const mergeWithContent = async (
     const originalPosts = await getKnex()
       .table<Selectable<Posts>>(TABLE_NAME)
       .whereIn("id", reshareIds);
-    // Recursively resolve originals (one level deep, no loggedUserId to avoid infinite nesting)
-    const resolved = await mergeWithContent(originalPosts);
+    // Recursively resolve originals (one level deep)
+    const resolved = await mergeWithContent(originalPosts, loggedUserId);
     resharedPostMap = new Map(resolved.map((p) => [p.id, p]));
   }
 

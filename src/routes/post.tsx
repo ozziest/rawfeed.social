@@ -47,7 +47,10 @@ export default async function postRoutes(fastify: FastifyInstance) {
 
   fastify.post(
     "/posts/reshare/:postId",
-    { preHandler: [fastify.csrfProtection, verifyToken, requireAuth] },
+    {
+      preHandler: [fastify.csrfProtection, verifyToken, requireAuth],
+      config: { rateLimit: { max: 10, timeWindow: "1 minute" } },
+    },
     async (request, reply) => {
       const { postId } = request.params as { postId: string };
       const { html, notify } = useCtx(request, reply);
@@ -65,7 +68,9 @@ export default async function postRoutes(fastify: FastifyInstance) {
             err instanceof Error ? err.message : "Cannot reshare this post";
           notify(message);
           const current = await postService.getById(postId, userId);
-          if (!current) return reply.status(404).send();
+          if (!current) {
+            return reply.status(404).send();
+          }
           return html(
             <ReshareButton
               post={current}
