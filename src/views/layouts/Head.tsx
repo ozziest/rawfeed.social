@@ -1,4 +1,3 @@
-/** @jsxImportSource @kitajs/html */
 import { asset } from "../../helpers/asset";
 
 type HeadProps = {

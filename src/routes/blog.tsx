@@ -1,4 +1,3 @@
-/** @jsxImportSource @kitajs/html */
 import { FastifyInstance } from "fastify";
 import { useJsxViews } from "../helpers/useViews";
 import { verifyToken } from "../middleware/verifyToken";

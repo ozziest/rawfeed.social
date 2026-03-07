@@ -1,4 +1,9 @@
-/** @jsxImportSource @kitajs/html */
+import { CsrfToken } from "../../components/forms/CsrfToken";
+import { SettingsPageHeader } from "../../components/shared/SettingsPageHeader";
+import { Card } from "../../components/shared/Card";
+import { FieldError } from "../../components/forms/FieldError";
+import { InfoNotice } from "../../components/shared/InfoNotice";
+import { Button } from "../../components/forms/Button";
 import type { BaseProps } from "../../../types/views";
 import type { TokenPayload } from "../../../helpers/tokens";
 import { DefaultLayout } from "../../layouts/DefaultLayout";
@@ -14,28 +19,20 @@ export function DomainInit(props: DomainInitProps) {
   return (
     <DefaultLayout {...props}>
       <div class="max-w-2xl mx-auto px-4 py-8">
-        <div class="mb-6">
-          <a
-            href="/user/settings"
-            class="text-black hover:text-gray-700 text-sm font-medium mb-3 inline-block underline"
-          >
-            ← Back to Settings
-          </a>
-          <h1 class="text-2xl font-bold text-gray-900 mb-2">Custom Domain</h1>
-          <p class="text-gray-600">
-            Connect your own domain name to your rawfeed.social profile. Your
-            posts and profile will be accessible via your custom domain while
-            maintaining full compatibility with the rawfeed.social network.
-          </p>
-        </div>
+        <SettingsPageHeader
+          backHref="/user/settings"
+          backLabel="Back to Settings"
+          title="Custom Domain"
+          description="Connect your own domain name to your rawfeed.social profile. Your posts and profile will be accessible via your custom domain while maintaining full compatibility with the rawfeed.social network."
+        />
 
-        <div class="bg-white rounded-lg shadow-sm p-6">
+        <Card>
           <h2 class="text-lg font-semibold text-gray-900 mb-4">
             Setup Custom Domain
           </h2>
 
           <form method="POST" action="/user/settings/domain">
-            <input type="hidden" name="_csrf" value={csrfToken} />
+            <CsrfToken token={csrfToken} />
 
             <div class="mb-6">
               <label
@@ -55,49 +52,25 @@ export function DomainInit(props: DomainInitProps) {
               <p class="mt-2 text-sm text-gray-500">
                 Enter your domain without http:// or www (e.g., example.com)
               </p>
-              <div>
-                {validation?.domain ? (
-                  <p class="text-red-700 text-sm my-1" safe>
-                    {validation.domain}
-                  </p>
-                ) : undefined}
-              </div>
+              <FieldError message={validation?.domain} />
             </div>
 
-            <div class="bg-gray-100 border border-gray-300 rounded-lg p-4 mb-6">
-              <div class="flex gap-3">
-                <svg
-                  class="w-5 h-5 text-black shrink-0 mt-0.5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-                <div class="text-sm text-gray-900">
-                  <p class="font-medium mb-1">What you'll need:</p>
-                  <ul class="list-disc list-inside space-y-1 text-gray-700">
-                    <li>Access to your domain's DNS settings</li>
-                    <li>Ability to add a TXT record</li>
-                    <li>5-10 minutes for DNS propagation</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              class="w-full bg-black hover:bg-gray-800 text-white font-medium px-6 py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
+            <InfoNotice
+              title="What you'll need:"
+              class="bg-gray-100 border border-gray-300 rounded-lg p-4 mb-6"
             >
+              <ul class="list-disc list-inside space-y-1 text-gray-700">
+                <li>Access to your domain's DNS settings</li>
+                <li>Ability to add a TXT record</li>
+                <li>5-10 minutes for DNS propagation</li>
+              </ul>
+            </InfoNotice>
+
+            <Button type="submit" variant="primary" class="w-full px-6 py-3">
               Continue
-            </button>
+            </Button>
           </form>
-        </div>
+        </Card>
 
         <div class="mt-6 bg-gray-50 rounded-lg p-6">
           <h3 class="font-semibold text-gray-900 mb-3">How it works</h3>

@@ -1,4 +1,3 @@
-/** @jsxImportSource @kitajs/html */
 import dotenv from "dotenv";
 dotenv.config({ path: "./.env" });
 
@@ -43,6 +42,7 @@ import { requireAuth } from "./middleware/requireAuth";
 import { shouldBeAdmin } from "./middleware/shouldBeAdmin";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
+const isTest = process.env.NODE_ENV === "test";
 const assetBaseUrl = (process.env.ASSET_BASE_URL || "").replace(/\/$/, "");
 
 const server = Fastify({ logger: false, trustProxy: true });
@@ -134,13 +134,24 @@ server.register(fastifyStatic, {
   decorateReply: false,
 });
 
-server.get("/robots.txt", async (request, reply) => {
-  const robotsPath = path.join(__dirname, "../public/robots.txt");
-  const content = await fs.readFile(robotsPath, "utf-8");
+server.get(
+  "/robots.txt",
+  {
+    config: {
+      rateLimit: {
+        max: 10,
+        timeWindow: "30 minutes",
+      },
+    },
+  },
+  async (request, reply) => {
+    const robotsPath = path.join(__dirname, "../public/robots.txt");
+    const content = await fs.readFile(robotsPath, "utf-8");
 
-  reply.type("text/plain");
-  return content;
-});
+    reply.type("text/plain");
+    return content;
+  },
+);
 
 server.register(compress, {
   global: true,
@@ -218,11 +229,13 @@ const start = async () => {
     const port = Number(process.env.APP_PORT) || 3000;
     await server.listen({ port, host: "0.0.0.0" });
 
-    blogService.clearCache();
+    if (!isTest) {
+      blogService.clearCache();
 
-    initializeRSSScheduler(isDevelopment);
-    initializeExportWorker();
-    initializeSitemapScheduler();
+      initializeRSSScheduler(isDevelopment);
+      initializeExportWorker();
+      initializeSitemapScheduler();
+    }
 
     server.log.info(`Server listening on port ${port}`);
   } catch (err) {

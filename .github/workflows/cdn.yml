@@ -1,4 +1,6 @@
 name: CDN
+permissions:
+  contents: read
 on:
   push:
     branches:

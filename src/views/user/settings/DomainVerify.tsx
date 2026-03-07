@@ -1,9 +1,14 @@
-/** @jsxImportSource @kitajs/html */
 import type { BaseProps } from "../../../types/views";
 import type { Selectable } from "kysely";
 import type { Users } from "../../../types/database";
 import { DefaultLayout } from "../../layouts/DefaultLayout";
 import { asset } from "../../../helpers/asset";
+import { CsrfToken } from "../../components/forms/CsrfToken";
+import { ClipboardIcon } from "../../components/icons/ClipboardIcon";
+import { Button } from "../../components/forms/Button";
+import { SettingsPageHeader } from "../../components/shared/SettingsPageHeader";
+import { Card } from "../../components/shared/Card";
+import { DomainStatusBadge } from "../../components/shared/DomainStatusBadge";
 
 type DomainVerifyProps = BaseProps & {
   csrfToken: string;
@@ -17,19 +22,7 @@ function CopyButton({ value }: { value: string }) {
       class="text-black hover:text-gray-700 font-medium underline text-sm"
       title="Copy to clipboard"
     >
-      <svg
-        class="w-4 h-4"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
-        />
-      </svg>
+      <ClipboardIcon class="w-4 h-4" />
     </button>
   );
 }
@@ -38,40 +31,17 @@ export function DomainVerify(props: DomainVerifyProps) {
   const { csrfToken, user } = props;
   const isVerified = user.domain_verification_status === "verified";
 
-  const statusBadge =
-    user.domain_verification_status === "pending" ? (
-      <span class="px-3 py-1 text-sm font-medium text-amber-700 bg-amber-100 rounded-full">
-        Pending Verification
-      </span>
-    ) : user.domain_verification_status === "verified" ? (
-      <span class="px-3 py-1 text-sm font-medium text-green-700 bg-green-100 rounded-full">
-        ✓ Verified
-      </span>
-    ) : (
-      <span class="px-3 py-1 text-sm font-medium text-red-700 bg-red-100 rounded-full">
-        Verification Failed
-      </span>
-    );
-
   return (
     <DefaultLayout {...props}>
       <div class="max-w-2xl mx-auto px-4 py-8">
-        <div class="mb-6">
-          <a
-            href="/user/settings"
-            class="text-black hover:text-gray-700 font-medium underline text-sm mb-3 inline-block"
-          >
-            ← Back to Settings
-          </a>
-          <h1 class="text-2xl font-bold text-gray-900 mb-2">
-            Verify Custom Domain
-          </h1>
-          <p class="text-gray-600">
-            Follow the steps below to verify ownership of your domain.
-          </p>
-        </div>
+        <SettingsPageHeader
+          backHref="/user/settings"
+          backLabel="Back to Settings"
+          title="Verify Custom Domain"
+          description="Follow the steps below to verify ownership of your domain."
+        />
 
-        <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+        <Card class="mb-6">
           <div class="flex items-center justify-between mb-4">
             <div>
               <p class="text-sm text-gray-600 mb-1">Your Domain</p>
@@ -79,13 +49,16 @@ export function DomainVerify(props: DomainVerifyProps) {
                 {user.custom_domain}
               </p>
             </div>
-            {statusBadge}
+            <DomainStatusBadge
+              status={user.domain_verification_status}
+              variant="md"
+            />
           </div>
-        </div>
+        </Card>
 
         {!isVerified ? (
           <>
-            <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+            <Card class="mb-6">
               <div class="flex items-start gap-3 mb-4">
                 <span class="shrink-0 w-8 h-8 bg-gray-200 text-black border border-gray-300 rounded-full flex items-center justify-center font-semibold">
                   1
@@ -159,9 +132,9 @@ export function DomainVerify(props: DomainVerifyProps) {
                   </div>
                 </div>
               </div>
-            </div>
+            </Card>
 
-            <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+            <Card class="mb-6">
               <div class="flex items-start gap-3">
                 <span class="shrink-0 w-8 h-8 bg-gray-200 text-black border border-gray-300 rounded-full flex items-center justify-center font-semibold">
                   2
@@ -175,13 +148,10 @@ export function DomainVerify(props: DomainVerifyProps) {
                     verify your domain.
                   </p>
                   <form method="POST" action="/user/settings/domain/verify">
-                    <input type="hidden" name="_csrf" value={csrfToken} />
-                    <button
-                      type="submit"
-                      class="bg-black hover:bg-gray-800 text-white font-medium px-6 py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
-                    >
+                    <CsrfToken token={csrfToken} />
+                    <Button type="submit" variant="primary" class="px-6 py-3">
                       Verify Domain
-                    </button>
+                    </Button>
                   </form>
                   {user.domain_verification_status === "failed" ? (
                     <div class="mt-4 bg-red-50 border border-red-200 rounded-lg p-3">
@@ -194,10 +164,10 @@ export function DomainVerify(props: DomainVerifyProps) {
                   ) : undefined}
                 </div>
               </div>
-            </div>
+            </Card>
           </>
         ) : (
-          <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+          <Card class="mb-6">
             <div class="flex items-start gap-3 mb-4">
               <span class="shrink-0 w-8 h-8 bg-green-100 text-green-600 rounded-full flex items-center justify-center font-semibold">
                 ✓
@@ -254,10 +224,10 @@ export function DomainVerify(props: DomainVerifyProps) {
                 </div>
               </div>
             </div>
-          </div>
+          </Card>
         )}
 
-        <div class="bg-white rounded-lg shadow-sm p-6">
+        <Card>
           <h3 class="font-semibold text-gray-900 mb-2">Remove Custom Domain</h3>
           <p class="text-gray-600 text-sm mb-4">
             This will remove your custom domain and you'll need to set it up
@@ -269,7 +239,7 @@ export function DomainVerify(props: DomainVerifyProps) {
           >
             Remove Domain
           </a>
-        </div>
+        </Card>
       </div>
       <script src={asset("/public/js/copy-to-clipboard.js")} />
     </DefaultLayout>

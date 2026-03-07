@@ -1,7 +1,6 @@
-/** @jsxImportSource @kitajs/html */
 import type { Children } from "@kitajs/html";
 import type { BaseProps } from "../../types/views";
-import { Head } from "./Head";
+import { Head } from "../components/layout/Head";
 
 type AuthLayoutProps = BaseProps & { children?: Children };
 

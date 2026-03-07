@@ -1,9 +1,24 @@
 import { CreateEmailOptions, Resend } from "resend";
 import { logError } from "../helpers/common";
 
-const resend = new Resend(process.env.RESEND_KEY!);
+const resend = process.env.RESEND_KEY
+  ? new Resend(process.env.RESEND_KEY)
+  : null;
 
 const FROM_EMAIL = "noreply@rawfeed.social";
+
+const sendEmail = async (options: CreateEmailOptions): Promise<void> => {
+  if (process.env.NODE_ENV !== "production") {
+    console.log(options.html);
+    return;
+  }
+
+  if (!resend) {
+    throw new Error("Missing RESEND_KEY in production environment");
+  }
+
+  await resend.emails.send(options);
+};
 
 export const sendDataExportReadyEmail = async (
   to: string,
@@ -39,11 +54,7 @@ export const sendDataExportReadyEmail = async (
       `,
     };
 
-    if (process.env.NODE_ENV === "production") {
-      await resend.emails.send(options);
-    } else {
-      console.log(options.html);
-    }
+    await sendEmail(options);
   } catch (error) {
     logError(error);
     throw error;
@@ -55,7 +66,7 @@ export const sendDataExportFailedEmail = async (
   username: string,
 ): Promise<void> => {
   try {
-    await resend.emails.send({
+    const options: CreateEmailOptions = {
       from: FROM_EMAIL,
       to,
       subject: "Data Export Failed",
@@ -67,7 +78,9 @@ export const sendDataExportFailedEmail = async (
           <p>Please try again later or contact support if the problem persists.</p>
         </div>
       `,
-    });
+    };
+
+    await sendEmail(options);
   } catch (error) {
     logError(error);
     throw error;
@@ -109,11 +122,7 @@ export const sendVerificationEmail = async (
       `,
     };
 
-    if (process.env.NODE_ENV === "production") {
-      await resend.emails.send(options);
-    } else {
-      console.log(options.html);
-    }
+    await sendEmail(options);
   } catch (error) {
     logError(error);
     throw error;

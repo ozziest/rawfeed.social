@@ -1,4 +1,3 @@
-/** @jsxImportSource @kitajs/html */
 import { FastifyInstance } from "fastify";
 import { verifyToken } from "../middleware/verifyToken";
 import { requireAuth } from "../middleware/requireAuth";
@@ -8,7 +7,7 @@ import { useJsxViews } from "../helpers/useViews";
 import { UserProfileParams } from "../helpers/dtos";
 import { safeReferer } from "../helpers/security";
 import { FollowActions } from "../views/partials/FollowActions";
-import { FollowButton } from "../views/partials/FollowButton";
+import { FollowButton } from "../views/components/users/FollowButton";
 import { UserListItems } from "../views/partials/UserListItems";
 import { FollowersPage } from "../views/user/FollowersPage";
 import { FollowingPage } from "../views/user/FollowingPage";

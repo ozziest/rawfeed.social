@@ -1,8 +1,7 @@
-/** @jsxImportSource @kitajs/html */
 import type { Children } from "@kitajs/html";
 import type { BaseProps } from "../../types/views";
-import { Head } from "./Head";
-import { Navbar } from "../partials/Navbar";
+import { Head } from "../components/layout/Head";
+import { Navbar } from "../components/layout/Navbar";
 
 type LandingLayoutProps = BaseProps & { children?: Children };
 

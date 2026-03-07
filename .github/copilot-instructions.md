@@ -32,9 +32,19 @@ src/
   consts.ts           # App-wide constants
   routes/             # Fastify route handlers (.tsx — thin, delegate to services)
   views/              # JSX view components (.tsx)
-    layouts/          # Layout wrappers (Base, Auth, etc.)
-    partials/         # Reusable JSX fragments
-    auth/, posts/, user/, tags/, explore/  # Feature-specific views
+    layouts/          # Layout wrappers (DefaultLayout, AuthLayout, etc.)
+    partials/         # Reusable JSX fragments (FlashMessages, etc.)
+    components/       # Shared UI components (see Component Library section)
+      auth/           # Auth-specific components
+      blog/           # Blog components
+      forms/          # Form controls (Button, CsrfToken, FieldError, Textarea, etc.)
+      icons/          # SVG icon components
+      layout/         # Layout building blocks
+      posts/          # Post-related components
+      shared/         # General-purpose shared components
+      sidebar/        # Sidebar components
+      users/          # User-related components
+    auth/, posts/, user/, tags/, explore/  # Feature-specific page views
   services/           # Business logic layer (pure functions, no classes)
   helpers/            # Shared utilities (validation, tokens, cache, DTOs, etc.)
   middleware/         # Fastify hooks (auth guard, mode detection, token verification)
@@ -56,7 +66,7 @@ public/               # Static assets (CSS, JS, images)
 ### Routes
 
 - Route files live in `src/routes/` as `.tsx` files and export a default `async function (fastify: FastifyInstance)`.
-- All `.tsx` files must include `/** @jsxImportSource @kitajs/html */` as the very first line.
+- **No per-file JSX pragma needed** — `jsxImportSource` is set globally in `tsconfig.json`.
 - Keep routes thin — validate input, call a service, render a view or redirect.
 - Use `useJsxViews()` from `src/helpers/useViews.ts` to get `html`, `base`, `setFlash`, `setState`, and `setValidation` helpers.
 - Render views with `reply.html(<MyView {...base()} />)` — `base()` injects all shared props.
@@ -88,10 +98,62 @@ public/               # Static assets (CSS, JS, images)
 
 - JSX view components live in `src/views/` as `.tsx` files.
 - Layouts are in `src/views/layouts/`; partials in `src/views/partials/`.
-- Every `.tsx` file must start with `/** @jsxImportSource @kitajs/html */`.
+- The `jsxImportSource` is set globally in `tsconfig.json` — **do NOT add `/** @jsxImportSource @kitajs/html \*/` pragma\*\* to individual files.
 - All views receive a `BaseProps` object (from `getBaseProps()`) which includes `asset`, `loggedUser`, `mode`, helpers like `sanitize`/`getAvatar`, and flash data (`validation`, `state`).
 - Use the `asset` helper (from `src/helpers/asset.ts`) for cache-busted static asset URLs.
 - HTMX targets return HTML fragments, not full pages — use `hx-boost`, `hx-swap`, `hx-target` patterns.
+- **Always prefer existing components** over writing inline HTML. Check `src/views/components/` before writing new markup. Keep view files thin.
+
+### Component Library
+
+All reusable components live in `src/views/components/`. **Always check here before writing inline HTML in views.**
+
+#### Forms (`components/forms/`)
+
+- **`Button`** — props: `variant` (`auth`|`primary`|`danger`|`ghost`, default `auth`), `type`, `class`, `disabled`, `children`. `auth` = full-width black; `primary` = inline black; `danger` = red; `ghost` = underline.
+- **`CsrfToken`** — props: `token: string`. Renders the hidden CSRF input.
+- **`FieldError`** — props: `message?: string`. Renders inline validation error; renders nothing when falsy.
+- **`Textarea`** — props: `id`, `name`, `value`, `placeholder`, `rows`, `maxlength`, `class`.
+- **`LocationSelect`** — locale/timezone dropdown.
+- **`FormField`** — labeled input wrapper.
+
+#### Shared (`components/shared/`)
+
+- **`Card`** — props: `class?`, `children`. Base: `bg-white rounded-lg shadow-sm p-6`. Use for white content cards.
+- **`InfoNotice`** — props: `title`, `class?`, `children`. Gray info box with info icon.
+- **`WarningNotice`** — props: `title`, `class?`, `children`. Red warning box with warning icon.
+- **`Alert`** — props: `type` (`info`|`success`|`error`), `children`, `className?`. Colored alert banner.
+- **`SettingsPageHeader`** — props: `backHref`, `backLabel`, `title`, `description`. Settings page header with back link.
+- **`SettingsNavItem`** — props: `href`, `title`, `children`. Nav card with chevron, for settings index.
+- **`DomainStatusBadge`** — props: `status: string|null|undefined`, `variant` (`icon`|`sm`|`md`, default `md`). Shows domain verification status.
+- **`ExportStatusBadge`** — export job status pill.
+- **`ExportHistoryItem`** — single export row.
+- **`ExportHistory`** — export history list card.
+- **`RequestExport`** — request export card.
+- **`RssSourceBadge`** — RSS source indicator.
+
+#### Users (`components/users/`)
+
+- **`Avatar`** — user avatar image.
+- **`BotBadge`** — 🤖 Bot label span.
+- **`BotUserCard`** — bot user card for explore pages.
+- **`FollowButton`** — follow/unfollow toggle.
+- **`FollowStats`** — followers/following counts.
+- **`ProfileHeader`** — full profile header block.
+- **`RssFeedLink`** — RSS feed button/link.
+- **`UserCard`** — user summary card.
+- **`UserStatLink`** — single stat with link.
+
+#### Posts (`components/posts/`)
+
+- **`Post`** — full post component.
+- **`PostContent`** — post body rendering.
+- **`PostStats`** — likes/repost counts.
+- **`HashtagLink`**, **`MentionLink`**, **`ExternalLink`** — inline text link components.
+
+#### Icons (`components/icons/`)
+
+25 SVG icon components. Each accepts a `class` prop. Available icons: `ArchiveIcon`, `ArrowsRightLeftIcon`, `ChatBubbleIcon`, `CheckCircleIcon`, `CheckCircleSmallIcon`, `CheckIcon`, `ChevronLeftIcon`, `ChevronRightIcon`, `ClipboardIcon`, `ClockCircleSmallIcon`, `DownloadIcon`, `ExclamationTriangleIcon`, `InfoCircleIcon`, `InfoCircleSmallIcon`, `LinkIcon`, `MailIcon`, `MenuIcon`, `RssIcon`, `RssWaveIcon`, `SpinnerIcon`, `TrendingUpIcon`, `UserPlusIcon`, `WarningTriangleSmallIcon`, `XCircleSmallIcon`, `XMarkIcon`.
 
 ### Middleware
 

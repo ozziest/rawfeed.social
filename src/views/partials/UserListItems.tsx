@@ -1,4 +1,3 @@
-/** @jsxImportSource @kitajs/html */
 import type { FollowWithUser } from "../../types/relations";
 import type { TokenPayload } from "../../helpers/tokens";
 import { UserCard } from "./UserCard";

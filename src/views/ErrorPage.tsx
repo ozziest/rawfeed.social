@@ -1,4 +1,3 @@
-/** @jsxImportSource @kitajs/html */
 type ErrorProps = {
   asset: (path: string) => string;
   statusCode: number;

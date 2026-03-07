@@ -1,4 +1,3 @@
-/** @jsxImportSource @kitajs/html */
 import type { Children } from "@kitajs/html";
 
 /**

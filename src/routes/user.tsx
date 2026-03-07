@@ -1,4 +1,3 @@
-/** @jsxImportSource @kitajs/html */
 import { FastifyInstance } from "fastify";
 import { verifyToken } from "../middleware/verifyToken";
 import postService from "../services/post.service";

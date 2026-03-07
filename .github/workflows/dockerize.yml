@@ -1,4 +1,6 @@
 name: Dockerize
+permissions:
+  contents: read
 on:
   push:
     branches:

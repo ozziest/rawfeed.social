@@ -1,5 +1,8 @@
-/** @jsxImportSource @kitajs/html */
 import type { TokenPayload } from "../../helpers/tokens";
+import { CsrfToken } from "../components/forms/CsrfToken";
+import { LocationSelect } from "../components/forms/LocationSelect";
+import { Textarea } from "../components/forms/Textarea";
+import { FieldError } from "../components/forms/FieldError";
 
 type ShareProps = {
   loggedUser?: TokenPayload;
@@ -29,69 +32,23 @@ export function Share({
         hx-disabled-elt="find button[type='submit']"
         class="bg-white rounded-lg shadow p-6 mb-6"
       >
-        <input type="hidden" name="_csrf" value={csrfToken} />
+        <CsrfToken token={csrfToken} />
         <div class="mb-4">
-          <textarea
+          <Textarea
             id="content"
             name="content"
-            maxlength="400"
-            rows="3"
+            maxlength={400}
+            rows={3}
             placeholder="What's on your mind?"
-            class="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent resize-none"
-            safe
-          >
-            {contentValue}
-          </textarea>
-          {validation?.content ? (
-            <div class="text-red-600 text-sm mt-2" safe>
-              {validation.content}
-            </div>
-          ) : (
-            ""
-          )}
+            value={contentValue}
+          />
+          <FieldError message={validation?.content} />
         </div>
 
         <div class="flex items-center justify-between">
           <div class="flex items-center">
-            <select
-              id="location"
-              name="location"
-              class="text-sm text-gray-600 border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-black"
-            >
-              <option
-                value="en"
-                selected={
-                  (formData?.location as string) === "en" || !formData?.location
-                    ? true
-                    : undefined
-                }
-              >
-                English
-              </option>
-              <option
-                value="tr"
-                selected={
-                  (formData?.location as string) === "tr" ? true : undefined
-                }
-              >
-                Turkish
-              </option>
-              <option
-                value="da"
-                selected={
-                  (formData?.location as string) === "da" ? true : undefined
-                }
-              >
-                Danish
-              </option>
-            </select>
-            {validation?.location ? (
-              <span class="text-red-600 text-xs ml-2" safe>
-                {validation.location}
-              </span>
-            ) : (
-              ""
-            )}
+            <LocationSelect value={formData?.location as string | undefined} />
+            <FieldError message={validation?.location} />
           </div>
 
           <button
