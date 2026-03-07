@@ -134,13 +134,24 @@ server.register(fastifyStatic, {
   decorateReply: false,
 });
 
-server.get("/robots.txt", async (request, reply) => {
-  const robotsPath = path.join(__dirname, "../public/robots.txt");
-  const content = await fs.readFile(robotsPath, "utf-8");
+server.get(
+  "/robots.txt",
+  {
+    config: {
+      rateLimit: {
+        max: 10,
+        timeWindow: "30 minutes",
+      },
+    },
+  },
+  async (request, reply) => {
+    const robotsPath = path.join(__dirname, "../public/robots.txt");
+    const content = await fs.readFile(robotsPath, "utf-8");
 
-  reply.type("text/plain");
-  return content;
-});
+    reply.type("text/plain");
+    return content;
+  },
+);
 
 server.register(compress, {
   global: true,
