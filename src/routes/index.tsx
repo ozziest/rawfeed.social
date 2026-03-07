@@ -28,7 +28,7 @@ export default async function routes(fastify: FastifyInstance) {
       }
 
       const [posts, report, lastMembers, bots] = await Promise.all([
-        postService.getItems({ followingUserIds }),
+        postService.getItems({ followingUserIds, loggedUserId }),
         hashtagService.getDailyReport(),
         userService.getLastMembers(),
         userService.getLastBots(),
@@ -92,14 +92,22 @@ export default async function routes(fastify: FastifyInstance) {
         }
       }
 
-      const posts = await postService.getItems({ cursor, followingUserIds });
+      const posts = await postService.getItems({
+        cursor,
+        followingUserIds,
+        loggedUserId,
+      });
       postService.incViews(posts);
+
+      const csrfToken = reply.generateCsrf();
 
       return html(
         <PostsNext
           posts={posts}
           nextCursor={nextCursor(posts)}
           feedNextRoute="/feed/next/"
+          csrfToken={csrfToken}
+          loggedUser={request.loggedUser}
         />,
       );
     },

@@ -1,3 +1,20 @@
+function showToast(message, type = "error") {
+  const toast = document.createElement("div");
+  toast.className = [
+    "fixed bottom-6 left-1/2 -translate-x-1/2 z-50",
+    "px-5 py-3 rounded-lg shadow-lg text-sm font-medium text-white",
+    "animate-[fadeInUp_0.2s_ease-out]",
+    type === "error" ? "bg-red-600" : "bg-green-600",
+  ].join(" ");
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(() => {
+    toast.style.transition = "opacity 0.3s";
+    toast.style.opacity = "0";
+    setTimeout(() => toast.remove(), 300);
+  }, 3500);
+}
+
 function formatRelativeTime(date) {
   const now = new Date();
   const diff = now - date;
@@ -63,6 +80,11 @@ if (document.readyState === "loading") {
 
     document.body.addEventListener("htmx:afterSwap", function (event) {
       updateTimestamps();
+    });
+
+    document.body.addEventListener("notify", function (event) {
+      const { type, message } = event.detail || {};
+      if (message) showToast(message, type);
     });
   });
 } else {

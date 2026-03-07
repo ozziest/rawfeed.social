@@ -44,7 +44,7 @@ export function UserProfile(props: UserProfileProps) {
         />
 
         <div class="space-y-4">
-          <Posts posts={posts} />
+          <Posts posts={posts} loggedUser={loggedUser} csrfToken={csrfToken} />
           {nextCursor ? (
             <div
               hx-get={`/posts/next/${nextCursor}/${nextCursorUserId}`}

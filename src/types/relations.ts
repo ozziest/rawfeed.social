@@ -18,6 +18,8 @@ export type PostWithContent = Selectable<Posts> & {
   links: PostLinkWithLink[];
   mentions: PostMentions[];
   hashtags: PostHashtags[];
+  resharedPost?: PostWithContent;
+  userReshared?: boolean;
 };
 
 export type FollowWithUser = Selectable<Follows> & {

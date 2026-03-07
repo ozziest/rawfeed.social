@@ -47,7 +47,11 @@ export function Feed(props: FeedProps) {
             />
 
             <div class="space-y-4">
-              <Posts posts={posts} />
+              <Posts
+                posts={posts}
+                loggedUser={loggedUser}
+                csrfToken={csrfToken}
+              />
               {nextCursor ? (
                 <div
                   hx-get={`/feed/next/${nextCursor}`}

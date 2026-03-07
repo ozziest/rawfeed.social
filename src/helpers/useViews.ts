@@ -79,6 +79,18 @@ export const useJsxViews = () => {
       });
     };
 
-    return { html, base, setFlash, setValidation, setState, setAuthTokens };
+    const notify = (message: string, type: "error" | "success" = "error") => {
+      reply.header("HX-Trigger", JSON.stringify({ notify: { type, message } }));
+    };
+
+    return {
+      html,
+      base,
+      setFlash,
+      setValidation,
+      setState,
+      setAuthTokens,
+      notify,
+    };
   };
 };

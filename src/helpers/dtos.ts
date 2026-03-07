@@ -38,4 +38,5 @@ export type PostQueryParams = {
   userId?: string;
   id?: string;
   followingUserIds?: string[];
+  loggedUserId?: string;
 };
