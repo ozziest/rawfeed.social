@@ -1,4 +1,3 @@
-
 export function SidebarLinks() {
   return (
     <div class="bg-white border border-gray-200 rounded-lg p-3">
@@ -8,6 +7,9 @@ export function SidebarLinks() {
         </a>
         <a href="/blog" class="hover:underline">
           Blog
+        </a>
+        <a href="/budget" class="hover:underline">
+          Budget
         </a>
         <a href="/legal/privacy" class="hover:underline">
           Privacy

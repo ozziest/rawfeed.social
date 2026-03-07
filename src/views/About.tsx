@@ -323,6 +323,65 @@ export function AboutPage(props: Props) {
           </div>
         </div>
 
+        <div class="relative bg-gray-50 py-24 border-b-2 border-black">
+          <div class="max-w-4xl mx-auto px-4">
+            <div class="text-center mb-16">
+              <p class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-4">
+                Transparency
+              </p>
+              <h2 class="text-4xl sm:text-5xl font-bold text-black mb-6 leading-tight">
+                Freedom Costs Money.
+                <br />
+                Here's Exactly How Much.
+              </h2>
+              <p class="text-xl text-gray-700 max-w-2xl mx-auto">
+                No ads. No data deals. No investors. Rawfeed runs entirely out
+                of pocket — and every cost is published here, openly.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+              <div class="bg-white border-2 border-black p-8 text-center">
+                <div class="text-5xl font-bold text-black mb-2">$0</div>
+                <div class="text-gray-600 font-medium uppercase tracking-wide text-sm">
+                  Earned from Ads
+                </div>
+              </div>
+              <div class="bg-white border-2 border-black p-8 text-center">
+                <div class="text-5xl font-bold text-black mb-2">$0</div>
+                <div class="text-gray-600 font-medium uppercase tracking-wide text-sm">
+                  Earned from Your Data
+                </div>
+              </div>
+              <div class="bg-white border-2 border-black p-8 text-center">
+                <div class="text-5xl font-bold text-black mb-2">100%</div>
+                <div class="text-gray-600 font-medium uppercase tracking-wide text-sm">
+                  Cost-Transparent
+                </div>
+              </div>
+            </div>
+
+            <div class="border-l-4 border-black pl-6 py-2 mb-12">
+              <p class="text-lg text-gray-700 leading-relaxed">
+                Servers, storage, email — real infrastructure with real costs,
+                paid for personally. The budget page shows every line item,
+                every price change, and a running total since launch. If that
+                ever needs to change, you'll read about it there first — in
+                plain language, no small print.
+              </p>
+            </div>
+
+            <div class="text-center">
+              <a
+                href="/budget"
+                class="inline-block px-8 py-4 bg-black text-white font-bold text-lg hover:bg-gray-800 transition-colors"
+              >
+                → See Full Budget Breakdown
+              </a>
+            </div>
+          </div>
+        </div>
+
         <div class="relative bg-gray-50 py-24">
           <div class="relative max-w-4xl mx-auto px-4">
             <div class="text-center mb-16">

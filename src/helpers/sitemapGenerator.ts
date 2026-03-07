@@ -140,6 +140,11 @@ export async function generateStaticSitemap(): Promise<string> {
       changefreq: "monthly",
       priority: 0.3,
     },
+    {
+      loc: `${APP_URL}/budget`,
+      changefreq: "monthly",
+      priority: 0.5,
+    },
   ];
 
   return generateSitemapXml(urls);

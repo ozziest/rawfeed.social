@@ -133,6 +133,11 @@ export function Footer() {
                 </a>
               </li>
               <li>
+                <a href="/budget" class="text-gray-300">
+                  Budget
+                </a>
+              </li>
+              <li>
                 <a href="/auth/login" class="text-gray-300">
                   Login
                 </a>

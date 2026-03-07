@@ -29,6 +29,7 @@ import tagsRoutes from "./routes/tags";
 import legalRoutes from "./routes/legal";
 import aboutRoutes from "./routes/about";
 import blogRoutes from "./routes/blog";
+import budgetRoutes from "./routes/budget";
 import blogService from "./services/blog.service";
 import sitemapRoutes from "./routes/sitemap";
 import followRoutes from "./routes/follow";
@@ -172,6 +173,7 @@ server.register(tagsRoutes);
 server.register(legalRoutes);
 server.register(aboutRoutes);
 server.register(blogRoutes);
+server.register(budgetRoutes);
 
 server.setErrorHandler((error: any, request, reply) => {
   request.log.error(error);
