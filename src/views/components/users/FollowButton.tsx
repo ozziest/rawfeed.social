@@ -1,4 +1,5 @@
-/** @jsxImportSource @kitajs/html */
+import { CsrfToken } from "../forms/CsrfToken";
+
 type FollowButtonProps = {
   targetUsername: string;
   targetUserId: string;
@@ -28,7 +29,7 @@ export function FollowButton({
       hx-target={`#${target}`}
       hx-swap="outerHTML"
     >
-      <input type="hidden" name="_csrf" value={csrfToken} />
+      <CsrfToken token={csrfToken} />
       <button
         type="submit"
         class={

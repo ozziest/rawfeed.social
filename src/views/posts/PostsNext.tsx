@@ -1,4 +1,3 @@
-/** @jsxImportSource @kitajs/html */
 import type { PostWithContent } from "../../types/relations";
 import { Posts } from "../partials/Posts";
 

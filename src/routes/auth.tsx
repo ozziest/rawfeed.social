@@ -1,4 +1,3 @@
-/** @jsxImportSource @kitajs/html */
 import { FastifyInstance } from "fastify";
 import userService from "../services/user.service";
 import {

@@ -1,4 +1,3 @@
-/** @jsxImportSource @kitajs/html */
 type NotFoundProps = {
   asset: (path: string) => string;
 };

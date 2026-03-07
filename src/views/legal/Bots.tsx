@@ -1,4 +1,3 @@
-/** @jsxImportSource @kitajs/html */
 import type { BaseProps } from "../../types/views";
 import { DefaultLayout } from "../layouts/DefaultLayout";
 

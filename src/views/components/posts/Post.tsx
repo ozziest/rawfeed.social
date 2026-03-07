@@ -1,11 +1,12 @@
-/** @jsxImportSource @kitajs/html */
-import type { PostWithContent } from "../../types/relations";
-import { getAvatar } from "../../helpers/common";
-import { toISO } from "../../helpers/common";
+import type { PostWithContent } from "../../../types/relations";
+import { getAvatar } from "../../../helpers/common";
+import { toISO } from "../../../helpers/common";
 import { PostContent } from "./PostContent";
 import { PostStats } from "./PostStats";
+import { Avatar } from "../users/Avatar";
+import { BotBadge } from "../users/BotBadge";
 
-type PostProps = {
+export type PostProps = {
   post: PostWithContent;
 };
 
@@ -16,10 +17,11 @@ export function Post({ post }: PostProps) {
     <article class="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
       {/* User Info */}
       <div class="flex items-center gap-3 mb-4">
-        <img
+        <Avatar
           src={getAvatar(post.user)}
           alt={post.user.name}
-          class="w-10 h-10 rounded-full"
+          size={40}
+          className="w-10 h-10"
         />
         <div>
           <div class="flex items-center gap-2">
@@ -29,13 +31,7 @@ export function Post({ post }: PostProps) {
             >
               <span safe>{post.user.name}</span>
             </a>
-            {post.user.bot_type ? (
-              <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-200 text-black border border-gray-300">
-                🤖 Bot
-              </span>
-            ) : (
-              ""
-            )}
+            {post.user.bot_type ? <BotBadge /> : null}
           </div>
           <p class="text-sm text-gray-500">
             @<span safe>{post.user.username}</span>
@@ -43,7 +39,7 @@ export function Post({ post }: PostProps) {
         </div>
       </div>
 
-      {/* Content — PostContent renders pre-sanitized HTML with mentions/hashtags/links */}
+      {/* Content */}
       <p
         class="text-gray-900 leading-relaxed mb-4 whitespace-pre-line wrap-break-words overflow-wrap-anywhere line-clamp-12"
         lang={post.location ?? "en"}

@@ -1,6 +1,7 @@
-/** @jsxImportSource @kitajs/html */
 import type { BaseProps } from "../../types/views";
 import { AuthLayout } from "../layouts/AuthLayout";
+import { CheckIcon } from "../components/icons/CheckIcon";
+import { CheckCircleIcon } from "../components/icons/CheckCircleIcon";
 
 export function VerificationSuccess(props: BaseProps) {
   return (
@@ -9,19 +10,7 @@ export function VerificationSuccess(props: BaseProps) {
         <div class="w-full max-w-md space-y-8">
           <div class="text-center">
             <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-100 mb-6">
-              <svg
-                class="h-8 w-8 text-green-600"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
+              <CheckIcon class="h-8 w-8 text-green-600" />
             </div>
             <h2 class="text-3xl font-bold tracking-tight text-gray-900">
               Email Verified!
@@ -33,19 +22,7 @@ export function VerificationSuccess(props: BaseProps) {
 
           <div class="bg-green-50 border border-green-200 rounded-lg p-6 space-y-4">
             <div class="flex items-start">
-              <svg
-                class="h-6 w-6 text-green-600 mt-0.5 mr-3 shrink-0"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
+              <CheckCircleIcon class="h-6 w-6 text-green-600 mt-0.5 mr-3 shrink-0" />
               <div>
                 <h3 class="text-base font-semibold text-gray-900">
                   You're all set!

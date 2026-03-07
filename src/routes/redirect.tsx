@@ -1,4 +1,3 @@
-/** @jsxImportSource @kitajs/html */
 import { FastifyInstance } from "fastify";
 import linkService from "../services/link.service";
 import { logError } from "../helpers/common";

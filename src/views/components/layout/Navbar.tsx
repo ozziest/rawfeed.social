@@ -1,6 +1,6 @@
-/** @jsxImportSource @kitajs/html */
-import type { TokenPayload } from "../../helpers/tokens";
-import { asset } from "../../helpers/asset";
+import type { TokenPayload } from "../../../helpers/tokens";
+import { asset } from "../../../helpers/asset";
+import { MenuIcon } from "../icons/MenuIcon";
 
 type NavbarProps = {
   mode: "root" | "custom";
@@ -33,19 +33,7 @@ export function Navbar({ mode, loggedUser }: NavbarProps) {
             class="md:hidden p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
             aria-label="Toggle menu"
           >
-            <svg
-              class="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              ></path>
-            </svg>
+            <MenuIcon class="w-6 h-6" />
           </button>
 
           {/* Desktop Navigation Links */}

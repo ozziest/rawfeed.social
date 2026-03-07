@@ -1,10 +1,8 @@
-/** @jsxImportSource @kitajs/html */
 export function Footer() {
   return (
     <footer class="bg-black text-gray-300 border-t-2 border-white">
       <div class="max-w-4xl mx-auto px-4 py-16">
         <div class="grid md:grid-cols-4 gap-10 mb-12">
-          {/* Column 1 — Project */}
           <div>
             <h4 class="text-white font-bold mb-6 text-lg border-b border-gray-700 pb-2">
               Project
@@ -43,7 +41,6 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Column 2 — Contribute */}
           <div>
             <h4 class="text-white font-bold mb-6 text-lg border-b border-gray-700 pb-2">
               Contribute
@@ -82,7 +79,6 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Column 3 — Legal */}
           <div>
             <h4 class="text-white font-bold mb-6 text-lg border-b border-gray-700 pb-2">
               Legal
@@ -126,7 +122,6 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Column 4 — Platform */}
           <div>
             <h4 class="text-white font-bold mb-6 text-lg border-b border-gray-700 pb-2">
               Platform

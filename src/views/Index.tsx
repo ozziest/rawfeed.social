@@ -1,4 +1,3 @@
-/** @jsxImportSource @kitajs/html */
 import type { BaseProps } from "../types/views";
 import type { PostWithContent } from "../types/relations";
 import { DefaultLayout } from "./layouts/DefaultLayout";

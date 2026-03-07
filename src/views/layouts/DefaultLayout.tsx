@@ -1,10 +1,9 @@
-/** @jsxImportSource @kitajs/html */
 import type { Children } from "@kitajs/html";
 import type { BaseProps } from "../../types/views";
-import { Head } from "./Head";
-import { Navbar } from "../partials/Navbar";
-import { Footer } from "../partials/Footer";
-import { FooterCustom } from "../partials/FooterCustom";
+import { Head } from "../components/layout/Head";
+import { Navbar } from "../components/layout/Navbar";
+import { Footer } from "../components/layout/Footer";
+import { FooterCustom } from "../components/layout/FooterCustom";
 
 type DefaultLayoutProps = BaseProps & { children?: Children };
 

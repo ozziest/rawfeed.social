@@ -1,4 +1,3 @@
-/** @jsxImportSource @kitajs/html */
 import type { PostWithContent } from "../../types/relations";
 import type { TokenPayload } from "../../helpers/tokens";
 import { Share } from "../partials/Share";

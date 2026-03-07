@@ -1,4 +1,3 @@
-/** @jsxImportSource @kitajs/html */
 
 type RawHtmlProps = {
   /** Trusted HTML string — only use with sanitized or server-generated content. */

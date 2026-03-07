@@ -1,4 +1,3 @@
-/** @jsxImportSource @kitajs/html */
 export function FooterCustom() {
   return (
     <footer class="border-t border-gray-200 bg-white text-gray-500 text-sm mt-8">

@@ -1,4 +1,3 @@
-/** @jsxImportSource @kitajs/html */
 type ErrorDevProps = {
   asset: (path: string) => string;
   error: {

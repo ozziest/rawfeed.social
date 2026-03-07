@@ -1,6 +1,5 @@
-/** @jsxImportSource @kitajs/html */
 import type { PostWithContent } from "../../types/relations";
-import { Post } from "./Post";
+import { Post } from "../components/posts/Post";
 
 type PostsProps = {
   posts?: PostWithContent[];
