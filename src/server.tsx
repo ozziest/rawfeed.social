@@ -38,6 +38,7 @@ import { asset } from "./helpers/asset";
 import { NotFound } from "./views/NotFound";
 import { ErrorPage } from "./views/ErrorPage";
 import { ErrorDev } from "./views/ErrorDev";
+import { TooManyRequests } from "./views/TooManyRequests";
 import { verifyToken } from "./middleware/verifyToken";
 import { requireAuth } from "./middleware/requireAuth";
 import { shouldBeAdmin } from "./middleware/shouldBeAdmin";
@@ -186,6 +187,34 @@ server.setErrorHandler((error: any, request, reply) => {
       message: error.message,
       statusCode,
     });
+  }
+
+  if (statusCode === 429) {
+    const waitTime =
+      error.message?.replace("Rate limit exceeded, retry in ", "").trim() ||
+      "a few minutes";
+
+    if (request.headers["hx-request"]) {
+      reply.header(
+        "HX-Trigger",
+        JSON.stringify({
+          notify: {
+            type: "error",
+            message: `Too many requests. Please wait ${waitTime} before trying again.`,
+          },
+        }),
+      );
+      return reply.code(429).html(<></>);
+    }
+
+    return reply
+      .code(429)
+      .html(
+        <TooManyRequests
+          waitTime={waitTime}
+          isProd={process.env.NODE_ENV === "production"}
+        />,
+      );
   }
 
   if (process.env.NODE_ENV !== "production") {
