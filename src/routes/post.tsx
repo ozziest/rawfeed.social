@@ -101,6 +101,7 @@ export default async function postRoutes(fastify: FastifyInstance) {
     "/posts/create",
     {
       preHandler: [fastify.csrfProtection, verifyToken, requireAuth],
+      config: { rateLimit: { max: 20, timeWindow: "1 minute" } },
     },
     async (request, reply) => {
       const { html, base } = useCtx(request, reply);
