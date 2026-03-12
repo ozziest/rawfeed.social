@@ -7,27 +7,60 @@ import { PostStats } from "./PostStats";
 import { Avatar } from "../users/Avatar";
 import { BotBadge } from "../users/BotBadge";
 import { ReshareHeader } from "./ReshareHeader";
+import { PostThreadRow } from "./PostThreadRow";
 
 export type PostProps = {
   post: PostWithContent;
   loggedUser?: TokenPayload;
   csrfToken?: string;
+  suppressThread?: boolean;
 };
 
-export function Post({ post, loggedUser, csrfToken }: PostProps) {
+export function Post({
+  post,
+  loggedUser,
+  csrfToken,
+  suppressThread = false,
+}: PostProps) {
   const isReshare = post.reshare_id !== null;
+  const isReply = post.parent_id !== null && !isReshare;
 
-  // For reshares, show the original post's content; the resharer is shown as a label
+  // Reply with parent available → thread card (vertical connector between avatars)
+  if (isReply && post.parentPost && !suppressThread) {
+    return (
+      <article class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+        <PostThreadRow
+          post={post.parentPost}
+          loggedUser={loggedUser}
+          csrfToken={csrfToken}
+          hasConnector={true}
+          isFocal={false}
+        />
+        <PostThreadRow
+          post={post}
+          loggedUser={loggedUser}
+          csrfToken={csrfToken}
+          hasConnector={false}
+          isFocal={false}
+        />
+      </article>
+    );
+  }
+
+  // Standard card (top-level post or reshare)
   const displayPost = isReshare && post.resharedPost ? post.resharedPost : post;
   const displayIsoDate = toISO(displayPost.created_at as unknown as string);
 
   return (
-    <article class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+    <article
+      class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden cursor-pointer"
+      data-post-card
+      data-post-href={`/posts/${displayPost.id}`}
+    >
       {/* Reshared-by header */}
       {isReshare ? <ReshareHeader post={post} /> : null}
 
       <div class="p-6">
-        {/* User Info */}
         <div class="flex items-center gap-3 mb-4">
           <Avatar
             src={getAvatar(displayPost.user)}

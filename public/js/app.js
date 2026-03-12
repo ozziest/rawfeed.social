@@ -62,6 +62,18 @@ function updateTimestamps() {
   });
 }
 
+function initPostCards() {
+  document.querySelectorAll("[data-post-card]").forEach((card) => {
+    if (card.dataset.postCardInit) return;
+    card.dataset.postCardInit = "1";
+    card.addEventListener("click", function (e) {
+      if (e.target.closest("a, button, input, textarea, select, form")) return;
+      const href = card.dataset.postHref;
+      if (href) window.location.href = href;
+    });
+  });
+}
+
 function initMobileMenu() {
   const menuButton = document.getElementById("mobile-menu-button");
   const mobileMenu = document.getElementById("mobile-menu");
@@ -77,9 +89,11 @@ if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", () => {
     updateTimestamps();
     initMobileMenu();
+    initPostCards();
 
     document.body.addEventListener("htmx:afterSwap", function (event) {
       updateTimestamps();
+      initPostCards();
     });
 
     document.body.addEventListener("notify", function (event) {
@@ -90,4 +104,5 @@ if (document.readyState === "loading") {
 } else {
   updateTimestamps();
   initMobileMenu();
+  initPostCards();
 }

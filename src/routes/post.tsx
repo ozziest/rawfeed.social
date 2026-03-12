@@ -9,10 +9,88 @@ import { nextCursor } from "../helpers/common";
 import { PostCreate } from "../views/posts/PostCreate";
 import { PostsNext } from "../views/posts/PostsNext";
 import { ReshareButton } from "../views/components/posts/ReshareButton";
+import { PostDetail } from "../views/posts/PostDetail";
+import { ReplySection } from "../views/posts/ReplySection";
+import { NotFound } from "../views/NotFound";
 
 const useCtx = useJsxViews();
 
 export default async function postRoutes(fastify: FastifyInstance) {
+  fastify.get(
+    "/posts/:id",
+    { preHandler: [verifyToken] },
+    async (request, reply) => {
+      const { id } = request.params as { id: string };
+      const { html, base } = useCtx(request, reply);
+      const loggedUserId = request.loggedUser?.userId;
+      const csrfToken = reply.generateCsrf();
+
+      const post = await postService.getById(id, loggedUserId);
+      if (!post) {
+        return reply.status(404).html(<NotFound {...base()} />);
+      }
+
+      const replies = await postService.getReplies(id, loggedUserId);
+
+      return html(
+        <PostDetail
+          {...base()}
+          post={post}
+          replies={replies}
+          csrfToken={csrfToken}
+        />,
+      );
+    },
+  );
+
+  fastify.post(
+    "/posts/:id/reply",
+    {
+      preHandler: [fastify.csrfProtection, verifyToken, requireAuth],
+      config: { rateLimit: { max: 20, timeWindow: "1 minute" } },
+    },
+    async (request, reply) => {
+      const { id } = request.params as { id: string };
+      const { html, base } = useCtx(request, reply);
+      const csrfToken = reply.generateCsrf();
+      const loggedUserId = request.loggedUser!.userId;
+
+      const post = await postService.getById(id, loggedUserId);
+      if (!post) {
+        return reply.status(404).send();
+      }
+
+      const validation = validate(POST_SCHEMA, request.body);
+      if (validation.isNotValid) {
+        const b = base();
+        const replies = await postService.getReplies(id, loggedUserId);
+        return html(
+          <ReplySection
+            postId={id}
+            replies={replies}
+            loggedUser={b.loggedUser}
+            csrfToken={csrfToken}
+            validation={b.validation}
+            formData={b.state as Record<string, unknown>}
+          />,
+        );
+      }
+
+      const input = request.body as PostInput;
+      await postService.insert(loggedUserId, input, undefined, undefined, id);
+
+      const replies = await postService.getReplies(id, loggedUserId);
+      return html(
+        <ReplySection
+          postId={id}
+          replies={replies}
+          loggedUser={request.loggedUser}
+          csrfToken={csrfToken}
+        />,
+      );
+    },
+  );
+
   fastify.get(
     "/posts/next/:cursor/:userId",
     { preHandler: [verifyToken] },

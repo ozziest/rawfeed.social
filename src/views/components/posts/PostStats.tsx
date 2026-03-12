@@ -12,13 +12,16 @@ type PostStatsProps = {
 export function PostStats({ post, loggedUser, csrfToken }: PostStatsProps) {
   return (
     <>
-      <button class="flex items-center gap-2 text-gray-600 hover:text-black transition-colors opacity-50">
+      <a
+        href={`/posts/${post.id}`}
+        class="flex items-center gap-2 text-gray-600 hover:text-black transition-colors"
+      >
         <ChatBubbleIcon class="w-5 h-5" />
         <span>
           {post.stats_replies ?? 0}{" "}
           {post.stats_replies === 1 ? "reply" : "replies"}
         </span>
-      </button>
+      </a>
       <ReshareButton
         post={post}
         loggedUser={loggedUser}
