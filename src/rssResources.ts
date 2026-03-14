@@ -92,6 +92,16 @@ export const RSS_RESOURCES: RSSSource[] = [
     updateFrequency: "0 0 * * *",
     svg: asset("/public/images/rss/rss.svg"),
   },
+  {
+    username: "rss_misaligned_markets",
+    name: "Misaligned Markets",
+    bio: "RSS feed of the Misaligned Markets blog",
+    url: "https://misaligned.markets/rss",
+    category: "blog",
+    language: "en",
+    updateFrequency: "0 0 * * *",
+    svg: asset("/public/images/rss/rss.svg"),
+  },
 ];
 
 export const RSS_BOT_USERNAMES: string[] = RSS_RESOURCES.map(
