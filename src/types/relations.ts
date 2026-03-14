@@ -19,6 +19,7 @@ export type PostWithContent = Selectable<Posts> & {
   mentions: PostMentions[];
   hashtags: PostHashtags[];
   resharedPost?: PostWithContent;
+  parentPost?: PostWithContent;
   userReshared?: boolean;
 };
 

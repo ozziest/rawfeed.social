@@ -18,6 +18,7 @@ const insert = async (
   input: PostInput,
   externalId?: string,
   created_at?: Date,
+  parent_id?: string,
 ) => {
   const postId = uuidv4();
   const postContent = await contentService.toPostContent(input.content);
@@ -27,6 +28,7 @@ const insert = async (
     .insert({
       id: postId,
       user_id: userId,
+      parent_id: parent_id ?? null,
       content: postContent.content,
       lexical: postContent.content,
       location: input.location,
@@ -36,6 +38,13 @@ const insert = async (
     });
 
   await postDetailService.insert(postId, postContent);
+
+  if (parent_id) {
+    await getKnex()
+      .table(TABLE_NAME)
+      .where("id", parent_id)
+      .increment("stats_replies", 1);
+  }
 
   return postId;
 };
@@ -222,6 +231,17 @@ const unreshare = async (userId: string, postId: string): Promise<void> => {
     .decrement("stats_shares", 1);
 };
 
+const getReplies = async (
+  postId: string,
+  loggedUserId?: string,
+): Promise<PostWithContent[]> => {
+  const posts = await getKnex()
+    .table<Selectable<Posts>>(TABLE_NAME)
+    .where("parent_id", postId)
+    .orderBy("created_at", "desc");
+  return await mergeWithContent(posts, loggedUserId, true);
+};
+
 const getReshareByUser = async (
   userId: string,
   postId: string,
@@ -236,14 +256,19 @@ const getReshareByUser = async (
 const mergeWithContent = async (
   posts: Selectable<Posts>[],
   loggedUserId?: string,
+  shallow = false,
 ): Promise<PostWithContent[]> => {
   const userIds = posts.map((item) => item.user_id);
   const postIds = posts.map((item) => item.id);
 
   // Collect reshare_id values to fetch original posts
-  const reshareIds = posts
-    .map((p) => p.reshare_id)
-    .filter((id): id is string => id !== null && id !== undefined);
+  const reshareIds = Array.from(
+    new Set(
+      posts
+        .map((p) => p.reshare_id)
+        .filter((id): id is string => id !== null && id !== undefined),
+    ),
+  );
 
   const [users, details] = await Promise.all([
     userService.getByIds(userIds),
@@ -261,15 +286,35 @@ const mergeWithContent = async (
     postLink.linkDetail = linkMap.get(postLink.link_id);
   });
 
-  // Fetch original posts for reshares
+  // Fetch original posts for reshares (one level deep, shallow to prevent further recursion)
   let resharedPostMap = new Map<string, PostWithContent>();
-  if (reshareIds.length > 0) {
+  if (!shallow && reshareIds.length > 0) {
     const originalPosts = await getKnex()
       .table<Selectable<Posts>>(TABLE_NAME)
       .whereIn("id", reshareIds);
-    // Recursively resolve originals (one level deep)
-    const resolved = await mergeWithContent(originalPosts, loggedUserId);
+    const resolved = await mergeWithContent(originalPosts, loggedUserId, true);
     resharedPostMap = new Map(resolved.map((p) => [p.id, p]));
+  }
+
+  // Fetch parent posts for replies (one level up, shallow to prevent further recursion)
+  const parentIds = Array.from(
+    new Set(
+      posts
+        .map((p) => p.parent_id)
+        .filter((id): id is string => id !== null && id !== undefined),
+    ),
+  );
+  let parentPostMap = new Map<string, PostWithContent>();
+  if (!shallow && parentIds.length > 0) {
+    const parentRows = await getKnex()
+      .table<Selectable<Posts>>(TABLE_NAME)
+      .whereIn("id", parentIds);
+    const resolvedParents = await mergeWithContent(
+      parentRows,
+      loggedUserId,
+      true,
+    );
+    parentPostMap = new Map(resolvedParents.map((p) => [p.id, p]));
   }
 
   // Fetch which posts the logged-in user has reshared
@@ -297,6 +342,9 @@ const mergeWithContent = async (
       resharedPost: post.reshare_id
         ? resharedPostMap.get(post.reshare_id)
         : undefined,
+      parentPost: post.parent_id
+        ? parentPostMap.get(post.parent_id)
+        : undefined,
       userReshared: loggedUserId ? userResharedSet.has(post.id) : undefined,
     };
     return postWithContent;
@@ -317,6 +365,7 @@ export default loggerAll(
     reshare,
     unreshare,
     getReshareByUser,
+    getReplies,
   },
   "post.service",
 );
