@@ -81,7 +81,7 @@
   },
   "devDependencies": {
     "@kitajs/ts-html-plugin": "^4.1.4",
-    "@sentry/cli": "^3.3.0",
+    "@sentry/cli": "^3.3.3",
     "@types/adm-zip": "^0.5.7",
     "@types/bcrypt": "^6.0.0",
     "@types/jsonwebtoken": "^9.0.10",
