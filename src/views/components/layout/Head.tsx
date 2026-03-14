@@ -32,7 +32,55 @@ export function Head({
       <script src={asset("/public/js/htmx.min.js")}></script>
       <script src={asset("/public/js/simple-cookie-banner.js")}></script>
       <script src={asset("/public/js/app.js")}></script>
-      {/* ...existing code... */}
+      <meta name="robots" content="index, follow" />
+      <meta name="googlebot" content="index, follow, noarchive" />
+      <meta name="googlebot-news" content="nosnippet" />
+
+      <meta property="og:site_name" content="rawfeed.social" />
+      <meta property="og:type" content="website" />
+      <meta
+        property="og:title"
+        content={
+          title ||
+          "Rawfeed - Chronological Microblogging Without Algorithmic Manipulation"
+        }
+      />
+      <meta
+        property="og:description"
+        content={
+          description ||
+          "Open-source microblogging with chronological RSS feeds and no algorithmic manipulation."
+        }
+      />
+      <meta property="og:image" content={asset("/public/images/og.png")} />
+      <meta property="og:url" content={canonical || "https://rawfeed.social"} />
+
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta
+        name="twitter:title"
+        content={
+          title ||
+          "Rawfeed - Chronological Microblogging Without Algorithmic Manipulation"
+        }
+      />
+      <meta
+        name="twitter:description"
+        content={
+          description ||
+          "Open-source microblogging with chronological RSS feeds and no algorithmic manipulation."
+        }
+      />
+      <meta name="twitter:image" content={asset("/public/images/og.png")} />
+
+      {isProd ? (
+        <script
+          defer
+          src="https://cloud.umami.is/script.js"
+          data-website-id="b0b55b3f-3a08-4ddd-b775-348ea72445d6"
+        ></script>
+      ) : (
+        ""
+      )}
     </head>
   );
 }
