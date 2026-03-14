@@ -1,4 +1,3 @@
-
 type MentionLinkProps = {
   username: string;
 };
@@ -8,7 +7,7 @@ export function MentionLink({ username }: MentionLinkProps) {
   return (
     <a
       href={`/u/${safeUsername}`}
-      class="transition-colors font-semibold text-neutral-800 hover:underline hover:text-neutral-900"
+      class="relative z-10 transition-colors font-semibold text-neutral-800 hover:underline hover:text-neutral-900"
     >
       <span safe>{username}</span>
     </a>

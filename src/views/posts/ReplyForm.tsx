@@ -24,7 +24,7 @@ export function ReplyForm({
       id="reply-form"
       hx-post={`/posts/${postId}/reply`}
       hx-target="#reply-section"
-      hx-swap="innerHTML"
+      hx-swap="outerHTML"
       hx-disabled-elt="find button[type='submit']"
       class="bg-white rounded-lg shadow p-6 mb-6"
     >

@@ -1,4 +1,3 @@
-
 type ExternalLinkProps = {
   code: string;
   link: string;
@@ -27,7 +26,7 @@ export function ExternalLink({ code, link }: ExternalLinkProps) {
       href={`/redirect/${safeCode}`}
       target="_blank"
       rel="noopener noreferrer"
-      class="transition-colors font-medium text-black hover:underline hover:text-gray-700"
+      class="relative z-10 transition-colors font-medium text-black hover:underline hover:text-gray-700"
     >
       <span safe>{displayText}</span>
     </a>

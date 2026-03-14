@@ -51,7 +51,7 @@ export default async function postRoutes(fastify: FastifyInstance) {
     },
     async (request, reply) => {
       const { id } = request.params as { id: string };
-      const { html, base } = useCtx(request, reply);
+      const { html, base, setValidation, setState } = useCtx(request, reply);
       const csrfToken = reply.generateCsrf();
       const loggedUserId = request.loggedUser!.userId;
 
@@ -62,6 +62,8 @@ export default async function postRoutes(fastify: FastifyInstance) {
 
       const validation = validate(POST_SCHEMA, request.body);
       if (validation.isNotValid) {
+        setValidation(validation.errors);
+        setState(request.body as object);
         const b = base();
         const replies = await postService.getReplies(id, loggedUserId);
         return html(

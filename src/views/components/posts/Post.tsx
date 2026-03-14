@@ -1,13 +1,11 @@
 import type { PostWithContent } from "../../../types/relations";
 import type { TokenPayload } from "../../../helpers/tokens";
-import { getAvatar } from "../../../helpers/common";
 import { toISO } from "../../../helpers/common";
 import { PostContent } from "./PostContent";
 import { PostStats } from "./PostStats";
-import { Avatar } from "../users/Avatar";
-import { BotBadge } from "../users/BotBadge";
 import { ReshareHeader } from "./ReshareHeader";
 import { PostThreadRow } from "./PostThreadRow";
+import { PostAuthor } from "./PostAuthor";
 
 export type PostProps = {
   post: PostWithContent;
@@ -52,37 +50,19 @@ export function Post({
   const displayIsoDate = toISO(displayPost.created_at as unknown as string);
 
   return (
-    <article
-      class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden cursor-pointer"
-      data-post-card
-      data-post-href={`/posts/${displayPost.id}`}
-    >
+    <article class="relative bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden cursor-pointer">
+      {/* Stretched link — covers the full card for click / keyboard / middle-click / Ctrl+click */}
+      <a
+        href={`/posts/${displayPost.id}`}
+        class="absolute inset-0 z-0"
+        aria-label={`View post by ${displayPost.user.name}`}
+      />
+
       {/* Reshared-by header */}
       {isReshare ? <ReshareHeader post={post} /> : null}
 
-      <div class="p-6">
-        <div class="flex items-center gap-3 mb-4">
-          <Avatar
-            src={getAvatar(displayPost.user)}
-            alt={displayPost.user.name}
-            size={40}
-            className="w-10 h-10"
-          />
-          <div>
-            <div class="flex items-center gap-2">
-              <a
-                href={`/u/${displayPost.user.username}`}
-                class="font-semibold text-gray-900 hover:underline"
-              >
-                <span safe>{displayPost.user.name}</span>
-              </a>
-              {displayPost.user.bot_type ? <BotBadge /> : null}
-            </div>
-            <p class="text-sm text-gray-500">
-              @<span safe>{displayPost.user.username}</span>
-            </p>
-          </div>
-        </div>
+      <div class="p-6 ">
+        <PostAuthor user={displayPost.user} />
 
         {/* Content */}
         {isReshare && !post.resharedPost ? (
@@ -98,7 +78,7 @@ export function Post({
           </p>
         )}
 
-        <div class="flex items-center justify-between text-sm">
+        <div class="relative z-10 flex items-center justify-between text-sm">
           <div class="flex gap-6">
             <PostStats
               post={displayPost}
@@ -107,9 +87,14 @@ export function Post({
             />
           </div>
           {!isReshare ? (
-            <time class="text-gray-400 text-xs" datetime={displayIsoDate} safe>
-              {displayIsoDate}
-            </time>
+            <a
+              href={`/posts/${displayPost.id}`}
+              class="text-gray-400 text-xs hover:underline"
+            >
+              <time datetime={displayIsoDate} safe>
+                {displayIsoDate}
+              </time>
+            </a>
           ) : null}
         </div>
       </div>

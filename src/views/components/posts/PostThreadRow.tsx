@@ -45,12 +45,17 @@ export function PostThreadRow({
       {/* Left column: avatar + optional connector line */}
       <div class="flex flex-col items-center w-10 flex-shrink-0">
         <div class="relative z-10">
-          <Avatar
-            src={getAvatar(displayPost.user)}
-            alt={displayPost.user.name}
-            size={40}
-            className="w-10 h-10"
-          />
+          <a
+            href={`/u/${displayPost.user.username}`}
+            aria-label={`View profile of ${displayPost.user.name}`}
+          >
+            <Avatar
+              src={getAvatar(displayPost.user)}
+              alt={displayPost.user.name}
+              size={40}
+              className="w-10 h-10 hover:opacity-80 transition-opacity"
+            />
+          </a>
         </div>
         {hasConnector ? (
           <div class="w-0.5 bg-gray-200 flex-1 mt-2 min-h-[32px]" />
@@ -79,16 +84,20 @@ export function PostThreadRow({
             <span safe>{displayPost.user.name}</span>
           </a>
           {displayPost.user.bot_type ? <BotBadge /> : null}
-          <span class="text-sm text-gray-500">
-            @<span safe>{displayPost.user.username}</span>
-          </span>
-          <time
-            class="text-gray-400 text-xs ml-auto"
-            datetime={displayIsoDate}
-            safe
+          <a
+            href={`/u/${displayPost.user.username}`}
+            class="text-sm text-gray-500 hover:underline"
           >
-            {displayIsoDate}
-          </time>
+            @<span safe>{displayPost.user.username}</span>
+          </a>
+          <a
+            href={`/posts/${displayPost.id}`}
+            class="text-gray-400 text-xs ml-auto hover:underline"
+          >
+            <time datetime={displayIsoDate} safe>
+              {displayIsoDate}
+            </time>
+          </a>
         </div>
 
         {/* Content */}

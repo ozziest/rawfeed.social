@@ -239,7 +239,7 @@ const getReplies = async (
     .table<Selectable<Posts>>(TABLE_NAME)
     .where("parent_id", postId)
     .orderBy("created_at", "desc");
-  return await mergeWithContent(posts, loggedUserId);
+  return await mergeWithContent(posts, loggedUserId, true);
 };
 
 const getReshareByUser = async (
@@ -262,9 +262,13 @@ const mergeWithContent = async (
   const postIds = posts.map((item) => item.id);
 
   // Collect reshare_id values to fetch original posts
-  const reshareIds = posts
-    .map((p) => p.reshare_id)
-    .filter((id): id is string => id !== null && id !== undefined);
+  const reshareIds = Array.from(
+    new Set(
+      posts
+        .map((p) => p.reshare_id)
+        .filter((id): id is string => id !== null && id !== undefined),
+    ),
+  );
 
   const [users, details] = await Promise.all([
     userService.getByIds(userIds),
@@ -293,9 +297,13 @@ const mergeWithContent = async (
   }
 
   // Fetch parent posts for replies (one level up, shallow to prevent further recursion)
-  const parentIds = posts
-    .map((p) => p.parent_id)
-    .filter((id): id is string => id !== null && id !== undefined);
+  const parentIds = Array.from(
+    new Set(
+      posts
+        .map((p) => p.parent_id)
+        .filter((id): id is string => id !== null && id !== undefined),
+    ),
+  );
   let parentPostMap = new Map<string, PostWithContent>();
   if (!shallow && parentIds.length > 0) {
     const parentRows = await getKnex()

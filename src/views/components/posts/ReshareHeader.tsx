@@ -10,7 +10,7 @@ export function ReshareHeader({ post }: ReshareHeaderProps) {
   const isoDate = toISO(post.created_at as unknown as string);
 
   return (
-    <div class="flex items-center gap-2 px-6 py-2.5 bg-gray-50 border-b border-gray-100 text-xs text-gray-500">
+    <div class="relative z-10 flex items-center gap-2 px-6 py-2.5 bg-gray-50 border-b border-gray-100 text-xs text-gray-500">
       <ArrowsRightLeftIcon class="w-3.5 h-3.5 shrink-0 text-green-600" />
       <span>
         <a
