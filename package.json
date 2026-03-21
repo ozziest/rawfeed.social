@@ -57,7 +57,7 @@
     "@fastify/static": "^9.0.0",
     "@kitajs/fastify-html-plugin": "^4.2.1",
     "@kitajs/html": "^4.2.13",
-    "@sentry/node": "^10.42.0",
+    "@sentry/node": "^10.45.0",
     "@tailwindcss/cli": "^4.2.1",
     "adm-zip": "^0.5.16",
     "bcrypt": "^6.0.0",
