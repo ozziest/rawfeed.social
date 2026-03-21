@@ -96,7 +96,7 @@
     "postcss": "^8.5.8",
     "prettier": "^3.8.1",
     "sqlite3": "^5.1.7",
-    "tailwindcss": "^4.2.1",
+    "tailwindcss": "^4.2.2",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.9.3",
