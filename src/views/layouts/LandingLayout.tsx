@@ -1,5 +1,6 @@
 import type { Children } from "@kitajs/html";
 import type { BaseProps } from "../../types/views";
+import { Footer } from "../components/layout/Footer";
 import { Head } from "../components/layout/Head";
 import { Navbar } from "../components/layout/Navbar";
 
@@ -27,6 +28,7 @@ export function LandingLayout({
       <body class="bg-gray-100 text-gray-900">
         <Navbar mode={mode} loggedUser={loggedUser} />
         {children}
+        <Footer />
       </body>
     </html>
   );
