@@ -43,7 +43,7 @@ export function PostThreadRow({
       )}
 
       {/* Left column: avatar + optional connector line */}
-      <div class="flex flex-col items-center w-10 flex-shrink-0">
+      <div class="flex flex-col items-center w-10 shrink-0">
         <div class="relative z-10">
           <a
             href={`/u/${displayPost.user.username}`}
@@ -58,7 +58,7 @@ export function PostThreadRow({
           </a>
         </div>
         {hasConnector ? (
-          <div class="w-0.5 bg-gray-200 flex-1 mt-2 min-h-[32px]" />
+          <div class="w-0.5 bg-gray-200 flex-1 mt-2 min-h-8" />
         ) : (
           ""
         )}
