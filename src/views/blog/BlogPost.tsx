@@ -16,7 +16,7 @@ export function BlogPost(props: BlogPostProps) {
 
   return (
     <LandingLayout {...props}>
-      <div class="bg-white min-h-screen">
+      <div class="bg-white dark:bg-gray-900 min-h-screen">
         <BlogBackBar />
 
         <article class="max-w-3xl mx-auto px-4 py-12">
@@ -24,7 +24,7 @@ export function BlogPost(props: BlogPostProps) {
 
           <RawHtml id="blog-content" html={post.html} />
 
-          <footer class="mt-16 pt-8 border-t-2 border-black">
+          <footer class="mt-16 pt-8 border-t-2 border-black dark:border-gray-600">
             <BlogBackLink />
           </footer>
         </article>

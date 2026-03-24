@@ -188,9 +188,10 @@ function formatDate(date: Date): string {
 
 function cycleBadge(cycle: BillingCycle) {
   const styles: Record<BillingCycle, string> = {
-    monthly: "bg-blue-100 text-blue-700",
-    yearly: "bg-purple-100 text-purple-700",
-    "one-time": "bg-gray-100 text-gray-600",
+    monthly: "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400",
+    yearly:
+      "bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400",
+    "one-time": "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400",
   };
   return (
     <span
@@ -241,17 +242,17 @@ export function BudgetPage(props: Props) {
       <main class="max-w-3xl mx-auto px-4 py-12">
         {/* Header */}
         <div class="mb-5">
-          <h1 class="text-3xl font-bold text-gray-900 mb-2">
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
             Budget &amp; Transparency
           </h1>
-          <p class="text-gray-600 text-sm leading-relaxed">
+          <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
             Rawfeed is a non-profit, open-source project run by a single person
             who believes the web should stay open and humane.{" "}
             <strong>We don't sell your data. We don't profile you.</strong>{" "}
             There are no investors to please and no growth targets to hit. It's
             just a platform that tries to do right by its users.
           </p>
-          <p class="text-gray-600 text-sm leading-relaxed mt-3">
+          <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mt-3">
             Running a server costs real money, though. This page shows exactly
             where every dollar goes. Tracking costs since{" "}
             <strong safe>{formatDate(START_DATE)}</strong>.
@@ -259,15 +260,15 @@ export function BudgetPage(props: Props) {
         </div>
 
         {/* Funding notice */}
-        <div class="bg-gray-50 border border-gray-200 rounded-lg px-5 py-4 mb-5 flex gap-4 items-start">
+        <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg px-5 py-4 mb-5 flex gap-4 items-start">
           <span class="text-2xl mt-0.5" aria-hidden="true">
             💛
           </span>
           <div>
-            <p class="text-sm font-semibold text-gray-800 mb-1">
+            <p class="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">
               How is Rawfeed funded?
             </p>
-            <p class="text-sm text-gray-600 leading-relaxed">
+            <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
               Right now, entirely out of pocket. No ads, no data deals, no
               subscriptions. If that ever changes — say, a small
               non-personalised banner ad to help cover costs — you'll read about
@@ -279,24 +280,28 @@ export function BudgetPage(props: Props) {
 
         {/* Summary Cards */}
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
-          <div class="bg-white rounded-lg shadow-sm p-5 border border-gray-100">
-            <p class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-5 border border-gray-100 dark:border-gray-700">
+            <p class="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wide mb-1">
               Per Month
             </p>
-            <p class="text-2xl font-bold text-gray-900" safe>
+            <p class="text-2xl font-bold text-gray-900 dark:text-gray-100" safe>
               {formatUSD(monthlyTotal)}
             </p>
-            <p class="text-xs text-gray-400 mt-1">estimated monthly spend</p>
+            <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">
+              estimated monthly spend
+            </p>
           </div>
 
-          <div class="bg-white rounded-lg shadow-sm p-5 border border-gray-100">
-            <p class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-5 border border-gray-100 dark:border-gray-700">
+            <p class="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wide mb-1">
               Per Year
             </p>
-            <p class="text-2xl font-bold text-gray-900" safe>
+            <p class="text-2xl font-bold text-gray-900 dark:text-gray-100" safe>
               {formatUSD(yearlyTotal)}
             </p>
-            <p class="text-xs text-gray-400 mt-1">estimated annual spend</p>
+            <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">
+              estimated annual spend
+            </p>
           </div>
 
           <div class="bg-black rounded-lg shadow-sm p-5">
@@ -313,43 +318,49 @@ export function BudgetPage(props: Props) {
         </div>
 
         {/* Items Table */}
-        <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
-          <div class="px-5 py-4 border-b border-gray-100">
-            <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
+          <div class="px-5 py-4 border-b border-gray-100 dark:border-gray-700">
+            <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide">
               Services &amp; Costs
             </h2>
           </div>
 
           <table class="w-full text-sm">
             <thead>
-              <tr class="bg-gray-50 text-left">
-                <th class="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide w-full">
+              <tr class="bg-gray-50 dark:bg-gray-700 text-left">
+                <th class="px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide w-full">
                   Service
                 </th>
-                <th class="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide whitespace-nowrap">
+                <th class="px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide whitespace-nowrap">
                   Cycle
                 </th>
-                <th class="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide text-right whitespace-nowrap">
+                <th class="px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide text-right whitespace-nowrap">
                   Cost
                 </th>
-                <th class="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide text-right whitespace-nowrap">
+                <th class="px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide text-right whitespace-nowrap">
                   / month
                 </th>
-                <th class="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide text-right whitespace-nowrap">
+                <th class="px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide text-right whitespace-nowrap">
                   / year
                 </th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-gray-50">
+            <tbody class="divide-y divide-gray-50 dark:divide-gray-700">
               {BUDGET_ITEMS.map((item) => (
-                <tr class="hover:bg-gray-50 transition-colors">
+                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                   <td class="px-5 py-4">
                     <div class="flex flex-col gap-1">
-                      <span class="font-medium text-gray-900" safe>
+                      <span
+                        class="font-medium text-gray-900 dark:text-gray-100"
+                        safe
+                      >
                         {item.name}
                       </span>
                       {item.description ? (
-                        <span class="text-gray-400 text-xs" safe>
+                        <span
+                          class="text-gray-400 dark:text-gray-500 text-xs"
+                          safe
+                        >
                           {item.description}
                         </span>
                       ) : undefined}
@@ -357,16 +368,16 @@ export function BudgetPage(props: Props) {
                     </div>
                   </td>
                   <td class="px-5 py-4 align-top">{cycleBadge(item.cycle)}</td>
-                  <td class="px-5 py-4 text-right align-top font-mono text-gray-700">
+                  <td class="px-5 py-4 text-right align-top font-mono text-gray-700 dark:text-gray-300">
                     {item.cost === 0 ? (
-                      <span class="text-emerald-600 font-semibold text-xs">
+                      <span class="text-emerald-600 dark:text-emerald-400 font-semibold text-xs">
                         FREE
                       </span>
                     ) : (
                       <div class="flex flex-col items-end gap-0.5">
                         <span safe>{formatUSD(item.cost)}</span>
                         {initialCost(item) !== null && (
-                          <span class="text-gray-400 text-xs font-normal">
+                          <span class="text-gray-400 dark:text-gray-500 text-xs font-normal">
                             started at{" "}
                             <span safe>
                               {formatUSD(initialCost(item) as number)}
@@ -377,7 +388,7 @@ export function BudgetPage(props: Props) {
                     )}
                   </td>
                   <td
-                    class="px-5 py-4 text-right align-top font-mono text-gray-500 text-xs"
+                    class="px-5 py-4 text-right align-top font-mono text-gray-500 dark:text-gray-400 text-xs"
                     safe
                   >
                     {item.cycle === "one-time"
@@ -387,7 +398,7 @@ export function BudgetPage(props: Props) {
                         : formatUSD(toMonthlyEquivalent(item))}
                   </td>
                   <td
-                    class="px-5 py-4 text-right align-top font-mono text-gray-500 text-xs"
+                    class="px-5 py-4 text-right align-top font-mono text-gray-500 dark:text-gray-400 text-xs"
                     safe
                   >
                     {item.cycle === "one-time"
@@ -400,24 +411,24 @@ export function BudgetPage(props: Props) {
               ))}
             </tbody>
             <tfoot>
-              <tr class="bg-gray-50 border-t border-gray-200">
+              <tr class="bg-gray-50 dark:bg-gray-700 border-t border-gray-200 dark:border-gray-600">
                 <td
                   colspan="2"
-                  class="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                  class="px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide"
                 >
                   Total
                 </td>
-                <td class="px-5 py-3 text-right font-mono font-bold text-gray-900">
+                <td class="px-5 py-3 text-right font-mono font-bold text-gray-900 dark:text-gray-100">
                   &nbsp;
                 </td>
                 <td
-                  class="px-5 py-3 text-right font-mono font-bold text-gray-900"
+                  class="px-5 py-3 text-right font-mono font-bold text-gray-900 dark:text-gray-100"
                   safe
                 >
                   {formatUSD(monthlyTotal)}
                 </td>
                 <td
-                  class="px-5 py-3 text-right font-mono font-bold text-gray-900"
+                  class="px-5 py-3 text-right font-mono font-bold text-gray-900 dark:text-gray-100"
                   safe
                 >
                   {formatUSD(yearlyTotal)}
@@ -428,7 +439,7 @@ export function BudgetPage(props: Props) {
         </div>
 
         {/* Footer note */}
-        <p class="mt-6 text-xs text-gray-400 text-center">
+        <p class="mt-6 text-xs text-gray-400 dark:text-gray-500 text-center">
           Last updated <span safe>{formatDate(now)}</span>. All prices in USD.
           Free-tier services may incur costs as usage grows — any change will be
           reflected here.

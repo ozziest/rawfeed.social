@@ -32,6 +32,10 @@ export const getBaseProps = (request: FastifyRequest, reply: FastifyReply) => {
     profileUser: request.profileUser,
     activeHashtag: "",
     isProd: process.env.NODE_ENV === "production",
+    theme: (request.cookies?.theme === "dark" ||
+    request.cookies?.theme === "light"
+      ? request.cookies.theme
+      : "system") as "dark" | "light" | "system",
     sanitize,
     getAvatar,
     toISO,

@@ -19,9 +19,9 @@ export function WarningNotice({
       ).trim()}
     >
       <div class="flex items-start gap-3">
-        <WarningTriangleSmallIcon class="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+        <WarningTriangleSmallIcon class="w-5 h-5 text-red-500 dark:text-red-400 shrink-0 mt-0.5" />
         <div>
-          <h3 class="font-semibold text-red-800 mb-1" safe>
+          <h3 class="font-semibold text-red-800 dark:text-red-300 mb-1" safe>
             {title}
           </h3>
           {children}

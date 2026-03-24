@@ -46,18 +46,25 @@ export function DomainRemove(props: DomainRemoveProps) {
         </WarningNotice>
 
         <Card class="mb-6">
-          <h3 class="font-semibold text-gray-900 mb-3">
+          <h3 class="font-semibold text-gray-900 dark:text-gray-100 mb-3">
             Current Configuration
           </h3>
           <dl class="space-y-2">
             <div class="flex gap-6">
-              <dt class="text-sm text-gray-500 w-32 shrink-0">Domain</dt>
-              <dd class="text-sm font-mono text-gray-900" safe>
+              <dt class="text-sm text-gray-500 dark:text-gray-400 w-32 shrink-0">
+                Domain
+              </dt>
+              <dd
+                class="text-sm font-mono text-gray-900 dark:text-gray-100"
+                safe
+              >
                 {user.custom_domain}
               </dd>
             </div>
             <div class="flex gap-6">
-              <dt class="text-sm text-gray-500 w-32 shrink-0">Status</dt>
+              <dt class="text-sm text-gray-500 dark:text-gray-400 w-32 shrink-0">
+                Status
+              </dt>
               <dd>
                 <DomainStatusBadge
                   status={user.domain_verification_status}
@@ -69,10 +76,15 @@ export function DomainRemove(props: DomainRemoveProps) {
         </Card>
 
         <Card>
-          <h3 class="font-semibold text-gray-900 mb-2">Confirm Removal</h3>
-          <p class="text-sm text-gray-600 mb-4">
+          <h3 class="font-semibold text-gray-900 dark:text-gray-100 mb-2">
+            Confirm Removal
+          </h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
             Type your domain name{" "}
-            <code class="font-mono bg-gray-100 px-1 rounded" safe>
+            <code
+              class="font-mono bg-gray-100 dark:bg-gray-700 px-1 rounded"
+              safe
+            >
               {user.custom_domain}
             </code>{" "}
             below to confirm removal.
@@ -83,7 +95,7 @@ export function DomainRemove(props: DomainRemoveProps) {
             <div class="mb-4">
               <label
                 for="domain"
-                class="block text-sm font-medium text-gray-700 mb-1"
+                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
               >
                 Domain Name
               </label>
@@ -91,7 +103,7 @@ export function DomainRemove(props: DomainRemoveProps) {
                 type="text"
                 id="domain"
                 name="domain"
-                class={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent ${validation?.domain ? "border-red-500" : "border-gray-300"}`}
+                class={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent dark:bg-gray-700 dark:text-gray-100 ${validation?.domain ? "border-red-500" : "border-gray-300 dark:border-gray-600"}`}
                 placeholder={user.custom_domain || ""}
                 autocomplete="off"
               />

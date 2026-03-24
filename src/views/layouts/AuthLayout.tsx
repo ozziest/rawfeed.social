@@ -10,10 +10,11 @@ export function AuthLayout({
   keywords,
   canonical,
   isProd,
+  theme,
   children,
 }: AuthLayoutProps) {
   return (
-    <html lang="en">
+    <html lang="en" class={theme === "dark" ? "dark" : undefined}>
       <Head
         title={title}
         description={description}
@@ -21,7 +22,9 @@ export function AuthLayout({
         canonical={canonical}
         isProd={isProd}
       />
-      <body class="bg-gray-100 text-gray-900">{children}</body>
+      <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+        {children}
+      </body>
     </html>
   );
 }

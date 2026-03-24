@@ -1,4 +1,3 @@
-
 export type AvatarProps = {
   src: string;
   alt?: string;
@@ -18,7 +17,10 @@ export function Avatar({
       alt={alt}
       width={size}
       height={size}
-      class={`rounded-full object-cover border border-gray-200 ` + className}
+      class={
+        `rounded-full object-cover border border-gray-200 dark:border-gray-600 bg-white ` +
+        className
+      }
       loading="lazy"
     />
   );

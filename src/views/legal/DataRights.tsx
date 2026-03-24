@@ -11,7 +11,9 @@ export function DataRightsPage(props: Props) {
           <h1 class="text-4xl font-bold mb-2">
             Data Subject Rights & How to Exercise Them
           </h1>
-          <p class="text-gray-600 mb-8">Last Updated: February 2026</p>
+          <p class="text-gray-600 dark:text-gray-400 mb-8">
+            Last Updated: February 2026
+          </p>
 
           <div class="prose prose-sm max-w-none space-y-6">
             <section>
@@ -62,7 +64,7 @@ export function DataRightsPage(props: Props) {
                 </li>
               </ol>
 
-              <div class="bg-gray-100 border-l-4 border-black p-4 mt-4">
+              <div class="bg-gray-100 dark:bg-gray-700 border-l-4 border-black p-4 mt-4">
                 <p class="text-sm">
                   <strong>Timeline:</strong> We will provide data within 30 days
                   of your request. In complex cases, we may extend by 2
@@ -111,7 +113,7 @@ export function DataRightsPage(props: Props) {
                 </li>
               </ol>
 
-              <div class="bg-gray-100 border-l-4 border-black p-4 mt-4">
+              <div class="bg-gray-100 dark:bg-gray-700 border-l-4 border-black p-4 mt-4">
                 <p class="text-sm">
                   <strong>Note:</strong> We cannot edit your posts after
                   creation for integrity reasons. You can delete and re-post
@@ -399,7 +401,7 @@ export function DataRightsPage(props: Props) {
               </h2>
               <p>To exercise any of these rights, contact us at:</p>
 
-              <div class="bg-gray-100 p-4 rounded mt-4">
+              <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded mt-4">
                 <p>
                   <strong>Email:</strong>
                   <a
@@ -478,7 +480,7 @@ export function DataRightsPage(props: Props) {
                 For questions about your rights or to exercise them, please
                 reach out:
               </p>
-              <div class="bg-gray-100 p-4 rounded mt-4">
+              <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded mt-4">
                 <p>
                   <strong>Rawfeed Privacy Team:</strong>
                 </p>

@@ -11,7 +11,9 @@ export function BotsLegalPage(props: Props) {
           <h1 class="text-4xl font-bold mb-2">
             Bot Accounts & Automated Content
           </h1>
-          <p class="text-gray-600 mb-8">Last Updated: February 2026</p>
+          <p class="text-gray-600 dark:text-gray-400 mb-8">
+            Last Updated: February 2026
+          </p>
 
           <div class="prose prose-sm max-w-none space-y-6">
             <section>
@@ -290,7 +292,7 @@ export function BotsLegalPage(props: Props) {
               </h2>
 
               <table class="w-full mt-4 border-collapse border border-gray-300">
-                <thead class="bg-gray-100">
+                <thead class="bg-gray-100 dark:bg-gray-700">
                   <tr>
                     <th class="border border-gray-300 px-4 py-2 text-left">
                       Feature
@@ -315,7 +317,7 @@ export function BotsLegalPage(props: Props) {
                       Automated from RSS feeds
                     </td>
                   </tr>
-                  <tr class="bg-gray-50">
+                  <tr class="bg-gray-50 dark:bg-gray-800">
                     <td class="border border-gray-300 px-4 py-2">
                       <strong>Interactions</strong>
                     </td>
@@ -338,7 +340,7 @@ export function BotsLegalPage(props: Props) {
                       follow/unfollow
                     </td>
                   </tr>
-                  <tr class="bg-gray-50">
+                  <tr class="bg-gray-50 dark:bg-gray-800">
                     <td class="border border-gray-300 px-4 py-2">
                       <strong>Personal Data Collection</strong>
                     </td>
@@ -360,7 +362,7 @@ export function BotsLegalPage(props: Props) {
                       "BOT" badge
                     </td>
                   </tr>
-                  <tr class="bg-gray-50">
+                  <tr class="bg-gray-50 dark:bg-gray-800">
                     <td class="border border-gray-300 px-4 py-2">
                       <strong>Chronological Feed</strong>
                     </td>
@@ -419,7 +421,7 @@ export function BotsLegalPage(props: Props) {
                 If you have concerns about bot accounts or their behavior,
                 please contact us:
               </p>
-              <div class="bg-gray-100 p-4 rounded mt-4">
+              <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded mt-4">
                 <p>
                   <strong>Rawfeed Support:</strong>
                 </p>

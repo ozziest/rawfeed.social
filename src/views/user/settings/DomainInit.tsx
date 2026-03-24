@@ -27,7 +27,7 @@ export function DomainInit(props: DomainInitProps) {
         />
 
         <Card>
-          <h2 class="text-lg font-semibold text-gray-900 mb-4">
+          <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
             Setup Custom Domain
           </h2>
 
@@ -37,7 +37,7 @@ export function DomainInit(props: DomainInitProps) {
             <div class="mb-6">
               <label
                 for="domain"
-                class="block text-sm font-medium text-gray-700 mb-2"
+                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
               >
                 Your Domain
               </label>
@@ -46,10 +46,10 @@ export function DomainInit(props: DomainInitProps) {
                 id="domain"
                 name="domain"
                 placeholder="example.com"
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
                 required
               />
-              <p class="mt-2 text-sm text-gray-500">
+              <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
                 Enter your domain without http:// or www (e.g., example.com)
               </p>
               <FieldError message={validation?.domain} />

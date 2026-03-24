@@ -41,7 +41,7 @@ export function Profile({
 
   return (
     <>
-      <div class="bg-white rounded-xl mb-6 shadow-sm overflow-hidden">
+      <div class="bg-white dark:bg-gray-800 rounded-xl mb-6 shadow-sm overflow-hidden">
         {/* Accent bar */}
         <div class="h-1.5 bg-linear-to-r from-gray-900 via-gray-600 to-gray-400"></div>
 
@@ -59,7 +59,7 @@ export function Profile({
             <div class="min-w-0 flex flex-col justify-center">
               <div class="flex items-center gap-2 flex-wrap min-w-0">
                 <h1
-                  class="text-lg sm:text-2xl font-bold text-gray-900 leading-tight"
+                  class="text-lg sm:text-2xl font-bold text-gray-900 dark:text-gray-100 leading-tight"
                   safe
                 >
                   {user.name}
@@ -82,7 +82,7 @@ export function Profile({
             <div class="col-span-3 mt-3">
               {user.bio ? (
                 <p
-                  class="text-sm sm:text-base text-gray-600 leading-relaxed mb-3"
+                  class="text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed mb-3"
                   safe
                 >
                   {user.bio}
@@ -97,7 +97,7 @@ export function Profile({
                     href={user.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="inline-flex items-center gap-1.5 text-sm text-gray-600 hover:text-black hover:underline break-all"
+                    class="inline-flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white hover:underline break-all"
                   >
                     <LinkIcon class="w-3.5 h-3.5 shrink-0" />
                     <span safe>{profileLink}</span>
@@ -108,17 +108,17 @@ export function Profile({
               )}
 
               {/* Stats + actions footer */}
-              <div class="pt-3 border-t border-gray-100 flex flex-row items-center justify-between gap-3">
+              <div class="pt-3 border-t border-gray-100 dark:border-gray-700 flex flex-row items-center justify-between gap-3">
                 {followerCount !== undefined ? (
                   <div id={`follow-count-${user.id}`} class="flex gap-6">
                     <a
                       href={`/u/${user.username}/followers`}
                       class="group flex flex-col items-start"
                     >
-                      <strong class="text-base font-bold text-gray-900 group-hover:text-black leading-none">
+                      <strong class="text-base font-bold text-gray-900 dark:text-gray-100 group-hover:text-black dark:group-hover:text-white leading-none">
                         {followerCount ?? 0}
                       </strong>
-                      <span class="text-xs text-gray-500 mt-0.5">
+                      <span class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
                         followers
                       </span>
                     </a>
@@ -126,10 +126,10 @@ export function Profile({
                       href={`/u/${user.username}/following`}
                       class="group flex flex-col items-start"
                     >
-                      <strong class="text-base font-bold text-gray-900 group-hover:text-black leading-none">
+                      <strong class="text-base font-bold text-gray-900 dark:text-gray-100 group-hover:text-black dark:group-hover:text-white leading-none">
                         {followingCount ?? 0}
                       </strong>
-                      <span class="text-xs text-gray-500 mt-0.5">
+                      <span class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
                         following
                       </span>
                     </a>

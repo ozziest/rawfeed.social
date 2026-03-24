@@ -2,8 +2,8 @@ import { SelectField, SelectOption } from "./SelectField";
 
 const LOCATIONS: SelectOption[] = [
   { value: "en", label: "English" },
-  { value: "tr", label: "Turkish" },
   { value: "da", label: "Danish" },
+  { value: "tr", label: "Turkish" },
 ];
 
 type LocationSelectProps = {

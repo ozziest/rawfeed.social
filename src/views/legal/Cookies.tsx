@@ -9,7 +9,9 @@ export function CookiesPage(props: Props) {
       <>
         <div class="max-w-4xl mx-auto px-6 py-12">
           <h1 class="text-4xl font-bold mb-2">Cookie Policy</h1>
-          <p class="text-gray-600 mb-8">Last Updated: February 2026</p>
+          <p class="text-gray-600 dark:text-gray-400 mb-8">
+            Last Updated: February 2026
+          </p>
 
           <div class="prose prose-sm max-w-none space-y-6">
             <section>
@@ -36,7 +38,7 @@ export function CookiesPage(props: Props) {
 
               <div class="overflow-x-auto -mx-2 sm:mx-0">
                 <table class="w-full mt-4 border-collapse border border-gray-300 min-w-[640px]">
-                  <thead class="bg-gray-100">
+                  <thead class="bg-gray-100 dark:bg-gray-700">
                     <tr>
                       <th class="border border-gray-300 px-2 sm:px-4 py-2 text-left text-xs sm:text-sm">
                         Cookie Name
@@ -62,7 +64,7 @@ export function CookiesPage(props: Props) {
                         10 minutes
                       </td>
                     </tr>
-                    <tr class="bg-gray-50">
+                    <tr class="bg-gray-50 dark:bg-gray-800">
                       <td class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm">
                         <code>refreshToken</code>
                       </td>
@@ -86,7 +88,7 @@ export function CookiesPage(props: Props) {
                         Session
                       </td>
                     </tr>
-                    <tr class="bg-gray-50">
+                    <tr class="bg-gray-50 dark:bg-gray-800">
                       <td class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm">
                         <code>validation</code>
                       </td>
@@ -313,7 +315,7 @@ export function CookiesPage(props: Props) {
                 If you have questions about our cookie practices, please contact
                 us:
               </p>
-              <div class="bg-gray-100 p-4 rounded mt-4">
+              <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded mt-4">
                 <p>
                   <strong>Rawfeed Support:</strong>
                 </p>

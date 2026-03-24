@@ -32,7 +32,11 @@ export function FormField({
 }: FormFieldProps) {
   return (
     <div class={className}>
-      <label for={id} class="block text-sm font-medium text-gray-700" safe>
+      <label
+        for={id}
+        class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+        safe
+      >
         {label}
       </label>
       <div class="mt-1">
@@ -43,7 +47,7 @@ export function FormField({
           autocomplete={autoComplete}
           required={required}
           class={
-            "block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm " +
+            "block w-full appearance-none rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-3 py-2 placeholder-gray-400 dark:placeholder-gray-500 shadow-sm focus:border-black dark:focus:border-gray-400 focus:outline-none focus:ring-black sm:text-sm " +
             inputClassName
           }
           placeholder={placeholder}

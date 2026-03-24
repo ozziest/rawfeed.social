@@ -1,4 +1,21 @@
 @import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------------
+   Theme toggle — show the correct icon based on data-theme attribute
+   --------------------------------------------------------------------------- */
+[data-theme-toggle] span[data-role] {
+  display: none;
+}
+[data-theme-toggle][data-theme="light"] span[data-role="sun"] {
+  display: block;
+}
+[data-theme-toggle][data-theme="dark"] span[data-role="moon"] {
+  display: block;
+}
+[data-theme-toggle][data-theme="system"] span[data-role="monitor"] {
+  display: block;
+}
 
 /* ---------------------------------------------------------------------------
    Blog post content — scoped styles for Markdown-rendered HTML
@@ -155,6 +172,67 @@
   border: none;
   border-top: 1px solid #e5e7eb;
   margin: 2.5em 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Blog post content — dark mode overrides
+   --------------------------------------------------------------------------- */
+.dark #blog-content {
+  color: #d1d5db;
+}
+
+.dark #blog-content h1,
+.dark #blog-content h2,
+.dark #blog-content h3,
+.dark #blog-content h4,
+.dark #blog-content h5,
+.dark #blog-content h6 {
+  color: #f9fafb;
+}
+
+.dark #blog-content a {
+  color: #e5e7eb;
+}
+
+.dark #blog-content a:hover {
+  color: #9ca3af;
+}
+
+.dark #blog-content strong {
+  color: #f9fafb;
+}
+
+.dark #blog-content blockquote {
+  border-left-color: #6b7280;
+  color: #9ca3af;
+}
+
+.dark #blog-content pre {
+  background: #374151;
+  color: #e5e7eb;
+}
+
+.dark #blog-content code {
+  background: #374151;
+  color: #e5e7eb;
+}
+
+.dark #blog-content th,
+.dark #blog-content td {
+  border-color: #4b5563;
+}
+
+.dark #blog-content th {
+  background: #374151;
+  color: #f9fafb;
+}
+
+.dark #blog-content tr:nth-child(even) td {
+  background: #1f2937;
+}
+
+.dark #blog-content hr {
+  border-top-color: #374151;
 }
 
 /* ---------------------------------------------------------------------------

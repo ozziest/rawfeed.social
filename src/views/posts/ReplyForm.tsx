@@ -26,7 +26,7 @@ export function ReplyForm({
       hx-target="#reply-section"
       hx-swap="outerHTML"
       hx-disabled-elt="find button[type='submit']"
-      class="bg-white rounded-lg shadow p-6 mb-6"
+      class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mb-6"
     >
       <CsrfToken token={csrfToken} />
       <div class="mb-4">
@@ -56,8 +56,8 @@ export function ReplyForm({
       </div>
 
       {validation?.general ? (
-        <div class="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-          <p class="text-red-700 text-sm" safe>
+        <div class="mt-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+          <p class="text-red-700 dark:text-red-400 text-sm" safe>
             {validation.general}
           </p>
         </div>

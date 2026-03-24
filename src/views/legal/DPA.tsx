@@ -11,7 +11,9 @@ export function DPAPage(props: Props) {
           <h1 class="text-4xl font-bold mb-2">
             Data Processing Agreement (DPA)
           </h1>
-          <p class="text-gray-600 mb-8">Last Updated: February 2026</p>
+          <p class="text-gray-600 dark:text-gray-400 mb-8">
+            Last Updated: February 2026
+          </p>
 
           <div class="prose prose-sm max-w-none space-y-6">
             <section>
@@ -48,7 +50,7 @@ export function DPAPage(props: Props) {
               </h3>
               <div class="overflow-x-auto -mx-2 sm:mx-0">
                 <table class="w-full mt-3 border-collapse border border-gray-300 min-w-[640px]">
-                  <thead class="bg-gray-100">
+                  <thead class="bg-gray-100 dark:bg-gray-700">
                     <tr>
                       <th class="border border-gray-300 px-2 sm:px-4 py-2 text-left text-xs sm:text-sm">
                         Provider
@@ -131,7 +133,7 @@ export function DPAPage(props: Props) {
               </h3>
               <div class="overflow-x-auto -mx-2 sm:mx-0">
                 <table class="w-full mt-3 border-collapse border border-gray-300 min-w-[640px]">
-                  <thead class="bg-gray-100">
+                  <thead class="bg-gray-100 dark:bg-gray-700">
                     <tr>
                       <th class="border border-gray-300 px-2 sm:px-4 py-2 text-left text-xs sm:text-sm">
                         Provider
@@ -386,7 +388,7 @@ export function DPAPage(props: Props) {
 
               <div class="overflow-x-auto -mx-2 sm:mx-0">
                 <table class="w-full mt-4 border-collapse border border-gray-300 min-w-[640px]">
-                  <thead class="bg-gray-100">
+                  <thead class="bg-gray-100 dark:bg-gray-700">
                     <tr>
                       <th class="border border-gray-300 px-2 sm:px-4 py-2 text-left text-xs sm:text-sm">
                         Data Type
@@ -559,7 +561,7 @@ export function DPAPage(props: Props) {
                 If you have questions about this DPA or how your data is
                 processed, please contact:
               </p>
-              <div class="bg-gray-100 p-4 rounded mt-4">
+              <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded mt-4">
                 <p>
                   <strong>Data Controller (Ozgur Adem Isikli):</strong>
                 </p>

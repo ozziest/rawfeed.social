@@ -21,7 +21,10 @@ export function ProfileHeader({ user, showRss = true }: ProfileHeaderProps) {
       />
       <div class="min-w-0 flex flex-col justify-center">
         <div class="flex items-center gap-2 flex-wrap min-w-0">
-          <h1 class="text-2xl font-bold text-gray-900 leading-tight" safe>
+          <h1
+            class="text-2xl font-bold text-gray-900 dark:text-gray-100 leading-tight"
+            safe
+          >
             {user.name}
           </h1>
           {user.bot_type ? <BotBadge /> : null}

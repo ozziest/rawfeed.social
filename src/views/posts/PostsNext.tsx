@@ -33,7 +33,9 @@ export function PostsNext({
           hx-swap="outerHTML"
           class="h-20 flex items-center justify-center"
         >
-          <div class="animate-pulse text-gray-500">Loading more...</div>
+          <div class="animate-pulse text-gray-500 dark:text-gray-400">
+            Loading more...
+          </div>
         </div>
       ) : (
         ""

@@ -9,7 +9,9 @@ export function PrivacyPage(props: Props) {
       <>
         <div class="max-w-4xl mx-auto px-6 py-12">
           <h1 class="text-4xl font-bold mb-2">Privacy Policy</h1>
-          <p class="text-gray-600 mb-8">Last Updated: February 2026</p>
+          <p class="text-gray-600 dark:text-gray-400 mb-8">
+            Last Updated: February 2026
+          </p>
 
           <div class="prose prose-sm max-w-none space-y-6">
             <section>
@@ -228,7 +230,7 @@ export function PrivacyPage(props: Props) {
               <p>
                 We share your data with the following third-party processors:
               </p>
-              <p class="text-sm text-gray-700 bg-gray-100 p-3 rounded mt-3 mb-3">
+              <p class="text-sm text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 p-3 rounded mt-3 mb-3">
                 For detailed information about data processors, retention
                 policies, and security measures, see our
                 <a
@@ -450,7 +452,7 @@ export function PrivacyPage(props: Props) {
                 If you have questions about this Privacy Policy or our data
                 handling practices, you can contact us at:
               </p>
-              <div class="bg-gray-100 p-4 rounded mt-4">
+              <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded mt-4">
                 <p>
                   <strong>Data Controller & Privacy Contact:</strong>
                 </p>

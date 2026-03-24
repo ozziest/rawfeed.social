@@ -9,7 +9,9 @@ export function TermsPage(props: Props) {
       <>
         <div class="max-w-4xl mx-auto px-6 py-12">
           <h1 class="text-4xl font-bold mb-2">Terms of Service</h1>
-          <p class="text-gray-600 mb-8">Last Updated: February 2026</p>
+          <p class="text-gray-600 dark:text-gray-400 mb-8">
+            Last Updated: February 2026
+          </p>
 
           <div class="prose prose-sm max-w-none space-y-6">
             <section>
@@ -433,7 +435,7 @@ export function TermsPage(props: Props) {
             <section>
               <h2 class="text-2xl font-bold mb-4">14. Contact Us</h2>
               <p>For questions about these Terms, please contact us at:</p>
-              <div class="bg-gray-100 p-4 rounded mt-4">
+              <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded mt-4">
                 <p>
                   <strong>Rawfeed Support:</strong>
                 </p>

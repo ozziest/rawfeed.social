@@ -26,7 +26,7 @@ export function Post({
   // Reply with parent available → thread card (vertical connector between avatars)
   if (isReply && post.parentPost && !suppressThread) {
     return (
-      <article class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+      <article class="bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden">
         <PostThreadRow
           post={post.parentPost}
           loggedUser={loggedUser}
@@ -50,7 +50,7 @@ export function Post({
   const displayIsoDate = toISO(displayPost.created_at as unknown as string);
 
   return (
-    <article class="relative bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden cursor-pointer">
+    <article class="relative bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden cursor-pointer">
       {/* Stretched link — covers the full card for click / keyboard / middle-click / Ctrl+click */}
       <a
         href={`/posts/${displayPost.id}`}
@@ -66,12 +66,12 @@ export function Post({
 
         {/* Content */}
         {isReshare && !post.resharedPost ? (
-          <p class="text-gray-400 italic mb-4 text-sm">
+          <p class="text-gray-400 dark:text-gray-500 italic mb-4 text-sm">
             Original post unavailable.
           </p>
         ) : (
           <p
-            class="text-gray-900 leading-relaxed mb-4 whitespace-pre-line wrap-break-words overflow-wrap-anywhere line-clamp-12"
+            class="text-gray-900 dark:text-gray-100 leading-relaxed mb-4 whitespace-pre-line wrap-break-words overflow-wrap-anywhere line-clamp-12"
             lang={displayPost.location ?? "en"}
           >
             <PostContent post={displayPost} />
@@ -89,7 +89,7 @@ export function Post({
           {!isReshare ? (
             <a
               href={`/posts/${displayPost.id}`}
-              class="text-gray-400 text-xs hover:underline"
+              class="text-gray-400 dark:text-gray-500 text-xs hover:underline"
             >
               <time datetime={displayIsoDate} safe>
                 {displayIsoDate}

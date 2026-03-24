@@ -34,7 +34,7 @@ export function SettingsProfile(props: SettingsProfileProps) {
             <div>
               <label
                 for="name"
-                class="block text-sm font-medium text-gray-900 mb-2"
+                class="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2"
               >
                 Display name
               </label>
@@ -44,7 +44,7 @@ export function SettingsProfile(props: SettingsProfileProps) {
                 name="name"
                 value={user?.name || ""}
                 placeholder="Your name"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition"
+                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition"
               />
               <FieldError message={validation?.name} />
             </div>
@@ -52,7 +52,7 @@ export function SettingsProfile(props: SettingsProfileProps) {
             <div>
               <label
                 for="bio"
-                class="block text-sm font-medium text-gray-900 mb-2"
+                class="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2"
               >
                 Bio
               </label>
@@ -65,14 +65,16 @@ export function SettingsProfile(props: SettingsProfileProps) {
                 value={user?.bio || ""}
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition resize-none"
               />
-              <p class="text-xs text-gray-500 mt-1">Maximum 400 characters</p>
+              <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                Maximum 400 characters
+              </p>
               <FieldError message={validation?.bio} />
             </div>
 
             <div>
               <label
                 for="link"
-                class="block text-sm font-medium text-gray-900 mb-2"
+                class="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2"
               >
                 Website / Link
               </label>
@@ -82,9 +84,9 @@ export function SettingsProfile(props: SettingsProfileProps) {
                 name="link"
                 value={user?.link || ""}
                 placeholder="https://yourwebsite.com"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition"
+                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition"
               />
-              <p class="text-xs text-gray-500 mt-1">
+              <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 Must start with http:// or https://
               </p>
               <FieldError message={validation?.link} />
@@ -96,7 +98,7 @@ export function SettingsProfile(props: SettingsProfileProps) {
               </Button>
               <a
                 href="/user/settings"
-                class="px-6 py-2 bg-gray-200 text-gray-900 font-medium rounded-lg hover:bg-gray-300 transition-colors"
+                class="px-6 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
               >
                 Cancel
               </a>

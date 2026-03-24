@@ -31,20 +31,24 @@ export function FollowersPage(props: FollowersPageProps) {
         <div class="mb-6">
           <a
             href={`/u/${profileUser.username}`}
-            class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 mb-3"
+            class="inline-flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white mb-3"
           >
             <ChevronLeftIcon class="w-4 h-4" />
             Back to <span safe>@{profileUser.username}</span>
           </a>
-          <h1 class="text-2xl font-bold text-gray-900">Followers</h1>
-          <p class="text-gray-500 text-sm mt-1">
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">
+            Followers
+          </h1>
+          <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">
             People who follow <strong safe>@{profileUser.username}</strong>
           </p>
         </div>
 
         <div class="space-y-3">
           {items.length === 0 ? (
-            <p class="text-gray-500 text-center py-12">No followers yet.</p>
+            <p class="text-gray-500 dark:text-gray-400 text-center py-12">
+              No followers yet.
+            </p>
           ) : (
             <UserListItems
               items={items}

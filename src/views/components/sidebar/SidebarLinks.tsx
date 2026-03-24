@@ -1,7 +1,7 @@
 export function SidebarLinks() {
   return (
-    <div class="bg-white border border-gray-200 rounded-lg p-3">
-      <div class="flex flex-wrap gap-x-3 gap-y-1 text-xs text-gray-600">
+    <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3">
+      <div class="flex flex-wrap gap-x-3 gap-y-1 text-xs text-gray-600 dark:text-gray-400">
         <a href="/about" class="hover:underline">
           About
         </a>
@@ -30,7 +30,9 @@ export function SidebarLinks() {
           Bots
         </a>
       </div>
-      <p class="text-xs text-gray-500 mt-2">&copy; 2026 rawfeed.social</p>
+      <p class="text-xs text-gray-500 dark:text-gray-500 mt-2">
+        &copy; 2026 rawfeed.social
+      </p>
     </div>
   );
 }

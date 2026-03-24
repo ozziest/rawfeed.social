@@ -17,10 +17,13 @@ export function ExploreBotsMembers(props: ExploreBotsMembersProps) {
     <DefaultLayout {...props}>
       <div class="max-w-4xl mx-auto px-4 py-8">
         <div class="mb-6">
-          <h1 class="text-2xl font-bold text-gray-900 mb-2" safe>
+          <h1
+            class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2"
+            safe
+          >
             {pageTitle}
           </h1>
-          <p class="text-gray-600" safe>
+          <p class="text-gray-600 dark:text-gray-400" safe>
             {pageDescription}
           </p>
         </div>
