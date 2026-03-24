@@ -55,7 +55,13 @@ export function TermsPage(props: Props) {
                   <strong>Bot Accounts:</strong> Rawfeed auto-creates
                   clearly-labeled bot accounts that syndicate RSS feeds from
                   external sources. See our
-                  <a href="/legal/bots">Bot Account Disclosure</a> for details.
+                  <a
+                    href="/legal/bots"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
+                  >
+                    Bot Account Disclosure
+                  </a>{" "}
+                  for details.
                 </li>
               </ul>
             </section>
@@ -217,7 +223,7 @@ export function TermsPage(props: Props) {
                 our licensors. The source code is licensed under the
                 <a
                   href="https://www.gnu.org/licenses/agpl-3.0.html"
-                  class="text-black hover:underline font-medium"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                 >
                   AGPL-3.0 License
                 </a>
@@ -373,7 +379,7 @@ export function TermsPage(props: Props) {
                 Your use of Rawfeed is also governed by our
                 <a
                   href="/legal/privacy"
-                  class="text-black hover:underline font-medium"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                 >
                   Privacy Policy
                 </a>
@@ -402,7 +408,7 @@ export function TermsPage(props: Props) {
                 Send notices to:
                 <a
                   href="mailto:i.ozguradem@gmail.com"
-                  class="text-black hover:underline font-medium"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                 >
                   i.ozguradem@gmail.com
                 </a>
@@ -443,7 +449,7 @@ export function TermsPage(props: Props) {
                   Email:
                   <a
                     href="mailto:i.ozguradem@gmail.com"
-                    class="text-black hover:underline font-medium"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
                     i.ozguradem@gmail.com
                   </a>

@@ -204,7 +204,7 @@ export function PrivacyPage(props: Props) {
                 aware of unauthorized scraping, please contact us at
                 <a
                   href="mailto:i.ozguradem@gmail.com"
-                  class="text-black hover:underline font-medium"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                 >
                   i.ozguradem@gmail.com
                 </a>
@@ -214,7 +214,7 @@ export function PrivacyPage(props: Props) {
                 For more information about how we handle your data, see our
                 <a
                   href="/legal/dpa"
-                  class="text-black hover:underline font-medium font-semibold"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium font-semibold"
                 >
                   Data Processing Agreement (DPA)
                 </a>
@@ -235,7 +235,7 @@ export function PrivacyPage(props: Props) {
                 policies, and security measures, see our
                 <a
                   href="/legal/dpa"
-                  class="text-black hover:underline font-medium font-semibold"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium font-semibold"
                 >
                   Data Processing Agreement (DPA)
                 </a>
@@ -257,7 +257,10 @@ export function PrivacyPage(props: Props) {
                 </li>
                 <li>
                   <strong>Cloudflare:</strong> CDN and DDoS protection service.
-                  <a href="https://www.cloudflare.com/privacypolicy/">
+                  <a
+                    href="https://www.cloudflare.com/privacypolicy/"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
+                  >
                     Cloudflare Privacy Policy
                   </a>
                 </li>
@@ -270,7 +273,10 @@ export function PrivacyPage(props: Props) {
                 <li>
                   <strong>Gravatar:</strong> Profile avatar service (if you use
                   Gravatar).
-                  <a href="https://automattic.com/privacy/">
+                  <a
+                    href="https://automattic.com/privacy/"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
+                  >
                     Automattic Privacy Policy
                   </a>
                 </li>
@@ -278,12 +284,22 @@ export function PrivacyPage(props: Props) {
                   <strong>Sentry:</strong> Error tracking (does NOT receive
                   personally identifiable information due to low sampling rates
                   and PII exclusion).
-                  <a href="https://sentry.io/privacy/">Sentry Privacy Policy</a>
+                  <a
+                    href="https://sentry.io/privacy/"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
+                  >
+                    Sentry Privacy Policy
+                  </a>
                 </li>
                 <li>
                   <strong>Resend:</strong> Email service for account
                   notifications (optional).
-                  <a href="https://resend.com/privacy">Resend Privacy Policy</a>
+                  <a
+                    href="https://resend.com/privacy"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
+                  >
+                    Resend Privacy Policy
+                  </a>
                 </li>
               </ul>
 
@@ -294,7 +310,13 @@ export function PrivacyPage(props: Props) {
                 Rawfeed automatically creates bot accounts that ingest posts
                 from external RSS feeds. These bots are clearly labeled and do
                 not collect user data. See our{" "}
-                <a href="/legal/bots">Bot Account Disclosure</a> for details.
+                <a
+                  href="/legal/bots"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
+                >
+                  Bot Account Disclosure
+                </a>{" "}
+                for details.
               </p>
             </section>
 
@@ -347,7 +369,10 @@ export function PrivacyPage(props: Props) {
 
               <p class="mt-4">
                 For requests related to these rights, see our
-                <a href="/legal/data-rights">
+                <a
+                  href="/legal/data-rights"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
+                >
                   Data Subject Rights Instructions
                 </a>
                 .
@@ -462,12 +487,12 @@ export function PrivacyPage(props: Props) {
                   Email:
                   <a
                     href="mailto:i.ozguradem@gmail.com"
-                    class="text-black hover:underline font-medium"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
                     i.ozguradem@gmail.com
                   </a>
                 </p>
-                <p class="text-sm text-gray-600 mt-2">
+                <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">
                   Note: Formal Data Protection Officer contact information will
                   be updated if/when Rawfeed becomes a registered organization.
                 </p>
@@ -480,7 +505,7 @@ export function PrivacyPage(props: Props) {
                 <li>
                   <a
                     href="https://gdpr-info.eu/"
-                    class="text-black hover:underline font-medium"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
                     EU General Data Protection Regulation (GDPR)
                   </a>
@@ -488,7 +513,7 @@ export function PrivacyPage(props: Props) {
                 <li>
                   <a
                     href="https://oag.ca.gov/privacy/ccpa"
-                    class="text-black hover:underline font-medium"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
                     California Consumer Privacy Act (CCPA)
                   </a>
@@ -496,7 +521,7 @@ export function PrivacyPage(props: Props) {
                 <li>
                   <a
                     href="https://www.ico.org.uk/"
-                    class="text-black hover:underline font-medium"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
                     UK Information Commissioner's Office (ICO)
                   </a>

@@ -53,10 +53,10 @@ export function DataRightsPage(props: Props) {
                 <li>
                   <strong>Manual Request:</strong> Email
                   <a
-                    href="mailto:privacy@rawfeed.dev"
-                    class="text-black hover:underline font-medium"
+                    href="mailto:i.ozguradem@gmail.com"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
-                    privacy@rawfeed.dev
+                    i.ozguradem@gmail.com
                   </a>
                   with the subject "Data Access Request" and include your
                   username. We will respond within 30 days with a complete copy
@@ -99,10 +99,10 @@ export function DataRightsPage(props: Props) {
                   <strong>Manual Request:</strong> For data that cannot be
                   edited through the interface, email
                   <a
-                    href="mailto:privacy@rawfeed.dev"
-                    class="text-black hover:underline font-medium"
+                    href="mailto:i.ozguradem@gmail.com"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
-                    privacy@rawfeed.dev
+                    i.ozguradem@gmail.com
                   </a>
                   with:
                   <ul class="list-disc pl-6 mt-2">
@@ -143,10 +143,10 @@ export function DataRightsPage(props: Props) {
                 <li>
                   <strong>Manual Request:</strong> Email
                   <a
-                    href="mailto:privacy@rawfeed.dev"
-                    class="text-black hover:underline font-medium"
+                    href="mailto:i.ozguradem@gmail.com"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
-                    privacy@rawfeed.dev
+                    i.ozguradem@gmail.com
                   </a>
                   with:
                   <ul class="list-disc pl-6 mt-2">
@@ -217,10 +217,10 @@ export function DataRightsPage(props: Props) {
               <p>
                 Email
                 <a
-                  href="mailto:privacy@rawfeed.dev"
-                  class="text-black hover:underline font-medium"
+                  href="mailto:i.ozguradem@gmail.com"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                 >
-                  privacy@rawfeed.dev
+                  i.ozguradem@gmail.com
                 </a>
                 with:
               </p>
@@ -266,10 +266,10 @@ export function DataRightsPage(props: Props) {
                 <li>
                   <strong>Manual Request:</strong> Email
                   <a
-                    href="mailto:privacy@rawfeed.dev"
-                    class="text-black hover:underline font-medium"
+                    href="mailto:i.ozguradem@gmail.com"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
-                    privacy@rawfeed.dev
+                    i.ozguradem@gmail.com
                   </a>
                   requesting your data in a portable format (e.g., CSV, JSON).
                 </li>
@@ -296,10 +296,10 @@ export function DataRightsPage(props: Props) {
               <p>
                 Email
                 <a
-                  href="mailto:privacy@rawfeed.dev"
-                  class="text-black hover:underline font-medium"
+                  href="mailto:i.ozguradem@gmail.com"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                 >
-                  privacy@rawfeed.dev
+                  i.ozguradem@gmail.com
                 </a>
                 with:
               </p>
@@ -373,7 +373,7 @@ export function DataRightsPage(props: Props) {
                   <strong>EU/EEA:</strong>
                   <a
                     href="https://edpb.ec.europa.eu/about-edpb/board/members_en"
-                    class="text-black hover:underline font-medium"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
                     Find your national DPA
                   </a>
@@ -382,7 +382,7 @@ export function DataRightsPage(props: Props) {
                   <strong>UK:</strong>
                   <a
                     href="https://ico.org.uk/"
-                    class="text-black hover:underline font-medium"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
                     UK Information Commissioner's Office (ICO)
                   </a>
@@ -406,7 +406,7 @@ export function DataRightsPage(props: Props) {
                   <strong>Email:</strong>
                   <a
                     href="mailto:i.ozguradem@gmail.com"
-                    class="text-black hover:underline font-medium"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
                     i.ozguradem@gmail.com
                   </a>
@@ -488,7 +488,7 @@ export function DataRightsPage(props: Props) {
                   Email:
                   <a
                     href="mailto:i.ozguradem@gmail.com"
-                    class="text-black hover:underline font-medium"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
                     i.ozguradem@gmail.com
                   </a>

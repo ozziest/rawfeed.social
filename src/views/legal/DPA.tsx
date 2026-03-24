@@ -80,13 +80,13 @@ export function DPAPage(props: Props) {
                       <td class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm">
                         <a
                           href="https://www.digitalocean.com/legal/data-processing-agreement"
-                          class="text-black hover:underline font-medium"
+                          class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                         >
                           DigitalOcean DPA
                         </a>
                       </td>
                     </tr>
-                    <tr class="bg-gray-50">
+                    <tr class="bg-gray-50 dark:bg-gray-800">
                       <td class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm">
                         <strong>AWS</strong>
                       </td>
@@ -99,7 +99,7 @@ export function DPAPage(props: Props) {
                       <td class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm">
                         <a
                           href="https://aws.amazon.com/legal/aws-dpa/"
-                          class="text-black hover:underline font-medium"
+                          class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                         >
                           AWS DPA
                         </a>
@@ -118,7 +118,7 @@ export function DPAPage(props: Props) {
                       <td class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm">
                         <a
                           href="https://www.cloudflare.com/trust-hub/dpa/"
-                          class="text-black hover:underline font-medium"
+                          class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                         >
                           Cloudflare DPA
                         </a>
@@ -163,13 +163,13 @@ export function DPAPage(props: Props) {
                       <td class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm">
                         <a
                           href="https://sentry.io/legal/dpa/"
-                          class="text-black hover:underline font-medium"
+                          class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                         >
                           Sentry DPA
                         </a>
                       </td>
                     </tr>
-                    <tr class="bg-gray-50">
+                    <tr class="bg-gray-50 dark:bg-gray-800">
                       <td class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm">
                         <strong>Resend</strong>
                       </td>
@@ -182,7 +182,7 @@ export function DPAPage(props: Props) {
                       <td class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm">
                         <a
                           href="https://resend.com/terms"
-                          class="text-black hover:underline font-medium"
+                          class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                         >
                           Resend Terms
                         </a>
@@ -201,7 +201,7 @@ export function DPAPage(props: Props) {
                       <td class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm">
                         <a
                           href="https://automattic.com/privacy/"
-                          class="text-black hover:underline font-medium"
+                          class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                         >
                           Automattic Privacy
                         </a>
@@ -310,7 +310,7 @@ export function DPAPage(props: Props) {
                 For requests related to these rights, see our
                 <a
                   href="/legal/data-rights"
-                  class="text-black hover:underline font-medium"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                 >
                   Data Subject Rights Instructions
                 </a>
@@ -413,7 +413,7 @@ export function DPAPage(props: Props) {
                         Permanent deletion window + recovery
                       </td>
                     </tr>
-                    <tr class="bg-gray-50">
+                    <tr class="bg-gray-50 dark:bg-gray-800">
                       <td class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm">
                         <strong>Posts & Content</strong>
                       </td>
@@ -435,7 +435,7 @@ export function DPAPage(props: Props) {
                         Security, debugging, legal compliance
                       </td>
                     </tr>
-                    <tr class="bg-gray-50">
+                    <tr class="bg-gray-50 dark:bg-gray-800">
                       <td class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm">
                         <strong>Error Logs</strong>
                       </td>
@@ -480,7 +480,7 @@ export function DPAPage(props: Props) {
                 Users can lodge objections to new sub-processors by contacting
                 <a
                   href="mailto:i.ozguradem@gmail.com"
-                  class="text-black hover:underline font-medium"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                 >
                   i.ozguradem@gmail.com
                 </a>
@@ -569,7 +569,7 @@ export function DPAPage(props: Props) {
                   Email:
                   <a
                     href="mailto:i.ozguradem@gmail.com"
-                    class="text-black hover:underline font-medium"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
                     i.ozguradem@gmail.com
                   </a>
@@ -587,7 +587,7 @@ export function DPAPage(props: Props) {
                 <li>
                   <a
                     href="/legal/privacy"
-                    class="text-black hover:underline font-medium"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
                     Privacy Policy
                   </a>
@@ -595,7 +595,7 @@ export function DPAPage(props: Props) {
                 <li>
                   <a
                     href="/legal/terms"
-                    class="text-black hover:underline font-medium"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
                     Terms of Service
                   </a>
@@ -603,7 +603,7 @@ export function DPAPage(props: Props) {
                 <li>
                   <a
                     href="/legal/data-rights"
-                    class="text-black hover:underline font-medium"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
                     Data Subject Rights Instructions
                   </a>
@@ -611,7 +611,7 @@ export function DPAPage(props: Props) {
                 <li>
                   <a
                     href="/legal/cookies"
-                    class="text-black hover:underline font-medium"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
                     Cookie Policy
                   </a>

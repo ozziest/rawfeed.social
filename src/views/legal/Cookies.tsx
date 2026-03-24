@@ -10,7 +10,7 @@ export function CookiesPage(props: Props) {
         <div class="max-w-4xl mx-auto px-6 py-12">
           <h1 class="text-4xl font-bold mb-2">Cookie Policy</h1>
           <p class="text-gray-600 dark:text-gray-400 mb-8">
-            Last Updated: February 2026
+            Last Updated: 24 March 2026
           </p>
 
           <div class="prose prose-sm max-w-none space-y-6">
@@ -110,6 +110,18 @@ export function CookiesPage(props: Props) {
                         1 hour
                       </td>
                     </tr>
+                    <tr class="bg-gray-50 dark:bg-gray-800">
+                      <td class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm">
+                        <code>theme</code>
+                      </td>
+                      <td class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm">
+                        Remembers your preferred color theme (dark, light, or
+                        system)
+                      </td>
+                      <td class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm">
+                        1 year
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -137,7 +149,7 @@ export function CookiesPage(props: Props) {
                 cookies to recognize you across websites.
                 <a
                   href="https://automattic.com/privacy/"
-                  class="text-black hover:underline font-medium"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                 >
                   Learn about Gravatar's privacy
                 </a>
@@ -153,7 +165,7 @@ export function CookiesPage(props: Props) {
                 tracking identifiers.
                 <a
                   href="https://www.cloudflare.com/privacypolicy/"
-                  class="text-black hover:underline font-medium"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                 >
                   Learn about Cloudflare's cookies
                 </a>
@@ -200,7 +212,7 @@ export function CookiesPage(props: Props) {
                 <li>
                   <a
                     href="https://support.google.com/accounts/answer/61416"
-                    class="text-black hover:underline font-medium"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
                     Google Chrome
                   </a>
@@ -208,7 +220,7 @@ export function CookiesPage(props: Props) {
                 <li>
                   <a
                     href="https://support.mozilla.org/en-US/kb/enhanced-tracking-protection-firefox-desktop"
-                    class="text-black hover:underline font-medium"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
                     Firefox
                   </a>
@@ -216,7 +228,7 @@ export function CookiesPage(props: Props) {
                 <li>
                   <a
                     href="https://support.apple.com/en-us/HT201265"
-                    class="text-black hover:underline font-medium"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
                     Safari
                   </a>
@@ -224,7 +236,7 @@ export function CookiesPage(props: Props) {
                 <li>
                   <a
                     href="https://support.microsoft.com/en-us/microsoft-edge/manage-cookies-in-microsoft-edge"
-                    class="text-black hover:underline font-medium"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
                     Microsoft Edge
                   </a>
@@ -290,7 +302,7 @@ export function CookiesPage(props: Props) {
                 cookies and other methods, see our
                 <a
                   href="/legal/privacy"
-                  class="text-black hover:underline font-medium"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                 >
                   Privacy Policy
                 </a>
@@ -320,10 +332,10 @@ export function CookiesPage(props: Props) {
                   <strong>Rawfeed Support:</strong>
                 </p>
                 <p>
-                  Email:
+                  Email:{" "}
                   <a
                     href="mailto:i.ozguradem@gmail.com"
-                    class="text-black hover:underline font-medium"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
                     i.ozguradem@gmail.com
                   </a>
