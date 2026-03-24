@@ -9,6 +9,7 @@ ENV RELEASE_VERSION=$RELEASE_VERSION
 
 # Copy package files
 COPY package*.json ./
+COPY scripts ./scripts
 
 # Install all dependencies (including devDependencies for build)
 RUN npm ci
@@ -37,6 +38,7 @@ ENV NODE_ENV=production
 
 # Copy package files
 COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/scripts ./scripts
 
 # Install only production dependencies
 RUN npm ci --only=production
