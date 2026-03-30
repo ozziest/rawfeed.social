@@ -36,8 +36,8 @@ export function ReshareButton({
             type="submit"
             class={`flex items-center gap-2 transition-colors cursor-pointer ${
               isActive
-                ? "text-green-600 hover:text-gray-600"
-                : "text-gray-600 hover:text-green-600"
+                ? "text-green-600 hover:text-gray-600 dark:hover:text-gray-400"
+                : "text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-400"
             }`}
             title={isActive ? "Remove reshare" : "Reshare this post"}
           >
@@ -54,7 +54,7 @@ export function ReshareButton({
   return (
     <span data-reshare-btn>
       <span
-        class={`flex items-center gap-2 ${isOwnPost ? "text-gray-600" : "text-gray-400 opacity-50"}`}
+        class={`flex items-center gap-2 ${isOwnPost ? "text-gray-600 dark:text-gray-400" : "text-gray-400 dark:text-gray-600 opacity-50"}`}
       >
         <ArrowsRightLeftIcon class="w-5 h-5" />
         <span>

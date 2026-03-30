@@ -16,7 +16,7 @@ export function Textarea({
   rows = "3",
   maxlength,
   class:
-    className = "w-full px-4 py-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent resize-none",
+    className = "w-full px-4 py-3 text-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent resize-none",
 }: TextareaProps) {
   return (
     <textarea

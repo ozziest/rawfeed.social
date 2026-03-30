@@ -15,7 +15,7 @@ export function SelectField({ id, name, options, value }: SelectFieldProps) {
     <select
       id={id}
       name={name}
-      class="text-sm text-gray-600 border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-black"
+      class="text-sm text-gray-600 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-black"
     >
       {options.map(({ value: v, label }) => (
         <option value={v} selected={value === v || false} safe>

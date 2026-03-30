@@ -31,8 +31,11 @@ export function ReplySection({
           formData={formData}
         />
       ) : (
-        <div class="bg-white rounded-lg shadow p-6 mb-6 text-center text-gray-500 text-sm">
-          <a href="/auth/login" class="text-black font-medium hover:underline">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mb-6 text-center text-gray-500 dark:text-gray-400 text-sm">
+          <a
+            href="/auth/login"
+            class="text-black dark:text-gray-200 font-medium hover:underline"
+          >
             Log in
           </a>{" "}
           to reply.

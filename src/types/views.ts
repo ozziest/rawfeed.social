@@ -18,6 +18,7 @@ export type BaseProps = {
   domainUser?: Selectable<Users>;
   profileUser?: Selectable<Users>;
   isProd: boolean;
+  theme: "dark" | "light" | "system";
 };
 
 // Layout components accept all base props plus child content

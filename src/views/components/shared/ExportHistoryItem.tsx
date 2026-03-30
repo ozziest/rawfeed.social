@@ -17,31 +17,31 @@ export function ExportHistoryItem({ exp }: ExportHistoryItemProps) {
   const size = `Size: ${((exp.file_size as number) / 1024 / 1024).toFixed(2)} MB`;
 
   return (
-    <div class="flex items-center justify-between p-3 bg-gray-50 rounded border border-gray-200">
+    <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded border border-gray-200 dark:border-gray-600">
       <div class="flex-1">
         <div class="flex items-center gap-2 mb-1">
           <ExportStatusBadge status={exp.status || ""} />
         </div>
-        <p class="text-xs text-gray-600">
+        <p class="text-xs text-gray-600 dark:text-gray-400">
           Requested:{" "}
           <span safe>
             {new Date(exp.requested_at as Date).toLocaleString()}
           </span>
         </p>
         {exp.status === "completed" && exp.expires_at != null ? (
-          <p class="text-xs text-gray-600">
+          <p class="text-xs text-gray-600 dark:text-gray-400">
             {!isExpired ? (
               <>
                 Expires:{" "}
                 <span safe>{new Date(exp.expires_at).toLocaleString()}</span>
               </>
             ) : (
-              <span class="text-red-600">Expired</span>
+              <span class="text-red-600 dark:text-red-400">Expired</span>
             )}
           </p>
         ) : undefined}
         {exp.file_size != null ? (
-          <p class="text-xs text-gray-600" safe>
+          <p class="text-xs text-gray-600 dark:text-gray-400" safe>
             {size}
           </p>
         ) : undefined}
@@ -57,9 +57,11 @@ export function ExportHistoryItem({ exp }: ExportHistoryItemProps) {
             Download
           </a>
         ) : exp.status === "completed" && isExpired ? (
-          <span class="text-xs text-gray-500">Expired</span>
+          <span class="text-xs text-gray-500 dark:text-gray-400">Expired</span>
         ) : exp.status === "pending" || exp.status === "processing" ? (
-          <span class="text-xs text-gray-500">Processing...</span>
+          <span class="text-xs text-gray-500 dark:text-gray-400">
+            Processing...
+          </span>
         ) : null}
       </div>
     </div>

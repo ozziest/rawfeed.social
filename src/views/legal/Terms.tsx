@@ -9,7 +9,9 @@ export function TermsPage(props: Props) {
       <>
         <div class="max-w-4xl mx-auto px-6 py-12">
           <h1 class="text-4xl font-bold mb-2">Terms of Service</h1>
-          <p class="text-gray-600 mb-8">Last Updated: February 2026</p>
+          <p class="text-gray-600 dark:text-gray-400 mb-8">
+            Last Updated: February 2026
+          </p>
 
           <div class="prose prose-sm max-w-none space-y-6">
             <section>
@@ -53,7 +55,13 @@ export function TermsPage(props: Props) {
                   <strong>Bot Accounts:</strong> Rawfeed auto-creates
                   clearly-labeled bot accounts that syndicate RSS feeds from
                   external sources. See our
-                  <a href="/legal/bots">Bot Account Disclosure</a> for details.
+                  <a
+                    href="/legal/bots"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
+                  >
+                    Bot Account Disclosure
+                  </a>{" "}
+                  for details.
                 </li>
               </ul>
             </section>
@@ -215,7 +223,7 @@ export function TermsPage(props: Props) {
                 our licensors. The source code is licensed under the
                 <a
                   href="https://www.gnu.org/licenses/agpl-3.0.html"
-                  class="text-black hover:underline font-medium"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                 >
                   AGPL-3.0 License
                 </a>
@@ -371,7 +379,7 @@ export function TermsPage(props: Props) {
                 Your use of Rawfeed is also governed by our
                 <a
                   href="/legal/privacy"
-                  class="text-black hover:underline font-medium"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                 >
                   Privacy Policy
                 </a>
@@ -400,7 +408,7 @@ export function TermsPage(props: Props) {
                 Send notices to:
                 <a
                   href="mailto:i.ozguradem@gmail.com"
-                  class="text-black hover:underline font-medium"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                 >
                   i.ozguradem@gmail.com
                 </a>
@@ -433,7 +441,7 @@ export function TermsPage(props: Props) {
             <section>
               <h2 class="text-2xl font-bold mb-4">14. Contact Us</h2>
               <p>For questions about these Terms, please contact us at:</p>
-              <div class="bg-gray-100 p-4 rounded mt-4">
+              <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded mt-4">
                 <p>
                   <strong>Rawfeed Support:</strong>
                 </p>
@@ -441,7 +449,7 @@ export function TermsPage(props: Props) {
                   Email:
                   <a
                     href="mailto:i.ozguradem@gmail.com"
-                    class="text-black hover:underline font-medium"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
                     i.ozguradem@gmail.com
                   </a>

@@ -14,7 +14,7 @@ export function PostStats({ post, loggedUser, csrfToken }: PostStatsProps) {
     <>
       <a
         href={`/posts/${post.id}`}
-        class="flex items-center gap-2 text-gray-600 hover:text-black transition-colors"
+        class="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
       >
         <ChatBubbleIcon class="w-5 h-5" />
         <span>

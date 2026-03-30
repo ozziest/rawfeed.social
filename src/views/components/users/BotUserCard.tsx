@@ -9,13 +9,13 @@ type BotUserCardProps = {
 
 export function BotUserCard({ user }: BotUserCardProps) {
   return (
-    <div class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+    <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow">
       <div class="flex items-start gap-3">
         <a href={`/u/${user.username}`}>
           <img
             src={getAvatar(user)}
             alt={user.name || user.username}
-            class="w-12 h-12 rounded-full object-cover"
+            class="w-12 h-12 rounded-full object-cover bg-white"
           />
         </a>
 
@@ -23,20 +23,23 @@ export function BotUserCard({ user }: BotUserCardProps) {
           <div class="flex items-center gap-2 mb-1">
             <a
               href={`/u/${user.username}`}
-              class="font-semibold text-gray-900 hover:underline truncate"
+              class="font-semibold text-gray-900 dark:text-gray-100 hover:underline truncate"
               safe
             >
               {user.name || user.username}
             </a>
           </div>
 
-          <p class="text-sm text-gray-500 mb-2" safe>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mb-2" safe>
             @{user.username}
           </p>
 
           <div>
             {user.bio ? (
-              <p class="text-sm text-gray-700 mb-3 line-clamp-2" safe>
+              <p
+                class="text-sm text-gray-700 dark:text-gray-300 mb-3 line-clamp-2"
+                safe
+              >
                 {user.bio}
               </p>
             ) : undefined}

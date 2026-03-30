@@ -73,10 +73,69 @@ function initMobileMenu() {
   }
 }
 
+function getStoredTheme() {
+  const match = document.cookie
+    .split(";")
+    .find((c) => c.trim().startsWith("theme="));
+  return match ? match.trim().slice(6) : "system";
+}
+
+function setThemeCookie(theme) {
+  const maxAge = 365 * 24 * 60 * 60;
+  document.cookie = `theme=${theme}; path=/; max-age=${maxAge}; SameSite=Lax`;
+}
+
+function applyTheme(theme) {
+  if (theme === "dark") {
+    document.documentElement.classList.add("dark");
+  } else if (theme === "light") {
+    document.documentElement.classList.remove("dark");
+  } else {
+    // system
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }
+}
+
+function initTheme() {
+  const theme = getStoredTheme();
+  applyTheme(theme);
+
+  // Re-apply when OS preference changes (only relevant in system mode)
+  window
+    .matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener("change", () => {
+      if (getStoredTheme() === "system") {
+        applyTheme("system");
+      }
+    });
+}
+
+function cycleTheme() {
+  const current = getStoredTheme();
+  const next =
+    current === "system" ? "dark" : current === "dark" ? "light" : "system";
+  setThemeCookie(next);
+  applyTheme(next);
+  document.querySelectorAll("[data-theme-toggle]").forEach((btn) => {
+    btn.dataset.theme = next;
+  });
+}
+
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", () => {
+    initTheme();
     updateTimestamps();
     initMobileMenu();
+
+    document.body.addEventListener("click", function (event) {
+      if (event.target.closest("[data-theme-toggle]")) {
+        cycleTheme();
+      }
+    });
 
     document.body.addEventListener("htmx:afterSwap", function (event) {
       updateTimestamps();
@@ -88,6 +147,13 @@ if (document.readyState === "loading") {
     });
   });
 } else {
+  initTheme();
   updateTimestamps();
   initMobileMenu();
+
+  document.body.addEventListener("click", function (event) {
+    if (event.target.closest("[data-theme-toggle]")) {
+      cycleTheme();
+    }
+  });
 }

@@ -29,7 +29,7 @@ export function PostThreadRow({
 
   return (
     <div
-      class={`relative flex gap-3 px-6 pt-5 ${!isFocal ? "hover:bg-gray-50 transition-colors cursor-pointer" : ""}`}
+      class={`relative flex gap-3 px-6 pt-5 ${!isFocal ? "hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors cursor-pointer" : ""}`}
     >
       {/* Stretched link for parent rows — clicking anywhere navigates to that post */}
       {!isFocal ? (
@@ -58,7 +58,7 @@ export function PostThreadRow({
           </a>
         </div>
         {hasConnector ? (
-          <div class="w-0.5 bg-gray-200 flex-1 mt-2 min-h-8" />
+          <div class="w-0.5 bg-gray-200 dark:bg-gray-600 flex-1 mt-2 min-h-8" />
         ) : (
           ""
         )}
@@ -68,7 +68,7 @@ export function PostThreadRow({
       <div class={`flex-1 min-w-0 ${hasConnector ? "pb-4" : "pb-5"}`}>
         {/* Reshare attribution */}
         {isReshare ? (
-          <p class="text-xs text-gray-500 mb-1">
+          <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">
             <span safe>{post.user.name}</span> reshared
           </p>
         ) : (
@@ -79,20 +79,20 @@ export function PostThreadRow({
         <div class="relative z-10 flex items-center gap-2 flex-wrap mb-2">
           <a
             href={`/u/${displayPost.user.username}`}
-            class="font-semibold text-gray-900 hover:underline"
+            class="font-semibold text-gray-900 dark:text-gray-100 hover:underline"
           >
             <span safe>{displayPost.user.name}</span>
           </a>
           {displayPost.user.bot_type ? <BotBadge /> : null}
           <a
             href={`/u/${displayPost.user.username}`}
-            class="text-sm text-gray-500 hover:underline"
+            class="text-sm text-gray-500 dark:text-gray-400 hover:underline"
           >
             @<span safe>{displayPost.user.username}</span>
           </a>
           <a
             href={`/posts/${displayPost.id}`}
-            class="text-gray-400 text-xs ml-auto hover:underline"
+            class="text-gray-400 dark:text-gray-500 text-xs ml-auto hover:underline"
           >
             <time datetime={displayIsoDate} safe>
               {displayIsoDate}
@@ -102,12 +102,12 @@ export function PostThreadRow({
 
         {/* Content */}
         {isReshare && !post.resharedPost ? (
-          <p class="text-gray-400 italic mb-3 text-sm">
+          <p class="text-gray-400 dark:text-gray-500 italic mb-3 text-sm">
             Original post unavailable.
           </p>
         ) : (
           <p
-            class={`leading-relaxed mb-3 whitespace-pre-line wrap-break-words overflow-wrap-anywhere ${isFocal ? "text-gray-900 text-base" : "text-gray-800 line-clamp-12"}`}
+            class={`leading-relaxed mb-3 whitespace-pre-line wrap-break-words overflow-wrap-anywhere ${isFocal ? "text-gray-900 dark:text-gray-100 text-base" : "text-gray-800 dark:text-gray-200 line-clamp-12"}`}
             lang={displayPost.location ?? "en"}
           >
             <PostContent post={displayPost} />

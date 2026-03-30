@@ -15,7 +15,7 @@ export function SidebarUserList({ users, viewAllHref }: SidebarUserListProps) {
         {users.map((user) => (
           <a
             href={`/u/${user.username}`}
-            class="flex items-center gap-2 hover:bg-gray-50 -mx-2 px-2 py-1 rounded"
+            class="flex items-center gap-2 hover:bg-gray-50 dark:hover:bg-gray-700 -mx-2 px-2 py-1 rounded"
           >
             <Avatar
               src={getAvatar(user)}
@@ -24,10 +24,13 @@ export function SidebarUserList({ users, viewAllHref }: SidebarUserListProps) {
               className="w-8 h-8"
             />
             <div class="flex-1 min-w-0">
-              <p class="text-sm font-medium text-gray-900 truncate" safe>
+              <p
+                class="text-sm font-medium text-gray-900 dark:text-gray-100 truncate"
+                safe
+              >
                 {user.name}
               </p>
-              <p class="text-xs text-gray-500">
+              <p class="text-xs text-gray-500 dark:text-gray-400">
                 @<span safe>{user.username}</span>
               </p>
             </div>
@@ -36,7 +39,7 @@ export function SidebarUserList({ users, viewAllHref }: SidebarUserListProps) {
       </div>
       <a
         href={viewAllHref}
-        class="mt-2 block text-center text-sm text-black hover:text-gray-700 font-medium"
+        class="mt-2 block text-center text-sm text-black dark:text-gray-200 hover:text-gray-700 dark:hover:text-white font-medium"
       >
         View all
       </a>

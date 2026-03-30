@@ -23,12 +23,12 @@ export function PostAuthor({ user }: PostAuthorProps) {
       />
       <div>
         <div class="flex items-center gap-2">
-          <span class="font-semibold text-gray-900 hover:underline">
+          <span class="font-semibold text-gray-900 dark:text-gray-100 hover:underline">
             <span safe>{user.name}</span>
           </span>
           {user.bot_type ? <BotBadge /> : null}
         </div>
-        <p class="text-sm text-gray-500 hover:underline">
+        <p class="text-sm text-gray-500 dark:text-gray-400 hover:underline">
           @<span safe>{user.username}</span>
         </p>
       </div>

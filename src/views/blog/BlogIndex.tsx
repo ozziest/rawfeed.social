@@ -14,7 +14,7 @@ export function BlogIndex(props: BlogIndexProps) {
 
   return (
     <LandingLayout {...props}>
-      <div class="bg-white min-h-screen">
+      <div class="bg-white dark:bg-gray-900 min-h-screen">
         <BlogHero />
 
         <div class="max-w-3xl mx-auto px-4 py-12">

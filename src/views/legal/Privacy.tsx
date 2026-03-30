@@ -9,7 +9,9 @@ export function PrivacyPage(props: Props) {
       <>
         <div class="max-w-4xl mx-auto px-6 py-12">
           <h1 class="text-4xl font-bold mb-2">Privacy Policy</h1>
-          <p class="text-gray-600 mb-8">Last Updated: February 2026</p>
+          <p class="text-gray-600 dark:text-gray-400 mb-8">
+            Last Updated: February 2026
+          </p>
 
           <div class="prose prose-sm max-w-none space-y-6">
             <section>
@@ -202,7 +204,7 @@ export function PrivacyPage(props: Props) {
                 aware of unauthorized scraping, please contact us at
                 <a
                   href="mailto:i.ozguradem@gmail.com"
-                  class="text-black hover:underline font-medium"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                 >
                   i.ozguradem@gmail.com
                 </a>
@@ -212,7 +214,7 @@ export function PrivacyPage(props: Props) {
                 For more information about how we handle your data, see our
                 <a
                   href="/legal/dpa"
-                  class="text-black hover:underline font-medium font-semibold"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium font-semibold"
                 >
                   Data Processing Agreement (DPA)
                 </a>
@@ -228,12 +230,12 @@ export function PrivacyPage(props: Props) {
               <p>
                 We share your data with the following third-party processors:
               </p>
-              <p class="text-sm text-gray-700 bg-gray-100 p-3 rounded mt-3 mb-3">
+              <p class="text-sm text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 p-3 rounded mt-3 mb-3">
                 For detailed information about data processors, retention
                 policies, and security measures, see our
                 <a
                   href="/legal/dpa"
-                  class="text-black hover:underline font-medium font-semibold"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium font-semibold"
                 >
                   Data Processing Agreement (DPA)
                 </a>
@@ -255,7 +257,10 @@ export function PrivacyPage(props: Props) {
                 </li>
                 <li>
                   <strong>Cloudflare:</strong> CDN and DDoS protection service.
-                  <a href="https://www.cloudflare.com/privacypolicy/">
+                  <a
+                    href="https://www.cloudflare.com/privacypolicy/"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
+                  >
                     Cloudflare Privacy Policy
                   </a>
                 </li>
@@ -268,7 +273,10 @@ export function PrivacyPage(props: Props) {
                 <li>
                   <strong>Gravatar:</strong> Profile avatar service (if you use
                   Gravatar).
-                  <a href="https://automattic.com/privacy/">
+                  <a
+                    href="https://automattic.com/privacy/"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
+                  >
                     Automattic Privacy Policy
                   </a>
                 </li>
@@ -276,12 +284,22 @@ export function PrivacyPage(props: Props) {
                   <strong>Sentry:</strong> Error tracking (does NOT receive
                   personally identifiable information due to low sampling rates
                   and PII exclusion).
-                  <a href="https://sentry.io/privacy/">Sentry Privacy Policy</a>
+                  <a
+                    href="https://sentry.io/privacy/"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
+                  >
+                    Sentry Privacy Policy
+                  </a>
                 </li>
                 <li>
                   <strong>Resend:</strong> Email service for account
                   notifications (optional).
-                  <a href="https://resend.com/privacy">Resend Privacy Policy</a>
+                  <a
+                    href="https://resend.com/privacy"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
+                  >
+                    Resend Privacy Policy
+                  </a>
                 </li>
               </ul>
 
@@ -292,7 +310,13 @@ export function PrivacyPage(props: Props) {
                 Rawfeed automatically creates bot accounts that ingest posts
                 from external RSS feeds. These bots are clearly labeled and do
                 not collect user data. See our{" "}
-                <a href="/legal/bots">Bot Account Disclosure</a> for details.
+                <a
+                  href="/legal/bots"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
+                >
+                  Bot Account Disclosure
+                </a>{" "}
+                for details.
               </p>
             </section>
 
@@ -345,7 +369,10 @@ export function PrivacyPage(props: Props) {
 
               <p class="mt-4">
                 For requests related to these rights, see our
-                <a href="/legal/data-rights">
+                <a
+                  href="/legal/data-rights"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
+                >
                   Data Subject Rights Instructions
                 </a>
                 .
@@ -450,7 +477,7 @@ export function PrivacyPage(props: Props) {
                 If you have questions about this Privacy Policy or our data
                 handling practices, you can contact us at:
               </p>
-              <div class="bg-gray-100 p-4 rounded mt-4">
+              <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded mt-4">
                 <p>
                   <strong>Data Controller & Privacy Contact:</strong>
                 </p>
@@ -460,12 +487,12 @@ export function PrivacyPage(props: Props) {
                   Email:
                   <a
                     href="mailto:i.ozguradem@gmail.com"
-                    class="text-black hover:underline font-medium"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
                     i.ozguradem@gmail.com
                   </a>
                 </p>
-                <p class="text-sm text-gray-600 mt-2">
+                <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">
                   Note: Formal Data Protection Officer contact information will
                   be updated if/when Rawfeed becomes a registered organization.
                 </p>
@@ -478,7 +505,7 @@ export function PrivacyPage(props: Props) {
                 <li>
                   <a
                     href="https://gdpr-info.eu/"
-                    class="text-black hover:underline font-medium"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
                     EU General Data Protection Regulation (GDPR)
                   </a>
@@ -486,7 +513,7 @@ export function PrivacyPage(props: Props) {
                 <li>
                   <a
                     href="https://oag.ca.gov/privacy/ccpa"
-                    class="text-black hover:underline font-medium"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
                     California Consumer Privacy Act (CCPA)
                   </a>
@@ -494,7 +521,7 @@ export function PrivacyPage(props: Props) {
                 <li>
                   <a
                     href="https://www.ico.org.uk/"
-                    class="text-black hover:underline font-medium"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
                     UK Information Commissioner's Office (ICO)
                   </a>

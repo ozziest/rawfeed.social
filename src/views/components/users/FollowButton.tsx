@@ -34,7 +34,7 @@ export function FollowButton({
         type="submit"
         class={
           isFollowing
-            ? "px-4 py-1.5 text-sm font-medium rounded-full transition-colors text-gray-700 bg-white border border-gray-300 hover:bg-red-50 hover:text-red-600 hover:border-red-300"
+            ? "px-4 py-1.5 text-sm font-medium rounded-full transition-colors text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:bg-red-50 dark:hover:bg-red-900/30 hover:text-red-600 dark:hover:text-red-400 hover:border-red-300 dark:hover:border-red-800"
             : "px-4 py-1.5 text-sm font-medium rounded-full transition-colors text-white bg-black hover:bg-gray-800"
         }
       >

@@ -10,19 +10,23 @@ export function ReshareHeader({ post }: ReshareHeaderProps) {
   const isoDate = toISO(post.created_at as unknown as string);
 
   return (
-    <div class="relative z-10 flex items-center gap-2 px-6 py-2.5 bg-gray-50 border-b border-gray-100 text-xs text-gray-500">
+    <div class="relative z-10 flex items-center gap-2 px-6 py-2.5 bg-gray-50 dark:bg-gray-700/50 border-b border-gray-100 dark:border-gray-700 text-xs text-gray-500 dark:text-gray-400">
       <ArrowsRightLeftIcon class="w-3.5 h-3.5 shrink-0 text-green-600" />
       <span>
         <a
           href={`/u/${post.user.username}`}
-          class="font-semibold text-gray-700 hover:underline"
+          class="font-semibold text-gray-700 dark:text-gray-300 hover:underline"
           safe
         >
           {post.user.name}
         </a>{" "}
         reshared
       </span>
-      <time datetime={isoDate} safe class="ml-auto text-gray-400">
+      <time
+        datetime={isoDate}
+        safe
+        class="ml-auto text-gray-400 dark:text-gray-500"
+      >
         {isoDate}
       </time>
     </div>

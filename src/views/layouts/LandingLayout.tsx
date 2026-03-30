@@ -14,10 +14,11 @@ export function LandingLayout({
   isProd,
   mode,
   loggedUser,
+  theme,
   children,
 }: LandingLayoutProps) {
   return (
-    <html lang="en">
+    <html lang="en" class={theme === "dark" ? "dark" : undefined}>
       <Head
         title={title}
         description={description}
@@ -25,8 +26,8 @@ export function LandingLayout({
         canonical={canonical}
         isProd={isProd}
       />
-      <body class="bg-gray-100 text-gray-900">
-        <Navbar mode={mode} loggedUser={loggedUser} />
+      <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+        <Navbar mode={mode} loggedUser={loggedUser} theme={theme} />
         {children}
         <Footer />
       </body>

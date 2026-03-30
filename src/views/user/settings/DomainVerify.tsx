@@ -19,7 +19,7 @@ function CopyButton({ value }: { value: string }) {
   return (
     <button
       data-copy={value}
-      class="text-black hover:text-gray-700 font-medium underline text-sm"
+      class="text-black dark:text-gray-200 hover:text-gray-700 dark:hover:text-white font-medium underline text-sm"
       title="Copy to clipboard"
     >
       <ClipboardIcon class="w-4 h-4" />
@@ -44,8 +44,13 @@ export function DomainVerify(props: DomainVerifyProps) {
         <Card class="mb-6">
           <div class="flex items-center justify-between mb-4">
             <div>
-              <p class="text-sm text-gray-600 mb-1">Your Domain</p>
-              <p class="text-xl font-semibold text-gray-900" safe>
+              <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                Your Domain
+              </p>
+              <p
+                class="text-xl font-semibold text-gray-900 dark:text-gray-100"
+                safe
+              >
                 {user.custom_domain}
               </p>
             </div>
@@ -60,50 +65,52 @@ export function DomainVerify(props: DomainVerifyProps) {
           <>
             <Card class="mb-6">
               <div class="flex items-start gap-3 mb-4">
-                <span class="shrink-0 w-8 h-8 bg-gray-200 text-black border border-gray-300 rounded-full flex items-center justify-center font-semibold">
+                <span class="shrink-0 w-8 h-8 bg-gray-200 dark:bg-gray-700 text-black dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-full flex items-center justify-center font-semibold">
                   1
                 </span>
                 <div class="flex-1">
-                  <h2 class="text-lg font-semibold text-gray-900 mb-2">
+                  <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
                     Add DNS TXT Record
                   </h2>
-                  <p class="text-gray-600 mb-4">
+                  <p class="text-gray-600 dark:text-gray-400 mb-4">
                     Log in to your domain provider's control panel and add the
                     following TXT record:
                   </p>
 
-                  <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-3">
+                  <div class="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-4 space-y-3">
                     <div>
-                      <p class="text-xs font-medium text-gray-500 uppercase mb-1">
+                      <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase mb-1">
                         Type
                       </p>
-                      <code class="text-sm font-mono text-gray-900">TXT</code>
+                      <code class="text-sm font-mono text-gray-900 dark:text-gray-100">
+                        TXT
+                      </code>
                     </div>
                     <div>
-                      <p class="text-xs font-medium text-gray-500 uppercase mb-1">
+                      <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase mb-1">
                         Name
                       </p>
                       <div class="flex items-center gap-2">
                         <code
-                          class="text-sm font-mono text-gray-900 break-all"
+                          class="text-sm font-mono text-gray-900 dark:text-gray-100 break-all"
                           safe
                         >
                           _rawfeed.{user.custom_domain}
                         </code>
                         <CopyButton value={`_rawfeed.${user.custom_domain}`} />
                       </div>
-                      <p class="text-xs text-gray-500 mt-1">
+                      <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
                         Some DNS providers may only require{" "}
                         <code class="font-mono">_rawfeed</code>
                       </p>
                     </div>
                     <div>
-                      <p class="text-xs font-medium text-gray-500 uppercase mb-1">
+                      <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase mb-1">
                         Value
                       </p>
                       <div class="flex items-center gap-2">
                         <code
-                          class="text-sm font-mono text-gray-900 break-all"
+                          class="text-sm font-mono text-gray-900 dark:text-gray-100 break-all"
                           safe
                         >
                           {user.domain_verification_token}
@@ -114,11 +121,13 @@ export function DomainVerify(props: DomainVerifyProps) {
                       </div>
                     </div>
                     <div>
-                      <p class="text-xs font-medium text-gray-500 uppercase mb-1">
+                      <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase mb-1">
                         TTL
                       </p>
-                      <code class="text-sm font-mono text-gray-900">3600</code>
-                      <span class="text-xs text-gray-500 ml-2">
+                      <code class="text-sm font-mono text-gray-900 dark:text-gray-100">
+                        3600
+                      </code>
+                      <span class="text-xs text-gray-500 dark:text-gray-400 ml-2">
                         (or default)
                       </span>
                     </div>
@@ -136,14 +145,14 @@ export function DomainVerify(props: DomainVerifyProps) {
 
             <Card class="mb-6">
               <div class="flex items-start gap-3">
-                <span class="shrink-0 w-8 h-8 bg-gray-200 text-black border border-gray-300 rounded-full flex items-center justify-center font-semibold">
+                <span class="shrink-0 w-8 h-8 bg-gray-200 dark:bg-gray-700 text-black dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-full flex items-center justify-center font-semibold">
                   2
                 </span>
                 <div class="flex-1">
-                  <h2 class="text-lg font-semibold text-gray-900 mb-2">
+                  <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
                     Verify Domain
                   </h2>
-                  <p class="text-gray-600 mb-4">
+                  <p class="text-gray-600 dark:text-gray-400 mb-4">
                     After adding the DNS record, click the button below to
                     verify your domain.
                   </p>
@@ -181,33 +190,41 @@ export function DomainVerify(props: DomainVerifyProps) {
                   your domain to rawfeed.social:
                 </p>
 
-                <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-3">
+                <div class="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-4 space-y-3">
                   <div>
-                    <p class="text-xs font-medium text-gray-500 uppercase mb-1">
+                    <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase mb-1">
                       Type
                     </p>
-                    <code class="text-sm font-mono text-gray-900">CNAME</code>
+                    <code class="text-sm font-mono text-gray-900 dark:text-gray-100">
+                      CNAME
+                    </code>
                   </div>
                   <div>
-                    <p class="text-xs font-medium text-gray-500 uppercase mb-1">
+                    <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase mb-1">
                       Name
                     </p>
                     <div class="flex items-center gap-2">
-                      <code class="text-sm font-mono text-gray-900" safe>
+                      <code
+                        class="text-sm font-mono text-gray-900 dark:text-gray-100"
+                        safe
+                      >
                         {user.custom_domain}
                       </code>
                       <CopyButton value={user.custom_domain || ""} />
                     </div>
-                    <p class="text-xs text-gray-500 mt-1">
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
                       Some DNS providers may only require the subdomain part
                     </p>
                   </div>
                   <div>
-                    <p class="text-xs font-medium text-gray-500 uppercase mb-1">
+                    <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase mb-1">
                       Value
                     </p>
                     <div class="flex items-center gap-2">
-                      <code class="text-sm font-mono text-gray-900" safe>
+                      <code
+                        class="text-sm font-mono text-gray-900 dark:text-gray-100"
+                        safe
+                      >
                         {user.username}.rawfeed.social
                       </code>
                       <CopyButton value="rawfeed.social" />

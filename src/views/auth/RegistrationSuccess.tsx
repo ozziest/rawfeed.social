@@ -15,12 +15,12 @@ export function RegistrationSuccess(props: BaseProps) {
 
           <EmailVerificationNotice />
 
-          <div class="text-center text-sm text-gray-600 space-y-2">
+          <div class="text-center text-sm text-gray-600 dark:text-gray-400 space-y-2">
             <p>Didn't receive the email? Check your spam folder.</p>
             <p class="mt-4">
               <a
                 href="/auth/login"
-                class="font-medium text-black hover:text-gray-700 underline"
+                class="font-medium text-black dark:text-gray-200 hover:text-gray-700 dark:hover:text-white underline"
               >
                 Return to login
               </a>
