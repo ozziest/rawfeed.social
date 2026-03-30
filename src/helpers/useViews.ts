@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { sanitize } from "./security";
-import { getAvatar, toISO } from "./common";
+import { getAvatar, toISO, getThemeFromCookies } from "./common";
 import { asset } from "./asset";
 
 // ---------------------------------------------------------------------------
@@ -32,10 +32,7 @@ export const getBaseProps = (request: FastifyRequest, reply: FastifyReply) => {
     profileUser: request.profileUser,
     activeHashtag: "",
     isProd: process.env.NODE_ENV === "production",
-    theme: (request.cookies?.theme === "dark" ||
-    request.cookies?.theme === "light"
-      ? request.cookies.theme
-      : "system") as "dark" | "light" | "system",
+    theme: getThemeFromCookies(request.cookies),
     sanitize,
     getAvatar,
     toISO,

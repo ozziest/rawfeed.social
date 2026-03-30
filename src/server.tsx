@@ -35,6 +35,7 @@ import sitemapRoutes from "./routes/sitemap";
 import followRoutes from "./routes/follow";
 import { timer } from "./helpers/timer";
 import { asset } from "./helpers/asset";
+import { getThemeFromCookies } from "./helpers/common";
 import { NotFound } from "./views/NotFound";
 import { ErrorPage } from "./views/ErrorPage";
 import { ErrorDev } from "./views/ErrorDev";
@@ -213,13 +214,7 @@ server.setErrorHandler((error: any, request, reply) => {
         <TooManyRequests
           waitTime={waitTime}
           isProd={process.env.NODE_ENV === "production"}
-          theme={
-            request.cookies?.theme === "dark"
-              ? "dark"
-              : request.cookies?.theme === "light"
-                ? "light"
-                : "system"
-          }
+          theme={getThemeFromCookies(request.cookies)}
         />,
       );
   }
@@ -241,13 +236,7 @@ server.setErrorHandler((error: any, request, reply) => {
       <ErrorPage
         asset={asset}
         statusCode={statusCode}
-        theme={
-          request.cookies?.theme === "dark"
-            ? "dark"
-            : request.cookies?.theme === "light"
-              ? "light"
-              : "system"
-        }
+        theme={getThemeFromCookies(request.cookies)}
         message={
           statusCode === 500
             ? "Something went wrong on our end. Please try again later."
@@ -269,16 +258,7 @@ server.setNotFoundHandler((request, reply) => {
   return reply
     .code(404)
     .html(
-      <NotFound
-        asset={asset}
-        theme={
-          request.cookies?.theme === "dark"
-            ? "dark"
-            : request.cookies?.theme === "light"
-              ? "light"
-              : "system"
-        }
-      />,
+      <NotFound asset={asset} theme={getThemeFromCookies(request.cookies)} />,
     );
 });
 

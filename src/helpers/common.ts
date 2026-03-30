@@ -6,8 +6,19 @@ import { RSS_RESOURCES } from "../rssResources";
 import { POST_SIZE } from "../consts";
 import { PostWithContent } from "../types/relations";
 import { asset } from "./asset";
+import type { BaseProps } from "../types/views";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
+
+export const getThemeFromCookies = (
+  cookies: Record<string, string | undefined> | undefined,
+): BaseProps["theme"] => {
+  const value = cookies?.theme;
+  if (value === "dark" || value === "light") {
+    return value;
+  }
+  return "system";
+};
 
 const getGravatarUrl = (email: string, size: number = 400): string => {
   const hash = crypto

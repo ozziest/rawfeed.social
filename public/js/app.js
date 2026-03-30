@@ -131,6 +131,12 @@ if (document.readyState === "loading") {
     updateTimestamps();
     initMobileMenu();
 
+    document.body.addEventListener("click", function (event) {
+      if (event.target.closest("[data-theme-toggle]")) {
+        cycleTheme();
+      }
+    });
+
     document.body.addEventListener("htmx:afterSwap", function (event) {
       updateTimestamps();
     });
@@ -144,4 +150,10 @@ if (document.readyState === "loading") {
   initTheme();
   updateTimestamps();
   initMobileMenu();
+
+  document.body.addEventListener("click", function (event) {
+    if (event.target.closest("[data-theme-toggle]")) {
+      cycleTheme();
+    }
+  });
 }
