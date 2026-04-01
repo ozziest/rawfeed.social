@@ -6,6 +6,8 @@ import { CsrfToken } from "../components/forms/CsrfToken";
 import { Button } from "../components/forms/Button";
 import { AuthHeading } from "../components/auth/AuthHeading";
 import { AuthFormLink } from "../components/auth/AuthFormLink";
+import { Checkbox } from "../components/forms/Checkbox";
+import { Link } from "../components/shared/Link";
 
 type RegisterProps = BaseProps & { csrfToken: string };
 
@@ -62,6 +64,22 @@ export function Register(props: RegisterProps) {
               placeholder="••••••••"
               error={validation?.confirmPassword}
             />
+
+            <Checkbox name="terms" value="confirmed" error={validation?.terms}>
+              I agree to the{" "}
+              <Link to="/legal/terms" target="_blank">
+                Terms of Service
+              </Link>
+              ,{" "}
+              <Link to="/legal/privacy" target="_blank">
+                Privacy Policy
+              </Link>
+              , and{" "}
+              <Link to="/legal/cookies" target="_blank">
+                Cookie Policy
+              </Link>
+              .
+            </Checkbox>
 
             <Button type="submit">Create account</Button>
 

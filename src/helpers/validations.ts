@@ -67,6 +67,7 @@ export const REGISTER_SCHEMA = z
     email: z.email().toLowerCase(),
     password: z.string().min(8),
     confirmPassword: z.string(),
+    terms: z.enum(["confirmed"]),
   })
   .refine((data) => data.password === data.confirmPassword, {
     path: ["confirmPassword"],
