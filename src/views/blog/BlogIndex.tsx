@@ -21,7 +21,6 @@ export function BlogIndex(props: BlogIndexProps) {
           <BlogPostList posts={posts} />
         </div>
       </div>
-      <Footer />
     </LandingLayout>
   );
 }
