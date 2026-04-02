@@ -2,6 +2,7 @@ import Parser from "rss-parser";
 import { DefaultRSSFeedItem, RSSSourceWithUser } from "../types/shared";
 import crypto from "crypto";
 import postService from "./post.service";
+import { sentryException } from "../sentry";
 
 const parser = new Parser();
 
@@ -16,6 +17,7 @@ export class RSSService {
         fetchedAt: new Date(),
       };
     } catch (error) {
+      sentryException(error);
       throw error;
     }
   }
