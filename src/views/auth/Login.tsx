@@ -6,6 +6,7 @@ import { Button } from "../components/forms/Button";
 import { AuthHeading } from "../components/auth/AuthHeading";
 import { AuthFormLink } from "../components/auth/AuthFormLink";
 import { CsrfToken } from "../components/forms/CsrfToken";
+import Turnstile from "../components/forms/Turnstile";
 
 type LoginProps = BaseProps & { csrfToken: string };
 
@@ -48,7 +49,11 @@ export function Login(props: LoginProps) {
               error={validation?.password}
             />
 
-            <Button type="submit">Sign in</Button>
+            <Turnstile theme={props.theme} error={validation?.turnstile} />
+
+            <Button type="submit" class="hidden turnstile-submit">
+              Sign in
+            </Button>
 
             <AuthFormLink
               label="Don't have an account?"

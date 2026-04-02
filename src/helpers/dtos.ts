@@ -3,11 +3,13 @@ export type RegisterInput = {
   email: string;
   password: string;
   confirmPassword: string;
+  "cf-turnstile-response": string;
 };
 
 export type LoginInput = {
   email: string;
   password: string;
+  "cf-turnstile-response": string;
 };
 
 export type PostInput = {

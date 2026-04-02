@@ -157,3 +157,14 @@ if (document.readyState === "loading") {
     }
   });
 }
+
+function onTurnstileSuccess() {
+  const elements = document.getElementsByClassName("turnstile-submit");
+
+  if (elements.length > 0) {
+    const button = elements[0];
+    button.classList.remove("hidden");
+  } else {
+    throw new Error("The turnstile-submit is not found.");
+  }
+}

@@ -29,9 +29,15 @@ export function Head({
         href={asset("/public/favicon.svg")}
       />
       <link rel="stylesheet" href={asset("/public/css/tailwind.css")} />
+      <link rel="preconnect" href="https://challenges.cloudflare.com" />
       <script src={asset("/public/js/htmx.min.js")}></script>
       <script src={asset("/public/js/simple-cookie-banner.js")}></script>
       <script src={asset("/public/js/app.js")}></script>
+      <script
+        src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+        async
+        defer
+      ></script>
       <meta name="robots" content="index, follow" />
       <meta name="googlebot" content="index, follow, noarchive" />
       <meta name="googlebot-news" content="nosnippet" />

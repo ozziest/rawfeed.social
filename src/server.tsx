@@ -80,6 +80,7 @@ server.register(helmet, {
           scriptSrc: [
             "'self'",
             "https://cloud.umami.is",
+            "https://challenges.cloudflare.com",
             ...(assetBaseUrl ? [assetBaseUrl] : []),
           ],
           imgSrc: [

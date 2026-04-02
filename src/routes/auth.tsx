@@ -16,6 +16,7 @@ import { Register } from "../views/auth/Register";
 import { RegistrationSuccess } from "../views/auth/RegistrationSuccess";
 import { VerificationError } from "../views/auth/VerificationError";
 import { VerificationSuccess } from "../views/auth/VerificationSuccess";
+import { verifyTurnstile } from "../helpers/turnstile";
 
 const useCtx = useJsxViews();
 
@@ -124,6 +125,15 @@ export default async function authRoutes(fastify: FastifyInstance) {
       const input = request.body as RegisterInput;
       setState(input);
 
+      const verified = await verifyTurnstile(
+        input["cf-turnstile-response"],
+        request.ip,
+      );
+      if (!verified) {
+        setValidation({ turnstile: "The Cloudflare check wasn't valid." });
+        return reply.redirect("/auth/register");
+      }
+
       const validation = validate(REGISTER_SCHEMA, request.body);
       if (validation.isNotValid) {
         setValidation(validation.errors);
@@ -199,6 +209,15 @@ export default async function authRoutes(fastify: FastifyInstance) {
 
       const input = request.body as LoginInput;
       setState(input);
+
+      const verified = await verifyTurnstile(
+        input["cf-turnstile-response"],
+        request.ip,
+      );
+      if (!verified) {
+        setValidation({ turnstile: "The Cloudflare check wasn't valid." });
+        return reply.redirect("/auth/login");
+      }
 
       const validation = validate(LOGIN_SCHEMA, input);
       if (validation.isNotValid) {

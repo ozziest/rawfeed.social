@@ -15,7 +15,6 @@ export type ButtonProps = {
   type?: "button" | "submit" | "reset";
   variant?: ButtonVariant;
   class?: string;
-  /** @deprecated use class */
   className?: string;
   children: Children;
   disabled?: boolean;
