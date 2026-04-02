@@ -1,4 +1,4 @@
-import { Head } from "./layouts/Head";
+import { Head } from "./components/layout/Head";
 
 type TooManyRequestsProps = {
   waitTime: string;

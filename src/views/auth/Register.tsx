@@ -8,6 +8,7 @@ import { AuthHeading } from "../components/auth/AuthHeading";
 import { AuthFormLink } from "../components/auth/AuthFormLink";
 import { Checkbox } from "../components/forms/Checkbox";
 import { Link } from "../components/shared/Link";
+import { Turnstile } from "../components/forms/Turnstile";
 
 type RegisterProps = BaseProps & { csrfToken: string };
 
@@ -15,7 +16,7 @@ export function Register(props: RegisterProps) {
   const { csrfToken, validation, state } = props;
 
   return (
-    <AuthLayout {...props}>
+    <AuthLayout {...props} useTurnstile={true}>
       <div class="flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
         <div class="w-full max-w-md space-y-8">
           <FlashMessages state={props.state} />
@@ -81,7 +82,11 @@ export function Register(props: RegisterProps) {
               .
             </Checkbox>
 
-            <Button type="submit">Create account</Button>
+            <Turnstile theme={props.theme} error={validation?.turnstile} />
+
+            <Button type="submit" class="hidden turnstile-submit -mt-2">
+              Create account
+            </Button>
 
             <AuthFormLink
               label="Already have an account?"

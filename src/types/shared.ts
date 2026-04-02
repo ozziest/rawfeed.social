@@ -64,3 +64,5 @@ export type DailyReportItem = {
   hashtag: string;
   total: number;
 };
+
+export type ThemeTypes = "dark" | "light" | "system";

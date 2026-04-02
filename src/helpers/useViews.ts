@@ -61,7 +61,12 @@ export const useJsxViews = () => {
     };
 
     const setValidation = (errors: object) => setFlash("validation", errors);
-    const setState = (state: object) => setFlash("state", state);
+    const setState = (state: object) => {
+      if ((state as any)["cf-turnstile-response"]) {
+        delete (state as any)["cf-turnstile-response"];
+      }
+      setFlash("state", state);
+    };
 
     const setAuthTokens = (accessToken: string, refreshToken: string) => {
       reply.setCookie("accessToken", accessToken, {

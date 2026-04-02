@@ -80,6 +80,7 @@ server.register(helmet, {
           scriptSrc: [
             "'self'",
             "https://cloud.umami.is",
+            "https://challenges.cloudflare.com",
             ...(assetBaseUrl ? [assetBaseUrl] : []),
           ],
           imgSrc: [
@@ -92,11 +93,12 @@ server.register(helmet, {
             "'self'",
             "https://cloud.umami.is",
             "https://api-gateway.umami.dev",
+            "https://challenges.cloudflare.com",
           ],
           fontSrc: ["'self'", ...(assetBaseUrl ? [assetBaseUrl] : [])],
           objectSrc: ["'none'"],
           mediaSrc: ["'none'"],
-          frameSrc: ["'none'"],
+          frameSrc: ["https://challenges.cloudflare.com"],
           baseUri: ["'self'"],
           formAction: ["'self'"],
         },
