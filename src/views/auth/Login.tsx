@@ -6,7 +6,7 @@ import { Button } from "../components/forms/Button";
 import { AuthHeading } from "../components/auth/AuthHeading";
 import { AuthFormLink } from "../components/auth/AuthFormLink";
 import { CsrfToken } from "../components/forms/CsrfToken";
-import Turnstile from "../components/forms/Turnstile";
+import { Turnstile } from "../components/forms/Turnstile";
 
 type LoginProps = BaseProps & { csrfToken: string };
 
@@ -14,7 +14,7 @@ export function Login(props: LoginProps) {
   const { csrfToken, validation, state } = props;
 
   return (
-    <AuthLayout {...props}>
+    <AuthLayout {...props} useTurnstile={true}>
       <div class="flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
         <div class="w-full max-w-md space-y-8">
           <FlashMessages state={props.state} />

@@ -161,10 +161,12 @@ if (document.readyState === "loading") {
 function onTurnstileSuccess() {
   const elements = document.getElementsByClassName("turnstile-submit");
 
-  if (elements.length > 0) {
-    const button = elements[0];
-    button.classList.remove("hidden");
-  } else {
-    throw new Error("The turnstile-submit is not found.");
+  if (elements.length === 0) {
+    console.warn("The turnstile-submit element was not found.");
+    return;
   }
+
+  Array.from(elements).forEach((button) => {
+    button.classList.remove("hidden");
+  });
 }

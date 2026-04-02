@@ -1,4 +1,4 @@
-import { ThemeTypes } from "../../../types/shared";
+import type { ThemeTypes } from "../../../types/shared";
 import { FieldError } from "./FieldError";
 
 const TURNSTILE_SITE_KEY = process.env.TURNSTILE_SITE_KEY;
@@ -10,7 +10,7 @@ type Props = {
   error?: string;
 };
 
-export default function Turnstile({ theme, error }: Props) {
+export function Turnstile({ theme, error }: Props) {
   const selectedTheme = ACCEPTABLE_TURNSTILE_THEMES.includes(theme)
     ? theme
     : undefined;

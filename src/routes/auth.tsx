@@ -123,20 +123,18 @@ export default async function authRoutes(fastify: FastifyInstance) {
       const { setValidation, setState } = useCtx(request, reply);
 
       const input = request.body as RegisterInput;
+      const cfTurnstileToken = input["cf-turnstile-response"];
       setState(input);
-
-      const verified = await verifyTurnstile(
-        input["cf-turnstile-response"],
-        request.ip,
-      );
-      if (!verified) {
-        setValidation({ turnstile: "The Cloudflare check wasn't valid." });
-        return reply.redirect("/auth/register");
-      }
 
       const validation = validate(REGISTER_SCHEMA, request.body);
       if (validation.isNotValid) {
         setValidation(validation.errors);
+        return reply.redirect("/auth/register");
+      }
+
+      const verified = await verifyTurnstile(cfTurnstileToken, request.ip);
+      if (!verified) {
+        setValidation({ turnstile: "The Cloudflare check wasn't valid." });
         return reply.redirect("/auth/register");
       }
 
@@ -208,20 +206,18 @@ export default async function authRoutes(fastify: FastifyInstance) {
       const { setValidation, setState, setAuthTokens } = useCtx(request, reply);
 
       const input = request.body as LoginInput;
+      const cfTurnstileToken = input["cf-turnstile-response"];
       setState(input);
-
-      const verified = await verifyTurnstile(
-        input["cf-turnstile-response"],
-        request.ip,
-      );
-      if (!verified) {
-        setValidation({ turnstile: "The Cloudflare check wasn't valid." });
-        return reply.redirect("/auth/login");
-      }
 
       const validation = validate(LOGIN_SCHEMA, input);
       if (validation.isNotValid) {
         setValidation(validation.errors);
+        return reply.redirect("/auth/login");
+      }
+
+      const verified = await verifyTurnstile(cfTurnstileToken, request.ip);
+      if (!verified) {
+        setValidation({ turnstile: "The Cloudflare check wasn't valid." });
         return reply.redirect("/auth/login");
       }
 

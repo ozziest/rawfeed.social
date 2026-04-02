@@ -2,7 +2,7 @@ import type { Children } from "@kitajs/html";
 import type { Selectable } from "kysely";
 import type { TokenPayload } from "../helpers/tokens";
 import type { Users } from "./database";
-import { ThemeTypes } from "./shared";
+import type { ThemeTypes } from "./shared";
 
 // ---------------------------------------------------------------------------
 // Base props injected into every page component via useJsxViews base()
