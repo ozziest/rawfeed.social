@@ -28,8 +28,8 @@ const sendEmail = async (options: CreateEmailOptions): Promise<void> => {
       Source: FROM_EMAIL,
       Destination: { ToAddresses: [options.to] },
       Message: {
-        Subject: { Data: options.subject },
-        Body: { Html: { Data: options.html } },
+        Subject: { Data: options.subject, Charset: "UTF-8" },
+        Body: { Html: { Data: options.html, Charset: "UTF-8" } },
       },
     }),
   );
