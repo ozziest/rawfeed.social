@@ -72,8 +72,8 @@ const BUDGET_ITEMS: BudgetItem[] = [
   {
     name: "Transactional Email",
     category: "Communication",
-    description: "Resend — free tier",
-    cost: 0.0,
+    description: "AWS SES",
+    cost: 1,
     cycle: "monthly",
   },
   {
