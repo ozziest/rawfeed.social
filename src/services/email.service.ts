@@ -1,23 +1,38 @@
-import { CreateEmailOptions, Resend } from "resend";
 import { logError } from "../helpers/common";
+import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 
-const resend = process.env.RESEND_KEY
-  ? new Resend(process.env.RESEND_KEY)
-  : null;
+type CreateEmailOptions = {
+  to: string;
+  subject: string;
+  html: string;
+};
 
 const FROM_EMAIL = "noreply@rawfeed.social";
 
+const ses = new SESClient({
+  region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+  },
+});
+
 const sendEmail = async (options: CreateEmailOptions): Promise<void> => {
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env.NODE_ENV === "development") {
     console.log(options.html);
     return;
   }
 
-  if (!resend) {
-    throw new Error("Missing RESEND_KEY in production environment");
-  }
-
-  await resend.emails.send(options);
+  await ses.send(
+    new SendEmailCommand({
+      Source: FROM_EMAIL,
+      Destination: { ToAddresses: [options.to] },
+      Message: {
+        Subject: { Data: options.subject, Charset: "UTF-8" },
+        Body: { Html: { Data: options.html, Charset: "UTF-8" } },
+      },
+    }),
+  );
 };
 
 export const sendDataExportReadyEmail = async (
@@ -27,7 +42,6 @@ export const sendDataExportReadyEmail = async (
 ): Promise<void> => {
   try {
     const options: CreateEmailOptions = {
-      from: FROM_EMAIL,
       to,
       subject: "Your Data Export is Ready",
       html: `
@@ -67,7 +81,6 @@ export const sendDataExportFailedEmail = async (
 ): Promise<void> => {
   try {
     const options: CreateEmailOptions = {
-      from: FROM_EMAIL,
       to,
       subject: "Data Export Failed",
       html: `
@@ -94,7 +107,6 @@ export const sendVerificationEmail = async (
 ): Promise<void> => {
   try {
     const options: CreateEmailOptions = {
-      from: FROM_EMAIL,
       to,
       subject: "Verify Your Email Address",
       html: `
