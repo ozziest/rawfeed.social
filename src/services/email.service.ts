@@ -18,7 +18,7 @@ const ses = new SESClient({
 });
 
 const sendEmail = async (options: CreateEmailOptions): Promise<void> => {
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env.NODE_ENV === "development") {
     console.log(options.html);
     return;
   }
