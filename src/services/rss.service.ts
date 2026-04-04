@@ -4,7 +4,9 @@ import crypto from "crypto";
 import postService from "./post.service";
 import { sentryException } from "../sentry";
 
-const parser = new Parser();
+const parser = new Parser({
+  headers: { "User-Agent": "RawfeedBot" },
+});
 
 export class RSSService {
   async fetchFeed(source: RSSSourceWithUser) {
