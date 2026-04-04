@@ -115,7 +115,7 @@ export function PostThreadRow({
         )}
 
         {/* Stats */}
-        <div class="relative z-10 flex gap-6 text-sm">
+        <div class="relative z-10 flex gap-2 text-sm">
           <PostStats
             post={displayPost}
             loggedUser={loggedUser}
