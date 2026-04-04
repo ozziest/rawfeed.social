@@ -66,6 +66,14 @@ export interface PostHashtags {
   updated_at: Date | null;
 }
 
+export interface PostLikes {
+  created_at: Date | null;
+  id: string;
+  post_id: string;
+  updated_at: Date | null;
+  user_id: string;
+}
+
 export interface PostLinks {
   created_at: Date | null;
   id: string;
@@ -129,6 +137,7 @@ export interface DB {
   knex_migrations_lock: KnexMigrationsLock;
   links: Links;
   post_hashtags: PostHashtags;
+  post_likes: PostLikes;
   post_links: PostLinks;
   post_mentions: PostMentions;
   posts: Posts;

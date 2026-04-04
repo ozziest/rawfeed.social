@@ -4,6 +4,7 @@ import { ChatBubbleIcon } from "../icons/ChatBubbleIcon";
 import { ReshareButton } from "./ReshareButton";
 import classNames from "classnames";
 import { PostStat } from "./PostStat";
+import { LikeButton } from "./LikeButton";
 
 type PostStatsProps = {
   post: PostWithContent;
@@ -14,6 +15,7 @@ type PostStatsProps = {
 export function PostStats({ post, loggedUser, csrfToken }: PostStatsProps) {
   return (
     <>
+      <LikeButton post={post} loggedUser={loggedUser} csrfToken={csrfToken} />
       <PostStat
         to={`/posts/${post.id}`}
         count={post.stats_replies}

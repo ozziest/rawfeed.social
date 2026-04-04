@@ -1,15 +1,16 @@
 import { v4 as uuidv4 } from "uuid";
 import { getKnex } from "../db/connection";
 import { PostInput, PostQueryParams } from "../helpers/dtos";
-import { Posts } from "../types/database";
+import { PostLikes, Posts } from "../types/database";
 import { PostWithContent } from "../types/relations";
 import userService from "./user.service";
-import { Selectable } from "kysely";
+import { Insertable, Selectable } from "kysely";
 import contentService from "./content.service";
 import postDetailService from "./postDetailService";
 import linkService from "./link.service";
 import { loggerAll } from "../helpers/common";
 import { POST_SIZE } from "../consts";
+import { bust } from "../helpers/cache";
 
 const TABLE_NAME = "posts";
 
@@ -231,6 +232,70 @@ const unreshare = async (userId: string, postId: string): Promise<void> => {
     .decrement("stats_shares", 1);
 };
 
+const like = async (userId: string, postId: string): Promise<string> => {
+  const original = await getKnex()
+    .table<Selectable<Posts>>(TABLE_NAME)
+    .where("id", postId)
+    .first();
+
+  if (!original) {
+    throw new Error("Post not found");
+  }
+
+  if (original.user_id === userId) {
+    throw new Error("Cannot reshare your own post");
+  }
+
+  const postLikedByUser = await getKnex()
+    .table<Selectable<PostLikes>>("post_likes")
+    .where("post_id", postId)
+    .where("user_id", userId)
+    .first();
+  if (postLikedByUser) {
+    throw new Error("You already like the post");
+  }
+
+  const likeId = uuidv4();
+  await getKnex().table<Insertable<PostLikes>>("post_likes").insert({
+    id: likeId,
+    user_id: userId,
+    post_id: postId,
+    created_at: new Date(),
+    updated_at: new Date(),
+  });
+
+  await getKnex()
+    .table(TABLE_NAME)
+    .where("id", postId)
+    .increment("stats_likes", 1);
+
+  await Promise.all([
+    bust("postDetail.services.likes"),
+    bust("postDetail.services.getLikedPostsByUser"),
+  ]);
+
+  return likeId;
+};
+
+const removeLike = async (userId: string, postId: string): Promise<void> => {
+  await getKnex()
+    .table<PostLikes>("post_likes")
+    .where("user_id", userId)
+    .where("post_id", postId)
+    .delete();
+
+  await getKnex()
+    .table(TABLE_NAME)
+    .where("id", postId)
+    .where("stats_likes", ">", 0)
+    .decrement("stats_likes", 1);
+
+  await Promise.all([
+    bust("postDetail.services.likes"),
+    bust("postDetail.services.getLikedPostsByUser"),
+  ]);
+};
+
 const getReplies = async (
   postId: string,
   loggedUserId?: string,
@@ -253,6 +318,17 @@ const getReshareByUser = async (
     .first();
 };
 
+const getLikesByUser = async (
+  userId: string,
+  postId: string,
+): Promise<Selectable<PostLikes> | undefined> => {
+  return getKnex()
+    .table<Selectable<PostLikes>>("post_likes")
+    .where("user_id", userId)
+    .where("post_id", postId)
+    .first();
+};
+
 const mergeWithContent = async (
   posts: Selectable<Posts>[],
   loggedUserId?: string,
@@ -270,9 +346,10 @@ const mergeWithContent = async (
     ),
   );
 
-  const [users, details] = await Promise.all([
+  const [users, details, likedPostsByUser] = await Promise.all([
     userService.getByIds(userIds),
     postDetailService.getDetailsByPost(postIds),
+    postDetailService.getLikedPostsByUser(postIds, loggedUserId),
   ]);
 
   // Setting user map
@@ -280,6 +357,7 @@ const mergeWithContent = async (
 
   // Setting link map
   const linkIds = details.links.map((link) => link.link_id);
+
   const links = await linkService.getAllByIds(linkIds);
   const linkMap = new Map(links.map((link) => [link.id, link]));
   details.links.forEach((postLink) => {
@@ -336,6 +414,10 @@ const mergeWithContent = async (
     const postWithContent: PostWithContent = {
       ...post,
       user: userMap.get(post.user_id)!,
+      likeCount:
+        details.postLikesAsGrouped.find((item) => item.post_id === post.id)
+          ?.count || 0,
+      isLiked: likedPostsByUser.some((postId) => postId === post.id),
       links: details.links.filter((link) => link.post_id === post.id),
       mentions: details.mentions.filter((link) => link.post_id === post.id),
       hashtags: details.hashtags.filter((link) => link.post_id === post.id),
@@ -366,6 +448,9 @@ export default loggerAll(
     unreshare,
     getReshareByUser,
     getReplies,
+    getLikesByUser,
+    removeLike,
+    like,
   },
   "post.service",
 );

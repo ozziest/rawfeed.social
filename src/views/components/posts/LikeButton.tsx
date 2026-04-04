@@ -1,33 +1,25 @@
 import type { PostWithContent } from "../../../types/relations";
 import type { TokenPayload } from "../../../helpers/tokens";
-import { ArrowsRightLeftIcon } from "../icons/ArrowsRightLeftIcon";
 import { CsrfToken } from "../forms/CsrfToken";
 import classNames from "classnames";
+import { HeartIcon } from "../icons/HearthIcon";
 
-type ReshareButtonProps = {
+type LikeButtonProps = {
   post: PostWithContent;
   loggedUser?: TokenPayload;
   csrfToken?: string;
 };
 
-export function ReshareButton({
-  post,
-  loggedUser,
-  csrfToken,
-}: ReshareButtonProps) {
-  // Resharing a reshare is not allowed; only original posts can be reshared
-  const isOriginal = post.reshare_id === null;
+export function LikeButton({ post, loggedUser, csrfToken }: LikeButtonProps) {
   const isOwnPost = !!loggedUser && post.user_id === loggedUser.userId;
-  const canReshare = !!loggedUser && isOriginal && !isOwnPost && csrfToken;
-  const isActive = post.userReshared === true;
-  const count = post.stats_shares ?? 0;
+  const canLike = !!loggedUser && !isOwnPost && csrfToken;
 
-  if (canReshare) {
+  if (canLike) {
     return (
-      <span data-reshare-btn>
+      <span data-like-btn>
         <form
-          hx-post={`/posts/reshare/${post.id}`}
-          hx-target="closest [data-reshare-btn]"
+          hx-post={`/posts/like/${post.id}`}
+          hx-target="closest [data-like-btn]"
           hx-swap="outerHTML"
           hx-disabled-elt="find button"
           class="inline"
@@ -37,17 +29,17 @@ export function ReshareButton({
             type="submit"
             class={classNames([
               "flex items-center gap-1 transition-colors py-1 px-2 rounded-md cursor-pointer",
-              "hover:text-black hover:bg-gray-200",
-              "dark:hover:text-green-400 dark:hover:bg-gray-700",
+              "hover:text-red-500 hover:bg-gray-200",
+              "dark:hover:text-red-300 dark:hover:bg-gray-700",
               {
-                "text-green-600": isActive,
-                "text-gray-600 dark:text-gray-400": !isActive,
+                "text-red-400": post.isLiked,
+                "text-gray-600 dark:text-gray-400": !post.isLiked,
               },
             ])}
-            title={isActive ? "Remove reshare" : "Reshare this post"}
+            title={post.isLiked ? "Remove like" : "Like this post"}
           >
-            <ArrowsRightLeftIcon class="w-5 h-5" />
-            <span>{count}</span>
+            <HeartIcon class="w-5 h-5" />
+            <span>{post.likeCount}</span>
           </button>
         </form>
       </span>
@@ -55,7 +47,7 @@ export function ReshareButton({
   }
 
   return (
-    <span data-reshare-btn>
+    <span data-like-btn>
       <span
         class={classNames([
           "flex items-center gap-1 transition-colors py-1 px-2 rounded-md",
@@ -66,8 +58,8 @@ export function ReshareButton({
           },
         ])}
       >
-        <ArrowsRightLeftIcon class="w-5 h-5" />
-        <span>{count}</span>
+        <HeartIcon class="w-5 h-5" />
+        <span>{post.likeCount}</span>
       </span>
     </span>
   );

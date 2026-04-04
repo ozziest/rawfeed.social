@@ -9,13 +9,29 @@ const redis = new Redis({
   port: redisPort,
 });
 
-export async function cache<T>(
-  key: string,
-  ttl: number,
-  callback: () => Promise<T> | T,
-  params?: Record<string, any>,
-): Promise<T> {
-  let cacheKey = key;
+type ParamsType = Record<string, any>;
+
+type CacheKeyPrefix =
+  | "follow.service.isFollowing"
+  | "follow.service.getFollowers"
+  | "follow.service.getFollowing"
+  | "follow.service.getFollowerCount"
+  | "follow.service.getFollowingCount"
+  | "follow.service.getFollowingIds"
+  | "hashtag.service.getDailyReport"
+  | "postDetail.services.likes"
+  | "postDetail.services.links"
+  | "postDetail.services.mentions"
+  | "postDetail.services.hashtags"
+  | "postDetail.services.getLikedPostsByUser"
+  | "user.service.getByIds"
+  | "user.service.getLastMembers"
+  | "user.service.getLastBots"
+  | "blog:getAllPosts"
+  | "link.service.getAllByIds";
+
+const toCacheKey = (key: CacheKeyPrefix, params?: ParamsType): string => {
+  let cacheKey: string = key;
   if (params) {
     const paramString = Object.entries(params)
       .sort(([a], [b]) => a.localeCompare(b)) // Consistent ordering
@@ -24,9 +40,20 @@ export async function cache<T>(
     cacheKey = `${key}:${paramString}`;
   }
 
+  return cacheKey;
+};
+
+export async function cache<T>(
+  keyPrefix: CacheKeyPrefix,
+  ttl: number,
+  callback: () => Promise<T> | T,
+  params?: Record<string, any>,
+): Promise<T> {
+  const cacheKey = toCacheKey(keyPrefix, params);
+
   const cached = await Sentry.startSpan(
     {
-      name: key,
+      name: keyPrefix,
       op: "cache.get",
       attributes: {
         "cache.key": [cacheKey],
@@ -54,7 +81,7 @@ export async function cache<T>(
 
   await Sentry.startSpan(
     {
-      name: key,
+      name: keyPrefix,
       op: "cache.put",
       attributes: {
         "cache.key": [cacheKey],
@@ -69,6 +96,13 @@ export async function cache<T>(
   );
 
   return value;
+}
+
+export async function bust(keyPrefix: CacheKeyPrefix): Promise<void> {
+  const keys = await redis.keys(`${keyPrefix}*`);
+  if (keys.length > 0) {
+    await redis.del(...keys);
+  }
 }
 
 export { redis };
