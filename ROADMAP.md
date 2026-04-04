@@ -32,16 +32,15 @@
 
 ## Phase 4: More features
 
-- [ ] Implement rate limiting
-- [ ] Add bot protection
-- [ ] Implement follow/unfollow functionality
+- [x] Implement rate limiting
+- [x] Add bot protection
+- [x] Implement follow/unfollow functionality
 - [ ] Add mentions support (@username)
 - [ ] Add hashtags support (#topic)
 - [ ] Build basic search (users and posts)
 - [ ] Create notification system (mentions, new followers)
 - [ ] Add multi-language support
 - [ ] Improve accessibility (WCAG compliance)
-- [ ] Build data export/import tools
 - [ ] Define ethical metrics (engagement quality vs quantity)
 
 ## Phase 5: Moderation
@@ -52,7 +51,7 @@
 
 ## Phase 6: Privacy & Legal Commitments
 
-- [ ] Data Export Tool - One-click download of account data as JSON
+- [x] Data Export Tool - One-click download of account data as JSON
 - [ ] Self-service Account Deletion - Delete account with 30-day recovery window
 - [ ] Privacy Settings Dashboard - Manage email preferences, error tracking opt-out, etc.
 - [ ] Data Access Portal - View data we hold about you in your account
