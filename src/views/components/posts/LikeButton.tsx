@@ -53,7 +53,7 @@ export function LikeButton({ post, loggedUser, csrfToken }: LikeButtonProps) {
           "flex items-center gap-1 transition-colors py-1 px-2 rounded-md",
           {
             "text-gray-600 dark:text-gray-400 cursor-not-allowed": isOwnPost,
-            "text-gray-400 dark:text-gray-600 opacity-50 dark:hover:text-white dark:hover:bg-gray-700 hover:text-black hover:bg-gray-200 cursor-pointer":
+            "text-gray-400 dark:text-gray-600 opacity-50 cursor-not-allowed":
               !isOwnPost,
           },
         ])}
