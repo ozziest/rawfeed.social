@@ -2,7 +2,7 @@ import type { PostWithContent } from "../../../types/relations";
 import type { TokenPayload } from "../../../helpers/tokens";
 import { CsrfToken } from "../forms/CsrfToken";
 import classNames from "classnames";
-import { HeartIcon } from "../icons/HearthIcon";
+import { HeartIcon } from "../icons/HeartIcon";
 
 type LikeButtonProps = {
   post: PostWithContent;

@@ -243,7 +243,7 @@ const like = async (userId: string, postId: string): Promise<string> => {
   }
 
   if (original.user_id === userId) {
-    throw new Error("Cannot reshare your own post");
+    throw new Error("Cannot like your own post");
   }
 
   const postLikedByUser = await getKnex()

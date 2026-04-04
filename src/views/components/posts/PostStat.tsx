@@ -1,4 +1,4 @@
-import { Children, Component } from "@kitajs/html";
+import { Children } from "@kitajs/html";
 import classNames from "classnames";
 
 type Props = {
@@ -18,7 +18,7 @@ export function PostStat({ to, icon, count }: Props) {
       ])}
     >
       {icon}
-      <span>{count ?? 0} </span>
+      <span>{count ?? 0}</span>
     </a>
   );
 }

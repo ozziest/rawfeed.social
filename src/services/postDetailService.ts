@@ -98,13 +98,20 @@ const getDetailsByPost = async (postIds: string[]) => {
     cache(
       "postDetail.services.likes",
       60 * 15,
-      async () =>
-        getKnex()
+      async () => {
+        const rows = await getKnex()
           .table<PostLikes>("post_likes")
           .whereIn("post_id", postIds)
           .select("post_id")
           .count("id as count")
-          .groupBy("post_id"),
+          .groupBy("post_id");
+        return rows.map((row) => {
+          return {
+            ...row,
+            count: Number(row.count),
+          };
+        });
+      },
       { postIds },
     ),
     cache(

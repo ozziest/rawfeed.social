@@ -2,7 +2,6 @@ import type { PostWithContent } from "../../../types/relations";
 import type { TokenPayload } from "../../../helpers/tokens";
 import { ChatBubbleIcon } from "../icons/ChatBubbleIcon";
 import { ReshareButton } from "./ReshareButton";
-import classNames from "classnames";
 import { PostStat } from "./PostStat";
 import { LikeButton } from "./LikeButton";
 
