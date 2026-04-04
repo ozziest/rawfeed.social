@@ -99,10 +99,24 @@ export async function cache<T>(
 }
 
 export async function bust(keyPrefix: CacheKeyPrefix): Promise<void> {
-  const keys = await redis.keys(`${keyPrefix}*`);
-  if (keys.length > 0) {
-    await redis.del(...keys);
-  }
+  const pattern = `${keyPrefix}*`;
+  let cursor = "0";
+
+  do {
+    const [nextCursor, keys] = await redis.scan(
+      cursor,
+      "MATCH",
+      pattern,
+      "COUNT",
+      "100",
+    );
+
+    if (keys.length > 0) {
+      await redis.del(...keys);
+    }
+
+    cursor = nextCursor;
+  } while (cursor !== "0");
 }
 
 export { redis };
