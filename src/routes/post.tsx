@@ -12,6 +12,7 @@ import { ReshareButton } from "../views/components/posts/ReshareButton";
 import { PostDetail } from "../views/posts/PostDetail";
 import { ReplySection } from "../views/posts/ReplySection";
 import { NotFound } from "../views/NotFound";
+import { LikeButton } from "../views/components/posts/LikeButton";
 
 const useCtx = useJsxViews();
 
@@ -169,6 +170,58 @@ export default async function postRoutes(fastify: FastifyInstance) {
 
       return html(
         <ReshareButton
+          post={post}
+          loggedUser={request.loggedUser}
+          csrfToken={csrfToken}
+        />,
+      );
+    },
+  );
+
+  fastify.post(
+    "/posts/like/:postId",
+    {
+      preHandler: [fastify.csrfProtection, verifyToken, requireAuth],
+      config: { rateLimit: { max: 30, timeWindow: "1 minute" } },
+    },
+    async (request, reply) => {
+      const { postId } = request.params as { postId: string };
+      const { html, notify } = useCtx(request, reply);
+      const csrfToken = reply.generateCsrf();
+      const userId = request.loggedUser!.userId;
+
+      const existing = await postService.getLikesByUser(userId, postId);
+      if (existing) {
+        await postService.removeLike(userId, postId);
+      } else {
+        try {
+          await postService.like(userId, postId);
+        } catch (err) {
+          const message =
+            err instanceof Error ? err.message : "Cannot like this post";
+          notify(message);
+          const current = await postService.getById(postId, userId);
+          if (!current) {
+            return reply.status(404).send();
+          }
+          return html(
+            <LikeButton
+              post={current}
+              loggedUser={request.loggedUser}
+              csrfToken={csrfToken}
+            />,
+          );
+        }
+      }
+
+      const post = await postService.getById(postId, userId);
+      if (!post) {
+        notify("Post not found");
+        return reply.status(404).send();
+      }
+
+      return html(
+        <LikeButton
           post={post}
           loggedUser={request.loggedUser}
           csrfToken={csrfToken}

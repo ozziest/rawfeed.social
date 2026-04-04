@@ -1,9 +1,14 @@
 import { v4 as uuidv4 } from "uuid";
 import { getKnex } from "../db/connection";
-import { PostHashtags, PostLinks, PostMentions } from "../types/database";
+import {
+  PostHashtags,
+  PostLikes,
+  PostLinks,
+  PostMentions,
+} from "../types/database";
 import { ContentMap } from "../types/shared";
 import { Insertable } from "kysely";
-import { PostLinkWithLink } from "../types/relations";
+import { PostLikesAsGrouped, PostLinkWithLink } from "../types/relations";
 import { loggerAll } from "../helpers/common";
 import { cache } from "../helpers/cache";
 
@@ -82,6 +87,7 @@ const addHashtags = async (postId: string, content: ContentMap) => {
 const getDetailsByPost = async (postIds: string[]) => {
   if (postIds.length === 0) {
     return {
+      postLikesAsGrouped: [],
       links: [],
       mentions: [],
       hashtags: [],
@@ -89,6 +95,25 @@ const getDetailsByPost = async (postIds: string[]) => {
   }
 
   const promises = [
+    cache(
+      "postDetail.services.likes",
+      60 * 15,
+      async () => {
+        const rows = await getKnex()
+          .table<PostLikes>("post_likes")
+          .whereIn("post_id", postIds)
+          .select("post_id")
+          .count("id as count")
+          .groupBy("post_id");
+        return rows.map((row) => {
+          return {
+            ...row,
+            count: Number(row.count),
+          };
+        });
+      },
+      { postIds },
+    ),
     cache(
       "postDetail.services.links",
       60 * 15,
@@ -115,19 +140,41 @@ const getDetailsByPost = async (postIds: string[]) => {
       { postIds },
     ),
   ];
-  const [links, mentions, hashtags] = await Promise.all(promises);
+  const [likes, links, mentions, hashtags] = await Promise.all(promises);
 
   return {
+    postLikesAsGrouped: likes as PostLikesAsGrouped[],
     links: links as PostLinkWithLink[],
     mentions: mentions as PostMentions[],
     hashtags: hashtags as PostHashtags[],
   };
 };
 
+const getLikedPostsByUser = async (postIds: string[], userId?: string) => {
+  if (!userId || postIds.length === 0) {
+    return [];
+  }
+
+  const likes = await cache(
+    "postDetail.services.getLikedPostsByUser",
+    60 * 15,
+    async () =>
+      getKnex()
+        .table<PostLikes>("post_likes")
+        .whereIn("post_id", postIds)
+        .where("user_id", userId)
+        .select("post_id"),
+    { postIds, userId },
+  );
+
+  return likes.map((like: { post_id: string }) => like.post_id);
+};
+
 export default loggerAll(
   {
     insert,
     getDetailsByPost,
+    getLikedPostsByUser,
   },
   "postDetail.service",
 );
