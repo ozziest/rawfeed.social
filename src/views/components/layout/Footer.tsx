@@ -110,6 +110,11 @@ export function Footer() {
                 </a>
               </li>
               <li>
+                <a href="/legal/dmca" class="text-gray-300">
+                  Copyright Policy
+                </a>
+              </li>
+              <li>
                 <a
                   href="https://github.com/ozziest/rawfeed.social/blob/main/LICENSE"
                   target="_blank"

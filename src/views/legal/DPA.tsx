@@ -12,7 +12,7 @@ export function DPAPage(props: Props) {
             Data Processing Agreement (DPA)
           </h1>
           <p class="text-gray-600 dark:text-gray-400 mb-8">
-            Last Updated: February 2026
+            Last Updated: 05 April 2026
           </p>
 
           <div class="prose prose-sm max-w-none space-y-6">
@@ -224,7 +224,8 @@ export function DPAPage(props: Props) {
                 </li>
                 <li>
                   <strong>Profile Data:</strong> Bio, profile picture, custom
-                  domain, domain verification status
+                  domain, domain verification status, RSS feed URLs submitted by
+                  the user
                 </li>
                 <li>
                   <strong>Content Data:</strong> Posts, replies, shares, likes,
@@ -254,6 +255,10 @@ export function DPAPage(props: Props) {
                 <li>
                   <strong>Service Delivery:</strong> Providing the Rawfeed
                   microblogging platform
+                </li>
+                <li>
+                  <strong>RSS Feed Syndication:</strong> Fetching and displaying
+                  content from RSS feed URLs submitted by users
                 </li>
                 <li>
                   <strong>Authentication & Security:</strong> User login,

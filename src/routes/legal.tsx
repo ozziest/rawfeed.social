@@ -7,6 +7,7 @@ import { CookiesPage } from "../views/legal/Cookies";
 import { DataRightsPage } from "../views/legal/DataRights";
 import { DPAPage } from "../views/legal/DPA";
 import { BotsLegalPage } from "../views/legal/Bots";
+import { DMCAPage } from "../views/legal/DMCA";
 
 const useCtx = useJsxViews();
 
@@ -62,6 +63,15 @@ export default async function legalRoutes(fastify: FastifyInstance) {
     async (request, reply) => {
       const { html, base } = useCtx(request, reply);
       return html(<DPAPage {...base()} />);
+    },
+  );
+
+  fastify.get(
+    "/legal/dmca",
+    { preHandler: [verifyToken] },
+    async (request, reply) => {
+      const { html, base } = useCtx(request, reply);
+      return html(<DMCAPage {...base()} />);
     },
   );
 }

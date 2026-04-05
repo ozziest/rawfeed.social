@@ -12,7 +12,7 @@ export function BotsLegalPage(props: Props) {
             Bot Accounts & Automated Content
           </h1>
           <p class="text-gray-600 dark:text-gray-400 mb-8">
-            Last Updated: February 2026
+            Last Updated: 05 April 2026
           </p>
 
           <div class="prose prose-sm max-w-none space-y-6">
@@ -30,41 +30,39 @@ export function BotsLegalPage(props: Props) {
               <h2 class="text-2xl font-bold mb-4">1. How Bot Accounts Work</h2>
 
               <h3 class="text-lg font-semibold mb-3">
-                1.1 Automated Content Ingestion
+                1.1 User-Submitted RSS Feeds
               </h3>
               <p>
-                Rawfeed automatically creates bot accounts for curated external
-                RSS feeds across various categories:
+                Bot accounts on Rawfeed are created by users, not by Rawfeed
+                itself. When a user submits an external RSS feed URL, Rawfeed
+                reviews the submission for technical validity, source quality,
+                and safety before approving it. Once approved, Rawfeed
+                automatically creates a clearly-labeled bot account that
+                syndicates content from that feed.
               </p>
+              <p class="mt-4">This review covers:</p>
               <ul class="list-disc pl-6 space-y-2">
                 <li>
-                  <strong>Technology:</strong> Hacker News, TechCrunch, The
-                  Verge, etc.
+                  <strong>Technical validity:</strong> The URL must resolve to a
+                  valid, parseable RSS or Atom feed
                 </li>
                 <li>
-                  <strong>News & Politics:</strong> Reuters, Associated Press,
-                  BBC, etc.
+                  <strong>Source quality:</strong> The feed should be from a
+                  real, functional publisher — not spam, scraper sites, or
+                  low-quality aggregators
                 </li>
                 <li>
-                  <strong>Science & Nature:</strong> Nature, Science Daily,
-                  NASA, etc.
-                </li>
-                <li>
-                  <strong>Business & Economics:</strong> Bloomberg, Financial
-                  Times, Economist, etc.
-                </li>
-                <li>
-                  <strong>Entertainment & Culture:</strong> Various
-                  entertainment publications
-                </li>
-                <li>
-                  <strong>Gaming & Sports:</strong> Various gaming and sports
-                  outlets
-                </li>
-                <li>
-                  <strong>And many more...</strong>
+                  <strong>Safety:</strong> The source must not point to known
+                  malicious, harmful, or policy-violating domains
                 </li>
               </ul>
+              <p class="mt-4">
+                This review does <strong>not</strong> cover copyright
+                compliance. The user who submits the feed remains responsible
+                for ensuring the feed is lawfully available for syndication.
+                Rawfeed does not verify or guarantee the copyright status of any
+                RSS feed or its contents.
+              </p>
 
               <h3 class="text-lg font-semibold mb-3 mt-4">1.2 Bot Behavior</h3>
               <p>Bot accounts:</p>
@@ -156,12 +154,12 @@ export function BotsLegalPage(props: Props) {
               </ul>
 
               <h3 class="text-lg font-semibold mb-3 mt-4">
-                3.2 Source Attribution & Licensing
+                3.2 Source Attribution &amp; Copyright Responsibility
               </h3>
               <p>
-                All content posted by bot accounts is from publicly available
-                RSS feeds. Bot accounts respect the original authors' copyright
-                and licensing:
+                All content posted by bot accounts originates from RSS feeds
+                submitted by Rawfeed users. Rawfeed preserves original links and
+                credits authors and publications. However:
               </p>
               <ul class="list-disc pl-6 space-y-2">
                 <li>
@@ -170,7 +168,19 @@ export function BotsLegalPage(props: Props) {
                 </li>
                 <li>Authors and publications are credited</li>
                 <li>
-                  Content is used under fair use and public sharing agreements
+                  The user who submitted the RSS feed is responsible for
+                  ensuring the feed is lawfully available for syndication
+                </li>
+                <li>
+                  If you believe a syndicated feed infringes your copyright, see
+                  our{" "}
+                  <a
+                    href="/legal/dmca"
+                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
+                  >
+                    Copyright Policy
+                  </a>{" "}
+                  to submit a takedown request
                 </li>
               </ul>
 
@@ -240,31 +250,32 @@ export function BotsLegalPage(props: Props) {
             </section>
 
             <section>
-              <h2 class="text-2xl font-bold mb-4">
-                5. Why We Use Bot Accounts
-              </h2>
+              <h2 class="text-2xl font-bold mb-4">5. Why Bot Accounts Exist</h2>
 
               <h3 class="text-lg font-semibold mb-3">
-                5.1 Content Curation & Discovery
+                5.1 User-Driven Content Discovery
               </h3>
               <p>
-                Bot accounts help surface quality, verified content from trusted
-                sources. This provides:
+                Bot accounts exist because users choose to add them. Users
+                decide which RSS feeds they want to bring onto the platform
+                themselves. This provides:
               </p>
               <ul class="list-disc pl-6 space-y-2">
-                <li>A diverse range of high-quality sources in one place</li>
                 <li>
-                  Fair, chronological access to curated content (no algorithmic
+                  Full user control over which sources appear on the platform
+                </li>
+                <li>
+                  Fair, chronological access to content (no algorithmic
                   manipulation)
                 </li>
                 <li>
-                  Support for users who want to follow specific topics or
-                  publications
+                  The ability to follow any publicly available RSS feed from any
+                  publisher
                 </li>
               </ul>
 
               <h3 class="text-lg font-semibold mb-3 mt-4">
-                5.2 User Control & Decentralization
+                5.2 User Control &amp; Decentralization
               </h3>
               <p>
                 Unlike algorithm-driven platforms where recommendations are
@@ -274,15 +285,16 @@ export function BotsLegalPage(props: Props) {
                 <li>Transparent and clearly labeled</li>
                 <li>Chronological and non-manipulative</li>
                 <li>Controllable (mute, block, or filter as you see fit)</li>
+                <li>Added and governed by users, not by Rawfeed</li>
               </ul>
 
               <h3 class="text-lg font-semibold mb-3 mt-4">
                 5.3 Supporting Open Publishing Standards
               </h3>
               <p>
-                Rawfeed is RSS-native. By aggregating RSS feeds, we support open
-                publishing standards and reduce dependence on proprietary
-                algorithms.
+                Rawfeed is RSS-native. By letting users add any RSS feed, we
+                support open publishing standards and reduce dependence on
+                proprietary algorithms and walled-garden content curation.
               </p>
             </section>
 
