@@ -2,7 +2,6 @@ import crypto from "crypto";
 import Sentry from "@sentry/node";
 import { Selectable } from "kysely";
 import { Users } from "../types/database";
-import { RSS_RESOURCES } from "../rssResources";
 import { POST_SIZE } from "../consts";
 import { PostWithContent } from "../types/relations";
 import { asset } from "./asset";
@@ -34,12 +33,10 @@ export const getAvatar = (user: Selectable<Users>) => {
     return getGravatarUrl(user.email);
   }
 
-  const resource = RSS_RESOURCES.find(
-    (item) => item.username === user.username,
-  );
-  if (resource) {
-    return resource.svg;
+  if (user.bot_type === "rss") {
+    return asset("/public/images/rss/rss.svg");
   }
+
   return asset("/public/images/default_avatar.svg");
 };
 

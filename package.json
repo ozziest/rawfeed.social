@@ -60,6 +60,7 @@
     "adm-zip": "^0.5.16",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.3",
+    "bullmq": "^5.73.0",
     "classnames": "^2.5.1",
     "croner": "^10.0.1",
     "date-fns": "^4.1.0",

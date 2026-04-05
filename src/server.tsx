@@ -20,7 +20,10 @@ import csrf from "@fastify/csrf-protection";
 import Sentry from "@sentry/node";
 import { detectMode } from "./middleware/detectMode.ts";
 import fs from "fs/promises";
-import { initializeRSSScheduler } from "./scheduler/rss-scheduler";
+import {
+  initializeRSSScheduler,
+  shutdownRSSScheduler,
+} from "./scheduler/rss-scheduler";
 import { initializeExportWorker } from "./scheduler/export-worker";
 import { initializeSitemapScheduler } from "./scheduler/sitemap-scheduler";
 import redirectRoutes from "./routes/redirect";
@@ -284,5 +287,15 @@ const start = async () => {
     process.exit(1);
   }
 };
+
+const shutdown = async (signal: string) => {
+  server.log.info(`Received ${signal}, shutting down gracefully`);
+  await shutdownRSSScheduler();
+  await server.close();
+  process.exit(0);
+};
+
+process.on("SIGTERM", () => shutdown("SIGTERM"));
+process.on("SIGINT", () => shutdown("SIGINT"));
 
 start();

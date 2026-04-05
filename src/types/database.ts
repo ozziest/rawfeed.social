@@ -108,6 +108,21 @@ export interface Posts {
   user_id: string;
 }
 
+export interface RssSources {
+  bio: string | null;
+  bot_user_id: string | null;
+  category: string | null;
+  created_at: Generated<Date>;
+  id: string;
+  language: Generated<string>;
+  name: string;
+  status: Generated<"approved" | "pending" | "rejected">;
+  submitted_by: string;
+  update_frequency: Generated<string>;
+  updated_at: Generated<Date>;
+  url: string;
+}
+
 export interface Users {
   bio: string | null;
   bot_type: "rss" | "system" | null;
@@ -141,5 +156,6 @@ export interface DB {
   post_links: PostLinks;
   post_mentions: PostMentions;
   posts: Posts;
+  rss_sources: RssSources;
   users: Users;
 }
