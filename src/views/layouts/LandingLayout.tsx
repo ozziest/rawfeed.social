@@ -3,6 +3,7 @@ import type { BaseProps } from "../../types/views";
 import { Footer } from "../components/layout/Footer";
 import { Head } from "../components/layout/Head";
 import { Navbar } from "../components/layout/Navbar";
+import { ProductHunt } from "../components/layout/ProductHunt";
 
 type LandingLayoutProps = BaseProps & { children?: Children };
 
@@ -29,6 +30,7 @@ export function LandingLayout({
       <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
         <Navbar mode={mode} loggedUser={loggedUser} theme={theme} />
         {children}
+        <ProductHunt />
         <Footer />
       </body>
     </html>

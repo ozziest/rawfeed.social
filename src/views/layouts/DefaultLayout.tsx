@@ -4,6 +4,7 @@ import { Head } from "../components/layout/Head";
 import { Navbar } from "../components/layout/Navbar";
 import { Footer } from "../components/layout/Footer";
 import { FooterCustom } from "../components/layout/FooterCustom";
+import { ProductHunt } from "../components/layout/ProductHunt";
 
 type DefaultLayoutProps = BaseProps & { children?: Children };
 
@@ -30,6 +31,7 @@ export function DefaultLayout({
       <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
         <Navbar mode={mode} loggedUser={loggedUser} theme={theme} />
         {children}
+        <ProductHunt />
         {mode === "custom" ? <FooterCustom /> : <Footer />}
       </body>
     </html>
