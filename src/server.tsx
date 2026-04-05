@@ -87,6 +87,7 @@ server.register(helmet, {
             "'self'",
             "data:",
             "https://www.gravatar.com",
+            "https://api.producthunt.com",
             ...(assetBaseUrl ? [assetBaseUrl] : []),
           ],
           connectSrc: [
