@@ -55,3 +55,15 @@
 - [ ] Self-service Account Deletion - Delete account with 30-day recovery window
 - [ ] Privacy Settings Dashboard - Manage email preferences, error tracking opt-out, etc.
 - [ ] Data Access Portal - View data we hold about you in your account
+
+## Phase 7: Respect
+
+- [x] Create DMCA Policy page
+- [x] Write Terms of Service
+- [x] Add repeat infringer policy
+- [x] Limit content to title + link only
+- [x] Build DMCA notice processing workflow
+- [x] Check robots.txt
+- [x] Set custom User-Agent (e.g. "RawfeedBot")
+- [x] Add Privacy Policy (GDPR)
+- [ ] Add "Report this source" button
