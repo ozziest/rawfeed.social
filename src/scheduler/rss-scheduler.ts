@@ -5,9 +5,11 @@ import rssSourceService from "../services/rssSource.service";
 import { createRssQueue, createRssWorker, RssFetchJobData } from "./rss-queue";
 import { RssSourceRow } from "../types/shared";
 import { IS_DEVELOPMENT } from "../consts";
+import { queueJobsWaiting } from "../metrics";
 
 let queue: Queue<RssFetchJobData> | null = null;
 let worker: Worker<RssFetchJobData> | null = null;
+let waitingPollInterval: ReturnType<typeof setInterval> | null = null;
 
 async function ensureBotUser(row: RssSourceRow): Promise<void> {
   const source = {
@@ -35,7 +37,7 @@ async function scheduleSource(
     row.id,
     { pattern: row.update_frequency },
     {
-      name: `fetch:${row.name}`,
+      name: `fetch:${row.username}`,
       data: { sourceId: row.id },
       opts: {
         removeOnComplete: { count: 10 },
@@ -45,7 +47,7 @@ async function scheduleSource(
   );
 
   if (IS_DEVELOPMENT) {
-    await queue.add(`fetch:${row.name}:immediate`, { sourceId: row.id });
+    await queue.add(`fetch:${row.username}:immediate`, { sourceId: row.id });
   }
 }
 
@@ -69,12 +71,20 @@ export async function initializeRSSScheduler() {
 
   await Promise.all(rows.map((row) => scheduleSource(queue!, row)));
 
+  waitingPollInterval = setInterval(async () => {
+    const count = await queue!.getWaitingCount();
+    queueJobsWaiting.set(count);
+  }, 10_000);
+
   console.log(`[RSS Scheduler] ${rows.length} sources queued via BullMQ`);
 }
 
 export async function shutdownRSSScheduler() {
-  await worker?.close();
-  await queue?.close();
+  if (waitingPollInterval) {
+    clearInterval(waitingPollInterval);
+    waitingPollInterval = null;
+  }
+  await Promise.all([worker?.close(), queue?.close()]);
   queue = null;
   worker = null;
 }

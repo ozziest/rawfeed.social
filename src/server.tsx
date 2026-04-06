@@ -15,6 +15,7 @@ import jwt from "@fastify/jwt";
 import postRoutes from "./routes/post";
 import userRoutes from "./routes/user";
 import helmet from "@fastify/helmet";
+import metricsPlugin from "fastify-metrics";
 import rateLimit from "@fastify/rate-limit";
 import csrf from "@fastify/csrf-protection";
 import Sentry from "@sentry/node";
@@ -47,6 +48,7 @@ import { verifyToken } from "./middleware/verifyToken";
 import { requireAuth } from "./middleware/requireAuth";
 import { shouldBeAdmin } from "./middleware/shouldBeAdmin";
 import { IS_DEVELOPMENT } from "./consts";
+import { register } from "./metrics";
 
 const isTest = process.env.NODE_ENV === "test";
 const assetBaseUrl = (process.env.ASSET_BASE_URL || "").replace(/\/$/, "");
@@ -54,6 +56,25 @@ const assetBaseUrl = (process.env.ASSET_BASE_URL || "").replace(/\/$/, "");
 const server = Fastify({ logger: false, trustProxy: true });
 
 Sentry.setupFastifyErrorHandler(server);
+
+server.register(metricsPlugin, {
+  defaultMetrics: { enabled: true, register },
+  routeMetrics: {
+    enabled: true,
+    registeredRoutesOnly: true,
+    routeBlacklist: ["/xmetrics"],
+  },
+  endpoint: null,
+});
+
+server.get("/xmetrics", async (request, reply) => {
+  const auth = request.headers.authorization;
+  if (!IS_DEVELOPMENT && auth !== `Bearer ${process.env.METRICS_TOKEN}`) {
+    return reply.code(401).send({ error: "Unauthorized" });
+  }
+  reply.header("Content-Type", register.contentType);
+  return register.metrics();
+});
 
 // Register cookie and formbody BEFORE csrf
 server.register(cookie, {

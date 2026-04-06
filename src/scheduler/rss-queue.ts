@@ -2,6 +2,12 @@ import { Queue, Worker, Job } from "bullmq";
 import { RSSService } from "../services/rss.service";
 import rssSourceService from "../services/rssSource.service";
 import { logError } from "../helpers/common";
+import {
+  queueJobsTotal,
+  queueJobDuration,
+  queueJobsActive,
+  cronLastRun,
+} from "../metrics";
 
 export const QUEUE_NAME = "rss-fetch";
 
@@ -48,8 +54,13 @@ export function createRssWorker(): Worker<RssFetchJobData> {
         updateFrequency: row.update_frequency,
       };
 
-      const result = await rssService.fetchFeed(source);
-      await rssService.processFeedItems(source, result.items);
+      const endTimer = queueJobDuration.startTimer();
+      try {
+        const result = await rssService.fetchFeed(source);
+        await rssService.processFeedItems(source, result.items);
+      } finally {
+        endTimer();
+      }
     },
     {
       connection,
@@ -57,7 +68,19 @@ export function createRssWorker(): Worker<RssFetchJobData> {
     },
   );
 
+  worker.on("active", () => {
+    queueJobsActive.inc();
+  });
+
+  worker.on("completed", (job) => {
+    queueJobsActive.dec();
+    queueJobsTotal.inc({ status: "completed" });
+    cronLastRun.set({ job: job.name }, Date.now() / 1000);
+  });
+
   worker.on("failed", (job, err) => {
+    queueJobsActive.dec();
+    queueJobsTotal.inc({ status: "failed" });
     logError(err, {
       jobId: job?.id,
       sourceId: job?.data?.sourceId,
