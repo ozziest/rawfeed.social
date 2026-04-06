@@ -1,6 +1,7 @@
 import type { FastifyRequest, FastifyReply } from "fastify";
 import { generateTokens, TokenPayload } from "../helpers/tokens";
 import userService from "../services/user.service";
+import notificationService from "../services/notification.service";
 import { getAvatar } from "../helpers/common";
 
 export async function verifyToken(
@@ -8,6 +9,7 @@ export async function verifyToken(
   reply: FastifyReply,
 ) {
   const app = request.server;
+  request.unreadNotifCount = 0;
 
   try {
     const accessToken = request.cookies.accessToken;
@@ -59,5 +61,11 @@ export async function verifyToken(
 
       reply.clearCookie("accessToken").clearCookie("refreshToken");
     }
+  }
+
+  if (request.loggedUser) {
+    request.unreadNotifCount = await notificationService.getUnreadCount(
+      request.loggedUser.userId,
+    );
   }
 }

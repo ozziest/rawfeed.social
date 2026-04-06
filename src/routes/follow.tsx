@@ -3,7 +3,7 @@ import { verifyToken } from "../middleware/verifyToken";
 import { requireAuth } from "../middleware/requireAuth";
 import userService from "../services/user.service";
 import followService from "../services/follow.service";
-import { useJsxViews } from "../helpers/useViews";
+import { useViews } from "../helpers/useViews";
 import { UserProfileParams } from "../helpers/dtos";
 import { safeReferer } from "../helpers/security";
 import { FollowActions } from "../views/partials/FollowActions";
@@ -14,7 +14,7 @@ import { FollowingPage } from "../views/user/FollowingPage";
 import { NotFound } from "../views/NotFound";
 import { asset } from "../helpers/asset";
 
-const useCtx = useJsxViews();
+const useCtx = useViews();
 
 export default async function followRoutes(fastify: FastifyInstance) {
   fastify.post(

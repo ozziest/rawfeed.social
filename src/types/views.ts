@@ -5,7 +5,7 @@ import type { Users } from "./database";
 import type { ThemeTypes } from "./shared";
 
 // ---------------------------------------------------------------------------
-// Base props injected into every page component via useJsxViews base()
+// Base props injected into every page component via useViews base()
 // ---------------------------------------------------------------------------
 export type BaseProps = {
   title: string;
@@ -20,6 +20,7 @@ export type BaseProps = {
   profileUser?: Selectable<Users>;
   isProd: boolean;
   theme: ThemeTypes;
+  unreadNotifCount: number;
 };
 
 // Layout components accept all base props plus child content

@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { useJsxViews } from "../helpers/useViews";
+import { useViews } from "../helpers/useViews";
 import { verifyToken } from "../middleware/verifyToken";
 import { requireAuth } from "../middleware/requireAuth";
 import { POST_SCHEMA, validate } from "../helpers/validations";
@@ -14,7 +14,7 @@ import { ReplySection } from "../views/posts/ReplySection";
 import { NotFound } from "../views/NotFound";
 import { LikeButton } from "../views/components/posts/LikeButton";
 
-const useCtx = useJsxViews();
+const useCtx = useViews();
 
 export default async function postRoutes(fastify: FastifyInstance) {
   fastify.get(

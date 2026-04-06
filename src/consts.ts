@@ -2,10 +2,17 @@ import path from "path";
 
 export const POST_SIZE = 10;
 
+export const NOTIFICATION_SIZE = 20;
+
 export const BLOG_DIR = path.join(process.cwd(), "blog", "posts");
 export const BLOG_SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 export const IS_DEVELOPMENT = process.env.NODE_ENV !== "production";
+
+export const REDIS_CONNECTION = {
+  host: process.env.REDIS_HOST || "localhost",
+  port: parseInt(process.env.REDIS_PORT || "6379"),
+};
 
 export const RESERVED_USERNAMES = [
   // Admin & Moderation

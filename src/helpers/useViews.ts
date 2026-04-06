@@ -3,9 +3,6 @@ import { sanitize } from "./security";
 import { getAvatar, toISO, getThemeFromCookies } from "./common";
 import { asset } from "./asset";
 
-// ---------------------------------------------------------------------------
-// Shared base props injected into every JSX view
-// ---------------------------------------------------------------------------
 export const getBaseProps = (request: FastifyRequest, reply: FastifyReply) => {
   const getFlashRaw = (name: string): object | undefined => {
     const content = request.cookies[name];
@@ -33,6 +30,7 @@ export const getBaseProps = (request: FastifyRequest, reply: FastifyReply) => {
     activeHashtag: "",
     isProd: process.env.NODE_ENV === "production",
     theme: getThemeFromCookies(request.cookies),
+    unreadNotifCount: request.unreadNotifCount ?? 0,
     sanitize,
     getAvatar,
     toISO,
@@ -40,11 +38,7 @@ export const getBaseProps = (request: FastifyRequest, reply: FastifyReply) => {
   };
 };
 
-// ---------------------------------------------------------------------------
-// JSX view helper — call reply.html() with a JSX component.
-// Flash cookies (validation, state) are consumed through getBaseProps.
-// ---------------------------------------------------------------------------
-export const useJsxViews = () => {
+export const useViews = () => {
   return (request: FastifyRequest, reply: FastifyReply) => {
     const base = () => getBaseProps(request, reply);
 

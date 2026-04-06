@@ -33,6 +33,25 @@ export function SettingsIndex(props: SettingsIndexProps) {
             </p>
           </SettingsNavItem>
 
+          <SettingsNavItem
+            href="/user/settings/notifications"
+            title="Notifications"
+          >
+            {user?.notif_email_freq && user.notif_email_freq !== "off" ? (
+              <p class="text-sm text-gray-600 dark:text-gray-400">
+                Email digest:{" "}
+                <span class="font-medium text-gray-800 dark:text-gray-200" safe>
+                  {user.notif_email_freq.charAt(0).toUpperCase() +
+                    user.notif_email_freq.slice(1)}
+                </span>
+              </p>
+            ) : (
+              <p class="text-sm text-gray-600 dark:text-gray-400">
+                Email notifications are off.
+              </p>
+            )}
+          </SettingsNavItem>
+
           <SettingsNavItem href="/user/settings/domain" title="Custom domain">
             {user?.custom_domain ? (
               <>
@@ -62,6 +81,17 @@ export function SettingsIndex(props: SettingsIndexProps) {
               Export your account data and content in machine-readable formats.
             </p>
           </SettingsNavItem>
+
+          <form method="GET" action="/auth/logout">
+            <button
+              type="submit"
+              class="w-full text-left block bg-white dark:bg-gray-800 rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow border border-transparent dark:border-gray-700 cursor-pointer"
+            >
+              <h3 class="text-lg font-semibold text-red-600 dark:text-red-400">
+                Logout
+              </h3>
+            </button>
+          </form>
         </div>
       </div>
     </DefaultLayout>

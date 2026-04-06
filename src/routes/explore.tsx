@@ -1,10 +1,10 @@
 import { FastifyInstance } from "fastify";
 import { verifyToken } from "../middleware/verifyToken";
 import userService from "../services/user.service";
-import { useJsxViews } from "../helpers/useViews";
+import { useViews } from "../helpers/useViews";
 import { ExploreBotsMembers } from "../views/explore/ExploreBotsMembers";
 
-const useCtx = useJsxViews();
+const useCtx = useViews();
 
 export default async function exploreRoutes(fastify: FastifyInstance) {
   fastify.get(

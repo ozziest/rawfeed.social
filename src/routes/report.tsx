@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { useJsxViews } from "../helpers/useViews";
+import { useViews } from "../helpers/useViews";
 import { verifyToken } from "../middleware/verifyToken";
 import { REPORT_POST_SCHEMA, validate } from "../helpers/validations";
 import postService from "../services/post.service";
@@ -8,7 +8,7 @@ import { NotFound } from "../views/NotFound";
 import { ReportPost } from "../views/posts/ReportPost";
 import { ReportSuccess } from "../views/posts/ReportSuccess";
 
-const useCtx = useJsxViews();
+const useCtx = useViews();
 
 export default async function reportRoutes(fastify: FastifyInstance) {
   fastify.get(

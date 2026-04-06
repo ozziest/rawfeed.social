@@ -1,5 +1,6 @@
 import { logError } from "../helpers/common";
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
+import type { NotificationWithTriggers } from "../types/relations";
 
 type CreateEmailOptions = {
   to: string;
@@ -187,9 +188,85 @@ export const sendPostReportEmail = async (opts: {
   }
 };
 
+const formatNotificationLine = (n: NotificationWithTriggers): string => {
+  const users = n.triggerUsers;
+  let who = "";
+  if (users.length === 0) {
+    who = "Someone";
+  } else if (users.length === 1) {
+    who = users[0].name || `@${users[0].username}`;
+  } else if (users.length === 2) {
+    who = `${users[0].name || `@${users[0].username}`} and ${users[1].name || `@${users[1].username}`}`;
+  } else {
+    who = `${users[0].name || `@${users[0].username}`} and ${n.count - 1} others`;
+  }
+
+  const postLink = n.post_id
+    ? ` — <a href="https://rawfeed.social/posts/${n.post_id}">view post</a>`
+    : "";
+
+  switch (n.type) {
+    case "Like":
+      return `${who} liked your post${postLink}`;
+    case "Reshare":
+      return `${who} reshared your post${postLink}`;
+    case "Follow":
+      return `${who} followed you`;
+    case "Reply":
+      return `${who} replied to your post${postLink}`;
+    case "Mention":
+      return `${who} mentioned you in a post${postLink}`;
+    default:
+      return `New notification`;
+  }
+};
+
+export const sendNotificationDigestEmail = async (
+  to: string,
+  username: string,
+  notifications: NotificationWithTriggers[],
+): Promise<void> => {
+  try {
+    const lines = notifications.map(formatNotificationLine);
+    const listItems = lines
+      .map((line) => `<li style="margin-bottom: 8px;">${line}</li>`)
+      .join("");
+
+    const options: CreateEmailOptions = {
+      to,
+      subject: `You have ${notifications.length} new notification${notifications.length === 1 ? "" : "s"} on rawfeed.social`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2>Your notifications</h2>
+          <p>Hi ${username}, here's a summary of your recent activity on rawfeed.social:</p>
+          <ul style="padding-left: 20px; margin: 20px 0;">
+            ${listItems}
+          </ul>
+          <p style="margin: 30px 0;">
+            <a href="https://rawfeed.social/notifications"
+               style="background-color: #000000; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">
+              View all notifications
+            </a>
+          </p>
+          <p style="color: #666; font-size: 12px;">
+            You can change your email notification preferences in your
+            <a href="https://rawfeed.social/user/settings/notifications">account settings</a>.
+          </p>
+        </div>
+      `,
+    };
+
+    await sendEmail(options);
+  } catch (error) {
+    logError(error);
+    throw error;
+  }
+};
+
 export default {
   sendDataExportReadyEmail,
   sendDataExportFailedEmail,
   sendVerificationEmail,
   sendPostReportEmail,
+  sendNotificationDigestEmail,
 };

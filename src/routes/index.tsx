@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
 import { verifyToken } from "../middleware/verifyToken";
 import postService from "../services/post.service";
-import { useJsxViews } from "../helpers/useViews";
+import { useViews } from "../helpers/useViews";
 import hashtagService from "../services/hashtag.service";
 import userService from "../services/user.service";
 import followService from "../services/follow.service";
@@ -10,7 +10,7 @@ import { Feed } from "../views/Feed";
 import { Index } from "../views/Index";
 import { PostsNext } from "../views/posts/PostsNext";
 
-const useCtx = useJsxViews();
+const useCtx = useViews();
 
 export default async function routes(fastify: FastifyInstance) {
   fastify.get("/", { preHandler: [verifyToken] }, async (request, reply) => {

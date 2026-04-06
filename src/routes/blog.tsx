@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { useJsxViews } from "../helpers/useViews";
+import { useViews } from "../helpers/useViews";
 import { verifyToken } from "../middleware/verifyToken";
 import blogService from "../services/blog.service";
 import { BlogIndex } from "../views/blog/BlogIndex";
@@ -7,7 +7,7 @@ import { BlogPost } from "../views/blog/BlogPost";
 import { NotFound } from "../views/NotFound";
 import { asset } from "../helpers/asset";
 
-const useCtx = useJsxViews();
+const useCtx = useViews();
 
 export default async function blogRoutes(fastify: FastifyInstance) {
   // Blog index — list all posts

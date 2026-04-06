@@ -8,13 +8,8 @@ import {
   queueJobsActive,
   cronLastRun,
 } from "../metrics";
-
-export const QUEUE_NAME = "rss-fetch";
-
-const connection = {
-  host: process.env.REDIS_HOST || "localhost",
-  port: parseInt(process.env.REDIS_PORT || "6379"),
-};
+import { QueueNames } from "../enums";
+import { REDIS_CONNECTION } from "../consts";
 
 export type RssFetchJobData = {
   sourceId: string;
@@ -22,8 +17,8 @@ export type RssFetchJobData = {
 };
 
 export function createRssQueue(): Queue<RssFetchJobData> {
-  return new Queue<RssFetchJobData>(QUEUE_NAME, {
-    connection,
+  return new Queue<RssFetchJobData>(QueueNames.RSS, {
+    connection: REDIS_CONNECTION,
     defaultJobOptions: {
       removeOnComplete: { count: 10 },
       removeOnFail: { count: 50 },
@@ -35,7 +30,7 @@ export function createRssWorker(): Worker<RssFetchJobData> {
   const rssService = new RSSService();
 
   const worker = new Worker<RssFetchJobData>(
-    QUEUE_NAME,
+    QueueNames.RSS,
     async (job: Job<RssFetchJobData>) => {
       const { sourceId } = job.data;
 
@@ -64,7 +59,7 @@ export function createRssWorker(): Worker<RssFetchJobData> {
       }
     },
     {
-      connection,
+      connection: REDIS_CONNECTION,
       concurrency: 5,
     },
   );

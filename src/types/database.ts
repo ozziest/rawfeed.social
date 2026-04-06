@@ -57,6 +57,26 @@ export interface Links {
   updated_at: Date | null;
 }
 
+export interface Notifications {
+  count: Generated<number>;
+  created_at: Date | null;
+  id: string;
+  is_read: Generated<number>;
+  post_id: string | null;
+  reply_id: string | null;
+  type: "Follow" | "Like" | "Mention" | "Reply" | "Reshare";
+  updated_at: Date | null;
+  user_id: string;
+}
+
+export interface NotificationsTriggers {
+  created_at: Date | null;
+  id: string;
+  notification_id: string;
+  trigger_user_id: string;
+  updated_at: Date | null;
+}
+
 export interface PostHashtags {
   created_at: Date | null;
   hashtag: string;
@@ -139,6 +159,8 @@ export interface Users {
   is_admin: Generated<number>;
   link: string | null;
   name: string;
+  notif_email_freq: Generated<"daily" | "hourly" | "off" | "weekly">;
+  notif_email_last_sent_at: Date | null;
   password: string;
   updated_at: Date | null;
   username: string;
@@ -151,6 +173,8 @@ export interface DB {
   knex_migrations: KnexMigrations;
   knex_migrations_lock: KnexMigrationsLock;
   links: Links;
+  notifications: Notifications;
+  notifications_triggers: NotificationsTriggers;
   post_hashtags: PostHashtags;
   post_likes: PostLikes;
   post_links: PostLinks;

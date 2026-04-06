@@ -68,7 +68,7 @@ public/               # Static assets (CSS, JS, images)
 - Route files live in `src/routes/` as `.tsx` files and export a default `async function (fastify: FastifyInstance)`.
 - **No per-file JSX pragma needed** — `jsxImportSource` is set globally in `tsconfig.json`.
 - Keep routes thin — validate input, call a service, render a view or redirect.
-- Use `useJsxViews()` from `src/helpers/useViews.ts` to get `html`, `base`, `setFlash`, `setState`, and `setValidation` helpers.
+- Use `useViews()` from `src/helpers/useViews.ts` to get `html`, `base`, `setFlash`, `setState`, and `setValidation` helpers.
 - Render views with `reply.html(<MyView {...base()} />)` — `base()` injects all shared props.
 - Return 404s as `reply.status(404).html(<NotFound asset={asset} />)`.
 - Apply `preHandler: fastify.csrfProtection` on all mutating POST routes.

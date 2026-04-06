@@ -5,6 +5,8 @@ import { FollowWithUser } from "../types/relations";
 import { Selectable } from "kysely";
 import { cache, redis } from "../helpers/cache";
 import userService from "./user.service";
+import notificationService from "./notification.service";
+import { sentryException } from "../sentry";
 
 const TABLE_NAME = "follows";
 const FOLLOW_SIZE = 20;
@@ -26,6 +28,10 @@ const followUser = async (
     .ignore();
 
   await invalidateFollowCaches(followerId, followingId);
+
+  notificationService
+    .upsertNotification(followingId, "Follow", followerId)
+    .catch(sentryException);
 };
 
 const unfollowUser = async (

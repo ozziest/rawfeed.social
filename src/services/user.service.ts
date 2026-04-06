@@ -181,6 +181,23 @@ const verifyEmail = async (userId: string) => {
   });
 };
 
+const getUsersForNotificationDigest = async () => {
+  return await getKnex()
+    .table(TABLE_NAME)
+    .whereNot("notif_email_freq", "off")
+    .whereNull("email_verification_token")
+    .whereNull("deleted_at")
+    .whereNull("bot_type")
+    .select(
+      "id",
+      "email",
+      "username",
+      "name",
+      "notif_email_freq",
+      "notif_email_last_sent_at",
+    );
+};
+
 export default {
   insert,
   getByEmail,
@@ -197,4 +214,5 @@ export default {
   paginateBots,
   getByVerificationToken,
   verifyEmail,
+  getUsersForNotificationDigest,
 };

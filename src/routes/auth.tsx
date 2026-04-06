@@ -5,7 +5,7 @@ import {
   REGISTER_SCHEMA,
   validate,
 } from "../helpers/validations";
-import { useJsxViews } from "../helpers/useViews";
+import { useViews } from "../helpers/useViews";
 import { LoginInput, RegisterInput } from "../helpers/dtos";
 import bcrypt from "bcrypt";
 import { generateTokens } from "../helpers/tokens";
@@ -18,7 +18,7 @@ import { VerificationError } from "../views/auth/VerificationError";
 import { VerificationSuccess } from "../views/auth/VerificationSuccess";
 import { verifyTurnstile } from "../helpers/turnstile";
 
-const useCtx = useJsxViews();
+const useCtx = useViews();
 
 export default async function authRoutes(fastify: FastifyInstance) {
   fastify.get("/auth/register", async (request, reply) => {

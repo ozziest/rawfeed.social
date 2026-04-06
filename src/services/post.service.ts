@@ -8,8 +8,10 @@ import { Insertable, Selectable } from "kysely";
 import contentService from "./content.service";
 import postDetailService from "./postDetailService";
 import linkService from "./link.service";
+import notificationService from "./notification.service";
 import { POST_SIZE } from "../consts";
 import { bust } from "../helpers/cache";
+import { sentryException } from "../sentry";
 
 const TABLE_NAME = "posts";
 
@@ -37,13 +39,29 @@ const insert = async (
       updated_at: new Date(),
     });
 
-  await postDetailService.insert(postId, postContent);
+  await postDetailService.insert(postId, postContent, userId);
 
   if (parent_id) {
     await getKnex()
       .table(TABLE_NAME)
       .where("id", parent_id)
       .increment("stats_replies", 1);
+
+    const parentPost = await getKnex()
+      .table<Selectable<Posts>>(TABLE_NAME)
+      .where("id", parent_id)
+      .first();
+    if (parentPost) {
+      notificationService
+        .upsertNotification(
+          parentPost.user_id,
+          "Reply",
+          userId,
+          parent_id,
+          postId,
+        )
+        .catch(sentryException);
+    }
   }
 
   return postId;
@@ -227,6 +245,10 @@ const reshare = async (userId: string, postId: string): Promise<string> => {
     .where("id", postId)
     .increment("stats_shares", 1);
 
+  notificationService
+    .upsertNotification(original.user_id, "Reshare", userId, postId)
+    .catch(sentryException);
+
   return reshareId;
 };
 
@@ -285,6 +307,10 @@ const like = async (userId: string, postId: string): Promise<string> => {
     bust("postDetail.services.likes"),
     bust("postDetail.services.getLikedPostsByUser"),
   ]);
+
+  notificationService
+    .upsertNotification(original.user_id, "Like", userId, postId)
+    .catch(sentryException);
 
   return likeId;
 };
