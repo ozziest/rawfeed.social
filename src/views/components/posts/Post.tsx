@@ -79,7 +79,7 @@ export function Post({
         )}
 
         <div class="relative z-10 flex items-center justify-between text-sm">
-          <div class="flex gap-2">
+          <div class="flex gap-2 items-center">
             <PostStats
               post={displayPost}
               loggedUser={loggedUser}

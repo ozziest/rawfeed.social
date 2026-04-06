@@ -9,6 +9,8 @@ type CreateEmailOptions = {
 
 const FROM_EMAIL = "noreply@rawfeed.social";
 
+const REPORT_RECIPIENT = "hello@rawfeed.social";
+
 const ses = new SESClient({
   region: process.env.AWS_REGION,
   credentials: {
@@ -141,8 +143,53 @@ export const sendVerificationEmail = async (
   }
 };
 
+export const sendPostReportEmail = async (opts: {
+  postId: string;
+  postUrl: string;
+  reason: string;
+  explanation: string;
+}): Promise<void> => {
+  try {
+    const { postId, postUrl, reason, explanation } = opts;
+    const options: CreateEmailOptions = {
+      to: REPORT_RECIPIENT,
+      subject: `[Rawfeed] Post Reported — ${reason}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2>A post has been reported</h2>
+          <table style="border-collapse: collapse; width: 100%; margin-bottom: 24px;">
+            <tr>
+              <td style="padding: 8px 12px; background: #f3f4f6; font-weight: bold; width: 140px;">Post ID</td>
+              <td style="padding: 8px 12px; border: 1px solid #e5e7eb;">${postId}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 12px; background: #f3f4f6; font-weight: bold;">Reason</td>
+              <td style="padding: 8px 12px; border: 1px solid #e5e7eb;">${reason}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 12px; background: #f3f4f6; font-weight: bold;">Explanation</td>
+              <td style="padding: 8px 12px; border: 1px solid #e5e7eb; white-space: pre-line;">${explanation || "<em>None provided</em>"}</td>
+            </tr>
+          </table>
+          <p>
+            <a href="${postUrl}"
+               style="background-color: #000000; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">
+              View Post
+            </a>
+          </p>
+        </div>
+      `,
+    };
+    await sendEmail(options);
+  } catch (error) {
+    logError(error);
+    throw error;
+  }
+};
+
 export default {
   sendDataExportReadyEmail,
   sendDataExportFailedEmail,
   sendVerificationEmail,
+  sendPostReportEmail,
 };

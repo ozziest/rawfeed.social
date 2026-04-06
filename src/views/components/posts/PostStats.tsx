@@ -4,6 +4,7 @@ import { ChatBubbleIcon } from "../icons/ChatBubbleIcon";
 import { ReshareButton } from "./ReshareButton";
 import { PostStat } from "./PostStat";
 import { LikeButton } from "./LikeButton";
+import { ReportButton } from "./ReportButton";
 
 type PostStatsProps = {
   post: PostWithContent;
@@ -25,6 +26,7 @@ export function PostStats({ post, loggedUser, csrfToken }: PostStatsProps) {
         loggedUser={loggedUser}
         csrfToken={csrfToken}
       />
+      <ReportButton post={post} />
     </>
   );
 }

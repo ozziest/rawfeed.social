@@ -66,4 +66,4 @@
 - [x] Check robots.txt
 - [x] Set custom User-Agent (e.g. "RawfeedBot")
 - [x] Add Privacy Policy (GDPR)
-- [ ] Add "Report this source" button
+- [x] Add "Report this post" button

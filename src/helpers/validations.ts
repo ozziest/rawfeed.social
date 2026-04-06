@@ -113,6 +113,22 @@ export const CUSTOM_DOMAIN_SCHEMA = z.object({
     ),
 });
 
+export const REPORT_REASONS = [
+  "Spam",
+  "Harassment or abuse",
+  "Misinformation",
+  "Copyright violation",
+  "Violates Terms of Service",
+  "Illegal content",
+] as const;
+
+export type ReportReason = (typeof REPORT_REASONS)[number];
+
+export const REPORT_POST_SCHEMA = z.object({
+  reason: z.enum(REPORT_REASONS, { error: "Please select a reason" }),
+  explanation: z.string().trim().max(1000).optional().default(""),
+});
+
 export const PROFILE_UPDATE_SCHEMA = z.object({
   name: z.string().trim().min(1).max(100),
   bio: z.string().trim().max(400),
