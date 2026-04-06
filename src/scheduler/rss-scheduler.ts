@@ -38,7 +38,7 @@ async function scheduleSource(
     { pattern: row.update_frequency },
     {
       name: `fetch:${row.username}`,
-      data: { sourceId: row.id },
+      data: { sourceId: row.id, feedUrl: row.url },
       opts: {
         removeOnComplete: { count: 10 },
         removeOnFail: { count: 50 },
@@ -47,7 +47,10 @@ async function scheduleSource(
   );
 
   if (IS_DEVELOPMENT) {
-    await queue.add(`fetch:${row.username}:immediate`, { sourceId: row.id });
+    await queue.add(`fetch:${row.username}:immediate`, {
+      sourceId: row.id,
+      feedUrl: row.url,
+    });
   }
 }
 

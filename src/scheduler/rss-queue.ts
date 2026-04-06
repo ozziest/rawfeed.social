@@ -18,6 +18,7 @@ const connection = {
 
 export type RssFetchJobData = {
   sourceId: string;
+  feedUrl: string;
 };
 
 export function createRssQueue(): Queue<RssFetchJobData> {
@@ -84,6 +85,7 @@ export function createRssWorker(): Worker<RssFetchJobData> {
     logError(err, {
       jobId: job?.id,
       sourceId: job?.data?.sourceId,
+      feedUrl: job?.data?.feedUrl,
       tags: { module: "rss", action: "fetch_feed" },
     });
   });
