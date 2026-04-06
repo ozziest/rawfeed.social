@@ -2,7 +2,7 @@ exports.up = function (knex) {
   return knex.schema.createTable("rss_sources", function (table) {
     table.uuid("id").primary();
     table.uuid("submitted_by").notNullable();
-    table.uuid("bot_user_id").nullable();
+    table.uuid("bot_user_id").notNullable();
     table.string("url", 768).notNullable().unique();
     table.string("name", 255).notNullable();
     table.text("bio").nullable();
