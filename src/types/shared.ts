@@ -42,7 +42,7 @@ export type RssSourceStatus = "pending" | "approved" | "rejected";
 export type RssSourceRow = {
   id: string;
   submitted_by: string;
-  bot_user_id: string | null;
+  bot_user_id: string;
   url: string;
   name: string;
   bio: string | null;
@@ -50,8 +50,8 @@ export type RssSourceRow = {
   language: string;
   update_frequency: string;
   status: RssSourceStatus;
-  created_at: Date | null;
-  updated_at: Date | null;
+  created_at: Date;
+  updated_at: Date;
   // joined from users on bot_user_id
   username?: string;
 };
