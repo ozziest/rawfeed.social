@@ -219,7 +219,7 @@ export function PrivacyPage(props: Props) {
                 For more information about how we handle your data, see our
                 <a
                   href="/legal/dpa"
-                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium font-semibold"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-semibold"
                 >
                   Data Processing Agreement (DPA)
                 </a>
@@ -240,7 +240,7 @@ export function PrivacyPage(props: Props) {
                 policies, and security measures, see our
                 <a
                   href="/legal/dpa"
-                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium font-semibold"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-semibold"
                 >
                   Data Processing Agreement (DPA)
                 </a>
