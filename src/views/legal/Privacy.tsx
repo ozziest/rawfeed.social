@@ -297,13 +297,13 @@ export function PrivacyPage(props: Props) {
                   </a>
                 </li>
                 <li>
-                  <strong>Resend:</strong> Email service for account
+                  <strong>AWS SES:</strong> Email service for account
                   notifications (optional).
                   <a
-                    href="https://resend.com/privacy"
+                    href="https://aws.amazon.com/privacy/"
                     class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
-                    Resend Privacy Policy
+                    AWS Privacy Policy
                   </a>
                 </li>
               </ul>

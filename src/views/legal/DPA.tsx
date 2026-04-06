@@ -98,7 +98,7 @@ export function DPAPage(props: Props) {
                       </td>
                       <td class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm">
                         <a
-                          href="https://aws.amazon.com/legal/aws-dpa/"
+                          href="https://docs.aws.amazon.com/whitepapers/latest/navigating-gdpr-compliance/aws-data-processing-addendum-dpa.html"
                           class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                         >
                           AWS DPA
@@ -171,7 +171,7 @@ export function DPAPage(props: Props) {
                     </tr>
                     <tr class="bg-gray-50 dark:bg-gray-800">
                       <td class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm">
-                        <strong>Resend</strong>
+                        <strong>AWS SES</strong>
                       </td>
                       <td class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm">
                         Email service for account notifications
@@ -181,10 +181,10 @@ export function DPAPage(props: Props) {
                       </td>
                       <td class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm">
                         <a
-                          href="https://resend.com/terms"
+                          href="https://docs.aws.amazon.com/whitepapers/latest/navigating-gdpr-compliance/aws-data-processing-addendum-dpa.html"
                           class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                         >
-                          Resend Terms
+                          AWS DPA
                         </a>
                       </td>
                     </tr>

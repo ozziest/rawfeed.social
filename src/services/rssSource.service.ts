@@ -59,5 +59,4 @@ const updateBotUserId = async (
     .update({ bot_user_id: botUserId, updated_at: new Date() });
 };
 
-const rssSourceService = { getApproved, getById, updateBotUserId };
-export default rssSourceService;
+export default { getApproved, getById, updateBotUserId };
