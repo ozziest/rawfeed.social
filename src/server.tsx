@@ -63,6 +63,17 @@ server.register(metricsPlugin, {
     enabled: true,
     registeredRoutesOnly: true,
     routeBlacklist: ["/xmetrics"],
+    overrides: {
+      histogram: {
+        name: "http_request_duration_seconds",
+        buckets: [0.01, 0.05, 0.1, 0.5, 1, 3, 5, 10],
+        registers: [register],
+      },
+      summary: {
+        name: "http_request_summary_seconds",
+        registers: [register],
+      },
+    },
   },
   endpoint: null,
 });
