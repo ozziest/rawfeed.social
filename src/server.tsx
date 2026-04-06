@@ -46,8 +46,8 @@ import { TooManyRequests } from "./views/TooManyRequests";
 import { verifyToken } from "./middleware/verifyToken";
 import { requireAuth } from "./middleware/requireAuth";
 import { shouldBeAdmin } from "./middleware/shouldBeAdmin";
+import { IS_DEVELOPMENT } from "./consts";
 
-const isDevelopment = process.env.NODE_ENV !== "production";
 const isTest = process.env.NODE_ENV === "test";
 const assetBaseUrl = (process.env.ASSET_BASE_URL || "").replace(/\/$/, "");
 
@@ -70,7 +70,7 @@ server.register(csrf, {
   },
 });
 server.register(helmet, {
-  contentSecurityPolicy: isDevelopment
+  contentSecurityPolicy: IS_DEVELOPMENT
     ? false
     : {
         directives: {
@@ -109,7 +109,7 @@ server.register(helmet, {
       },
   crossOriginEmbedderPolicy: false,
   crossOriginResourcePolicy: {
-    policy: isDevelopment ? "cross-origin" : "same-origin",
+    policy: IS_DEVELOPMENT ? "cross-origin" : "same-origin",
   },
 });
 server.register(rateLimit, {
@@ -276,7 +276,7 @@ const start = async () => {
     if (!isTest) {
       blogService.clearCache();
 
-      initializeRSSScheduler(isDevelopment);
+      initializeRSSScheduler();
       initializeExportWorker();
       initializeSitemapScheduler();
     }

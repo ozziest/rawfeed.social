@@ -2,13 +2,11 @@ import crypto from "crypto";
 import Sentry from "@sentry/node";
 import { Selectable } from "kysely";
 import { Users } from "../types/database";
-import { POST_SIZE } from "../consts";
+import { IS_DEVELOPMENT, POST_SIZE } from "../consts";
 import { PostWithContent } from "../types/relations";
 import { asset } from "./asset";
 import type { BaseProps } from "../types/views";
 import { DEFAULT_USERNAME_SCHEMA, validate } from "./validations";
-
-const isDevelopment = process.env.NODE_ENV !== "production";
 
 export const isViewableUsername = (username?: string): boolean => {
   if (!username) {
@@ -97,7 +95,7 @@ export function logger<T extends (...args: any[]) => any>(
   const functionName = name || fn.name || "anonymous";
 
   const logResult = (duration: number, isError = false) => {
-    if (!isDevelopment) {
+    if (!IS_DEVELOPMENT) {
       return;
     }
 

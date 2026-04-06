@@ -4,6 +4,7 @@ import userService from "../services/user.service";
 import rssSourceService from "../services/rssSource.service";
 import { createRssQueue, createRssWorker, RssFetchJobData } from "./rss-queue";
 import { RssSourceRow } from "../types/shared";
+import { IS_DEVELOPMENT } from "../consts";
 
 let queue: Queue<RssFetchJobData> | null = null;
 let worker: Worker<RssFetchJobData> | null = null;
@@ -29,7 +30,6 @@ async function ensureBotUser(row: RssSourceRow): Promise<void> {
 async function scheduleSource(
   queue: Queue<RssFetchJobData>,
   row: RssSourceRow,
-  isDevelopment: boolean,
 ): Promise<void> {
   await queue.upsertJobScheduler(
     row.id,
@@ -44,12 +44,12 @@ async function scheduleSource(
     },
   );
 
-  if (isDevelopment) {
+  if (IS_DEVELOPMENT) {
     await queue.add(`fetch:${row.name}:immediate`, { sourceId: row.id });
   }
 }
 
-export async function initializeRSSScheduler(isDevelopment: boolean) {
+export async function initializeRSSScheduler() {
   const rows = await rssSourceService.getApproved();
 
   await Promise.allSettled(
@@ -67,9 +67,7 @@ export async function initializeRSSScheduler(isDevelopment: boolean) {
   worker = createRssWorker();
   queue = createRssQueue();
 
-  await Promise.all(
-    rows.map((row) => scheduleSource(queue!, row, isDevelopment)),
-  );
+  await Promise.all(rows.map((row) => scheduleSource(queue!, row)));
 
   console.log(`[RSS Scheduler] ${rows.length} sources queued via BullMQ`);
 }

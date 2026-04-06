@@ -5,6 +5,8 @@ export const POST_SIZE = 10;
 export const BLOG_DIR = path.join(process.cwd(), "blog", "posts");
 export const BLOG_SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
+export const IS_DEVELOPMENT = process.env.NODE_ENV !== "production";
+
 export const RESERVED_USERNAMES = [
   // Admin & Moderation
   "admin",
