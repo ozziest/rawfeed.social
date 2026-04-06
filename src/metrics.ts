@@ -34,3 +34,21 @@ export const cronLastRun = new Gauge({
   labelNames: ["job"] as const,
   registers: [register],
 });
+
+export const rssFeedItemsFetched = new Counter({
+  name: "rss_feed_items_fetched_total",
+  help: "Total number of items received from RSS feeds",
+  registers: [register],
+});
+
+export const rssFeedItemsInserted = new Counter({
+  name: "rss_feed_items_inserted_total",
+  help: "Total number of new RSS items inserted as posts",
+  registers: [register],
+});
+
+export const rssFeedRobotsBlocked = new Counter({
+  name: "rss_feed_robots_blocked_total",
+  help: "Total number of RSS fetches blocked by robots.txt",
+  registers: [register],
+});

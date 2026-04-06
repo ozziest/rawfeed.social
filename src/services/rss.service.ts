@@ -4,6 +4,11 @@ import { DefaultRSSFeedItem, RSSSourceWithUser } from "../types/shared";
 import crypto from "crypto";
 import postService from "./post.service";
 import { sentryException } from "../sentry";
+import {
+  rssFeedItemsFetched,
+  rssFeedItemsInserted,
+  rssFeedRobotsBlocked,
+} from "../metrics";
 
 const parser = new Parser({
   headers: { "User-Agent": "RawfeedBot" },
@@ -33,12 +38,14 @@ export class RSSService {
     try {
       const allowed = await this.isAllowedByRobots(source.url);
       if (!allowed) {
+        rssFeedRobotsBlocked.inc();
         throw new Error(
           `RawfeedBot is disallowed by robots.txt for ${source.url}`,
         );
       }
 
       const feed = await parser.parseURL(source.url);
+      rssFeedItemsFetched.inc(feed.items.length);
 
       return {
         source,
@@ -92,6 +99,7 @@ export class RSSService {
         externalId,
         createdAt,
       );
+      rssFeedItemsInserted.inc();
     }
   }
 }
