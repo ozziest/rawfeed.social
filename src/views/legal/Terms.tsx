@@ -320,8 +320,8 @@ export function TermsPage(props: Props) {
               </h3>
               <p>
                 We are not responsible for the performance, privacy practices,
-                or content of third-party services (Cloudflare, RSS feeds, etc.)
-                that we integrate with.
+                or content of third-party services (Gravatar, Cloudflare, RSS
+                feeds, etc.) that we integrate with.
               </p>
             </section>
 
