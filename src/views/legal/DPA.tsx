@@ -49,7 +49,7 @@ export function DPAPage(props: Props) {
                 2.1 Infrastructure & Hosting
               </h3>
               <div class="overflow-x-auto -mx-2 sm:mx-0">
-                <table class="w-full mt-3 border-collapse border border-gray-300 min-w-[640px]">
+                <table class="w-full mt-3 border-collapse border border-gray-300 min-w-160">
                   <thead class="bg-gray-100 dark:bg-gray-700">
                     <tr>
                       <th class="border border-gray-300 px-2 sm:px-4 py-2 text-left text-xs sm:text-sm">
@@ -392,7 +392,7 @@ export function DPAPage(props: Props) {
               </h2>
 
               <div class="overflow-x-auto -mx-2 sm:mx-0">
-                <table class="w-full mt-4 border-collapse border border-gray-300 min-w-[640px]">
+                <table class="w-full mt-4 border-collapse border border-gray-300 min-w-160">
                   <thead class="bg-gray-100 dark:bg-gray-700">
                     <tr>
                       <th class="border border-gray-300 px-2 sm:px-4 py-2 text-left text-xs sm:text-sm">
