@@ -6,8 +6,27 @@ import { POST_SIZE } from "../consts";
 import { PostWithContent } from "../types/relations";
 import { asset } from "./asset";
 import type { BaseProps } from "../types/views";
+import { DEFAULT_USERNAME_SCHEMA, validate } from "./validations";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
+
+export const isViewableUsername = (username?: string): boolean => {
+  if (!username) {
+    return false;
+  }
+
+  const validation = validate(DEFAULT_USERNAME_SCHEMA, username);
+
+  if (validation.isValid) {
+    return true;
+  }
+
+  if (username.trim().toLowerCase().startsWith("rss_")) {
+    return true;
+  }
+
+  return false;
+};
 
 export const getThemeFromCookies = (
   cookies: Record<string, string | undefined> | undefined,

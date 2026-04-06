@@ -13,7 +13,6 @@ import {
 } from "../helpers/dtos";
 import {
   CUSTOM_DOMAIN_SCHEMA,
-  DEFAULT_USERNAME_SCHEMA,
   PROFILE_UPDATE_SCHEMA,
   validate,
 } from "../helpers/validations";
@@ -22,7 +21,7 @@ import { requireAuth } from "../middleware/requireAuth";
 import { generateDomainVerificationToken } from "../helpers/security";
 import dns from "dns/promises";
 
-import { nextCursor } from "../helpers/common";
+import { isViewableUsername, nextCursor } from "../helpers/common";
 import { SettingsIndex } from "../views/user/settings/SettingsIndex";
 import { SettingsProfile } from "../views/user/settings/SettingsProfile";
 import { DomainInit } from "../views/user/settings/DomainInit";
@@ -354,21 +353,12 @@ export default async function userRoutes(fastify: FastifyInstance) {
       const { html, base } = useCtx(request, reply);
       const { username } = request.params as UserProfileParams;
 
-      const validation = validate(DEFAULT_USERNAME_SCHEMA, username);
-      // Bot usernames use underscores (e.g. rss_hacker_news) which fail the
-      // schema regex. Only skip the early exit — and pay the DB cost — when
-      // the username at least looks like it could be a bot username.
-      const couldBeBotUsername = /^[a-z][a-z0-9_]{1,18}[a-z0-9]$/.test(
-        username || "",
-      );
-      if (validation.isNotValid && !couldBeBotUsername) {
+      if (!isViewableUsername(username)) {
         return reply.status(404).html(<NotFound {...base()} />);
       }
+
       request.profileUser = await userService.getByUsername(username as string);
       if (!request.profileUser) {
-        return reply.status(404).html(<NotFound {...base()} />);
-      }
-      if (validation.isNotValid && request.profileUser.bot_type !== "rss") {
         return reply.status(404).html(<NotFound {...base()} />);
       }
 
@@ -423,18 +413,16 @@ export default async function userRoutes(fastify: FastifyInstance) {
         return reply.status(404).html(<NotFound {...base()} />);
       }
 
-      const validation = validate(DEFAULT_USERNAME_SCHEMA, username);
-      const couldBeBotUsername = /^[a-z][a-z0-9_]{1,18}[a-z0-9]$/.test(
-        username || "",
-      );
-      if (validation.isNotValid && !couldBeBotUsername) {
+      if (!isViewableUsername(username)) {
         return reply.status(404).html(<NotFound {...base()} />);
       }
+
       const user = await userService.getByUsername(username);
       if (!user) {
         return reply.status(404).html(<NotFound {...base()} />);
       }
-      if (validation.isNotValid && user.bot_type !== "rss") {
+
+      if (user.bot_type === "rss") {
         return reply.status(404).html(<NotFound {...base()} />);
       }
 
