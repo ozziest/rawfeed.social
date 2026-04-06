@@ -3,6 +3,7 @@ import type { PostWithContent } from "../../types/relations";
 import { DefaultLayout } from "../layouts/DefaultLayout";
 import { Profile } from "../partials/Profile";
 import { Posts } from "../partials/Posts";
+import { RssSources } from "../../types/database";
 
 type UserProfileProps = BaseProps & {
   posts: PostWithContent[];
@@ -12,6 +13,7 @@ type UserProfileProps = BaseProps & {
   followerCount: number;
   followingCount: number;
   isFollowing: boolean;
+  rssSource?: RssSources;
 };
 
 export function UserProfile(props: UserProfileProps) {
@@ -27,6 +29,7 @@ export function UserProfile(props: UserProfileProps) {
     domainUser,
     loggedUser,
     validation,
+    rssSource,
   } = props;
 
   return (
@@ -41,6 +44,7 @@ export function UserProfile(props: UserProfileProps) {
           isFollowing={isFollowing}
           csrfToken={csrfToken}
           validation={validation}
+          rssSource={rssSource}
         />
 
         <div class="space-y-4">

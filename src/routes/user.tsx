@@ -30,6 +30,7 @@ import { DomainRemove } from "../views/user/settings/DomainRemove";
 import { DataExtraction } from "../views/user/settings/DataExtraction";
 import { UserProfile } from "../views/user/UserProfile";
 import { NotFound } from "../views/NotFound";
+import rssSourceService from "../services/rssSource.service";
 
 const useCtx = useJsxViews();
 
@@ -370,13 +371,16 @@ export default async function userRoutes(fastify: FastifyInstance) {
       postService.incViews(posts);
       const profileUserId = request.profileUser!.id;
 
-      const [followerCount, followingCount, isFollowingProfile] =
+      const [followerCount, followingCount, isFollowingProfile, rssSource] =
         await Promise.all([
           followService.getFollowerCount(profileUserId),
           followService.getFollowingCount(profileUserId),
           loggedUserId && loggedUserId !== profileUserId
             ? followService.isFollowing(loggedUserId, profileUserId)
             : Promise.resolve(false),
+          request.profileUser.bot_type === "rss"
+            ? rssSourceService.getByUserId(profileUserId)
+            : Promise.resolve(undefined),
         ]);
 
       const profileUser = request.profileUser!;
@@ -397,6 +401,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
           followerCount={followerCount}
           followingCount={followingCount}
           isFollowing={isFollowingProfile}
+          rssSource={rssSource}
         />,
       );
     },

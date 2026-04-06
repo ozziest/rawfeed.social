@@ -1,5 +1,5 @@
 import type { Selectable } from "kysely";
-import type { Users } from "../../types/database";
+import type { RssSources, Users } from "../../types/database";
 import type { TokenPayload } from "../../helpers/tokens";
 import { getAvatar } from "../../helpers/common";
 import { Avatar } from "../components/users/Avatar";
@@ -20,6 +20,20 @@ type ProfileProps = {
   validation?: Record<string, string>;
   formData?: Record<string, unknown>;
   activeHashtag?: string;
+  rssSource?: RssSources;
+};
+
+const toProfileLink = (user: Selectable<Users>, rssSource?: RssSources) => {
+  if (user.link) {
+    return user.link;
+  }
+
+  if (!rssSource) {
+    return undefined;
+  }
+
+  const url = new URL(rssSource.url);
+  return url.origin;
 };
 
 export function Profile({
@@ -33,11 +47,13 @@ export function Profile({
   validation,
   formData,
   activeHashtag,
+  rssSource,
 }: ProfileProps) {
   const user = profileUser ?? domainUser;
   if (!user) return "";
 
-  const profileLink = user.link?.replace(/^https?:\/\//, "");
+  const link = toProfileLink(user, rssSource);
+  const profileLink = link?.replace(/^https?:\/\//, "");
 
   return (
     <>
@@ -91,10 +107,10 @@ export function Profile({
                 ""
               )}
 
-              {user.link ? (
+              {link ? (
                 <div class="flex justify-start mb-3">
                   <a
-                    href={user.link}
+                    href={link}
                     target="_blank"
                     rel="noopener noreferrer"
                     class="inline-flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white hover:underline break-all"

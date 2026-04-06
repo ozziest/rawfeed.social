@@ -1,4 +1,5 @@
 import { getKnex } from "../db/connection";
+import { RssSources } from "../types/database";
 import { RssSourceRow } from "../types/shared";
 
 const TABLE_NAME = "rss_sources";
@@ -49,6 +50,13 @@ const getById = async (id: string): Promise<RssSourceRow | undefined> => {
   return row ?? undefined;
 };
 
+const getByUserId = async (userId: string) => {
+  return await getKnex()
+    .table<RssSources>(TABLE_NAME)
+    .where("bot_user_id", userId)
+    .first();
+};
+
 const updateBotUserId = async (
   id: string,
   botUserId: string,
@@ -59,4 +67,4 @@ const updateBotUserId = async (
     .update({ bot_user_id: botUserId, updated_at: new Date() });
 };
 
-export default { getApproved, getById, updateBotUserId };
+export default { getApproved, getById, getByUserId, updateBotUserId };
