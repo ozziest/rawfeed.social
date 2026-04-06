@@ -148,6 +148,19 @@ const getItemByExternalId = async (externalId: string): Promise<Posts> => {
     .first();
 };
 
+const getExternalIdSet = async (
+  externalIds: string[],
+): Promise<Set<string>> => {
+  if (externalIds.length === 0) {
+    return new Set();
+  }
+  const rows = await getKnex()
+    .table<Posts>(TABLE_NAME)
+    .whereIn("external_id", externalIds)
+    .select("external_id");
+  return new Set(rows.map((r) => r.external_id as string));
+};
+
 const incViews = async (posts: PostWithContent[]) => {
   // if (posts.length === 0) {
   //   return;
@@ -443,6 +456,7 @@ export default loggerAll(
     getById,
     incViews,
     getItemByExternalId,
+    getExternalIdSet,
     getItemsByHashtag,
     reshare,
     unreshare,

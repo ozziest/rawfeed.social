@@ -38,6 +38,14 @@ export function FooterCustom() {
           >
             Cookie Policy
           </a>
+          <a
+            href="https://rawfeed.social/legal/dmca"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:underline"
+          >
+            Copyright Policy
+          </a>
         </nav>
       </div>
     </footer>

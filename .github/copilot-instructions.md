@@ -16,7 +16,7 @@
 | Cache          | Redis (ioredis)                                                   |
 | Auth           | JWT (`@fastify/jwt`) + bcrypt + CSRF (`@fastify/csrf-protection`) |
 | Storage        | AWS S3 (`@aws-sdk/client-s3`)                                     |
-| Email          | Resend                                                            |
+| Email          | AWS SES (`@aws-sdk/client-ses`)                                   |
 | Error Tracking | Sentry (`@sentry/node`)                                           |
 | Scheduling     | Croner                                                            |
 | Validation     | Zod                                                               |

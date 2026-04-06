@@ -10,7 +10,7 @@ export function PrivacyPage(props: Props) {
         <div class="max-w-4xl mx-auto px-6 py-12">
           <h1 class="text-4xl font-bold mb-2">Privacy Policy</h1>
           <p class="text-gray-600 dark:text-gray-400 mb-8">
-            Last Updated: February 2026
+            Last Updated: 05 April 2026
           </p>
 
           <div class="prose prose-sm max-w-none space-y-6">
@@ -64,6 +64,11 @@ export function PrivacyPage(props: Props) {
                 <li>
                   <strong>Interactions:</strong> We record your likes, shares,
                   replies, and mentions of other users.
+                </li>
+                <li>
+                  <strong>RSS Feed Sources:</strong> If you add external RSS
+                  feeds to the platform, we collect and store the feed URLs you
+                  submit in order to fetch and syndicate that content.
                 </li>
               </ul>
 
@@ -214,7 +219,7 @@ export function PrivacyPage(props: Props) {
                 For more information about how we handle your data, see our
                 <a
                   href="/legal/dpa"
-                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium font-semibold"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-semibold"
                 >
                   Data Processing Agreement (DPA)
                 </a>
@@ -235,7 +240,7 @@ export function PrivacyPage(props: Props) {
                 policies, and security measures, see our
                 <a
                   href="/legal/dpa"
-                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium font-semibold"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-semibold"
                 >
                   Data Processing Agreement (DPA)
                 </a>
@@ -292,13 +297,13 @@ export function PrivacyPage(props: Props) {
                   </a>
                 </li>
                 <li>
-                  <strong>Resend:</strong> Email service for account
+                  <strong>AWS SES:</strong> Email service for account
                   notifications (optional).
                   <a
-                    href="https://resend.com/privacy"
+                    href="https://aws.amazon.com/privacy/"
                     class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                   >
-                    Resend Privacy Policy
+                    AWS Privacy Policy
                   </a>
                 </li>
               </ul>

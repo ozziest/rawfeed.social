@@ -10,7 +10,7 @@ export function TermsPage(props: Props) {
         <div class="max-w-4xl mx-auto px-6 py-12">
           <h1 class="text-4xl font-bold mb-2">Terms of Service</h1>
           <p class="text-gray-600 dark:text-gray-400 mb-8">
-            Last Updated: February 2026
+            Last Updated: 05 April 2026
           </p>
 
           <div class="prose prose-sm max-w-none space-y-6">
@@ -52,9 +52,13 @@ export function TermsPage(props: Props) {
                   feed for portable content distribution.
                 </li>
                 <li>
-                  <strong>Bot Accounts:</strong> Rawfeed auto-creates
-                  clearly-labeled bot accounts that syndicate RSS feeds from
-                  external sources. See our
+                  <strong>RSS Bot Accounts:</strong> Users can submit RSS feeds
+                  to the platform. Rawfeed reviews each submission for technical
+                  validity, source quality, and safety before approving it.
+                  Approved feeds create clearly-labeled bot accounts that
+                  syndicate content from that source. This review does not cover
+                  copyright — users are responsible for ensuring the feeds they
+                  submit are lawfully available for syndication. See our{" "}
                   <a
                     href="/legal/bots"
                     class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
@@ -187,8 +191,8 @@ export function TermsPage(props: Props) {
               </ul>
 
               <p class="mt-4">
-                Rawfeed's native bot accounts (RSS feed importers) are
-                transparently labeled and disclosed.
+                Bot accounts created from user-submitted RSS feeds are
+                transparently labeled and their source is disclosed.
               </p>
             </section>
 
@@ -232,13 +236,26 @@ export function TermsPage(props: Props) {
               </p>
 
               <h3 class="text-lg font-semibold mb-3 mt-4">
-                5.3 Third-Party Content
+                5.3 Third-Party Content &amp; RSS Feeds
               </h3>
               <p>
-                Content syndicated from RSS feeds (posted by bot accounts) is
-                the copyright of the original authors and is used under fair use
-                or the original publication's terms. We do not claim ownership
-                of this content.
+                Users who add RSS feeds to Rawfeed are responsible for ensuring
+                those feeds are publicly available for syndication and that
+                their use does not infringe the copyright of the original
+                authors. Rawfeed acts as a passive conduit for user-submitted
+                RSS sources and does not claim ownership of any syndicated
+                content.
+              </p>
+              <p class="mt-4">
+                If you believe an RSS feed syndicated on Rawfeed infringes your
+                copyright, see our{" "}
+                <a
+                  href="/legal/dmca"
+                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
+                >
+                  Copyright Policy
+                </a>{" "}
+                for how to submit a takedown request.
               </p>
             </section>
 
@@ -388,30 +405,18 @@ export function TermsPage(props: Props) {
             </section>
 
             <section>
-              <h2 class="text-2xl font-bold mb-4">
-                11. DMCA & Copyright Claims
-              </h2>
+              <h2 class="text-2xl font-bold mb-4">11. Copyright Claims</h2>
               <p>
                 If you believe content on Rawfeed infringes your copyright, you
-                may submit a DMCA takedown notice. Please include:
-              </p>
-              <ul class="list-disc pl-6 space-y-2">
-                <li>A description of the copyrighted work</li>
-                <li>The URL of the infringing content</li>
-                <li>
-                  Your name, contact information, and statement under penalty of
-                  perjury
-                </li>
-              </ul>
-
-              <p class="mt-4">
-                Send notices to:
+                may submit a takedown request. For the full process, required
+                information, and timelines, see our{" "}
                 <a
-                  href="mailto:i.ozguradem@gmail.com"
+                  href="/legal/dmca"
                   class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                 >
-                  i.ozguradem@gmail.com
+                  Copyright Policy
                 </a>
+                .
               </p>
             </section>
 

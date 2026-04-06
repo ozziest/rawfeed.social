@@ -141,6 +141,11 @@ export async function generateStaticSitemap(): Promise<string> {
       priority: 0.3,
     },
     {
+      loc: `${APP_URL}/legal/dmca`,
+      changefreq: "monthly",
+      priority: 0.3,
+    },
+    {
       loc: `${APP_URL}/budget`,
       changefreq: "monthly",
       priority: 0.5,

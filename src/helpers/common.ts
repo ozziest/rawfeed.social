@@ -2,13 +2,29 @@ import crypto from "crypto";
 import Sentry from "@sentry/node";
 import { Selectable } from "kysely";
 import { Users } from "../types/database";
-import { RSS_RESOURCES } from "../rssResources";
-import { POST_SIZE } from "../consts";
+import { IS_DEVELOPMENT, POST_SIZE } from "../consts";
 import { PostWithContent } from "../types/relations";
 import { asset } from "./asset";
 import type { BaseProps } from "../types/views";
+import { DEFAULT_USERNAME_SCHEMA, validate } from "./validations";
 
-const isDevelopment = process.env.NODE_ENV !== "production";
+export const isViewableUsername = (username?: string): boolean => {
+  if (!username) {
+    return false;
+  }
+
+  const validation = validate(DEFAULT_USERNAME_SCHEMA, username);
+
+  if (validation.isValid) {
+    return true;
+  }
+
+  if (username.trim().toLowerCase().startsWith("rss_")) {
+    return true;
+  }
+
+  return false;
+};
 
 export const getThemeFromCookies = (
   cookies: Record<string, string | undefined> | undefined,
@@ -34,12 +50,10 @@ export const getAvatar = (user: Selectable<Users>) => {
     return getGravatarUrl(user.email);
   }
 
-  const resource = RSS_RESOURCES.find(
-    (item) => item.username === user.username,
-  );
-  if (resource) {
-    return resource.svg;
+  if (user.bot_type === "rss") {
+    return asset("/public/images/rss/rss.svg");
   }
+
   return asset("/public/images/default_avatar.svg");
 };
 
@@ -81,7 +95,7 @@ export function logger<T extends (...args: any[]) => any>(
   const functionName = name || fn.name || "anonymous";
 
   const logResult = (duration: number, isError = false) => {
-    if (!isDevelopment) {
+    if (!IS_DEVELOPMENT) {
       return;
     }
 

@@ -1,45 +1,80 @@
-import { Cron } from "croner";
-import { RSSService } from "../services/rss.service";
-import { RSS_RESOURCES } from "../rssResources";
+import { Queue, Worker } from "bullmq";
 import { logError } from "../helpers/common";
 import userService from "../services/user.service";
-import { RSSSourceWithUser } from "../types/shared";
+import rssSourceService from "../services/rssSource.service";
+import { createRssQueue, createRssWorker, RssFetchJobData } from "./rss-queue";
+import { RssSourceRow } from "../types/shared";
+import { IS_DEVELOPMENT } from "../consts";
 
-const rssService = new RSSService();
+let queue: Queue<RssFetchJobData> | null = null;
+let worker: Worker<RssFetchJobData> | null = null;
 
-export async function initializeRSSScheduler(isDevelopment: boolean) {
-  const resources: RSSSourceWithUser[] = [...RSS_RESOURCES];
+async function ensureBotUser(row: RssSourceRow): Promise<void> {
+  const source = {
+    username: row.username ?? "",
+    name: row.name,
+    bio: row.bio ?? "",
+    url: row.url,
+    category: (row.category ?? "blog") as any,
+    language: row.language as any,
+    updateFrequency: row.update_frequency,
+  };
 
-  for (const source of resources) {
-    try {
-      const user = await userService.createRSSBot(source);
-      source.uuid = user?.id;
-    } catch (error) {
-      logError(error as Error, {
-        username: source.username,
-        feedUrl: source.url,
-        tags: { module: "rss", action: "create_bot_user" },
-      });
-    }
+  const user = await userService.createRSSBot(source);
+  if (user && !row.bot_user_id) {
+    await rssSourceService.updateBotUserId(row.id, user.id);
+    row.bot_user_id = user.id;
   }
+}
 
-  for (const source of resources) {
-    new Cron(source.updateFrequency, async () => {
-      try {
-        const result = await rssService.fetchFeed(source);
-        await rssService.processFeedItems(source, result.items);
-      } catch (error) {
-        logError(error);
-      }
-    });
+async function scheduleSource(
+  queue: Queue<RssFetchJobData>,
+  row: RssSourceRow,
+): Promise<void> {
+  await queue.upsertJobScheduler(
+    row.id,
+    { pattern: row.update_frequency },
+    {
+      name: `fetch:${row.name}`,
+      data: { sourceId: row.id },
+      opts: {
+        removeOnComplete: { count: 10 },
+        removeOnFail: { count: 50 },
+      },
+    },
+  );
 
-    if (source.useInDevelopment) {
-      rssService
-        .fetchFeed(source)
-        .then((result) => rssService.processFeedItems(source, result.items))
-        .catch(logError);
-    }
+  if (IS_DEVELOPMENT) {
+    await queue.add(`fetch:${row.name}:immediate`, { sourceId: row.id });
   }
+}
 
-  console.log("[RSS Scheduler] All jobs scheduled");
+export async function initializeRSSScheduler() {
+  const rows = await rssSourceService.getApproved();
+
+  await Promise.allSettled(
+    rows.map((row) =>
+      ensureBotUser(row).catch((error) =>
+        logError(error as Error, {
+          sourceId: row.id,
+          feedUrl: row.url,
+          tags: { module: "rss", action: "create_bot_user" },
+        }),
+      ),
+    ),
+  );
+
+  worker = createRssWorker();
+  queue = createRssQueue();
+
+  await Promise.all(rows.map((row) => scheduleSource(queue!, row)));
+
+  console.log(`[RSS Scheduler] ${rows.length} sources queued via BullMQ`);
+}
+
+export async function shutdownRSSScheduler() {
+  await worker?.close();
+  await queue?.close();
+  queue = null;
+  worker = null;
 }

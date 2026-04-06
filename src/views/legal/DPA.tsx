@@ -12,7 +12,7 @@ export function DPAPage(props: Props) {
             Data Processing Agreement (DPA)
           </h1>
           <p class="text-gray-600 dark:text-gray-400 mb-8">
-            Last Updated: February 2026
+            Last Updated: 05 April 2026
           </p>
 
           <div class="prose prose-sm max-w-none space-y-6">
@@ -49,7 +49,7 @@ export function DPAPage(props: Props) {
                 2.1 Infrastructure & Hosting
               </h3>
               <div class="overflow-x-auto -mx-2 sm:mx-0">
-                <table class="w-full mt-3 border-collapse border border-gray-300 min-w-[640px]">
+                <table class="w-full mt-3 border-collapse border border-gray-300 min-w-160">
                   <thead class="bg-gray-100 dark:bg-gray-700">
                     <tr>
                       <th class="border border-gray-300 px-2 sm:px-4 py-2 text-left text-xs sm:text-sm">
@@ -98,7 +98,7 @@ export function DPAPage(props: Props) {
                       </td>
                       <td class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm">
                         <a
-                          href="https://aws.amazon.com/legal/aws-dpa/"
+                          href="https://docs.aws.amazon.com/whitepapers/latest/navigating-gdpr-compliance/aws-data-processing-addendum-dpa.html"
                           class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                         >
                           AWS DPA
@@ -132,7 +132,7 @@ export function DPAPage(props: Props) {
                 2.2 Support & Monitoring Services
               </h3>
               <div class="overflow-x-auto -mx-2 sm:mx-0">
-                <table class="w-full mt-3 border-collapse border border-gray-300 min-w-[640px]">
+                <table class="w-full mt-3 border-collapse border border-gray-300 min-w-160">
                   <thead class="bg-gray-100 dark:bg-gray-700">
                     <tr>
                       <th class="border border-gray-300 px-2 sm:px-4 py-2 text-left text-xs sm:text-sm">
@@ -171,7 +171,7 @@ export function DPAPage(props: Props) {
                     </tr>
                     <tr class="bg-gray-50 dark:bg-gray-800">
                       <td class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm">
-                        <strong>Resend</strong>
+                        <strong>AWS SES</strong>
                       </td>
                       <td class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm">
                         Email service for account notifications
@@ -181,10 +181,10 @@ export function DPAPage(props: Props) {
                       </td>
                       <td class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm">
                         <a
-                          href="https://resend.com/terms"
+                          href="https://docs.aws.amazon.com/whitepapers/latest/navigating-gdpr-compliance/aws-data-processing-addendum-dpa.html"
                           class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                         >
-                          Resend Terms
+                          AWS DPA
                         </a>
                       </td>
                     </tr>
@@ -224,7 +224,8 @@ export function DPAPage(props: Props) {
                 </li>
                 <li>
                   <strong>Profile Data:</strong> Bio, profile picture, custom
-                  domain, domain verification status
+                  domain, domain verification status, RSS feed URLs submitted by
+                  the user
                 </li>
                 <li>
                   <strong>Content Data:</strong> Posts, replies, shares, likes,
@@ -254,6 +255,10 @@ export function DPAPage(props: Props) {
                 <li>
                   <strong>Service Delivery:</strong> Providing the Rawfeed
                   microblogging platform
+                </li>
+                <li>
+                  <strong>RSS Feed Syndication:</strong> Fetching and displaying
+                  content from RSS feed URLs submitted by users
                 </li>
                 <li>
                   <strong>Authentication & Security:</strong> User login,
@@ -387,7 +392,7 @@ export function DPAPage(props: Props) {
               </h2>
 
               <div class="overflow-x-auto -mx-2 sm:mx-0">
-                <table class="w-full mt-4 border-collapse border border-gray-300 min-w-[640px]">
+                <table class="w-full mt-4 border-collapse border border-gray-300 min-w-160">
                   <thead class="bg-gray-100 dark:bg-gray-700">
                     <tr>
                       <th class="border border-gray-300 px-2 sm:px-4 py-2 text-left text-xs sm:text-sm">

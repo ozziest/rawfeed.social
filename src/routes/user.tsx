@@ -13,7 +13,6 @@ import {
 } from "../helpers/dtos";
 import {
   CUSTOM_DOMAIN_SCHEMA,
-  DEFAULT_USERNAME_SCHEMA,
   PROFILE_UPDATE_SCHEMA,
   validate,
 } from "../helpers/validations";
@@ -21,8 +20,8 @@ import { useJsxViews } from "../helpers/useViews";
 import { requireAuth } from "../middleware/requireAuth";
 import { generateDomainVerificationToken } from "../helpers/security";
 import dns from "dns/promises";
-import { RSS_BOT_USERNAMES } from "../rssResources";
-import { nextCursor } from "../helpers/common";
+
+import { isViewableUsername, nextCursor } from "../helpers/common";
 import { SettingsIndex } from "../views/user/settings/SettingsIndex";
 import { SettingsProfile } from "../views/user/settings/SettingsProfile";
 import { DomainInit } from "../views/user/settings/DomainInit";
@@ -354,11 +353,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
       const { html, base } = useCtx(request, reply);
       const { username } = request.params as UserProfileParams;
 
-      const validation = validate(DEFAULT_USERNAME_SCHEMA, username);
-      if (
-        validation.isNotValid &&
-        !RSS_BOT_USERNAMES.includes(username || "")
-      ) {
+      if (!isViewableUsername(username)) {
         return reply.status(404).html(<NotFound {...base()} />);
       }
 
@@ -418,16 +413,16 @@ export default async function userRoutes(fastify: FastifyInstance) {
         return reply.status(404).html(<NotFound {...base()} />);
       }
 
-      const validation = validate(DEFAULT_USERNAME_SCHEMA, username);
-      if (
-        validation.isNotValid &&
-        !RSS_BOT_USERNAMES.includes(username || "")
-      ) {
+      if (!isViewableUsername(username)) {
         return reply.status(404).html(<NotFound {...base()} />);
       }
 
       const user = await userService.getByUsername(username);
       if (!user) {
+        return reply.status(404).html(<NotFound {...base()} />);
+      }
+
+      if (user.bot_type === "rss") {
         return reply.status(404).html(<NotFound {...base()} />);
       }
 

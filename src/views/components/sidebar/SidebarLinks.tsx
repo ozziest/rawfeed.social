@@ -29,6 +29,9 @@ export function SidebarLinks() {
         <a href="/legal/bots" class="hover:underline">
           Bots
         </a>
+        <a href="/legal/dmca" class="hover:underline">
+          Copyright Policy
+        </a>
       </div>
       <p class="text-xs text-gray-500 dark:text-gray-500 mt-2">
         &copy; 2026 rawfeed.social

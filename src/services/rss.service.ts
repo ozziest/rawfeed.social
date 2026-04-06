@@ -28,33 +28,43 @@ export class RSSService {
     source: RSSSourceWithUser,
     items: Parser.Output<unknown>[],
   ) {
+    if (items.length === 0 || !source.uuid) {
+      return;
+    }
+
+    // Build externalId map for all items in one batch query
+    const itemMap = new Map<
+      string,
+      { item: Parser.Output<unknown>; createdAt: Date }
+    >();
     for (const item of items) {
       const externalId = crypto
         .createHash("sha256")
         .update(`${source.username}:${item.link}`)
         .digest("hex");
-
       const data = item as DefaultRSSFeedItem;
-
       const createdAt = data.isoDate
         ? new Date(data.isoDate)
         : data.pubDate
           ? new Date(data.pubDate)
           : new Date();
+      itemMap.set(externalId, { item, createdAt });
+    }
 
-      const post = await postService.getItemByExternalId(externalId);
-      const content = `${item.title}\n\n${item.link}`;
-      if (!post && source.uuid) {
-        await postService.insert(
-          source.uuid,
-          {
-            content,
-            location: source.language,
-          },
-          externalId,
-          createdAt,
-        );
+    // Single query to find which externalIds already exist
+    const existingIds = await postService.getExternalIdSet([...itemMap.keys()]);
+
+    for (const [externalId, { item, createdAt }] of itemMap) {
+      if (existingIds.has(externalId)) {
+        continue;
       }
+      const content = `${item.title}\n\n${item.link}`;
+      await postService.insert(
+        source.uuid,
+        { content, location: source.language },
+        externalId,
+        createdAt,
+      );
     }
   }
 }

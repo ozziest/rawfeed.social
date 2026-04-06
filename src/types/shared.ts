@@ -37,6 +37,25 @@ export type DefaultRSSFeedItem = {
   isoDate?: string;
 };
 
+export type RssSourceStatus = "pending" | "approved" | "rejected";
+
+export type RssSourceRow = {
+  id: string;
+  submitted_by: string;
+  bot_user_id: string;
+  url: string;
+  name: string;
+  bio: string | null;
+  category: string | null;
+  language: string;
+  update_frequency: string;
+  status: RssSourceStatus;
+  created_at: Date;
+  updated_at: Date;
+  // joined from users on bot_user_id
+  username?: string;
+};
+
 export type LinkMap = {
   link: string;
   uniqueId: string;
