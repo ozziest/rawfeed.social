@@ -1,4 +1,5 @@
 import Parser from "rss-parser";
+import robotsParser from "robots-parser";
 import { DefaultRSSFeedItem, RSSSourceWithUser } from "../types/shared";
 import crypto from "crypto";
 import postService from "./post.service";
@@ -9,8 +10,34 @@ const parser = new Parser({
 });
 
 export class RSSService {
+  private async isAllowedByRobots(feedUrl: string): Promise<boolean> {
+    try {
+      const { origin } = new URL(feedUrl);
+      const robotsUrl = `${origin}/robots.txt`;
+      const response = await fetch(robotsUrl, {
+        headers: { "User-Agent": "RawfeedBot" },
+        signal: AbortSignal.timeout(5_000),
+      });
+      if (!response.ok) {
+        return true;
+      }
+      const text = await response.text();
+      const robots = robotsParser(robotsUrl, text);
+      return robots.isAllowed(feedUrl, "RawfeedBot") !== false;
+    } catch {
+      return true;
+    }
+  }
+
   async fetchFeed(source: RSSSourceWithUser) {
     try {
+      const allowed = await this.isAllowedByRobots(source.url);
+      if (!allowed) {
+        throw new Error(
+          `RawfeedBot is disallowed by robots.txt for ${source.url}`,
+        );
+      }
+
       const feed = await parser.parseURL(source.url);
 
       return {
