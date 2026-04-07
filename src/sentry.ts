@@ -17,16 +17,11 @@ if (IS_PRODUCTION) {
 
 export const sentryException = (
   error: Error | unknown,
-  data: Record<string, unknown> = {},
+  extra: Record<string, unknown> = {},
 ) => {
   if (!IS_PRODUCTION) {
     return;
   }
 
-  Sentry.withScope((scope) => {
-    Object.keys(data).forEach((key) => {
-      scope.setTag(key, data[key] as any);
-    });
-    Sentry.captureException(error);
-  });
+  Sentry.captureException(error, { extra });
 };

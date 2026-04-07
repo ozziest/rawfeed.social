@@ -53,7 +53,7 @@ export class RSSService {
         fetchedAt: new Date(),
       };
     } catch (error) {
-      sentryException(error);
+      sentryException(error, { source });
       throw error;
     }
   }
