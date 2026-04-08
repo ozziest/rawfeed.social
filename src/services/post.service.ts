@@ -8,7 +8,6 @@ import { Insertable, Selectable } from "kysely";
 import contentService from "./content.service";
 import postDetailService from "./postDetailService";
 import linkService from "./link.service";
-import { loggerAll } from "../helpers/common";
 import { POST_SIZE } from "../consts";
 import { bust } from "../helpers/cache";
 
@@ -446,25 +445,22 @@ const mergeWithContent = async (
   });
 };
 
-export default loggerAll(
-  {
-    insert,
-    getItemsByUser,
-    getItems,
-    getLast100ByUser,
-    getAllByUser,
-    getById,
-    incViews,
-    getItemByExternalId,
-    getExternalIdSet,
-    getItemsByHashtag,
-    reshare,
-    unreshare,
-    getReshareByUser,
-    getReplies,
-    getLikesByUser,
-    removeLike,
-    like,
-  },
-  "post.service",
-);
+export default {
+  insert,
+  getItemsByUser,
+  getItems,
+  getLast100ByUser,
+  getAllByUser,
+  getById,
+  incViews,
+  getItemByExternalId,
+  getExternalIdSet,
+  getItemsByHashtag,
+  reshare,
+  unreshare,
+  getReshareByUser,
+  getReplies,
+  getLikesByUser,
+  removeLike,
+  like,
+};

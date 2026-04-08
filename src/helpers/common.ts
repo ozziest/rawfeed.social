@@ -88,64 +88,6 @@ export const toISO = (date: string) => {
   return new Date(date).toISOString();
 };
 
-export function logger<T extends (...args: any[]) => any>(
-  fn: T,
-  name?: string,
-): T {
-  const functionName = name || fn.name || "anonymous";
-
-  const logResult = (duration: number, isError = false) => {
-    if (!IS_DEVELOPMENT) {
-      return;
-    }
-
-    const durationStr = duration.toFixed(2);
-    let color = "\x1b[32m"; // green
-
-    if (duration > 30) {
-      color = "\x1b[38;5;208m"; // orange
-    } else if (duration > 10) {
-      color = "\x1b[33m"; // yellow
-    }
-
-    const reset = "\x1b[0m";
-    const errorSuffix = isError ? " (error)" : "";
-
-    console.log(
-      `${color}${functionName}: ${durationStr}ms${errorSuffix}${reset}`,
-    );
-  };
-
-  return ((...args: any[]) => {
-    const startTime = performance.now();
-    const result = fn(...args);
-
-    if (result instanceof Promise) {
-      return result
-        .then((data) => {
-          logResult(performance.now() - startTime);
-          return data;
-        })
-        .catch((error) => {
-          throw error;
-        });
-    }
-
-    logResult(performance.now() - startTime);
-    return result;
-  }) as T;
-}
-
-export function loggerAll<T extends Record<string, any>>(
-  fns: T,
-  prefix: string,
-): T {
-  return Object.keys(fns).reduce((acc, key) => {
-    acc[key as keyof T] = logger(fns[key], `${prefix}.${key}`); // ← Prefix ekle
-    return acc;
-  }, {} as T);
-}
-
 export const nextCursor = (posts: PostWithContent[]) => {
   const hasMore = posts.length === POST_SIZE;
 

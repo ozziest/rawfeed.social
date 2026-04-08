@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { getKnex } from "../db/connection";
 import { Links } from "../types/database";
-import { loggerAll } from "../helpers/common";
 import { cache } from "../helpers/cache";
 
 const TABLE_NAME = "links";
@@ -40,12 +39,9 @@ const incCount = async (id: string) => {
     .increment("count", 1);
 };
 
-export default loggerAll(
-  {
-    insert,
-    getAllByIds,
-    getByCode,
-    incCount,
-  },
-  "link.service",
-);
+export default {
+  insert,
+  getAllByIds,
+  getByCode,
+  incCount,
+};

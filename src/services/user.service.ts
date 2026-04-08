@@ -6,7 +6,6 @@ import { RegisterInput } from "../helpers/dtos";
 import { Users } from "../types/database";
 import { RSSSourceWithUser } from "../types/shared";
 import { Insertable, Selectable } from "kysely";
-import { loggerAll } from "../helpers/common";
 import { cache } from "../helpers/cache";
 
 const TABLE_NAME = "users";
@@ -182,23 +181,20 @@ const verifyEmail = async (userId: string) => {
   });
 };
 
-export default loggerAll(
-  {
-    insert,
-    getByEmail,
-    getByUsername,
-    getAllByUsernames,
-    getById,
-    getByIds,
-    getByCustomDomain,
-    getLastMembers,
-    getLastBots,
-    update,
-    createRSSBot,
-    paginateMembers,
-    paginateBots,
-    getByVerificationToken,
-    verifyEmail,
-  },
-  "user.service",
-);
+export default {
+  insert,
+  getByEmail,
+  getByUsername,
+  getAllByUsernames,
+  getById,
+  getByIds,
+  getByCustomDomain,
+  getLastMembers,
+  getLastBots,
+  update,
+  createRSSBot,
+  paginateMembers,
+  paginateBots,
+  getByVerificationToken,
+  verifyEmail,
+};

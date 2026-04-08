@@ -9,7 +9,6 @@ import {
 import { ContentMap } from "../types/shared";
 import { Insertable } from "kysely";
 import { PostLikesAsGrouped, PostLinkWithLink } from "../types/relations";
-import { loggerAll } from "../helpers/common";
 import { cache } from "../helpers/cache";
 
 const insert = async (postId: string, content: ContentMap) => {
@@ -170,11 +169,8 @@ const getLikedPostsByUser = async (postIds: string[], userId?: string) => {
   return likes.map((like: { post_id: string }) => like.post_id);
 };
 
-export default loggerAll(
-  {
-    insert,
-    getDetailsByPost,
-    getLikedPostsByUser,
-  },
-  "postDetail.service",
-);
+export default {
+  insert,
+  getDetailsByPost,
+  getLikedPostsByUser,
+};

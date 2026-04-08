@@ -4,7 +4,6 @@ import { Hashtags } from "../types/database";
 import { format, subHours } from "date-fns";
 import { DailyReportItem } from "../types/shared";
 import { Selectable } from "kysely";
-import { loggerAll } from "../helpers/common";
 import { cache } from "../helpers/cache";
 
 const TABLE_NAME = "hashtags";
@@ -54,12 +53,9 @@ const getDailyReport = async () => {
   );
 };
 
-export default loggerAll(
-  {
-    insert,
-    getUsedHashtags,
-    getDailyReport,
-    getByTag,
-  },
-  "hashtag.service",
-);
+export default {
+  insert,
+  getUsedHashtags,
+  getDailyReport,
+  getByTag,
+};

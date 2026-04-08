@@ -3,7 +3,6 @@ import { getKnex } from "../db/connection";
 import { Follows } from "../types/database";
 import { FollowWithUser } from "../types/relations";
 import { Selectable } from "kysely";
-import { loggerAll } from "../helpers/common";
 import { cache, redis } from "../helpers/cache";
 import userService from "./user.service";
 
@@ -251,17 +250,14 @@ const invalidateFollowCaches = async (
   await Promise.all(keys.map((k) => redis.del(k)));
 };
 
-export default loggerAll(
-  {
-    followUser,
-    unfollowUser,
-    isFollowing,
-    isFollowingBatch,
-    getFollowers,
-    getFollowing,
-    getFollowerCount,
-    getFollowingCount,
-    getFollowingIds,
-  },
-  "follow.service",
-);
+export default {
+  followUser,
+  unfollowUser,
+  isFollowing,
+  isFollowingBatch,
+  getFollowers,
+  getFollowing,
+  getFollowerCount,
+  getFollowingCount,
+  getFollowingIds,
+};

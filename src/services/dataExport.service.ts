@@ -2,7 +2,6 @@ import { v4 as uuidv4 } from "uuid";
 import { getKnex } from "../db/connection";
 import { DataExports } from "../types/database";
 import { Selectable } from "kysely";
-import { loggerAll } from "../helpers/common";
 
 const TABLE_NAME = "data_exports";
 
@@ -86,16 +85,13 @@ const isExportValid = (exportRecord: Selectable<DataExports>): boolean => {
   return new Date(exportRecord.expires_at) > new Date();
 };
 
-export default loggerAll(
-  {
-    create,
-    getById,
-    getByUserId,
-    getLatestByUserId,
-    canUserRequestExport,
-    update,
-    getPendingExports,
-    isExportValid,
-  },
-  "dataExport.service",
-);
+export default {
+  create,
+  getById,
+  getByUserId,
+  getLatestByUserId,
+  canUserRequestExport,
+  update,
+  getPendingExports,
+  isExportValid,
+};

@@ -38,7 +38,6 @@ import blogService from "./services/blog.service";
 import sitemapRoutes from "./routes/sitemap";
 import followRoutes from "./routes/follow";
 import reportRoutes from "./routes/report";
-import { timer } from "./helpers/timer";
 import { asset } from "./helpers/asset";
 import { getThemeFromCookies } from "./helpers/common";
 import { NotFound } from "./views/NotFound";
@@ -152,22 +151,6 @@ server.register(rateLimit, {
 server.register(kitaHtmlPlugin);
 server.register(jwt, {
   secret: process.env.JWT_SECRET!,
-});
-server.get(
-  "/metrics",
-  { preHandler: [verifyToken, requireAuth, shouldBeAdmin] },
-  async (request, reply) => {
-    reply.type("text/html");
-    return timer.getHtml();
-  },
-);
-server.addHook("onRequest", async (request, reply) => {
-  const routeName = `${request.method} ${request.url}`;
-  timer.start(routeName);
-
-  reply.raw.on("finish", () => {
-    timer.end(routeName);
-  });
 });
 
 server.register(fastifyStatic, {
