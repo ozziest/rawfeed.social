@@ -26,9 +26,13 @@ function buildActionText(type: string): string {
 export function NotificationItem({ notification }: NotificationItemProps) {
   const isUnread = !notification.is_read;
   const action = buildActionText(notification.type);
-  const postHref = notification.post_id
-    ? `/posts/${notification.post_id}`
-    : null;
+
+  const isReplyOrMention =
+    notification.type === "Reply" || notification.type === "Mention";
+  const targetId = isReplyOrMention
+    ? (notification.reply_id ?? notification.post_id)
+    : notification.post_id;
+  const postHref = targetId ? `/posts/${targetId}` : null;
 
   return (
     <div

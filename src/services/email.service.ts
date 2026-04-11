@@ -204,6 +204,9 @@ const formatNotificationLine = (n: NotificationWithTriggers): string => {
   const postLink = n.post_id
     ? ` — <a href="https://rawfeed.social/posts/${n.post_id}">view post</a>`
     : "";
+  const replyLink = n.reply_id
+    ? ` — <a href="https://rawfeed.social/posts/${n.reply_id}">view reply</a>`
+    : postLink;
 
   switch (n.type) {
     case "Like":
@@ -213,9 +216,9 @@ const formatNotificationLine = (n: NotificationWithTriggers): string => {
     case "Follow":
       return `${who} followed you`;
     case "Reply":
-      return `${who} replied to your post${postLink}`;
+      return `${who} replied to your post${replyLink}`;
     case "Mention":
-      return `${who} mentioned you in a post${postLink}`;
+      return `${who} mentioned you in a post${replyLink}`;
     default:
       return `New notification`;
   }
