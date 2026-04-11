@@ -68,13 +68,17 @@ const createNotificationTrigger = async (
   notificationId: string,
   triggerUserId: string,
 ) => {
-  return getKnex().table("notifications_triggers").insert({
-    id: uuidv4(),
-    notification_id: notificationId,
-    trigger_user_id: triggerUserId,
-    created_at: new Date(),
-    updated_at: new Date(),
-  });
+  return getKnex()
+    .table("notifications_triggers")
+    .insert({
+      id: uuidv4(),
+      notification_id: notificationId,
+      trigger_user_id: triggerUserId,
+      created_at: new Date(),
+      updated_at: new Date(),
+    })
+    .onConflict(["notification_id", "trigger_user_id"])
+    .ignore();
 };
 
 const getNotificationTriggers = async (notificationIds: string[]) => {
@@ -98,6 +102,7 @@ const fetchNotificationsForUser = async (userId: string, cursor?: string) => {
     .table("notifications")
     .where("user_id", userId)
     .orderBy("updated_at", "desc")
+    .orderBy("id", "desc")
     .limit(NOTIFICATION_SIZE)
     .select("*");
 
@@ -266,6 +271,7 @@ const getUnreadNotificationsForEmailDigest = async (
     .table("notifications")
     .where("user_id", userId)
     .orderBy("updated_at", "desc")
+    .orderBy("id", "desc")
     .limit(50);
 
   if (since) {

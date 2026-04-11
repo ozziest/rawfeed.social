@@ -9,7 +9,7 @@ import { SettingsPageHeader } from "../../components/shared/SettingsPageHeader";
 import { Card } from "../../components/shared/Card";
 
 type SettingsNotificationsProps = BaseProps & {
-  user: Selectable<Users> | undefined;
+  user: Selectable<Users>;
   csrfToken: string;
 };
 
@@ -38,7 +38,7 @@ const FREQ_OPTIONS: { value: string; label: string; description: string }[] = [
 
 export function SettingsNotifications(props: SettingsNotificationsProps) {
   const { user, csrfToken, validation } = props;
-  const currentFreq = (user as any)?.notif_email_freq ?? "daily";
+  const currentFreq = user.notif_email_freq ?? "daily";
 
   return (
     <DefaultLayout {...props}>

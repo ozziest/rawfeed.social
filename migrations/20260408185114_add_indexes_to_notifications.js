@@ -11,8 +11,14 @@ export const up = function (knex) {
 
 export const down = function (knex) {
   return knex.schema.alterTable("notifications", function (table) {
-    table.dropIndex([], "notifications_user_type_created_idx");
-    table.dropIndex([], "notifications_user_updated_idx");
-    table.dropIndex([], "notifications_user_is_read_idx");
+    table.dropIndex(
+      ["user_id", "type", "created_at"],
+      "notifications_user_type_created_idx",
+    );
+    table.dropIndex(
+      ["user_id", "updated_at"],
+      "notifications_user_updated_idx",
+    );
+    table.dropIndex(["user_id", "is_read"], "notifications_user_is_read_idx");
   });
 };

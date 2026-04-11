@@ -223,7 +223,7 @@ const formatNotificationLine = (n: NotificationWithTriggers): string => {
 
 export const sendNotificationDigestEmail = async (
   to: string,
-  username: string,
+  name: string,
   notifications: NotificationWithTriggers[],
 ): Promise<void> => {
   try {
@@ -238,7 +238,7 @@ export const sendNotificationDigestEmail = async (
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2>Your notifications</h2>
-          <p>Hi ${username}, here's a summary of your recent activity on rawfeed.social:</p>
+          <p>Hi ${name}, here's a summary of your recent activity on rawfeed.social:</p>
           <ul style="padding-left: 20px; margin: 20px 0;">
             ${listItems}
           </ul>
