@@ -27,6 +27,10 @@ import {
 } from "./scheduler/rss-scheduler";
 import { initializeExportWorker } from "./scheduler/export-worker";
 import { initializeSitemapScheduler } from "./scheduler/sitemap-scheduler";
+import {
+  initializeNotificationEmailScheduler,
+  shutdownNotificationEmailScheduler,
+} from "./scheduler/notification-email-scheduler";
 import redirectRoutes from "./routes/redirect";
 import exploreRoutes from "./routes/explore";
 import tagsRoutes from "./routes/tags";
@@ -38,15 +42,13 @@ import blogService from "./services/blog.service";
 import sitemapRoutes from "./routes/sitemap";
 import followRoutes from "./routes/follow";
 import reportRoutes from "./routes/report";
+import notificationRoutes from "./routes/notifications";
 import { asset } from "./helpers/asset";
 import { getThemeFromCookies } from "./helpers/common";
 import { NotFound } from "./views/NotFound";
 import { ErrorPage } from "./views/ErrorPage";
 import { ErrorDev } from "./views/ErrorDev";
 import { TooManyRequests } from "./views/TooManyRequests";
-import { verifyToken } from "./middleware/verifyToken";
-import { requireAuth } from "./middleware/requireAuth";
-import { shouldBeAdmin } from "./middleware/shouldBeAdmin";
 import { IS_DEVELOPMENT } from "./consts";
 import { register } from "./metrics";
 
@@ -122,7 +124,6 @@ server.register(helmet, {
             "'self'",
             "data:",
             "https://www.gravatar.com",
-            "https://api.producthunt.com",
             ...(assetBaseUrl ? [assetBaseUrl] : []),
           ],
           connectSrc: [
@@ -193,6 +194,7 @@ server.register(userRoutes);
 server.register(postRoutes);
 server.register(followRoutes);
 server.register(reportRoutes);
+server.register(notificationRoutes);
 server.register(exploreRoutes);
 server.register(tagsRoutes);
 server.register(legalRoutes);
@@ -296,6 +298,7 @@ const start = async () => {
       initializeRSSScheduler();
       initializeExportWorker();
       initializeSitemapScheduler();
+      initializeNotificationEmailScheduler();
     }
 
     server.log.info(`Server listening on port ${port}`);
@@ -308,6 +311,7 @@ const start = async () => {
 const shutdown = async (signal: string) => {
   server.log.info(`Received ${signal}, shutting down gracefully`);
   await shutdownRSSScheduler();
+  await shutdownNotificationEmailScheduler();
   await server.close();
   process.exit(0);
 };

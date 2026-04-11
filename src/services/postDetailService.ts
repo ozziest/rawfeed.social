@@ -10,11 +10,17 @@ import { ContentMap } from "../types/shared";
 import { Insertable } from "kysely";
 import { PostLikesAsGrouped, PostLinkWithLink } from "../types/relations";
 import { cache } from "../helpers/cache";
+import notificationService from "./notification.service";
+import { sentryException } from "../sentry";
 
-const insert = async (postId: string, content: ContentMap) => {
+const insert = async (
+  postId: string,
+  content: ContentMap,
+  postAuthorUserId?: string,
+) => {
   const promises = [
     addLinks(postId, content),
-    addMentions(postId, content),
+    addMentions(postId, content, postAuthorUserId),
     addHashtags(postId, content),
   ];
 
@@ -41,7 +47,11 @@ const addLinks = async (postId: string, content: ContentMap) => {
     );
 };
 
-const addMentions = async (postId: string, content: ContentMap) => {
+const addMentions = async (
+  postId: string,
+  content: ContentMap,
+  postAuthorUserId?: string,
+) => {
   if (content.mentions.length === 0) {
     return;
   }
@@ -60,6 +70,16 @@ const addMentions = async (postId: string, content: ContentMap) => {
         };
       }),
     );
+
+  if (postAuthorUserId) {
+    for (const mention of content.mentions) {
+      if (mention.id) {
+        notificationService
+          .upsertNotification(mention.id, "Mention", postAuthorUserId, postId)
+          .catch(sentryException);
+      }
+    }
+  }
 };
 
 const addHashtags = async (postId: string, content: ContentMap) => {

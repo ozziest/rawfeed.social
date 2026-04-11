@@ -161,3 +161,7 @@ export const PROFILE_UPDATE_SCHEMA = z.object({
       },
     ),
 });
+
+export const NOTIFICATION_SETTINGS_SCHEMA = z.object({
+  notif_email_freq: z.enum(["off", "hourly", "daily", "weekly"]),
+});

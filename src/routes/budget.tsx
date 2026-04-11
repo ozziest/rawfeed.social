@@ -1,9 +1,9 @@
 import { FastifyInstance } from "fastify";
-import { useJsxViews } from "../helpers/useViews";
+import { useViews } from "../helpers/useViews";
 import { verifyToken } from "../middleware/verifyToken";
 import { BudgetPage } from "../views/Budget";
 
-const useCtx = useJsxViews();
+const useCtx = useViews();
 
 export default async function budgetRoutes(fastify: FastifyInstance) {
   fastify.get(

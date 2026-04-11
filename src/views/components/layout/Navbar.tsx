@@ -2,14 +2,21 @@ import type { TokenPayload } from "../../../helpers/tokens";
 import { asset } from "../../../helpers/asset";
 import { MenuIcon } from "../icons/MenuIcon";
 import { ThemeToggle } from "./ThemeToggle";
+import { NotificationBell } from "./NotificationBell";
 
 type NavbarProps = {
   mode: "root" | "custom";
   loggedUser?: TokenPayload;
   theme: "dark" | "light" | "system";
+  unreadNotifCount: number;
 };
 
-export function Navbar({ mode, loggedUser, theme }: NavbarProps) {
+export function Navbar({
+  mode,
+  loggedUser,
+  theme,
+  unreadNotifCount,
+}: NavbarProps) {
   if (mode !== "root") return "";
 
   return (
@@ -44,22 +51,10 @@ export function Navbar({ mode, loggedUser, theme }: NavbarProps) {
           {/* Desktop Navigation Links */}
           <div class="hidden md:flex items-center gap-4">
             <a
-              href="/"
-              class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
-            >
-              Feed
-            </a>
-            <a
               href="/about"
               class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
             >
               About
-            </a>
-            <a
-              href="/blog"
-              class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
-            >
-              Blog
             </a>
             {!loggedUser ? (
               <>
@@ -93,14 +88,7 @@ export function Navbar({ mode, loggedUser, theme }: NavbarProps) {
                 >
                   Settings
                 </a>
-                <form method="GET" action="/auth/logout">
-                  <button
-                    type="submit"
-                    class="text-gray-600 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 transition-colors cursor-pointer"
-                  >
-                    Logout
-                  </button>
-                </form>
+                <NotificationBell unreadCount={unreadNotifCount} />
               </>
             ) : (
               ""
@@ -148,6 +136,7 @@ export function Navbar({ mode, loggedUser, theme }: NavbarProps) {
                 >
                   @<span safe>{loggedUser.username}</span>
                 </a>
+                <NotificationBell unreadCount={unreadNotifCount} mobile />
                 <a
                   href="/user/settings"
                   class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 px-3 py-2 rounded-lg transition-colors"

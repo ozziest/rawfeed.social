@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { useJsxViews, getBaseProps } from "../helpers/useViews";
+import { useViews, getBaseProps } from "../helpers/useViews";
 import { verifyToken } from "../middleware/verifyToken";
 import { TermsPage } from "../views/legal/Terms";
 import { PrivacyPage } from "../views/legal/Privacy";
@@ -9,7 +9,7 @@ import { DPAPage } from "../views/legal/DPA";
 import { BotsLegalPage } from "../views/legal/Bots";
 import { DMCAPage } from "../views/legal/DMCA";
 
-const useCtx = useJsxViews();
+const useCtx = useViews();
 
 export default async function legalRoutes(fastify: FastifyInstance) {
   fastify.get(

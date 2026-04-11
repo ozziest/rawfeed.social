@@ -26,6 +26,7 @@ declare module "fastify" {
     domainUser?: Selectable<Users>;
     loggedUser?: TokenPayload;
     profileUser?: Selectable<Users>;
+    unreadNotifCount: number;
   }
 
   interface FastifyReply {

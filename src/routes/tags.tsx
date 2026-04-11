@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
 import { verifyToken } from "../middleware/verifyToken";
 import userService from "../services/user.service";
-import { useJsxViews } from "../helpers/useViews";
+import { useViews } from "../helpers/useViews";
 import postService from "../services/post.service";
 import hashtagService from "../services/hashtag.service";
 import { HashtagViewParams } from "../helpers/dtos";
@@ -10,7 +10,7 @@ import { TagsIndex } from "../views/tags/TagsIndex";
 import { NotFound } from "../views/NotFound";
 import { asset } from "../helpers/asset";
 
-const useCtx = useJsxViews();
+const useCtx = useViews();
 
 export default async function tagsRoutes(fastify: FastifyInstance) {
   fastify.get(

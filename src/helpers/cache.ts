@@ -28,7 +28,8 @@ type CacheKeyPrefix =
   | "user.service.getLastMembers"
   | "user.service.getLastBots"
   | "blog:getAllPosts"
-  | "link.service.getAllByIds";
+  | "link.service.getAllByIds"
+  | "notification.service.getUnreadCount";
 
 const toCacheKey = (key: CacheKeyPrefix, params?: ParamsType): string => {
   let cacheKey: string = key;
@@ -98,8 +99,13 @@ export async function cache<T>(
   return value;
 }
 
-export async function bust(keyPrefix: CacheKeyPrefix): Promise<void> {
-  const pattern = `${keyPrefix}*`;
+export async function bust(
+  keyPrefix: CacheKeyPrefix,
+  params?: ParamsType,
+): Promise<void> {
+  const pattern = params
+    ? `${toCacheKey(keyPrefix, params)}*`
+    : `${keyPrefix}*`;
   let cursor = "0";
 
   do {

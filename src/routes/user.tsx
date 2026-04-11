@@ -13,10 +13,11 @@ import {
 } from "../helpers/dtos";
 import {
   CUSTOM_DOMAIN_SCHEMA,
+  NOTIFICATION_SETTINGS_SCHEMA,
   PROFILE_UPDATE_SCHEMA,
   validate,
 } from "../helpers/validations";
-import { useJsxViews } from "../helpers/useViews";
+import { useViews } from "../helpers/useViews";
 import { requireAuth } from "../middleware/requireAuth";
 import { generateDomainVerificationToken } from "../helpers/security";
 import dns from "dns/promises";
@@ -28,11 +29,13 @@ import { DomainInit } from "../views/user/settings/DomainInit";
 import { DomainVerify } from "../views/user/settings/DomainVerify";
 import { DomainRemove } from "../views/user/settings/DomainRemove";
 import { DataExtraction } from "../views/user/settings/DataExtraction";
+import { SettingsNotifications } from "../views/user/settings/SettingsNotifications";
 import { UserProfile } from "../views/user/UserProfile";
 import { NotFound } from "../views/NotFound";
 import rssSourceService from "../services/rssSource.service";
+import { Users } from "../types/database";
 
-const useCtx = useJsxViews();
+const useCtx = useViews();
 
 export default async function userRoutes(fastify: FastifyInstance) {
   fastify.get(
@@ -436,6 +439,51 @@ export default async function userRoutes(fastify: FastifyInstance) {
       return reply
         .header("Content-Type", "application/rss+xml; charset=utf-8")
         .send(rssXml);
+    },
+  );
+
+  fastify.get(
+    "/user/settings/notifications",
+    { preHandler: [verifyToken, requireAuth] },
+    async (request, reply) => {
+      const { html, base } = useCtx(request, reply);
+      const user = await userService.getById(request.loggedUser?.userId!);
+
+      if (!user) {
+        return reply.status(404).html(<NotFound {...base()} />);
+      }
+
+      return html(
+        <SettingsNotifications
+          {...base()}
+          csrfToken={reply.generateCsrf()}
+          user={user}
+        />,
+      );
+    },
+  );
+
+  fastify.post(
+    "/user/settings/notifications",
+    { preHandler: [fastify.csrfProtection, verifyToken, requireAuth] },
+    async (request, reply) => {
+      const { setValidation } = useCtx(request, reply);
+
+      const validation = validate(NOTIFICATION_SETTINGS_SCHEMA, request.body);
+      if (validation.isNotValid) {
+        setValidation(validation.errors);
+        return reply.redirect("/user/settings/notifications");
+      }
+
+      const input = request.body as {
+        notif_email_freq: Users["notif_email_freq"];
+      };
+
+      await userService.update(request.loggedUser?.userId!, {
+        notif_email_freq: input.notif_email_freq,
+      });
+
+      return reply.redirect("/user/settings");
     },
   );
 }
