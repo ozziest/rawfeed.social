@@ -136,9 +136,21 @@ export interface RssSources {
   id: string;
   language: Generated<string>;
   name: string;
-  status: Generated<"approved" | "pending" | "rejected">;
   submitted_by: string;
   update_frequency: Generated<string>;
+  updated_at: Generated<Date>;
+  url: string;
+}
+
+export interface RssSuggestions {
+  admin_notes: string | null;
+  created_at: Generated<Date>;
+  id: string;
+  is_owner: Generated<number>;
+  language: Generated<string>;
+  rejection_reason: string | null;
+  status: Generated<"accepted" | "pending" | "rejected">;
+  submitted_by: string;
   updated_at: Generated<Date>;
   url: string;
 }
@@ -181,5 +193,6 @@ export interface DB {
   post_mentions: PostMentions;
   posts: Posts;
   rss_sources: RssSources;
+  rss_suggestions: RssSuggestions;
   users: Users;
 }

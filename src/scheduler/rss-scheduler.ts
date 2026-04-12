@@ -54,8 +54,16 @@ async function scheduleSource(
   }
 }
 
+export async function addSourceToScheduler(row: RssSourceRow): Promise<void> {
+  if (!queue) {
+    return;
+  }
+  await ensureBotUser(row);
+  await scheduleSource(queue, row);
+}
+
 export async function initializeRSSScheduler() {
-  const rows = await rssSourceService.getApproved();
+  const rows = await rssSourceService.getAll();
 
   await Promise.allSettled(
     rows.map((row) =>
