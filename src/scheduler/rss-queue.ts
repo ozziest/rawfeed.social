@@ -35,7 +35,7 @@ export function createRssWorker(): Worker<RssFetchJobData> {
       const { sourceId } = job.data;
 
       const row = await rssSourceService.getById(sourceId);
-      if (!row || row.status !== "approved") {
+      if (!row) {
         return;
       }
 
