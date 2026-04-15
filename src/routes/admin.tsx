@@ -117,11 +117,8 @@ export default async function adminRoutes(fastify: FastifyInstance) {
 
       const result = await testRssFeed(suggestion.url);
 
-      reply.header("Content-Type", "text/html");
-      return reply.send(
-        await reply.html(
-          <RssSuggestionFeedPreview result={result} {...base()} />,
-        ),
+      return reply.html(
+        <RssSuggestionFeedPreview result={result} {...base()} />,
       );
     },
   );

@@ -1,6 +1,22 @@
 import { logError } from "../helpers/common";
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
+import sanitizeHtml from "sanitize-html";
 import type { NotificationWithTriggers } from "../types/relations";
+
+const esc = (text: string): string =>
+  sanitizeHtml(text, { allowedTags: [], allowedAttributes: {} });
+
+const safeUrl = (url: string): string => {
+  try {
+    const parsed = new URL(url);
+    if (parsed.protocol === "https:" || parsed.protocol === "http:") {
+      return url;
+    }
+  } catch {
+    // invalid URL
+  }
+  return "#";
+};
 
 type CreateEmailOptions = {
   to: string;
@@ -293,15 +309,15 @@ export const sendRssSuggestionReceivedEmail = async (opts: {
           <table style="border-collapse: collapse; width: 100%; margin-bottom: 24px;">
             <tr>
               <td style="padding: 8px 12px; background: #f3f4f6; font-weight: bold; width: 160px;">Submitted by</td>
-              <td style="padding: 8px 12px; border: 1px solid #e5e7eb;">@${submitterUsername} (${submitterEmail})</td>
+              <td style="padding: 8px 12px; border: 1px solid #e5e7eb;">@${esc(submitterUsername)} (${esc(submitterEmail)})</td>
             </tr>
             <tr>
               <td style="padding: 8px 12px; background: #f3f4f6; font-weight: bold;">Feed URL</td>
-              <td style="padding: 8px 12px; border: 1px solid #e5e7eb;"><a href="${feedUrl}">${feedUrl}</a></td>
+              <td style="padding: 8px 12px; border: 1px solid #e5e7eb;"><a href="${safeUrl(feedUrl)}">${esc(feedUrl)}</a></td>
             </tr>
             <tr>
               <td style="padding: 8px 12px; background: #f3f4f6; font-weight: bold;">Language</td>
-              <td style="padding: 8px 12px; border: 1px solid #e5e7eb;">${language.toUpperCase()}</td>
+              <td style="padding: 8px 12px; border: 1px solid #e5e7eb;">${esc(language.toUpperCase())}</td>
             </tr>
             <tr>
               <td style="padding: 8px 12px; background: #f3f4f6; font-weight: bold;">Feed owner?</td>
@@ -309,7 +325,7 @@ export const sendRssSuggestionReceivedEmail = async (opts: {
             </tr>
           </table>
           <p>
-            <a href="${adminUrl}"
+            <a href="${safeUrl(adminUrl)}"
                style="background-color: #000000; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">
               Review Suggestion
             </a>
@@ -337,9 +353,9 @@ export const sendRssSuggestionAcceptedEmail = async (
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2>Your RSS Feed Suggestion Was Accepted 🎉</h2>
-          <p>Hi @${username},</p>
-          <p>Great news! Your suggestion to add <strong>${feedName}</strong> has been reviewed and accepted by our moderation team.</p>
-          <p style="color: #666; font-size: 14px;">Feed URL: <a href="${feedUrl}">${feedUrl}</a></p>
+          <p>Hi @${esc(username)},</p>
+          <p>Great news! Your suggestion to add <strong>${esc(feedName)}</strong> has been reviewed and accepted by our moderation team.</p>
+          <p style="color: #666; font-size: 14px;">Feed URL: <a href="${safeUrl(feedUrl)}">${esc(feedUrl)}</a></p>
           <p>The feed has been added to <a href="https://rawfeed.social/explore/bots">rawfeed.social/explore/bots</a> and will start syncing shortly.</p>
           <p>Thank you for contributing to Rawfeed!</p>
         </div>
@@ -365,16 +381,16 @@ export const sendRssSuggestionRejectedEmail = async (
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2>RSS Feed Suggestion Not Accepted</h2>
-          <p>Hi @${username},</p>
+          <p>Hi @${esc(username)},</p>
           <p>Thank you for suggesting an RSS feed. Unfortunately, after review, we were not able to add it to Rawfeed.</p>
           <table style="border-collapse: collapse; width: 100%; margin: 20px 0;">
             <tr>
               <td style="padding: 8px 12px; background: #f3f4f6; font-weight: bold; width: 140px;">Feed URL</td>
-              <td style="padding: 8px 12px; border: 1px solid #e5e7eb;"><a href="${feedUrl}">${feedUrl}</a></td>
+              <td style="padding: 8px 12px; border: 1px solid #e5e7eb;"><a href="${safeUrl(feedUrl)}">${esc(feedUrl)}</a></td>
             </tr>
             <tr>
               <td style="padding: 8px 12px; background: #f3f4f6; font-weight: bold;">Reason</td>
-              <td style="padding: 8px 12px; border: 1px solid #e5e7eb;">${reason}</td>
+              <td style="padding: 8px 12px; border: 1px solid #e5e7eb;">${esc(reason)}</td>
             </tr>
           </table>
           <p style="color: #666; font-size: 14px;">

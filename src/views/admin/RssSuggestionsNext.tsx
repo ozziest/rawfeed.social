@@ -31,14 +31,18 @@ export function RssSuggestionsNext({
             </a>
           </td>
           <td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-            <a
-              href={`/u/${s.submitter_username}`}
-              class="underline"
-              target="_blank"
-              safe
-            >
-              @{s.submitter_username ?? "—"}
-            </a>
+            {s.submitter_username ? (
+              <a
+                href={`/u/${s.submitter_username}`}
+                class="underline"
+                target="_blank"
+                safe
+              >
+                @{s.submitter_username}
+              </a>
+            ) : (
+              <span class="text-gray-400">—</span>
+            )}
           </td>
           <td class="px-4 py-3">
             {s.status === "pending" ? (
@@ -74,7 +78,7 @@ export function RssSuggestionsNext({
       {nextUrl ? (
         <tr hx-get={nextUrl} hx-trigger="intersect once" hx-swap="outerHTML">
           <td
-            colspan="7"
+            colspan="5"
             class="px-4 py-6 text-center text-sm text-gray-400 animate-pulse"
           >
             Loading more…

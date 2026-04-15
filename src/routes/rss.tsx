@@ -84,7 +84,7 @@ export default async function rssRoutes(fastify: FastifyInstance) {
 
       await sendRssSuggestionReceivedEmail({
         submitterUsername: loggedUser.username,
-        submitterEmail: suggestion.submitter_email ?? loggedUser.username,
+        submitterEmail: suggestion.submitter_email ?? "(unknown)",
         feedUrl: url,
         language,
         isOwner: is_owner as boolean,

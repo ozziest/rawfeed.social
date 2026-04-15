@@ -149,6 +149,7 @@ export function SuggestFeed(props: SuggestFeedProps) {
                 <a
                   href="/legal/terms"
                   target="_blank"
+                  rel="noopener noreferrer"
                   class="underline font-medium"
                 >
                   Terms of Service
@@ -170,6 +171,7 @@ export function SuggestFeed(props: SuggestFeedProps) {
                 <a
                   href="/legal/dpa"
                   target="_blank"
+                  rel="noopener noreferrer"
                   class="underline font-medium"
                 >
                   Data Processing Agreement
@@ -191,6 +193,7 @@ export function SuggestFeed(props: SuggestFeedProps) {
                 <a
                   href="/legal/bots"
                   target="_blank"
+                  rel="noopener noreferrer"
                   class="underline font-medium"
                 >
                   Bots &amp; Automation Policy
@@ -212,6 +215,7 @@ export function SuggestFeed(props: SuggestFeedProps) {
                 <a
                   href="/legal/dmca"
                   target="_blank"
+                  rel="noopener noreferrer"
                   class="underline font-medium"
                 >
                   Copyright Policy

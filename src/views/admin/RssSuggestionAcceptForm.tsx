@@ -132,7 +132,10 @@ export function RssSuggestionAcceptForm({
               {RSS_LANGUAGES.map((lang) => (
                 <option
                   value={lang.code}
-                  selected={suggestionLanguage === lang.code || undefined}
+                  selected={
+                    (state?.language ?? suggestionLanguage) === lang.code ||
+                    undefined
+                  }
                 >
                   {lang.label}
                 </option>
@@ -154,7 +157,15 @@ export function RssSuggestionAcceptForm({
               class="block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
             >
               {UPDATE_FREQUENCY_OPTIONS.map((opt) => (
-                <option value={opt.value}>{opt.label}</option>
+                <option
+                  value={opt.value}
+                  selected={
+                    (state?.update_frequency ?? "0 */4 * * *") === opt.value ||
+                    undefined
+                  }
+                >
+                  {opt.label}
+                </option>
               ))}
             </select>
             <FieldError message={validation?.update_frequency} />

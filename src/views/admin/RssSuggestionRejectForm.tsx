@@ -43,7 +43,12 @@ export function RssSuggestionRejectForm({
           >
             <option value="">Select a reason...</option>
             {RSS_REJECTION_REASONS.map((r) => (
-              <option value={r}>{r}</option>
+              <option
+                value={r}
+                selected={state?.rejection_reason === r || undefined}
+              >
+                {r}
+              </option>
             ))}
           </select>
           <FieldError message={validation?.rejection_reason} />
