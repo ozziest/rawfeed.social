@@ -160,6 +160,49 @@ export const sendVerificationEmail = async (
   }
 };
 
+export const sendPasswordResetEmail = async (
+  to: string,
+  username: string,
+  resetUrl: string,
+): Promise<void> => {
+  try {
+    const safeUsername = esc(username);
+    const safeResetUrl = safeUrl(resetUrl);
+    const options: CreateEmailOptions = {
+      to,
+      subject: "Reset Your Password",
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2>Reset Your Password</h2>
+          <p>Hi ${safeUsername},</p>
+          <p>We received a request to reset the password for your rawfeed.social account.</p>
+          <p style="margin: 30px 0;">
+            <a href="${safeResetUrl}"
+               style="background-color: #000000; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">
+              Reset Password
+            </a>
+          </p>
+          <p style="color: #666; font-size: 14px;">
+            Or copy and paste this link into your browser:<br>
+            <a href="${safeResetUrl}" style="color: #2563eb;">${safeResetUrl}</a>
+          </p>
+          <p style="color: #666; font-size: 14px;">
+            <strong>Important:</strong> This link will expire in 1 hour.
+          </p>
+          <p style="color: #666; font-size: 14px;">
+            If you didn't request a password reset, you can safely ignore this email. Your password will not change.
+          </p>
+        </div>
+      `,
+    };
+
+    await sendEmail(options);
+  } catch (error) {
+    logError(error);
+    throw error;
+  }
+};
+
 export const sendPostReportEmail = async (opts: {
   postId: string;
   postUrl: string;

@@ -8,9 +8,9 @@ import { AuthFormLink } from "../components/auth/AuthFormLink";
 import { CsrfToken } from "../components/forms/CsrfToken";
 import { Turnstile } from "../components/forms/Turnstile";
 
-type LoginProps = BaseProps & { csrfToken: string };
+type ForgotPasswordProps = BaseProps & { csrfToken: string };
 
-export function Login(props: LoginProps) {
+export function ForgotPassword(props: ForgotPasswordProps) {
   const { csrfToken, validation, state } = props;
 
   return (
@@ -19,11 +19,15 @@ export function Login(props: LoginProps) {
         <div class="w-full max-w-md space-y-8">
           <FlashMessages state={props.state} />
           <AuthHeading
-            title="Sign in to your account"
-            subtitle="Welcome back to rawfeed.social"
+            title="Reset your password"
+            subtitle="Enter your email and we'll send you a reset link"
           />
 
-          <form class="mt-8 space-y-6" action="/auth/login" method="post">
+          <form
+            class="mt-8 space-y-6"
+            action="/auth/forgot-password"
+            method="post"
+          >
             <CsrfToken token={csrfToken} />
 
             <FormField
@@ -38,36 +42,16 @@ export function Login(props: LoginProps) {
               error={validation?.email}
             />
 
-            <FormField
-              id="password"
-              name="password"
-              type="password"
-              label="Password"
-              placeholder="••••••••"
-              autoComplete="current-password"
-              required
-              error={validation?.password}
-            />
-
             <Turnstile theme={props.theme} error={validation?.turnstile} />
 
             <Button type="submit" class="hidden turnstile-submit">
-              Sign in
+              Send reset link
             </Button>
 
-            <div class="text-center text-sm">
-              <a
-                href="/auth/forgot-password"
-                class="font-medium text-black dark:text-gray-200 hover:text-gray-700 dark:hover:text-white underline"
-              >
-                Forgot your password?
-              </a>
-            </div>
-
             <AuthFormLink
-              label="Don't have an account?"
-              href="/auth/register"
-              linkText="Create account"
+              label="Remember your password?"
+              href="/auth/login"
+              linkText="Sign in"
             />
           </form>
         </div>

@@ -3,19 +3,35 @@ import userService from "../services/user.service";
 import {
   LOGIN_SCHEMA,
   REGISTER_SCHEMA,
+  FORGOT_PASSWORD_SCHEMA,
+  RESET_PASSWORD_SCHEMA,
   validate,
 } from "../helpers/validations";
 import { useViews } from "../helpers/useViews";
-import { LoginInput, RegisterInput } from "../helpers/dtos";
+import {
+  LoginInput,
+  RegisterInput,
+  ForgotPasswordInput,
+  ResetPasswordInput,
+} from "../helpers/dtos";
 import bcrypt from "bcrypt";
+import crypto from "crypto";
 import { generateTokens } from "../helpers/tokens";
 import { getAvatar } from "../helpers/common";
-import { sendVerificationEmail } from "../services/email.service";
+import {
+  sendVerificationEmail,
+  sendPasswordResetEmail,
+} from "../services/email.service";
 import { Login } from "../views/auth/Login";
 import { Register } from "../views/auth/Register";
 import { RegistrationSuccess } from "../views/auth/RegistrationSuccess";
 import { VerificationError } from "../views/auth/VerificationError";
 import { VerificationSuccess } from "../views/auth/VerificationSuccess";
+import { ForgotPassword } from "../views/auth/ForgotPassword";
+import { ForgotPasswordSuccess } from "../views/auth/ForgotPasswordSuccess";
+import { ResetPassword } from "../views/auth/ResetPassword";
+import { ResetPasswordSuccess } from "../views/auth/ResetPasswordSuccess";
+import { ResetPasswordError } from "../views/auth/ResetPasswordError";
 import { verifyTurnstile } from "../helpers/turnstile";
 
 const useCtx = useViews();
@@ -253,4 +269,208 @@ export default async function authRoutes(fastify: FastifyInstance) {
       return reply.redirect("/");
     },
   );
+
+  fastify.get("/auth/forgot-password", async (request, reply) => {
+    const { html, base } = useCtx(request, reply);
+    return html(
+      <ForgotPassword
+        {...base()}
+        csrfToken={reply.generateCsrf()}
+        title="Forgot Password — Rawfeed"
+        description="Reset your rawfeed.social password"
+      />,
+    );
+  });
+
+  fastify.post(
+    "/auth/forgot-password",
+    {
+      preHandler: fastify.csrfProtection,
+      config: {
+        rateLimit: {
+          max: 3,
+          timeWindow: "30 minutes",
+        },
+      },
+    },
+    async (request, reply) => {
+      const { setValidation, setState } = useCtx(request, reply);
+
+      const input = request.body as ForgotPasswordInput;
+      const cfTurnstileToken = input["cf-turnstile-response"];
+      setState(input);
+
+      const validation = validate(FORGOT_PASSWORD_SCHEMA, input);
+      if (validation.isNotValid) {
+        setValidation(validation.errors);
+        return reply.redirect("/auth/forgot-password");
+      }
+
+      const verified = await verifyTurnstile(cfTurnstileToken, request.ip);
+      if (!verified) {
+        setValidation({ turnstile: "The Cloudflare check wasn't valid." });
+        return reply.redirect("/auth/forgot-password");
+      }
+
+      const normalizedEmail = input.email.trim().toLowerCase();
+      const user = await userService.getByEmail(normalizedEmail);
+
+      if (user && !user.email_verification_token) {
+        const resetToken = crypto.randomBytes(32).toString("hex");
+        const expiresAt = new Date();
+        expiresAt.setHours(expiresAt.getHours() + 1);
+
+        await userService.setPasswordResetToken(user.id, resetToken, expiresAt);
+
+        const baseUrl = process.env.APP_URL || "https://rawfeed.social";
+        const resetUrl = `${baseUrl}/auth/reset-password?token=${resetToken}`;
+
+        await sendPasswordResetEmail(normalizedEmail, user.username, resetUrl);
+      }
+
+      return reply.redirect("/auth/forgot-password-success");
+    },
+  );
+
+  fastify.get("/auth/forgot-password-success", async (request, reply) => {
+    const { html, base } = useCtx(request, reply);
+    return html(
+      <ForgotPasswordSuccess
+        {...base()}
+        title="Check Your Email — Rawfeed"
+        description="Password reset instructions sent"
+      />,
+    );
+  });
+
+  fastify.get("/auth/reset-password", async (request, reply) => {
+    const { token } = request.query as { token?: string };
+    const { html, base } = useCtx(request, reply);
+
+    if (!token) {
+      return html(
+        <ResetPasswordError
+          {...base()}
+          errorMessage="Invalid password reset link"
+          title="Reset Failed — Rawfeed"
+          description="Password reset failed"
+        />,
+      );
+    }
+
+    const user = await userService.getByPasswordResetToken(token);
+
+    if (!user) {
+      return html(
+        <ResetPasswordError
+          {...base()}
+          errorMessage="Invalid or expired reset link"
+          title="Reset Failed — Rawfeed"
+          description="Password reset failed"
+        />,
+      );
+    }
+
+    if (
+      user.password_reset_token_expires_at &&
+      new Date(user.password_reset_token_expires_at) < new Date()
+    ) {
+      return html(
+        <ResetPasswordError
+          {...base()}
+          errorMessage="Reset link has expired"
+          title="Reset Failed — Rawfeed"
+          description="Password reset link has expired"
+        />,
+      );
+    }
+
+    return html(
+      <ResetPassword
+        {...base()}
+        csrfToken={reply.generateCsrf()}
+        token={token}
+        title="Set New Password — Rawfeed"
+        description="Choose a new password for your account"
+      />,
+    );
+  });
+
+  fastify.post(
+    "/auth/reset-password",
+    {
+      preHandler: fastify.csrfProtection,
+      config: {
+        rateLimit: {
+          max: 5,
+          timeWindow: "30 minutes",
+        },
+      },
+    },
+    async (request, reply) => {
+      const { setValidation, html, base } = useCtx(request, reply);
+
+      const input = request.body as ResetPasswordInput;
+      const cfTurnstileToken = input["cf-turnstile-response"];
+
+      const validation = validate(RESET_PASSWORD_SCHEMA, input);
+      if (validation.isNotValid) {
+        setValidation(validation.errors);
+        return reply.redirect(
+          `/auth/reset-password?token=${encodeURIComponent(input.token ?? "")}`,
+        );
+      }
+
+      const verified = await verifyTurnstile(cfTurnstileToken, request.ip);
+      if (!verified) {
+        setValidation({ turnstile: "The Cloudflare check wasn't valid." });
+        return reply.redirect(
+          `/auth/reset-password?token=${encodeURIComponent(input.token)}`,
+        );
+      }
+
+      const user = await userService.getByPasswordResetToken(input.token);
+
+      if (!user) {
+        return html(
+          <ResetPasswordError
+            {...base()}
+            errorMessage="Invalid or expired reset link"
+            title="Reset Failed — Rawfeed"
+            description="Password reset failed"
+          />,
+        );
+      }
+
+      if (
+        user.password_reset_token_expires_at &&
+        new Date(user.password_reset_token_expires_at) < new Date()
+      ) {
+        return html(
+          <ResetPasswordError
+            {...base()}
+            errorMessage="Reset link has expired"
+            title="Reset Failed — Rawfeed"
+            description="Password reset link has expired"
+          />,
+        );
+      }
+
+      const hashedPassword = await bcrypt.hash(input.password, 10);
+      await userService.resetPassword(user.id, hashedPassword);
+
+      return reply.redirect("/auth/reset-password-success");
+    },
+  );
+
+  fastify.get("/auth/reset-password-success", async (request, reply) => {
+    const { html, base } = useCtx(request, reply);
+    return html(
+      <ResetPasswordSuccess
+        {...base()}
+        title="Password Reset — Rawfeed"
+        description="Your password has been successfully reset"
+      />,
+    );
+  });
 }

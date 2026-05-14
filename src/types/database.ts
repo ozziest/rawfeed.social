@@ -174,6 +174,8 @@ export interface Users {
   notif_email_freq: Generated<"daily" | "hourly" | "off" | "weekly">;
   notif_email_last_sent_at: Date | null;
   password: string;
+  password_reset_token: string | null;
+  password_reset_token_expires_at: Date | null;
   updated_at: Date | null;
   username: string;
 }
