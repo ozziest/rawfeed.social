@@ -317,10 +317,14 @@ export default async function authRoutes(fastify: FastifyInstance) {
 
       if (user && !user.email_verification_token) {
         const resetToken = crypto.randomBytes(32).toString("hex");
+        const tokenHash = crypto
+          .createHash("sha256")
+          .update(resetToken)
+          .digest("hex");
         const expiresAt = new Date();
         expiresAt.setHours(expiresAt.getHours() + 1);
 
-        await userService.setPasswordResetToken(user.id, resetToken, expiresAt);
+        await userService.setPasswordResetToken(user.id, tokenHash, expiresAt);
 
         const baseUrl = process.env.APP_URL || "https://rawfeed.social";
         const resetUrl = `${baseUrl}/auth/reset-password?token=${resetToken}`;
@@ -358,7 +362,8 @@ export default async function authRoutes(fastify: FastifyInstance) {
       );
     }
 
-    const user = await userService.getByPasswordResetToken(token);
+    const tokenHash = crypto.createHash("sha256").update(token).digest("hex");
+    const user = await userService.getByPasswordResetToken(tokenHash);
 
     if (!user) {
       return html(
@@ -429,9 +434,18 @@ export default async function authRoutes(fastify: FastifyInstance) {
         );
       }
 
-      const user = await userService.getByPasswordResetToken(input.token);
+      const inputTokenHash = crypto
+        .createHash("sha256")
+        .update(input.token)
+        .digest("hex");
 
-      if (!user) {
+      const hashedPassword = await bcrypt.hash(input.password, 10);
+      const updated = await userService.resetPassword(
+        inputTokenHash,
+        hashedPassword,
+      );
+
+      if (!updated) {
         return html(
           <ResetPasswordError
             {...base()}
@@ -441,23 +455,6 @@ export default async function authRoutes(fastify: FastifyInstance) {
           />,
         );
       }
-
-      if (
-        user.password_reset_token_expires_at &&
-        new Date(user.password_reset_token_expires_at) < new Date()
-      ) {
-        return html(
-          <ResetPasswordError
-            {...base()}
-            errorMessage="Reset link has expired"
-            title="Reset Failed — Rawfeed"
-            description="Password reset link has expired"
-          />,
-        );
-      }
-
-      const hashedPassword = await bcrypt.hash(input.password, 10);
-      await userService.resetPassword(user.id, hashedPassword);
 
       return reply.redirect("/auth/reset-password-success");
     },

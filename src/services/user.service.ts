@@ -199,12 +199,21 @@ const getByPasswordResetToken = async (token: string) => {
     .first<Selectable<Users> | undefined>();
 };
 
-const resetPassword = async (userId: string, hashedPassword: string) => {
-  await update(userId, {
-    password: hashedPassword,
-    password_reset_token: null,
-    password_reset_token_expires_at: null,
-  });
+const resetPassword = async (
+  tokenHash: string,
+  hashedPassword: string,
+): Promise<boolean> => {
+  const affected = await getKnex()
+    .table(TABLE_NAME)
+    .where("password_reset_token", tokenHash)
+    .where("password_reset_token_expires_at", ">", new Date())
+    .update({
+      password: hashedPassword,
+      password_reset_token: null,
+      password_reset_token_expires_at: null,
+      updated_at: new Date(),
+    });
+  return affected > 0;
 };
 
 const getUsersForNotificationDigest = async () => {
