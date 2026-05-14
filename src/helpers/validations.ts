@@ -78,6 +78,21 @@ export const LOGIN_SCHEMA = z.object({
   password: z.string().min(8),
 });
 
+export const FORGOT_PASSWORD_SCHEMA = z.object({
+  email: z.email(),
+});
+
+export const RESET_PASSWORD_SCHEMA = z
+  .object({
+    token: z.string().min(1),
+    password: z.string().min(8),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
 export const POST_SCHEMA = z.object({
   content: z.string().trim().min(1).max(400),
   location: z.enum(["tr", "en", "da"]),
