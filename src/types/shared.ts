@@ -37,8 +37,6 @@ export type DefaultRSSFeedItem = {
   isoDate?: string;
 };
 
-export type RssSourceStatus = "pending" | "approved" | "rejected";
-
 export type RssSourceRow = {
   id: string;
   submitted_by: string;
@@ -49,11 +47,29 @@ export type RssSourceRow = {
   category: string | null;
   language: string;
   update_frequency: string;
-  status: RssSourceStatus;
   created_at: Date;
   updated_at: Date;
   // joined from users on bot_user_id
   username?: string;
+};
+
+export type RssSuggestionStatus = "pending" | "accepted" | "rejected";
+
+export type RssSuggestionRow = {
+  id: string;
+  submitted_by: string;
+  url: string;
+  language: string;
+  is_owner: boolean;
+  status: RssSuggestionStatus;
+  rejection_reason: string | null;
+  admin_notes: string | null;
+  created_at: Date;
+  updated_at: Date;
+  // joined from users on submitted_by
+  submitter_username?: string;
+  submitter_email?: string;
+  submitter_name?: string | null;
 };
 
 export type LinkMap = {

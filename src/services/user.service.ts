@@ -181,6 +181,41 @@ const verifyEmail = async (userId: string) => {
   });
 };
 
+const setPasswordResetToken = async (
+  userId: string,
+  token: string,
+  expiresAt: Date,
+) => {
+  await update(userId, {
+    password_reset_token: token,
+    password_reset_token_expires_at: expiresAt,
+  });
+};
+
+const getByPasswordResetToken = async (token: string) => {
+  return await getKnex()
+    .table(TABLE_NAME)
+    .where("password_reset_token", token)
+    .first<Selectable<Users> | undefined>();
+};
+
+const resetPassword = async (
+  tokenHash: string,
+  hashedPassword: string,
+): Promise<boolean> => {
+  const affected = await getKnex()
+    .table(TABLE_NAME)
+    .where("password_reset_token", tokenHash)
+    .where("password_reset_token_expires_at", ">", new Date())
+    .update({
+      password: hashedPassword,
+      password_reset_token: null,
+      password_reset_token_expires_at: null,
+      updated_at: new Date(),
+    });
+  return affected > 0;
+};
+
 const getUsersForNotificationDigest = async () => {
   return await getKnex()
     .table(TABLE_NAME)
@@ -215,4 +250,7 @@ export default {
   getByVerificationToken,
   verifyEmail,
   getUsersForNotificationDigest,
+  setPasswordResetToken,
+  getByPasswordResetToken,
+  resetPassword,
 };

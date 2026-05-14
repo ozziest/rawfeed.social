@@ -43,6 +43,8 @@ import sitemapRoutes from "./routes/sitemap";
 import followRoutes from "./routes/follow";
 import reportRoutes from "./routes/report";
 import notificationRoutes from "./routes/notifications";
+import rssRoutes from "./routes/rss";
+import adminRoutes from "./routes/admin";
 import { asset } from "./helpers/asset";
 import { getThemeFromCookies } from "./helpers/common";
 import { NotFound } from "./views/NotFound";
@@ -201,6 +203,8 @@ server.register(legalRoutes);
 server.register(aboutRoutes);
 server.register(blogRoutes);
 server.register(budgetRoutes);
+server.register(rssRoutes);
+server.register(adminRoutes);
 
 server.setErrorHandler((error: any, request, reply) => {
   request.log.error(error);

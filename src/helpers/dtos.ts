@@ -42,3 +42,15 @@ export type PostQueryParams = {
   followingUserIds?: string[];
   loggedUserId?: string;
 };
+
+export type ForgotPasswordInput = {
+  email: string;
+  "cf-turnstile-response": string;
+};
+
+export type ResetPasswordInput = {
+  token: string;
+  password: string;
+  confirmPassword: string;
+  "cf-turnstile-response": string;
+};

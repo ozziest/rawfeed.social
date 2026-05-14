@@ -10,8 +10,10 @@ import {
   rssFeedRobotsBlocked,
 } from "../metrics";
 
+const USER_AGENT = "RawfeedBot";
+
 const parser = new Parser({
-  headers: { "User-Agent": "RawfeedBot" },
+  headers: { "User-Agent": USER_AGENT },
 });
 
 export class RSSService {
@@ -20,7 +22,7 @@ export class RSSService {
       const { origin } = new URL(feedUrl);
       const robotsUrl = `${origin}/robots.txt`;
       const response = await fetch(robotsUrl, {
-        headers: { "User-Agent": "RawfeedBot" },
+        headers: { "User-Agent": USER_AGENT },
         signal: AbortSignal.timeout(5_000),
       });
       if (!response.ok) {
@@ -28,7 +30,7 @@ export class RSSService {
       }
       const text = await response.text();
       const robots = robotsParser(robotsUrl, text);
-      return robots.isAllowed(feedUrl, "RawfeedBot") !== false;
+      return robots.isAllowed(feedUrl, USER_AGENT) !== false;
     } catch {
       return true;
     }
@@ -101,5 +103,66 @@ export class RSSService {
       );
       rssFeedItemsInserted.inc();
     }
+  }
+}
+
+export type FeedTestResult =
+  | {
+      ok: true;
+      robotsAllowed: boolean;
+      feedTitle: string;
+      itemCount: number;
+      items: { title: string; link: string; pubDate: string }[];
+    }
+  | { ok: false; error: string };
+
+export async function testRssFeed(url: string): Promise<FeedTestResult> {
+  try {
+    const { origin } = new URL(url);
+    const robotsUrl = `${origin}/robots.txt`;
+    let robotsAllowed = true;
+    try {
+      const res = await fetch(robotsUrl, {
+        headers: { "User-Agent": USER_AGENT },
+        signal: AbortSignal.timeout(5_000),
+      });
+      if (res.ok) {
+        const text = await res.text();
+        const robots = robotsParser(robotsUrl, text);
+        robotsAllowed = robots.isAllowed(url, USER_AGENT) !== false;
+      }
+    } catch (error) {
+      sentryException(error, {
+        url,
+      });
+    }
+
+    const feed = await parser.parseURL(url);
+
+    const items = (feed.items ?? []).slice(0, 5).map((item) => {
+      const data = item as DefaultRSSFeedItem & {
+        title?: string;
+        link?: string;
+      };
+      return {
+        title: data.title ?? "(no title)",
+        link: data.link ?? "",
+        pubDate: data.isoDate ?? data.pubDate ?? "",
+      };
+    });
+
+    return {
+      ok: true,
+      robotsAllowed,
+      feedTitle: feed.title ?? "(untitled)",
+      itemCount: feed.items?.length ?? 0,
+      items,
+    };
+  } catch (error) {
+    sentryException(error, { url });
+    return {
+      ok: false,
+      error: error instanceof Error ? error.message : "Unknown error",
+    };
   }
 }

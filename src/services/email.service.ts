@@ -1,6 +1,22 @@
 import { logError } from "../helpers/common";
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
+import sanitizeHtml from "sanitize-html";
 import type { NotificationWithTriggers } from "../types/relations";
+
+const esc = (text: string): string =>
+  sanitizeHtml(text, { allowedTags: [], allowedAttributes: {} });
+
+const safeUrl = (url: string): string => {
+  try {
+    const parsed = new URL(url);
+    if (parsed.protocol === "https:" || parsed.protocol === "http:") {
+      return url;
+    }
+  } catch {
+    // invalid URL
+  }
+  return "#";
+};
 
 type CreateEmailOptions = {
   to: string;
@@ -144,6 +160,49 @@ export const sendVerificationEmail = async (
   }
 };
 
+export const sendPasswordResetEmail = async (
+  to: string,
+  username: string,
+  resetUrl: string,
+): Promise<void> => {
+  try {
+    const safeUsername = esc(username);
+    const safeResetUrl = safeUrl(resetUrl);
+    const options: CreateEmailOptions = {
+      to,
+      subject: "Reset Your Password",
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2>Reset Your Password</h2>
+          <p>Hi ${safeUsername},</p>
+          <p>We received a request to reset the password for your rawfeed.social account.</p>
+          <p style="margin: 30px 0;">
+            <a href="${safeResetUrl}"
+               style="background-color: #000000; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">
+              Reset Password
+            </a>
+          </p>
+          <p style="color: #666; font-size: 14px;">
+            Or copy and paste this link into your browser:<br>
+            <a href="${safeResetUrl}" style="color: #2563eb;">${safeResetUrl}</a>
+          </p>
+          <p style="color: #666; font-size: 14px;">
+            <strong>Important:</strong> This link will expire in 1 hour.
+          </p>
+          <p style="color: #666; font-size: 14px;">
+            If you didn't request a password reset, you can safely ignore this email. Your password will not change.
+          </p>
+        </div>
+      `,
+    };
+
+    await sendEmail(options);
+  } catch (error) {
+    logError(error);
+    throw error;
+  }
+};
+
 export const sendPostReportEmail = async (opts: {
   postId: string;
   postUrl: string;
@@ -266,10 +325,141 @@ export const sendNotificationDigestEmail = async (
   }
 };
 
+export const sendRssSuggestionReceivedEmail = async (opts: {
+  submitterUsername: string;
+  submitterEmail: string;
+  feedUrl: string;
+  language: string;
+  isOwner: boolean;
+  suggestionId: string;
+}): Promise<void> => {
+  try {
+    const {
+      submitterUsername,
+      submitterEmail,
+      feedUrl,
+      language,
+      isOwner,
+      suggestionId,
+    } = opts;
+    const adminUrl = `https://rawfeed.social/admin/rss-suggestions/${suggestionId}`;
+    const options: CreateEmailOptions = {
+      to: REPORT_RECIPIENT,
+      subject: `[Rawfeed] New RSS Feed Suggestion from @${submitterUsername}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2>New RSS Feed Suggestion</h2>
+          <table style="border-collapse: collapse; width: 100%; margin-bottom: 24px;">
+            <tr>
+              <td style="padding: 8px 12px; background: #f3f4f6; font-weight: bold; width: 160px;">Submitted by</td>
+              <td style="padding: 8px 12px; border: 1px solid #e5e7eb;">@${esc(submitterUsername)} (${esc(submitterEmail)})</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 12px; background: #f3f4f6; font-weight: bold;">Feed URL</td>
+              <td style="padding: 8px 12px; border: 1px solid #e5e7eb;"><a href="${safeUrl(feedUrl)}">${esc(feedUrl)}</a></td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 12px; background: #f3f4f6; font-weight: bold;">Language</td>
+              <td style="padding: 8px 12px; border: 1px solid #e5e7eb;">${esc(language.toUpperCase())}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 12px; background: #f3f4f6; font-weight: bold;">Feed owner?</td>
+              <td style="padding: 8px 12px; border: 1px solid #e5e7eb;">${isOwner ? "Yes" : "No"}</td>
+            </tr>
+          </table>
+          <p>
+            <a href="${safeUrl(adminUrl)}"
+               style="background-color: #000000; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">
+              Review Suggestion
+            </a>
+          </p>
+        </div>
+      `,
+    };
+    await sendEmail(options);
+  } catch (error) {
+    logError(error);
+    throw error;
+  }
+};
+
+export const sendRssSuggestionAcceptedEmail = async (
+  to: string,
+  username: string,
+  feedName: string,
+  feedUrl: string,
+): Promise<void> => {
+  try {
+    const options: CreateEmailOptions = {
+      to,
+      subject: `[Rawfeed] Your RSS feed suggestion has been accepted!`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2>Your RSS Feed Suggestion Was Accepted 🎉</h2>
+          <p>Hi @${esc(username)},</p>
+          <p>Great news! Your suggestion to add <strong>${esc(feedName)}</strong> has been reviewed and accepted by our moderation team.</p>
+          <p style="color: #666; font-size: 14px;">Feed URL: <a href="${safeUrl(feedUrl)}">${esc(feedUrl)}</a></p>
+          <p>The feed has been added to <a href="https://rawfeed.social/explore/bots">rawfeed.social/explore/bots</a> and will start syncing shortly.</p>
+          <p>Thank you for contributing to Rawfeed!</p>
+        </div>
+      `,
+    };
+    await sendEmail(options);
+  } catch (error) {
+    logError(error);
+    throw error;
+  }
+};
+
+export const sendRssSuggestionRejectedEmail = async (
+  to: string,
+  username: string,
+  feedUrl: string,
+  reason: string,
+): Promise<void> => {
+  try {
+    const options: CreateEmailOptions = {
+      to,
+      subject: `[Rawfeed] Your RSS feed suggestion was not accepted`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2>RSS Feed Suggestion Not Accepted</h2>
+          <p>Hi @${esc(username)},</p>
+          <p>Thank you for suggesting an RSS feed. Unfortunately, after review, we were not able to add it to Rawfeed.</p>
+          <table style="border-collapse: collapse; width: 100%; margin: 20px 0;">
+            <tr>
+              <td style="padding: 8px 12px; background: #f3f4f6; font-weight: bold; width: 140px;">Feed URL</td>
+              <td style="padding: 8px 12px; border: 1px solid #e5e7eb;"><a href="${safeUrl(feedUrl)}">${esc(feedUrl)}</a></td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 12px; background: #f3f4f6; font-weight: bold;">Reason</td>
+              <td style="padding: 8px 12px; border: 1px solid #e5e7eb;">${esc(reason)}</td>
+            </tr>
+          </table>
+          <p style="color: #666; font-size: 14px;">
+            If you believe this decision was made in error or your feed no longer falls into this category,
+            you may submit a new suggestion in the future.
+          </p>
+          <p style="color: #666; font-size: 14px;">
+            Questions? Email us at <a href="mailto:hello@rawfeed.social">hello@rawfeed.social</a> or visit <a href="https://rawfeed.social/legal/terms">our policies</a>.
+          </p>
+        </div>
+      `,
+    };
+    await sendEmail(options);
+  } catch (error) {
+    logError(error);
+    throw error;
+  }
+};
+
 export default {
   sendDataExportReadyEmail,
   sendDataExportFailedEmail,
   sendVerificationEmail,
   sendPostReportEmail,
   sendNotificationDigestEmail,
+  sendRssSuggestionReceivedEmail,
+  sendRssSuggestionAcceptedEmail,
+  sendRssSuggestionRejectedEmail,
 };

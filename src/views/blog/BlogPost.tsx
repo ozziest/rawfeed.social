@@ -29,7 +29,6 @@ export function BlogPost(props: BlogPostProps) {
           </footer>
         </article>
       </div>
-      <Footer />
     </LandingLayout>
   );
 }
