@@ -1,7 +1,7 @@
 import type { Selectable } from "kysely";
 import type { Users } from "../../../types/database";
 import type { TokenPayload } from "../../../helpers/tokens";
-import { getAvatar } from "../../../helpers/common";
+import { getInitials, getAvatarBgClass } from "../../../helpers/common";
 import { FollowButton } from "./FollowButton";
 import { Avatar } from "./Avatar";
 
@@ -25,8 +25,8 @@ export function UserCard({
         class="flex items-center gap-3 min-w-0"
       >
         <Avatar
-          src={getAvatar(cardUser)}
-          alt={cardUser.name}
+          initials={getInitials(cardUser.name, cardUser.username)}
+          bgClass={getAvatarBgClass(cardUser.username)}
           size={48}
           className="w-12 h-12 shrink-0"
         />

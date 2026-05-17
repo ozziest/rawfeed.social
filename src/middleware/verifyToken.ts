@@ -2,7 +2,6 @@ import type { FastifyRequest, FastifyReply } from "fastify";
 import { generateTokens, TokenPayload } from "../helpers/tokens";
 import userService from "../services/user.service";
 import notificationService from "../services/notification.service";
-import { getAvatar } from "../helpers/common";
 
 export async function verifyToken(
   request: FastifyRequest,
@@ -41,7 +40,6 @@ export async function verifyToken(
         userId: decoded.userId,
         username: user.username,
         name: user.name,
-        gravatar: getAvatar(user),
         isAdmin: !!user.is_admin,
       };
 

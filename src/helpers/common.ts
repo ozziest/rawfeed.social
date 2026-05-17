@@ -1,10 +1,6 @@
-import crypto from "crypto";
 import Sentry from "@sentry/node";
-import { Selectable } from "kysely";
-import { Users } from "../types/database";
 import { IS_DEVELOPMENT, POST_SIZE } from "../consts";
 import { PostWithContent } from "../types/relations";
-import { asset } from "./asset";
 import type { BaseProps } from "../types/views";
 import { DEFAULT_USERNAME_SCHEMA, validate } from "./validations";
 
@@ -36,25 +32,35 @@ export const getThemeFromCookies = (
   return "system";
 };
 
-const getGravatarUrl = (email: string, size: number = 400): string => {
-  const hash = crypto
-    .createHash("md5")
-    .update(email.trim().toLowerCase())
-    .digest("hex");
+const AVATAR_PALETTE = [
+  "bg-slate-500",
+  "bg-zinc-600",
+  "bg-indigo-500",
+  "bg-violet-500",
+  "bg-sky-600",
+  "bg-teal-600",
+  "bg-rose-500",
+  "bg-amber-600",
+] as const;
 
-  return `https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon`;
+export const getInitials = (name: string | null, username: string): string => {
+  const source = name?.trim() || username;
+  const parts = source.split(/\s+/).filter(Boolean);
+
+  if (parts.length === 0) {
+    return "??";
+  }
+
+  if (parts.length >= 2) {
+    return (parts[0][0] + parts[1][0]).toUpperCase();
+  }
+
+  return parts[0].slice(0, 2).toUpperCase();
 };
 
-export const getAvatar = (user: Selectable<Users>) => {
-  if (user.bot_type === null) {
-    return getGravatarUrl(user.email);
-  }
-
-  if (user.bot_type === "rss") {
-    return asset("/public/images/rss/rss.svg");
-  }
-
-  return asset("/public/images/default_avatar.svg");
+export const getAvatarBgClass = (username: string): string => {
+  const sum = [...username].reduce((acc, c) => acc + c.charCodeAt(0), 0);
+  return AVATAR_PALETTE[sum % AVATAR_PALETTE.length];
 };
 
 export const logError = (

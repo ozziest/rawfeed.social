@@ -1,6 +1,6 @@
 import type { Selectable } from "kysely";
 import type { Users } from "../../../types/database";
-import { getAvatar } from "../../../helpers/common";
+import { getInitials, getAvatarBgClass } from "../../../helpers/common";
 import { Avatar } from "./Avatar";
 import { RssFeedLink } from "./RssFeedLink";
 import { BotBadge } from "./BotBadge";
@@ -14,10 +14,10 @@ export function ProfileHeader({ user, showRss = true }: ProfileHeaderProps) {
   return (
     <div class="flex items-center gap-4">
       <Avatar
-        src={getAvatar(user)}
-        alt={user.name}
+        initials={getInitials(user.name, user.username)}
+        bgClass={getAvatarBgClass(user.username)}
         size={80}
-        className="w-20 h-20 border-2 border-white shadow shrink-0"
+        className="w-20 h-20 shrink-0"
       />
       <div class="min-w-0 flex flex-col justify-center">
         <div class="flex items-center gap-2 flex-wrap min-w-0">
