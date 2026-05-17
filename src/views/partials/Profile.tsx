@@ -1,7 +1,7 @@
 import type { Selectable } from "kysely";
 import type { RssSources, Users } from "../../types/database";
 import type { TokenPayload } from "../../helpers/tokens";
-import { getAvatar } from "../../helpers/common";
+import { getInitials, getAvatarBgClass } from "../../helpers/common";
 import { Avatar } from "../components/users/Avatar";
 import { FollowButton } from "../components/users/FollowButton";
 import { Share } from "./Share";
@@ -65,10 +65,10 @@ export function Profile({
           <div class="grid grid-cols-[auto_1fr_auto] items-center gap-x-3 sm:gap-x-4">
             {/* Row 1, col 1 — Avatar */}
             <Avatar
-              src={getAvatar(user)}
-              alt={user.name}
+              initials={getInitials(user.name, user.username)}
+              bgClass={getAvatarBgClass(user.username)}
               size={80}
-              className="w-12 h-12 sm:w-20 sm:h-20 border-2 border-white shadow shrink-0"
+              className="w-12 h-12 sm:w-20 sm:h-20 shrink-0"
             />
 
             {/* Row 1, col 2 — Name + username */}

@@ -1,4 +1,4 @@
-import { getAvatar } from "../../../helpers/common";
+import { getInitials, getAvatarBgClass } from "../../../helpers/common";
 import { Avatar } from "../users/Avatar";
 import type { NotificationTriggerUser } from "../../../types/relations";
 
@@ -21,8 +21,8 @@ export function TriggerAvatars({ users, max = 4 }: TriggerAvatarsProps) {
           aria-label={`View profile of ${user.name || user.username}`}
         >
           <Avatar
-            src={getAvatar(user as any)}
-            alt={user.name || user.username}
+            initials={getInitials(user.name, user.username)}
+            bgClass={getAvatarBgClass(user.username)}
             size={32}
             className="w-8 h-8"
           />

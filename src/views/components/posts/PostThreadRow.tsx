@@ -1,6 +1,6 @@
 import type { PostWithContent } from "../../../types/relations";
 import type { TokenPayload } from "../../../helpers/tokens";
-import { getAvatar, toISO } from "../../../helpers/common";
+import { getInitials, getAvatarBgClass, toISO } from "../../../helpers/common";
 import { PostContent } from "./PostContent";
 import { PostStats } from "./PostStats";
 import { Avatar } from "../users/Avatar";
@@ -50,8 +50,11 @@ export function PostThreadRow({
             aria-label={`View profile of ${displayPost.user.name}`}
           >
             <Avatar
-              src={getAvatar(displayPost.user)}
-              alt={displayPost.user.name}
+              initials={getInitials(
+                displayPost.user.name,
+                displayPost.user.username,
+              )}
+              bgClass={getAvatarBgClass(displayPost.user.username)}
               size={40}
               className="w-10 h-10 hover:opacity-80 transition-opacity"
             />

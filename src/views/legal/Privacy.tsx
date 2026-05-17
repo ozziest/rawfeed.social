@@ -10,7 +10,7 @@ export function PrivacyPage(props: Props) {
         <div class="max-w-4xl mx-auto px-6 py-12">
           <h1 class="text-4xl font-bold mb-2">Privacy Policy</h1>
           <p class="text-gray-600 dark:text-gray-400 mb-8">
-            Last Updated: 05 April 2026
+            Last Updated: 17 May 2026
           </p>
 
           <div class="prose prose-sm max-w-none space-y-6">
@@ -89,9 +89,8 @@ export function PrivacyPage(props: Props) {
                   display form validation errors and success messages.
                 </li>
                 <li>
-                  <strong>Third-Party Cookies:</strong> Gravatar (avatar
-                  service) and Cloudflare (CDN/DDoS protection) may set their
-                  own cookies.
+                  <strong>Third-Party Cookies:</strong> Cloudflare (CDN/DDoS
+                  protection) may set its own cookies.
                 </li>
                 <li>
                   <strong>Access Logs:</strong> We may log IP addresses, browser
@@ -275,16 +274,6 @@ export function PrivacyPage(props: Props) {
                 7.2 Third-Party Services (Optional)
               </h3>
               <ul class="list-disc pl-6 space-y-2">
-                <li>
-                  <strong>Gravatar:</strong> Profile avatar service (if you use
-                  Gravatar).
-                  <a
-                    href="https://automattic.com/privacy/"
-                    class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
-                  >
-                    Automattic Privacy Policy
-                  </a>
-                </li>
                 <li>
                   <strong>Sentry:</strong> Error tracking (does NOT receive
                   personally identifiable information due to low sampling rates

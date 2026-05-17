@@ -12,7 +12,7 @@ export function DPAPage(props: Props) {
             Data Processing Agreement (DPA)
           </h1>
           <p class="text-gray-600 dark:text-gray-400 mb-8">
-            Last Updated: 05 April 2026
+            Last Updated: 17 May 2026
           </p>
 
           <div class="prose prose-sm max-w-none space-y-6">
@@ -185,25 +185,6 @@ export function DPAPage(props: Props) {
                           class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
                         >
                           AWS DPA
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm">
-                        <strong>Gravatar</strong>
-                      </td>
-                      <td class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm">
-                        Avatar/profile picture service (if used)
-                      </td>
-                      <td class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm">
-                        Email hash (for gravatar lookup)
-                      </td>
-                      <td class="border border-gray-300 px-2 sm:px-4 py-2 text-xs sm:text-sm">
-                        <a
-                          href="https://automattic.com/privacy/"
-                          class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
-                        >
-                          Automattic Privacy
                         </a>
                       </td>
                     </tr>

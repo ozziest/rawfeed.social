@@ -1,6 +1,6 @@
 import type { Selectable } from "kysely";
 import type { Users } from "../../../types/database";
-import { getAvatar } from "../../../helpers/common";
+import { getInitials, getAvatarBgClass } from "../../../helpers/common";
 import { Avatar } from "../users/Avatar";
 import { BotBadge } from "../users/BotBadge";
 
@@ -16,8 +16,8 @@ export function PostAuthor({ user }: PostAuthorProps) {
       aria-label={`View profile of ${user.name}`}
     >
       <Avatar
-        src={getAvatar(user)}
-        alt={user.name}
+        initials={getInitials(user.name, user.username)}
+        bgClass={getAvatarBgClass(user.username)}
         size={40}
         className="w-10 h-10 group-hover:opacity-80 transition-opacity"
       />

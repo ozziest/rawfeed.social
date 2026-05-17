@@ -10,7 +10,7 @@ export function TermsPage(props: Props) {
         <div class="max-w-4xl mx-auto px-6 py-12">
           <h1 class="text-4xl font-bold mb-2">Terms of Service</h1>
           <p class="text-gray-600 dark:text-gray-400 mb-8">
-            Last Updated: 05 April 2026
+            Last Updated: 17 May 2026
           </p>
 
           <div class="prose prose-sm max-w-none space-y-6">
@@ -320,8 +320,8 @@ export function TermsPage(props: Props) {
               </h3>
               <p>
                 We are not responsible for the performance, privacy practices,
-                or content of third-party services (Gravatar, Cloudflare, RSS
-                feeds, etc.) that we integrate with.
+                or content of third-party services (Cloudflare, RSS feeds, etc.)
+                that we integrate with.
               </p>
             </section>
 

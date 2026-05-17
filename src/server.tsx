@@ -122,12 +122,7 @@ server.register(helmet, {
             "https://challenges.cloudflare.com",
             ...(assetBaseUrl ? [assetBaseUrl] : []),
           ],
-          imgSrc: [
-            "'self'",
-            "data:",
-            "https://www.gravatar.com",
-            ...(assetBaseUrl ? [assetBaseUrl] : []),
-          ],
+          imgSrc: ["'self'", "data:", ...(assetBaseUrl ? [assetBaseUrl] : [])],
           connectSrc: [
             "'self'",
             "https://cloud.umami.is",

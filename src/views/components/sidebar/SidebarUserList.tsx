@@ -1,4 +1,4 @@
-import { getAvatar } from "../../../helpers/common";
+import { getInitials, getAvatarBgClass } from "../../../helpers/common";
 import type { Selectable } from "kysely";
 import type { Users } from "../../../types/database";
 import { Avatar } from "../users/Avatar";
@@ -18,8 +18,8 @@ export function SidebarUserList({ users, viewAllHref }: SidebarUserListProps) {
             class="flex items-center gap-2 hover:bg-gray-50 dark:hover:bg-gray-700 -mx-2 px-2 py-1 rounded"
           >
             <Avatar
-              src={getAvatar(user)}
-              alt={user.name}
+              initials={getInitials(user.name, user.username)}
+              bgClass={getAvatarBgClass(user.username)}
               size={32}
               className="w-8 h-8"
             />

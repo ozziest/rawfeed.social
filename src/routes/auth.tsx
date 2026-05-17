@@ -17,7 +17,6 @@ import {
 import bcrypt from "bcrypt";
 import crypto from "crypto";
 import { generateTokens } from "../helpers/tokens";
-import { getAvatar } from "../helpers/common";
 import {
   sendVerificationEmail,
   sendPasswordResetEmail,
@@ -260,7 +259,6 @@ export default async function authRoutes(fastify: FastifyInstance) {
         userId: user.id,
         username: user.username,
         name: user.name,
-        gravatar: getAvatar(user),
         isAdmin: !!user.is_admin,
       });
 

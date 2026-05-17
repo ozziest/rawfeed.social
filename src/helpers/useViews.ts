@@ -1,6 +1,11 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { sanitize } from "./security";
-import { getAvatar, toISO, getThemeFromCookies } from "./common";
+import {
+  getInitials,
+  getAvatarBgClass,
+  toISO,
+  getThemeFromCookies,
+} from "./common";
 import { asset } from "./asset";
 
 export const getBaseProps = (request: FastifyRequest, reply: FastifyReply) => {
@@ -32,7 +37,8 @@ export const getBaseProps = (request: FastifyRequest, reply: FastifyReply) => {
     theme: getThemeFromCookies(request.cookies),
     unreadNotifCount: request.unreadNotifCount ?? 0,
     sanitize,
-    getAvatar,
+    getInitials,
+    getAvatarBgClass,
     toISO,
     asset,
   };

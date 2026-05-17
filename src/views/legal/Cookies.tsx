@@ -10,7 +10,7 @@ export function CookiesPage(props: Props) {
         <div class="max-w-4xl mx-auto px-6 py-12">
           <h1 class="text-4xl font-bold mb-2">Cookie Policy</h1>
           <p class="text-gray-600 dark:text-gray-400 mb-8">
-            Last Updated: 05 April 2026
+            Last Updated: 17 May 2026
           </p>
 
           <div class="prose prose-sm max-w-none space-y-6">
@@ -142,22 +142,7 @@ export function CookiesPage(props: Props) {
               </p>
 
               <h3 class="text-lg font-semibold mb-3 mt-4">
-                3.1 Gravatar (Avatar Service)
-              </h3>
-              <p>
-                If you use Gravatar for your profile avatar, Gravatar may set
-                cookies to recognize you across websites.
-                <a
-                  href="https://automattic.com/privacy/"
-                  class="text-black dark:text-gray-200 hover:underline dark:hover:text-white font-medium"
-                >
-                  Learn about Gravatar's privacy
-                </a>
-                .
-              </p>
-
-              <h3 class="text-lg font-semibold mb-3 mt-4">
-                3.2 Cloudflare (CDN & DDoS Protection)
+                3.1 Cloudflare (CDN &amp; DDoS Protection)
               </h3>
               <p>
                 Cloudflare provides our content delivery and DDoS protection.
@@ -277,8 +262,8 @@ export function CookiesPage(props: Props) {
                   required, but we inform you here
                 </li>
                 <li>
-                  <strong>Third-party cookies (Gravatar, Cloudflare):</strong>{" "}
-                  You may want to review their privacy policies
+                  <strong>Third-party cookies (Cloudflare):</strong> You may
+                  want to review their privacy policies
                 </li>
                 <li>
                   <strong>Analytics/tracking cookies:</strong> We don't use any,

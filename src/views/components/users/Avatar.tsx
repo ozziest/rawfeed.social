@@ -1,27 +1,24 @@
 export type AvatarProps = {
-  src: string;
-  alt?: string;
+  initials: string;
+  bgClass: string;
   size?: number;
   className?: string;
 };
 
 export function Avatar({
-  src,
-  alt = "Avatar",
+  initials,
+  bgClass,
   size = 40,
   className = "",
 }: AvatarProps) {
+  const fontSize = Math.round(size * 0.38);
   return (
-    <img
-      src={src}
-      alt={alt}
-      width={size}
-      height={size}
-      class={
-        `rounded-full object-cover border border-gray-200 dark:border-gray-600 bg-white ` +
-        className
-      }
-      loading="lazy"
-    />
+    <div
+      class={`rounded-full flex items-center justify-center font-bold text-white select-none shrink-0 ${bgClass} ${className}`}
+      style={`width:${size}px;height:${size}px;font-size:${fontSize}px;line-height:1`}
+      aria-hidden="true"
+    >
+      {initials}
+    </div>
   );
 }

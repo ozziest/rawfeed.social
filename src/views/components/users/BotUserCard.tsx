@@ -1,6 +1,7 @@
 import type { Selectable } from "kysely";
 import type { Users } from "../../../types/database";
-import { getAvatar } from "../../../helpers/common";
+import { getInitials, getAvatarBgClass } from "../../../helpers/common";
+import { Avatar } from "./Avatar";
 import { RssSourceBadge } from "../shared/RssSourceBadge";
 
 type BotUserCardProps = {
@@ -12,10 +13,11 @@ export function BotUserCard({ user }: BotUserCardProps) {
     <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow">
       <div class="flex items-start gap-3">
         <a href={`/u/${user.username}`}>
-          <img
-            src={getAvatar(user)}
-            alt={user.name || user.username}
-            class="w-12 h-12 rounded-full object-cover bg-white"
+          <Avatar
+            initials={getInitials(user.name, user.username)}
+            bgClass={getAvatarBgClass(user.username)}
+            size={48}
+            className="w-12 h-12"
           />
         </a>
 
