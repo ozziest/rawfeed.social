@@ -17,6 +17,7 @@ export function Avatar({
       class={`rounded-full flex items-center justify-center font-bold text-white select-none shrink-0 ${bgClass} ${className}`}
       style={`width:${size}px;height:${size}px;font-size:${fontSize}px;line-height:1`}
       aria-hidden="true"
+      safe
     >
       {initials}
     </div>
