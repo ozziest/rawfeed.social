@@ -12,7 +12,10 @@ export function BotUserCard({ user }: BotUserCardProps) {
   return (
     <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow">
       <div class="flex items-start gap-3">
-        <a href={`/u/${user.username}`}>
+        <a
+          href={`/u/${user.username}`}
+          aria-label={`View profile of ${user.name || user.username}`}
+        >
           <Avatar
             initials={getInitials(user.name, user.username)}
             bgClass={getAvatarBgClass(user.username)}
