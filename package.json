@@ -57,7 +57,7 @@
     "@kitajs/html": "^4.2.13",
     "@sentry/node": "^10.53.1",
     "@tailwindcss/cli": "^4.3.0",
-    "adm-zip": "^0.5.17",
+    "adm-zip": "^0.6.0",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.3",
     "bullmq": "^5.76.8",
