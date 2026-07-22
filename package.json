@@ -97,7 +97,7 @@
     "kysely-codegen": "^0.20.0",
     "postcss": "^8.5.14",
     "prettier": "^3.8.3",
-    "sqlite3": "^5.1.7",
+    "sqlite3": "^6.0.1",
     "tailwindcss": "^4.3.0",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
