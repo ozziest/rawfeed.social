@@ -92,7 +92,7 @@
     "@types/sanitize-html": "^2.16.1",
     "autoprefixer": "^10.5.0",
     "commitizen": "^4.3.1",
-    "concurrently": "^9.2.1",
+    "concurrently": "^9.2.4",
     "cz-conventional-changelog": "^3.3.0",
     "kysely-codegen": "^0.20.0",
     "postcss": "^8.5.14",
