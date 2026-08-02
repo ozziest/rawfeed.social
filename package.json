@@ -95,7 +95,7 @@
     "concurrently": "^9.2.1",
     "cz-conventional-changelog": "^3.3.0",
     "kysely-codegen": "^0.20.0",
-    "postcss": "^8.5.14",
+    "postcss": "^8.5.25",
     "prettier": "^3.8.3",
     "sqlite3": "^5.1.7",
     "tailwindcss": "^4.3.0",
