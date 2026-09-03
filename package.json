@@ -72,7 +72,7 @@
     "ioredis": "^5.10.1",
     "knex": "^3.2.10",
     "marked": "^18.0.3",
-    "mysql2": "^3.22.3",
+    "mysql2": "^3.24.3",
     "nanoid": "^5.1.11",
     "prom-client": "^15.1.3",
     "robots-parser": "^3.0.1",
